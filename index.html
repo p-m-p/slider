@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Cubic slider</title>
+	
+	<link href="css/style.css" rel="stylesheet">
+</head>
+	<body>
+	  <div id="page">
+	    
+	    <section id="cubic-slider">
+	      <div id="cube">
+	        <figure class="slide slide-1">
+	          <img src="img/slide-1.png" alt="">
+	        </figure>
+	        <figure class="slide slide-2">
+            <img src="img/slide-2.png" alt="">
+          </figure>
+          <figure class="slide slide-3">
+            <img src="img/slide-3.png" alt="">
+          </figure>
+          <figure class="slide slide-4">
+            <img src="img/slide-4.png" alt="">
+          </figure>
+          <figure class="slide slide-5">
+            <img src="img/slide-5.png" alt="">
+          </figure>
+          <figure class="slide slide-6">
+            <img src="img/slide-6.png" alt="">
+          </figure>
+	      </div>	      
+	    </section>
+	    
+	  </div>
+		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+		<script src="js/box-slider.jquery.js"></script>
+		<script>
+		  
+		  $(function () {
+		    
+		    $("#cube").boxSlider();
+		    
+		  });
+		  
+		</script>
+	</body>
+</html>
