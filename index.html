@@ -9,27 +9,33 @@
 	<body>
 	  <div id="page">
 	    
-	    <section id="cubic-slider">
-	      <div id="cube">
-	        <figure class="slide slide-1">
+	    <section id="box-slider">
+	      <div id="box">
+	        <figure class="slide">
 	          <img src="img/slide-1.png" alt="">
 	        </figure>
-	        <figure class="slide slide-2">
+	        <figure class="slide">
             <img src="img/slide-2.png" alt="">
           </figure>
-          <figure class="slide slide-3">
+          <figure class="slide">
             <img src="img/slide-3.png" alt="">
           </figure>
-          <figure class="slide slide-4">
+          <figure class="slide">
             <img src="img/slide-4.png" alt="">
           </figure>
-          <figure class="slide slide-5">
+          <figure class="slide">
             <img src="img/slide-5.png" alt="">
           </figure>
-          <figure class="slide slide-6">
+          <figure class="slide">
             <img src="img/slide-6.png" alt="">
           </figure>
 	      </div>	      
+        <footer>
+          <nav id="controls">
+            <a class="bs-prev" href="#">Prev</a>
+            <a class="bs-next" href="#">Next</a>
+          </nav>
+        </footer>
 	    </section>
 	    
 	  </div>
@@ -39,7 +45,7 @@
 		  
 		  $(function () {
 		    
-		    $("#cube").boxSlider();
+		    $("#box").boxSlider();
 		    
 		  });
 		  
