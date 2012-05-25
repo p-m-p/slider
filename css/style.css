@@ -12,10 +12,8 @@ figure {
   position: absolute;
   top: 0;
   left: 0;
-  border: 1px solid black;
   width: 592px; 
   height: 392px;
-  opacity: .6;
 }
   .slide img { width: 100%; height: 100%; }
 
@@ -43,5 +41,7 @@ figure {
 
 .front { -webkit-transform: rotateY(0deg) translateZ(200px); }
 .top { -webkit-transform: rotateX(90deg) translateZ(200px); }
+.bottom { -webkit-transform: rotateX(-90deg) translateZ(200px); }
+.back { -webkit-transform: rotateX(180deg) translateZ(200px); }
 
 #box.show-top { -webkit-transform:  rotateX(-90deg); }
