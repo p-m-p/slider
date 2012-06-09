@@ -3,52 +3,126 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Cubic slider</title>
-	
+
 	<link href="css/style.css" rel="stylesheet">
 </head>
 	<body>
 	  <div id="page">
-	    
-	    <section id="box-slider">
-	      <div id="box">
-	        <figure class="slide">
-	          <img src="img/slide-1.png" alt="">
-	        </figure>
-	        <figure class="slide">
-            <img src="img/slide-2.png" alt="">
-          </figure>
-          <figure class="slide">
-            <img src="img/slide-3.png" alt="">
-          </figure>
-          <figure class="slide">
-            <img src="img/slide-4.png" alt="">
-          </figure>
-          <figure class="slide">
-            <img src="img/slide-5.png" alt="">
-          </figure>
-          <figure class="slide">
-            <img src="img/slide-6.png" alt="">
-          </figure>
-	      </div>	      
+
+      <section class="demo">
+        <header>
+          <h2>Box with pagination controls</h2>
+        </header>
+  	    <div id="box-slider-1" class="slider-viewport">
+  	      <div id="box-1" class="box">
+  	        <figure class="slide">
+  	          <img src="img/slide-1.png" alt="">
+  	        </figure>
+  	        <figure class="slide">
+              <img src="img/slide-2.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-3.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-4.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-5.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-6.png" alt="">
+            </figure>
+  	      </div>
+  	    </div>
         <footer>
-          <nav id="controls">
-            <a class="bs-prev" href="#">Prev</a>
-            <a class="bs-next" href="#">Next</a>
+          <nav class="slider-controls">
+            <ul class="controls" id="controls-1">
+              <li><a class="bs-prev" href="#">Prev</a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="0">1</a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="1">2</a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="2">3</a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="3">4</a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="4">5</a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="5">6</a></li>
+              <li><a class="bs-next" href="#">Next</a></li>
+            </ul>
           </nav>
         </footer>
-	    </section>
-	    
+      </section>
+
+      <section class="demo">
+        <header>
+          <h2>Auto scroll box</h2>
+        </header>
+        <div id="box-slider-2" class="slider-viewport">
+          <div id="box-2" class="box">
+            <figure class="slide">
+              <img src="img/slide-1.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-2.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-3.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-4.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-5.png" alt="">
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-6.png" alt="">
+            </figure>
+          </div>
+        </div>
+        <footer>
+          <nav class="slider-controls">
+            <ul class="controls" id="controls-2">
+              <li><a class="bs-prev" href="#">Prev</a></li>
+              <li><a class="bs-play-pause" href="#">Pause</a></li>
+              <li><a class="bs-next" href="#">Next</a></li>
+            </ul>
+          </nav>
+        </footer>
+      </section>
+
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
 		<script src="js/box-slider.jquery.js"></script>
 		<script>
-		  
+
 		  $(function () {
-		    
-		    $("#box").boxSlider();
-		    
+
+        var $box1 = $('#box-1')
+          , $box2 = $('#box-2');
+
+		    $box1.boxSlider({
+            speed: 800
+          , perspective: 1200
+          , next: $('#controls-1').find('.bs-next')
+          , prev: $('#controls-1').find('.bs-prev')
+        });
+        $('#controls-1')
+          .find('.goto-slide')
+          .on('click', function (ev) {
+            $box1.boxSlider('showSlide', $(this).data('slideindex'));
+            ev.preventDefault();
+          });
+
+        $box2.boxSlider({
+            autoScroll: true
+          , speed: 1200
+          , timeout: 3000
+          , pauseOnHover: true
+          , next: $('#controls-2').find('.bs-next')
+          , prev: $('#controls-2').find('.bs-prev')
+          , pause: $('#controls-2').find('.bs-play-pause')
+        });
+
 		  });
-		  
+
 		</script>
 	</body>
 </html>

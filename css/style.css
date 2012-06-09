@@ -1,5 +1,9 @@
+body {
+  font: .85em/1.2 helvetica, arial, sans-serif;
+}
+
 #page {
-  width: 600px;
+  width: 592px;
   margin: 40px auto;
 }
 
@@ -8,40 +12,49 @@ figure {
   padding: 0;
 }
 
-.slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 592px; 
-  height: 392px;
-}
-  .slide img { width: 100%; height: 100%; }
-
-#controls {
-  position: absolute;
-  top: 420px;
+.demo {
+  margin: 0 0 40px;
 }
 
-#box {
-  -webkit-transform-style: preserve-3d;
-  position: absolute;
-  -webkit-transform: translateZ(-200px);
-  -webkit-transition: -webkit-transform 1s;
-  width: 100%;
-  height: 100%;
-}
+.box { height: 100%; }
+.slide img { width: 100%; height: 100%; }
 
-#box-slider {
+.slider-viewport {
   width: 592px;
   height: 392px;
-  position: relative;
-  -webkit-perspective: 1000;
+  overflow: hidden;
 }
 
+.slider-controls {
+  overflow: hidden;
+}
 
-.front { -webkit-transform: rotateY(0deg) translateZ(200px); }
-.top { -webkit-transform: rotateX(90deg) translateZ(200px); }
-.bottom { -webkit-transform: rotateX(-90deg) translateZ(200px); }
-.back { -webkit-transform: rotateX(180deg) translateZ(200px); }
+/* pagination example */
+.controls, .controls li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-#box.show-top { -webkit-transform:  rotateX(-90deg); }
+.controls {
+  float: right;
+  margin: 20px 0 0;
+}
+
+.controls li {
+  display: inline;
+}
+
+.controls li a {
+  display: block;
+  float: left;
+  padding: 4px 6px;
+  background: #444;
+  color: white;
+  margin: 0 0 0 4px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
