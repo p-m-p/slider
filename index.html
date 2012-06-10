@@ -164,16 +164,20 @@
             autoScroll: true
           , speed: 1800
           , timeout: 5000
+          , onbefore: function () {
+              $('#progress-indicator-inner').fadeOut(1800);
+            }
           , onafter: function ($prev, $curr) {
+              showTimeoutProgress(5000 - 1800);
               $prev.find('.description').hide();
               $curr.find('.description').fadeIn(500);
-              showTimeoutProgress(5000 - 1800);
             }
         });
 
         var showTimeoutProgress = function (t) {
           $('#progress-indicator-inner')
             .css('width', '0px')
+            .fadeIn(0)
             .animate({width: '100%'}, t);
         };
 

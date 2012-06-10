@@ -78,6 +78,7 @@ figure {
 #progress-indicator-outer {
   border: solid 1px #999;
   margin: 10px 0 0;
+  height: 12px;
 }
 
 #progress-indicator-inner {
