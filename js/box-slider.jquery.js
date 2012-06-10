@@ -25,11 +25,17 @@
 
       setupControls($this, settings);
       $slides.css(setBoxCss($this, settings));
-      $slides.eq(0).css(
-          vendorPrefix + 'transform'
-        , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
-          settings.translateZ + 'px)'
-      );
+
+      if (supports3D) {
+        $slides.eq(0).css(
+            vendorPrefix + 'transform'
+          , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
+            settings.translateZ + 'px)'
+        );
+      }
+      else {
+        $slides.filter(':gt(0)').hide();
+      }
 
       if (settings.autoScroll) {
         settings.autointv = setInterval(function () {
@@ -51,6 +57,9 @@
     return this.each(function () { showNextSlide($(this), index); });
   };
 
+
+  // Event listeners for controls ----------------------------------------------
+
   // event listener for a next button
   var nextSlideListener = function (ev) {
     var $box = $(this).data('bsbox')
@@ -63,6 +72,7 @@
     ev.preventDefault();
   };
 
+  // event listener for play pause button
   var playPause = function (ev) {
     var $this = $(this)
       , $box = $this.data('bsbox');
@@ -72,6 +82,7 @@
     ev.preventDefault();
   };
 
+  // event listener for pause on hover
   var pauseOnHover = function (ev) {
     var $box = $(this)
       , settings = $box.data('bssettings');
@@ -81,12 +92,15 @@
     }
     else {
       $box.data('bssettings', $.extend(settings, {
-        autointv: setInterval(function () { 
-          showNextSlide($box); 
+        autointv: setInterval(function () {
+          showNextSlide($box);
         }, settings.timeout)
       }));
     }
   };
+
+
+  // Internals -----------------------------------------------------------------
 
   // initialise controls for $box
   var setupControls = function ($box, settings) {
@@ -115,9 +129,8 @@
     $controls.data('bsbox', $box);
   };
 
-
+  // moves the slider to the next or previous slide
   var showNextSlide = function ($box, index, reverse) {
-    // ------------------------------------------------------------------------- TODO: check 3d is supported and if not fallback to fade transition
     var settings = $box.data('bssettings')
       , $slides = $box.find(settings.slideClass)
       , angle = settings.bsangle + (reverse ? 90 : -90)
@@ -143,35 +156,46 @@
       }
     }
 
-    $slides // remove transform from all slides except current front face
-      .filter(function (index) { return currIndex !== index;})
-      .css(vendorPrefix + 'transform', 'none')
-      .css('display', 'none');
-    $slides.eq(nextIndex).css( // move next slide to the effective top face
-        vendorPrefix + 'transform'
-      , rotation(angle) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
-    ).css('display', 'block');
     $box.addClass('jbs-in-motion'); // stops user clunking through faces ------- FIXME: queue user clicks and keep rotating the box
-    $box.css( // rotate the box to show next face
-        vendorPrefix + 'transform'
-      , 'translate3d(0, 0, -' + settings.translateZ +
-        'px) rotateX(' + angle + 'deg)'
-    );
+
+    if (!supports3D) { // no 3D support just use a basic fade transition
+      $slides
+        .filter(function (index) { return currIndex !== index;})
+        .hide();
+      $slides.eq(currIndex).fadeOut(settings.speed);
+      $slides.eq(nextIndex).fadeIn(settings.speed);
+    }
+    else {
+      $slides // remove transform from all slides except current front face
+        .filter(function (index) { return currIndex !== index;})
+        .css(vendorPrefix + 'transform', 'none')
+        .css('display', 'none');
+      $slides.eq(nextIndex).css( // move next slide to the effective next face
+          vendorPrefix + 'transform'
+        , rotation(angle) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
+      ).css('display', 'block');
+
+      $box.css( // rotate the box to show next face
+          vendorPrefix + 'transform'
+        , 'translate3d(0, 0, -' + settings.translateZ +
+          'px) rotateX(' + angle + 'deg)'
+      );
+
+      // the box has gone full circle so start again from 0deg
+      if (Math.abs(angle) === 360) {
+        $box.css(
+            vendorPrefix + 'transform'
+          , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
+        );
+        angle = 0;
+      }
+    }
+
     setTimeout( // remove the active flag class once transition is complete
         function () { $box.removeClass('jbs-in-motion'); }
       , settings.speed
     );
-
-    // the box has gone full circle so start again from 0deg
-    if (Math.abs(angle) === 360) {
-      $box.css(
-          vendorPrefix + 'transform'
-        , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
-      );
-      angle = 0;
-    }
-
-    // cache settings for next rotation
+    // cache settings for next transition
     $box.data('bssettings', $.extend(settings, {
         bsangle: angle
       , bsfaceindex: nextIndex
@@ -193,30 +217,35 @@
         , height: height
       };
 
-    // set the Z axis translation amount on the settings for this box
-    settings.translateZ = height / 2;
-
     // ensure parent is positioned to hold the box
     if ('static auto'.indexOf($parent.css('position')) !== -1) {
       $parent.css('position', 'relative');
     }
-    $parent.css(vendorPrefix + 'perspective', settings.perspective);
-    $parent.css('overflow', 'visible');
-
-    // apply transforms before transition to stop initial animation
-    $box.css(vendorPrefix + 'transform-style', 'preserve-3d');
-    $box.css(
-        vendorPrefix + 'transform'
-      , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
-    );
     $box.css(positioning);
-    // wait half a second then apply transition for box rotation
-    setTimeout(function () {
+
+    if (supports3D) {
+      // set the Z axis translation amount on the settings for this box
+      settings.translateZ = height / 2;
+
+      // set the parent as the 3D viewport
+      $parent.css(vendorPrefix + 'perspective', settings.perspective);
+      $parent.css('overflow', 'visible');
+
+      // apply transforms before transition to stop initial animation
+      $box.css(vendorPrefix + 'transform-style', 'preserve-3d');
       $box.css(
-          vendorPrefix + 'transition'
-        , vendorPrefix + 'transform ' + speed
+          vendorPrefix + 'transform'
+        , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
       );
-    }, 500);
+
+      // wait half a second then apply transition for box rotation
+      setTimeout(function () {
+        $box.css(
+            vendorPrefix + 'transition'
+          , vendorPrefix + 'transform ' + speed
+        );
+      }, 500);
+    }
 
     return positioning; // reuse this for the slides
   };
@@ -240,7 +269,6 @@
   // set the correct vendor prefix for the css properties
   var vendorPrefix = (function () {
     var bs = document.body.style;
-    //console.dir(bs);
 
     if ('webkitTransition' in bs) {
       return '-webkit-';
@@ -251,6 +279,7 @@
     }
 
     supports3D = false;
+    return '';
   }());
 
 
