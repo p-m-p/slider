@@ -8,8 +8,6 @@
         speed: 800
       , timeout: 5000
       , autoScroll: false
-      , before: null
-      , after: null
       , slideClass: '.slide'
       , controls: true
       , perspective: 1000
@@ -22,6 +20,11 @@
     return this.each(function () {
       var $this = $(this)
         , $slides = $this.find(settings.slideClass);
+
+      // don't initialise if one or less slides found
+      if ($slides.length <= 1) {
+        return;
+      }
 
       setupControls($this, settings);
       $slides.css(setBoxCss($this, settings));
@@ -135,12 +138,9 @@
       , $slides = $box.find(settings.slideClass)
       , angle = settings.bsangle + (reverse ? 90 : -90)
       , currIndex = settings.bsfaceindex || 0
-      , nextIndex = index;
-
-    // correct angle if going from prev to next or vice versa
-    if (angle === 0) {
-      angle = reverse ? 360 : -360;
-    }
+      , nextIndex = index
+      , $currSlide
+      , $nextSlide;
 
     if ( // already on selected slide or incorrect index
       nextIndex === currIndex ||
@@ -156,21 +156,33 @@
       }
     }
 
+    $currSlide = $slides.eq(currIndex);
+    $nextSlide = $slides.eq(nextIndex);
+
+    if (typeof settings.onbefore === 'function') {
+      settings.onbefore.call($box, $currSlide, $nextSlide);
+    }
+    
     $box.addClass('jbs-in-motion'); // stops user clunking through faces ------- FIXME: queue user clicks and keep rotating the box
 
     if (!supports3D) { // no 3D support just use a basic fade transition
       $slides
         .filter(function (index) { return currIndex !== index;})
         .hide();
-      $slides.eq(currIndex).fadeOut(settings.speed);
-      $slides.eq(nextIndex).fadeIn(settings.speed);
+      $currSlide.fadeOut(settings.speed);
+      $nextSlide.fadeIn(settings.speed);
     }
     else {
+      // correct angle if going from prev to next or vice versa
+      if (angle === 0) {
+        angle = reverse ? 360 : -360;
+      }
+
       $slides // remove transform from all slides except current front face
         .filter(function (index) { return currIndex !== index;})
         .css(vendorPrefix + 'transform', 'none')
         .css('display', 'none');
-      $slides.eq(nextIndex).css( // move next slide to the effective next face
+      $nextSlide.css( // move next slide to the effective next face
           vendorPrefix + 'transform'
         , rotation(angle) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
       ).css('display', 'block');
@@ -192,7 +204,12 @@
     }
 
     setTimeout( // remove the active flag class once transition is complete
-        function () { $box.removeClass('jbs-in-motion'); }
+        function () { 
+          $box.removeClass('jbs-in-motion'); 
+          if (typeof settings.onafter === 'function') {
+            settings.onafter.call($box, $currSlide, $nextSlide);
+          }
+        }
       , settings.speed
     );
     // cache settings for next transition

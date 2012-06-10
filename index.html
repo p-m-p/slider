@@ -89,6 +89,43 @@
         </footer>
       </section>
 
+      <section class="demo">
+        <header>
+          <h2>Before and after events</h2>
+        </header>
+        <div id="box-slider-3" class="slider-viewport">
+          <div id="box-3" class="box">
+            <figure class="slide">
+              <img src="img/slide-1.png" alt="">
+              <figcaption class="description">
+                This is slide one's description
+              </figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-2.png" alt="">
+              <figcaption class="description">
+                This is slide two's description
+              </figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-3.png" alt="">
+              <figcaption class="description">
+                This is slide three's description
+              </figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="img/slide-4.png" alt="">
+              <figcaption class="description">
+                This is slide four's description
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <div id="progress-indicator-outer">
+          <div id="progress-indicator-inner"></div>
+        </div>
+      </section>
+
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
 		<script src="js/box-slider.jquery.js"></script>
@@ -97,7 +134,8 @@
 		  $(function () {
 
         var $box1 = $('#box-1')
-          , $box2 = $('#box-2');
+          , $box2 = $('#box-2')
+          , $box3 = $('#box-3');
 
 		    $box1.boxSlider({
             speed: 800
@@ -122,6 +160,25 @@
           , pause: $('#controls-2').find('.bs-play-pause')
         });
 
+        $box3.boxSlider({
+            autoScroll: true
+          , speed: 1800
+          , timeout: 5000
+          , onafter: function ($prev, $curr) {
+              $prev.find('.description').hide();
+              $curr.find('.description').fadeIn(500);
+              showTimeoutProgress(5000 - 1800);
+            }
+        });
+
+        var showTimeoutProgress = function (t) {
+          $('#progress-indicator-inner')
+            .css('width', '0px')
+            .animate({width: '100%'}, t);
+        };
+
+        showTimeoutProgress(5000);
+        
 		  });
 
 		</script>
