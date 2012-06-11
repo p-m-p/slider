@@ -14,28 +14,30 @@
         <header>
           <h2>Box with pagination controls</h2>
         </header>
-  	    <div id="box-slider-1" class="slider-viewport">
+        <div class="slider-shadow">
+  	    <div id="box-slider-1">
   	      <div id="box-1" class="box">
   	        <figure class="slide">
-  	          <img src="img/slide-1.png" alt="">
+  	          <img src="img/cuba/slide-1.jpg" alt="">
   	        </figure>
   	        <figure class="slide">
-              <img src="img/slide-2.png" alt="">
+              <img src="img/cuba/slide-2.jpg" alt="">
             </figure>
             <figure class="slide">
-              <img src="img/slide-3.png" alt="">
+              <img src="img/cuba/slide-3.jpg" alt="">
             </figure>
             <figure class="slide">
-              <img src="img/slide-4.png" alt="">
+              <img src="img/cuba/slide-4.jpg" alt="">
             </figure>
             <figure class="slide">
-              <img src="img/slide-5.png" alt="">
+              <img src="img/cuba/slide-5.jpg" alt="">
             </figure>
             <figure class="slide">
-              <img src="img/slide-6.png" alt="">
+              <img src="img/cuba/slide-6.jpg" alt="">
             </figure>
   	      </div>
   	    </div>
+        </div>
         <footer>
           <nav class="slider-controls">
             <ul class="controls" id="controls-1">
@@ -56,6 +58,7 @@
         <header>
           <h2>Auto scroll box</h2>
         </header>
+        <div class="slider-shadow">
         <div id="box-slider-2" class="slider-viewport">
           <div id="box-2" class="box">
             <figure class="slide">
@@ -78,6 +81,7 @@
             </figure>
           </div>
         </div>
+        </div>
         <footer>
           <nav class="slider-controls">
             <ul class="controls" id="controls-2">
@@ -93,6 +97,7 @@
         <header>
           <h2>Before and after events</h2>
         </header>
+        <div class="slider-shadow">
         <div id="box-slider-3" class="slider-viewport">
           <div id="box-3" class="box">
             <figure class="slide">
@@ -121,9 +126,8 @@
             </figure>
           </div>
         </div>
-        <div id="progress-indicator-outer">
-          <div id="progress-indicator-inner"></div>
         </div>
+        <div id="progress-indicator"></div>
       </section>
 
 	  </div>
@@ -165,7 +169,7 @@
           , speed: 1800
           , timeout: 5000
           , onbefore: function () {
-              $('#progress-indicator-inner').fadeOut(1800);
+              $('#progress-indicator').fadeTo(750, 0);
             }
           , onafter: function ($prev, $curr) {
               showTimeoutProgress(5000 - 1800);
@@ -175,9 +179,9 @@
         });
 
         var showTimeoutProgress = function (t) {
-          $('#progress-indicator-inner')
+          $('#progress-indicator')
             .css('width', '0px')
-            .fadeIn(0)
+            .fadeTo(0, 1)
             .animate({width: '100%'}, t);
         };
 
