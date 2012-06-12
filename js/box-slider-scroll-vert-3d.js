@@ -7,7 +7,6 @@
       , supports3D = false
       , vendorPrefix = '';
 
-
     api.configure = function (threeD, prefix) {
       supports3D = threeD;
       vendorPrefix = prefix;
@@ -38,6 +37,13 @@
         // set the Z axis translation amount on the settings for this box
         settings.translateZ = height / 2;
 
+        // set front slide
+        $slides.eq(0).css(
+            vendorPrefix + 'transform'
+          , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
+            settings.translateZ + 'px)'
+        );
+
         // set the parent as the 3D viewport
         $parent.css(vendorPrefix + 'perspective', settings.perspective);
         $parent.css('overflow', 'visible');
@@ -57,44 +63,32 @@
           );
         }, 500);
       }
+      else { // using fade hide all but first slide
+        $slides.filter(':gt(0)').hide();
+      }
     };
 
+    // moves the slider to the next, prev or 'index' slide 
     api.showNextSlide = function (settings, $box, $slides, index, reverse) {
       var angle = settings.bsangle + (reverse ? 90 : -90)
         , currIndex = settings.bsfaceindex || 0
-        , nextIndex = index
+        , nextIndex = calculateIndex(currIndex, $slides.length, reverse, index)
         , $currSlide
         , $nextSlide;
 
-      if ( // already on selected slide or incorrect index
-        nextIndex === currIndex ||
-        nextIndex >= $slides.length ||
-        nextIndex < 0
-      ) { return; }
-      else if (nextIndex == null) { // came from next button click
-        if (reverse) {
-          nextIndex = currIndex - 1 < 0 ? $slides.length - 1 : currIndex - 1;
-        }
-        else {
-          nextIndex = currIndex + 1 < $slides.length ? currIndex + 1 : 0;
-        }
-      }
+      // user defined index is out of bounds
+      if (nextIndex === -1) return;
 
       $currSlide = $slides.eq(currIndex);
       $nextSlide = $slides.eq(nextIndex);
+      $box.addClass('jbs-in-motion'); // stops user clunking through faces ------- FIXME: queue user clicks and keep rotating the box
 
       if (typeof settings.onbefore === 'function') {
         settings.onbefore.call($box, $currSlide, $nextSlide);
       }
-      
-      $box.addClass('jbs-in-motion'); // stops user clunking through faces ------- FIXME: queue user clicks and keep rotating the box
 
       if (!supports3D) { // no 3D support just use a basic fade transition
-        $slides
-          .filter(function (index) { return currIndex !== index;})
-          .hide();
-        $currSlide.fadeOut(settings.speed);
-        $nextSlide.fadeIn(settings.speed);
+        fadeSlides($slides, $currSlide, $nextSlide, currIndex, settings.speed);
       }
       else {
         // correct angle if going from prev to next or vice versa
@@ -143,6 +137,8 @@
       }));
     };
 
+    // Internals ---------------------------------------------------------------
+
     // returns the correct face rotation based on the box's rotated angle
     var rotation = function (angle) {
       switch (angle) {
@@ -155,6 +151,35 @@
         case 270:
         case -90:  return 'rotate3d(1, 0, 0, 90deg)'; // top
       }
+    };
+
+    // get the next slides index
+    var calculateIndex = function (currIndex, slidesLen, reverse, index) {
+      var nextIndex = index;
+
+      if ( // already on selected slide or incorrect index
+        nextIndex === currIndex ||
+        nextIndex >= slidesLen ||
+        nextIndex < 0
+      ) { return -1; }
+      else if (nextIndex == null) { // came from next button click
+        if (reverse) {
+          nextIndex = currIndex - 1 < 0 ? slidesLen - 1 : currIndex - 1;
+        }
+        else {
+          nextIndex = currIndex + 1 < slidesLen ? currIndex + 1 : 0;
+        }
+      }
+
+      return nextIndex;
+    };
+
+    var fadeSlides = function ($slides, $currSlide, $nextSlide, currIndex, s) { 
+      $slides
+        .filter(function (index) { return currIndex !== index;})
+        .hide();
+      $currSlide.fadeOut(s);
+      $nextSlide.fadeIn(s);
     };
 
     return api;

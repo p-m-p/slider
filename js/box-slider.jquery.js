@@ -34,17 +34,6 @@
       setupControls($this, settings);
       settings.slideAnimator.setupCss($this, $slides, settings);
 
-      if (supports3D) { // ------------------------------------------------------- FIXME move to animation adaptor
-        $slides.eq(0).css(
-            vendorPrefix + 'transform'
-          , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
-            settings.translateZ + 'px)'
-        );
-      }
-      else {
-        $slides.filter(':gt(0)').hide();
-      }
-
       if (settings.autoScroll) {
         settings.autointv = setInterval(function () {
           showNextSlide($this);
