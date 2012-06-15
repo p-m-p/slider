@@ -6,13 +6,15 @@
     var api = {}
       , supports3D = false
       , vendorPrefix = '';
-
-    api.configure = function (threeD, prefix) {
-      supports3D = threeD;
+    
+    // set local flags for 3D support and css vendor prefix
+    api.configure = function (can3D, prefix) {
+      supports3D = can3D;
       vendorPrefix = prefix;
     };
 
-    api.setupCss = function ($box, $slides, settings) {
+    // sets the box and slides initial state via css
+    api.initialize = function ($box, $slides, settings) {
       var speed = (settings.speed / 1000) + 's'
         , $parent = $box.parent()
         , width = $parent.innerWidth()
@@ -26,16 +28,17 @@
         };
 
       $slides.css(positioning);
+      $box.css(positioning);
 
       // ensure parent is positioned to hold the box
       if ('static auto'.indexOf($parent.css('position')) !== -1) {
         $parent.css('position', 'relative');
       }
-      $box.css(positioning);
 
       if (supports3D) {
         // set the Z axis translation amount on the settings for this box
         settings.translateZ = height / 2;
+        settings.bsangle = 0;
 
         // set front slide
         $slides.eq(0).css(
@@ -55,13 +58,13 @@
           , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
         );
 
-        // wait half a second then apply transition for box rotation
+        // wait then apply transition for box rotation
         setTimeout(function () {
           $box.css(
               vendorPrefix + 'transition'
             , vendorPrefix + 'transform ' + speed
           );
-        }, 500);
+        }, 10);
       }
       else { // using fade hide all but first slide
         $slides.filter(':gt(0)').hide();
@@ -88,7 +91,9 @@
       }
 
       if (!supports3D) { // no 3D support just use a basic fade transition
-        fadeSlides($slides, $currSlide, $nextSlide, currIndex, settings.speed);
+        $slides.filter(function (index) { return currIndex !== index; }).hide();
+        $currSlide.fadeOut(s);
+        $nextSlide.fadeIn(s);
       }
       else {
         // correct angle if going from prev to next or vice versa
@@ -157,12 +162,7 @@
     var calculateIndex = function (currIndex, slidesLen, reverse, index) {
       var nextIndex = index;
 
-      if ( // already on selected slide or incorrect index
-        nextIndex === currIndex ||
-        nextIndex >= slidesLen ||
-        nextIndex < 0
-      ) { return -1; }
-      else if (nextIndex == null) { // came from next button click
+      if (nextIndex == null) { // came from next button click
         if (reverse) {
           nextIndex = currIndex - 1 < 0 ? slidesLen - 1 : currIndex - 1;
         }
@@ -171,15 +171,13 @@
         }
       }
 
-      return nextIndex;
-    };
+      if ( // already on selected slide or incorrect index
+        nextIndex === currIndex ||
+        nextIndex >= slidesLen ||
+        nextIndex < 0
+      ) { return -1; }
 
-    var fadeSlides = function ($slides, $currSlide, $nextSlide, currIndex, s) { 
-      $slides
-        .filter(function (index) { return currIndex !== index;})
-        .hide();
-      $currSlide.fadeOut(s);
-      $nextSlide.fadeIn(s);
+      return nextIndex;
     };
 
     return api;

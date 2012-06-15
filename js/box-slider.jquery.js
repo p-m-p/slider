@@ -1,38 +1,34 @@
 (function (w, $, undefined) {
 
-  // internals
-  var methods = {} // plugin's external method api
-    // gets set to false during vendor detection if not supported
-    , supports3D = true
-    , slideAnimators = {}
-    , defaults = {
+  var methods = {} // external method api
+    , supports3D = true // set during vendorPrefix determination
+    , slideAnimators = {} // map of animation effect objects
+    , defaults = { // default required settings
         speed: 800
       , timeout: 5000
       , autoScroll: false
-      , slideClass: '.slide'
       , controls: true
       , perspective: 1000
       , pauseOnHover: false
+      , effect: 'scrollVert3d'
     };
 
-  methods.init = function (opts) {
-    var settings = $.extend({}, defaults, opts);
+  // API methods ---------------------------------------------------------------
 
-    if (typeof settings.slideAnimator !== 'object') {
-      settings.slideAnimator = methods.slideAnimator('scrollVert3d');
-    }
+  // sets up all selected boxes with applied options
+  methods.init = function (opts) {
+    var defaultSettings = $.extend({}, defaults, opts)
+      , animator = methods.slideAnimator(defaultSettings.effect);
 
     return this.each(function () {
       var $this = $(this)
-        , $slides = $this.find(settings.slideClass);
+        , $slides = $this.children()
+        , settings = $.extend({}, defaultSettings);
 
-      // don't initialise if one or less slides found
-      if ($slides.length <= 1) {
-        return;
-      }
-
+      $this.data('bssettings', settings);
+      settings.slideAnimator = animator;
+      settings.slideAnimator.initialize($this, $slides, settings);
       setupControls($this, settings);
-      settings.slideAnimator.setupCss($this, $slides, settings);
 
       if (settings.autoScroll) {
         settings.autointv = setInterval(function () {
@@ -40,13 +36,18 @@
         }, settings.timeout);
 
         if (settings.pauseOnHover) {
-          $this.on('hover', pauseOnHover);
+          $this.on('hover', togglePlayPause);
         }
       }
-
-      $this.data('bssettings', $.extend(settings, {bsangle: 0}));
     });
   };
+
+  // toggles the autoplay state for each slider
+  methods.playPause = function () {
+    return this.each(function (i, el) {
+      togglePlayPause.call($(this));
+    });
+  }
 
   // show the slide at the given index
   methods.showSlide = function (index) {
@@ -63,55 +64,15 @@
   };
 
   // returns a slide animation adaptor
-  methods.slideAnimator = function (animator) {
-    if (typeof slideAnimators[animator] === 'object') {
-      return slideAnimators[animator];
+  methods.slideAnimator = function (effect) {
+    if (typeof slideAnimators[effect] === 'object') {
+      return slideAnimators[effect];
     }
-    throw new Error('The slide animator ' + animator + ' has not been registered');
+    throw new Error(
+      'The slide animator for the ' + effect + 
+      ' effect has not been registered'
+    );
   };
-
-
-  // Event listeners for controls ----------------------------------------------
-
-  // event listener for a next button
-  var nextSlideListener = function (ev) {
-    var $box = $(this).data('bsbox')
-
-    // only go forward if not im motion
-    if (!$box.hasClass('jbs-in-motion')) {
-      showNextSlide($box, undefined, ev.data.reverse);
-    }
-
-    ev.preventDefault();
-  };
-
-  // event listener for play pause button
-  var playPause = function (ev) {
-    var $this = $(this)
-      , $box = $this.data('bsbox');
-
-    pauseOnHover.call($box, undefined);
-    $this.toggleClass('paused');
-    ev.preventDefault();
-  };
-
-  // event listener for pause on hover
-  var pauseOnHover = function (ev) {
-    var $box = $(this)
-      , settings = $box.data('bssettings');
-
-    if (settings.autointv != null) {
-      settings.autointv = clearInterval(settings.autointv);
-    }
-    else {
-      $box.data('bssettings', $.extend(settings, {
-        autointv: setInterval(function () {
-          showNextSlide($box);
-        }, settings.timeout)
-      }));
-    }
-  };
-
 
   // Internals -----------------------------------------------------------------
 
@@ -121,96 +82,90 @@
 
     if (settings.next != null) {
       $controls = $controls.add($(settings.next).on(
-          'click'
-        , { reverse: false }
-        , nextSlideListener
+        'click', { reverse: false }, nextSlideListener
       ));
     }
 
     if (settings.prev != null) {
       $controls = $controls.add($(settings.prev).on(
-          'click'
-        , { reverse: true }
-        , nextSlideListener
+        'click', { reverse: true }, nextSlideListener
       ));
     }
 
     if (settings.pause != null) {
-      $controls = $controls.add($(settings.pause).on('click', playPause));
+      $controls = $controls.add($(settings.pause).on(
+        'click', playPauseListener
+      ));
     }
 
     $controls.data('bsbox', $box);
   };
 
+  // Event listeners for controls ----------------------------------------------
+
+  // event listener for a next button
+  var nextSlideListener = function (ev) {
+    var $box = $(this).data('bsbox')
+
+    // only go forward if not already in motion
+    if (!$box.hasClass('jbs-in-motion')) {
+      showNextSlide($box, undefined, ev.data.reverse);
+    }
+
+    ev.preventDefault();
+  };
+
+  // event listener for play pause button
+  var playPauseListener = function (ev) {
+    var $this = $(this)
+      , $box = $this.data('bsbox');
+
+    togglePlayPause.call($box);
+    $this.toggleClass('paused');
+    ev.preventDefault();
+  };
+
+  // event listener for pause on hover
+  var togglePlayPause = function (ev) {
+    var $box = $(this)
+      , settings = $box.data('bssettings');
+
+    if (settings.autointv != null) {
+      settings.autointv = clearInterval(settings.autointv);
+    }
+    else {
+      settings.autointv = setInterval(function () {
+        showNextSlide($box);
+      }, settings.timeout);
+    }
+  };
+
   // moves the slider to the next or previous slide
   var showNextSlide = function ($box, index, reverse) {
     var settings = $box.data('bssettings')
-      , $slides = $box.find(settings.slideClass)
+      , $slides = $box.children();
 
     settings.slideAnimator.showNextSlide(settings, $box, $slides, index, reverse);
   };
 
-
-  // sets the 3d css properties for the box and it's container
-  var setupCss = function ($box, $slides, settings) {
-    var speed = (settings.speed / 1000) + 's'
-      , $parent = $box.parent()
-      , width = $parent.innerWidth()
-      , height = $parent.innerHeight()
-      , positioning = {
-          position: 'absolute'
-        , top: 0
-        , left: 0
-        , width: width
-        , height: height
-      };
-
-
-    // ensure parent is positioned to hold the box
-    if ('static auto'.indexOf($parent.css('position')) !== -1) {
-      $parent.css('position', 'relative');
-    }
-    $box.css(positioning);
-
-    if (supports3D) {
-      // set the Z axis translation amount on the settings for this box
-      settings.translateZ = height / 2;
-
-      // set the parent as the 3D viewport
-      $parent.css(vendorPrefix + 'perspective', settings.perspective);
-      $parent.css('overflow', 'visible');
-
-      // apply transforms before transition to stop initial animation
-      $box.css(vendorPrefix + 'transform-style', 'preserve-3d');
-      $box.css(
-          vendorPrefix + 'transform'
-        , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
-      );
-
-      // wait half a second then apply transition for box rotation
-      setTimeout(function () {
-        $box.css(
-            vendorPrefix + 'transition'
-          , vendorPrefix + 'transform ' + speed
-        );
-      }, 500);
-    }
-  };
-
   // set the correct vendor prefix for the css properties
   var vendorPrefix = (function () {
-    var bs = document.body.style;
+    var bs = document.body.style
+      , prefix = '';
 
     if ('webkitTransition' in bs) {
-      return '-webkit-';
+      prefix = '-webkit-';
     }
 
     if ('MozTransition' in bs) {
-      return '-moz-';
+      prefix = '-moz-';
     }
 
-    supports3D = false;
-    return '';
+    supports3D = (
+      'webkitPerspective' in bs ||
+      'MozPerspective' in bs
+    );
+    return prefix;
   }());
 
 
