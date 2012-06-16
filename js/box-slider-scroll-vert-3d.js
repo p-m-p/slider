@@ -139,23 +139,16 @@
         , settings.speed
       );
       // cache settings for next transition
-      $box.data('bssettings', $.extend(settings, {
-          bsangle: angle
-        , bsfaceindex: nextIndex
-      }));
+      $.extend(settings, {bsangle: angle, bsfaceindex: nextIndex});
     };
 
     // returns the correct face rotation based on the box's rotated angle
     var rotation = function (angle) {
       switch (angle) {
-        case 360:
-        case -360: return 'rotate3d(0, 1, 0, 0deg)'; // front
-        case 90:
-        case -270: return 'rotate3d(1, 0, 0, -90deg)'; // bottom
-        case 180:
-        case -180: return 'rotate3d(1, 0, 0, 180deg)'; // back
-        case 270:
-        case -90:  return 'rotate3d(1, 0, 0, 90deg)'; // top
+        case 360: case -360: return 'rotate3d(0, 1, 0, 0deg)'; // front
+        case 90:  case -270: return 'rotate3d(1, 0, 0, -90deg)'; // bottom
+        case 180: case -180: return 'rotate3d(1, 0, 0, 180deg)'; // back
+        case 270: case -90:  return 'rotate3d(1, 0, 0, 90deg)'; // top
       }
     };
 

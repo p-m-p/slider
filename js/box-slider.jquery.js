@@ -7,10 +7,9 @@
         speed: 800
       , timeout: 5000
       , autoScroll: false
-      , controls: true
-      , perspective: 1000
       , pauseOnHover: false
       , effect: 'scrollVert3d'
+      , perspective: 1000
     };
 
   // API methods ---------------------------------------------------------------
@@ -150,7 +149,9 @@
     var settings = $box.data('bssettings')
       , $slides = $box.children();
 
-    settings.slideAnimator.showNextSlide(settings, $box, $slides, index, reverse);
+    settings.slideAnimator.showNextSlide(
+      settings, $box, $slides, index, reverse
+    );
   };
 
   // set the correct vendor prefix for the css properties
@@ -168,7 +169,8 @@
 
     supports3D = (
       'webkitPerspective' in bs ||
-      'MozPerspective' in bs
+      'MozPerspective' in bs ||
+      'perspective' in bs
     );
     return prefix;
   }());
