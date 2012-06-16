@@ -117,10 +117,11 @@ Fires before each slide transition starts. The function parameter will be bound
 to the jQuerified box and will receive the current slide as it's first parameter
 and the next slide as its second.
 
+```javascript
 $('#content-box').option('onbefore', function ($currentSlide, $nextSlide) {
   // 'this' is effectively $('#content-box')
 });
-
+```
 
 ### `onafter`
 
@@ -128,6 +129,8 @@ Fires after each slide transition is complete. The function parameter will be bo
 to the jQuerified box and will receive the current slide as it's first parameter
 and the next slide as its second.
 
+```javascript
 $('#content-box').option('onafter', function ($currentSlide, $nextSlide) {
   // 'this' is effectively $('#content-box')
 });
+```
