@@ -6,7 +6,13 @@ interface for creating cool 2D or 3D slide animation transitions. It comes, by
 default, with a 3D vertical scrolling box transition and I intend to create
 more cool effects as I find time.
 
-Demos coming v.soon, promise :)
+Not officially released yet but browse index.html for demos.
+
+Support
+---
+
+Currently, I've only added 3D support for webkit and Firefox, all other browsers
+will fallback gracefully to a simple fade transition.
 
 Usage
 ---
@@ -39,9 +45,14 @@ a box containing slides of content.
 
 Technically no CSS is required but if the outer box `div.slider-viewport` is
 statically positioned the plugin will apply relative positioning to it so that
-it can hold the absolutely positioned box.
+it can hold the absolutely positioned box. Always a good idea to constrain the 
+size of the viewport so that the slides don't spew down the page at load time.
 
-Then the usual jQuery sugaryness applies...
+```css
+.slider-viewport { width: 560px; height: 380px; overflow: hidden }
+```
+
+Then on page load the usual jQuery sugaryness applies...
 
 ```javascript
 $('#content-box').boxSlider( /* options */ );
@@ -73,4 +84,53 @@ Options
 Methods
 ---
 
-Coming soon...
+### `showSlide`
+
+Shows a slide at the specified index starting from 0
+
+```javascript
+$('#content-box').boxSlider('showSlide', 3); // show 4th slide
+```
+### `playPause`
+
+Start autoScrolling a slideshow or pause an already running slideshow
+
+```javascript
+$('#content-box').boxSlider('playPause');
+```
+
+### `option`
+
+Get or set a specific option
+
+```javascript
+$('#content-box').option('speed'); // returns speed option value
+$('#content-box').option('speed', 1200); // sets the speed option to 1200
+```
+
+Events
+---
+
+### `onbefore`
+
+Fires before each slide transition starts. The function parameter will be bound
+to the jQuerified box and will receive the current slide as it's first parameter
+and the next slide as its second.
+
+```javascript
+$('#content-box').option('onbefore', function ($currentSlide, $nextSlide) {
+  // 'this' is effectively $('#content-box')
+});
+```
+
+### `onafter`
+
+Fires after each slide transition is complete. The function parameter will be bound
+to the jQuerified box and will receive the previous slide as it's first parameter
+and the current slide as its second.
+
+```javascript
+$('#content-box').option('onafter', function ($previousSlide, $currentSlide) {
+  // 'this' is effectively $('#content-box')
+});
+```
