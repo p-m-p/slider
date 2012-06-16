@@ -6,7 +6,7 @@
     var api = {}
       , supports3D = false
       , vendorPrefix = '';
-    
+
     // set local flags for 3D support and css vendor prefix
     api.configure = function (can3D, prefix) {
       supports3D = can3D;
@@ -71,8 +71,11 @@
       }
     };
 
-    // moves the slider to the next, prev or 'index' slide 
+    // moves the slider to the next, prev or 'index' slide
     api.showNextSlide = function (settings, $box, $slides, index, reverse) {
+      // only go forward if not already in motion
+      if ($box.hasClass('jbs-in-motion')) { return; }
+
       var angle = settings.bsangle + (reverse ? 90 : -90)
         , currIndex = settings.bsfaceindex || 0
         , nextIndex = calculateIndex(currIndex, $slides.length, reverse, index)
@@ -84,7 +87,7 @@
 
       $currSlide = $slides.eq(currIndex);
       $nextSlide = $slides.eq(nextIndex);
-      $box.addClass('jbs-in-motion'); // stops user clunking through faces ------- FIXME: queue user clicks and keep rotating the box
+      $box.addClass('jbs-in-motion'); // stops user clunking through faces ----- FIXME: queue user clicks and keep rotating the box
 
       if (typeof settings.onbefore === 'function') {
         settings.onbefore.call($box, $currSlide, $nextSlide);
@@ -127,8 +130,8 @@
       }
 
       setTimeout( // remove the active flag class once transition is complete
-          function () { 
-            $box.removeClass('jbs-in-motion'); 
+          function () {
+            $box.removeClass('jbs-in-motion');
             if (typeof settings.onafter === 'function') {
               settings.onafter.call($box, $currSlide, $nextSlide);
             }
@@ -141,8 +144,6 @@
         , bsfaceindex: nextIndex
       }));
     };
-
-    // Internals ---------------------------------------------------------------
 
     // returns the correct face rotation based on the box's rotated angle
     var rotation = function (angle) {
@@ -184,4 +185,4 @@
 
   }()));
 
-}(window, jQuery));
+}(window, jQuery || Zepto));

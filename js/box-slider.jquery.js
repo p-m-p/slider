@@ -1,4 +1,4 @@
-(function (w, $, undefined) {
+;(function (w, $, undefined) {
 
   var methods = {} // external method api
     , supports3D = true // set during vendorPrefix determination
@@ -69,12 +69,23 @@
       return slideAnimators[effect];
     }
     throw new Error(
-      'The slide animator for the ' + effect + 
+      'The slide animator for the ' + effect +
       ' effect has not been registered'
     );
   };
 
-  // Internals -----------------------------------------------------------------
+  // sets or gets an option for the set of matched sliders
+  methods.option = function (setting, newValue) {
+    var settings = this.data('bssettings') || {};
+
+    if (typeof newValue === 'undefined') {
+      return settings[setting];
+    }
+
+    settings[setting] = newValue;
+  }
+
+  // Event listeners and controls ----------------------------------------------
 
   // initialise controls for $box
   var setupControls = function ($box, settings) {
@@ -101,17 +112,11 @@
     $controls.data('bsbox', $box);
   };
 
-  // Event listeners for controls ----------------------------------------------
-
   // event listener for a next button
   var nextSlideListener = function (ev) {
-    var $box = $(this).data('bsbox')
+    var $box = $(this).data('bsbox');
 
-    // only go forward if not already in motion
-    if (!$box.hasClass('jbs-in-motion')) {
-      showNextSlide($box, undefined, ev.data.reverse);
-    }
-
+    showNextSlide($box, undefined, ev.data.reverse);
     ev.preventDefault();
   };
 
@@ -177,4 +182,4 @@
     return methods.init.apply(this, arguments);
   };
 
-}(window, jQuery));
+}(window, jQuery || Zepto));
