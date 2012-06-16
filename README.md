@@ -96,7 +96,7 @@ $('#content-box').boxSlider('showSlide', 3); // show 4th slide
 Start autoScrolling a slideshow or pause an already running slideshow
 
 ```javascript
-$('#content-box`).boxSlider('playPause');
+$('#content-box').boxSlider('playPause');
 ```
 
 ### `option`
