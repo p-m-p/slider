@@ -50,24 +50,24 @@ $('#content-box').boxSlider( /* options */ );
 Options
 ---
 
-* `speed` (default: 800) The time interval in milliseconds within which the
+* `speed (default: 800)` The time interval in milliseconds within which the
   slide animation will complete
-* `autoscroll` (default: false) Set true to automatically transition through
+* `autoscroll (default: false)` Set true to automatically transition through
   the slides
-* `timeout` (default: 5000) The time interval between slide transitions. For use
+* `timeout (default: 5000)` The time interval between slide transitions. For use
   with autoscroll
-* `pause` (default: null) A DOM element, jQuery object or selector for an element
+* `pause (default: null)` A DOM element, jQuery object or selector for an element
   that when clicked will toggle the autoscoll state of the slider. When the slider
   is in a paused state the element will be applied a class name of paused
-* `pauseOnHover` (default: false) Pause an auto-scrolling slider when the users
+* `pauseOnHover (default: false)` Pause an auto-scrolling slider when the users
   mouse hovers over it. For use with autoscroll
-* `next` (default: null) A DOM element, jQuery object or selector for an element
+* `next (default: null)` A DOM element, jQuery object or selector for an element
   that when clicked will advance the slider to the next slide
-* `prev` (default: null) A DOM element, jQuery object or selector for an element
+* `prev (default: null)` A DOM element, jQuery object or selector for an element
   that when clicked will advance the slider to the previous slide
-* `effect` (default: 'scrollVert3d') The slide animation effect to use when
+* `effect (default: 'scrollVert3d')` The slide animation effect to use when
   scrolling through content slides
-* `perspective` (default: 1000) The 3D perspective at which the content slides
+* `perspective (default: 1000)` The 3D perspective at which the content slides
   are placed from the view port during transition
 
 Methods
