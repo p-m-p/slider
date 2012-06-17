@@ -157,11 +157,24 @@ Slide animators must follow the following interface and adhere to some fundament
 ### `configure(Boolean supports3D, String vendorPrefix)`
 
 This method is optional and is called during the adaptor registration process. The `supports3D`
-parameter shows whether the host browser supports 3d CSS transformations and the `vendorPrefix`
-parameter provides the host browser CSS vendor prefix, e.g `'-moz-'`, `'-webkit-'`.
+parameter identifies whether the host browser supports 3D CSS transformations and the `vendorPrefix`
+parameter provides the host browser CSS vendor prefix if it exists, e.g `'-moz-'`, `'-webkit-'`.
 
 ```javascript
-adaptor.configure = function (supports3D, venderPrefix) {
+adaptor.configure = function (supports3D, vendorPrefix) {
+  // implementation omitted
+};
+```
+
+### `initialize($box, $slides, settings)`
+
+This method is required and sets up the initial state of each content slider. The first parameter
+`$box` is the jQuery content sliders main box (the selected element when the plugin is initialised), the 
+second parameter is the jQuery `$slides` object containing all of the individual slide elements and 
+the third parameter `settings` is the settings for the current content slider.
+
+```javascript
+adaptor.initialize = function ($box, $slides, settings) {
   // implementation omitted
 };
 ```
