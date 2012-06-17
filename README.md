@@ -45,10 +45,13 @@ a box containing slides of content.
 
 Technically no CSS is required but if the outer box `div.slider-viewport` is
 statically positioned the plugin will apply relative positioning to it so that
-it can hold the absolutely positioned box. Always a good idea to constrain the 
+it can hold the absolutely positioned box. It should be noted that the viewport
+and box should be the same width and height as the content slides so that the 
+rotation does not appear off center. It is also a good idea to constrain the 
 size of the viewport so that the slides don't spew down the page at load time.
 
 ```css
+/* overfow will get set to visible on initialisation of the plugin */
 .slider-viewport { width: 560px; height: 380px; overflow: hidden }
 ```
 
