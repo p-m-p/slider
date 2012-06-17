@@ -5,189 +5,82 @@
 	<title>Cubic slider</title>
 
 	<link href="css/style.css" rel="stylesheet">
-  <script src="js/modernizr.min.js"></script>
+  <script src="js/lib/modernizr.min.js"></script>
 </head>
 	<body>
 	  <div id="page">
 
-      <section class="demo">
+      <section>
+
         <header>
-          <h2>Box with pagination controls</h2>
+          <h1>jQuery 3D content slider</h1>
         </header>
-        <div class="slider-shadow">
-  	    <div id="box-slider-1">
-  	      <div id="box-1" class="box">
-  	        <figure class="slide">
-  	          <img src="img/cuba/slide-1.jpg" alt="">
-  	        </figure>
-  	        <figure class="slide">
-              <img src="img/cuba/slide-2.jpg" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/cuba/slide-3.jpg" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/cuba/slide-4.jpg" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/cuba/slide-5.jpg" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/cuba/slide-6.jpg" alt="">
-            </figure>
-  	      </div>
-  	    </div>
+      
+        <div id="slider-shadow">
+          <div id="slider-viewport">
+            <div id="box">
+              <figure class="slide">
+                <img src="img/cuba/slide-1.jpg" alt="Example image for slide one">
+              </figure>
+              <figure class="slide">
+                <img src="img/cuba/slide-2.jpg" alt="Example image for slide two">
+              </figure>
+              <figure class="slide">
+                <img src="img/cuba/slide-3.jpg" alt="Example image for slide three">
+              </figure>
+              <figure class="slide">
+                <img src="img/cuba/slide-4.jpg" alt="Example image for slide four">
+              </figure>
+              <figure class="slide">
+                <img src="img/cuba/slide-5.jpg" alt="Example image for slide five">
+              </figure>
+            </div>
+          </div>
         </div>
+
         <footer>
           <nav class="slider-controls">
-            <ul class="controls" id="controls-1">
-              <li><a class="bs-prev" href="#">Prev</a></li>
+            <ul id="controls">
+              <li><a id="prev" href="#">prev</a></li>
               <li><a class="goto-slide" href="#" data-slideindex="0">1</a></li>
               <li><a class="goto-slide" href="#" data-slideindex="1">2</a></li>
               <li><a class="goto-slide" href="#" data-slideindex="2">3</a></li>
               <li><a class="goto-slide" href="#" data-slideindex="3">4</a></li>
               <li><a class="goto-slide" href="#" data-slideindex="4">5</a></li>
-              <li><a class="goto-slide" href="#" data-slideindex="5">6</a></li>
-              <li><a class="bs-next" href="#">Next</a></li>
+              <li><a id="next" href="#">next</a></li>
             </ul>
           </nav>
         </footer>
-      </section>
 
-      <section class="demo">
-        <header>
-          <h2>Auto scroll box</h2>
-        </header>
-        <div class="slider-shadow">
-        <div id="box-slider-2" class="slider-viewport">
-          <div id="box-2" class="box">
-            <figure class="slide">
-              <img src="img/slide-1.png" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-2.png" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-3.png" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-4.png" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-5.png" alt="">
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-6.png" alt="">
-            </figure>
-          </div>
-        </div>
-        </div>
-        <footer>
-          <nav class="slider-controls">
-            <ul class="controls" id="controls-2">
-              <li><a class="bs-prev" href="#">Prev</a></li>
-              <li><a class="bs-play-pause" href="#">Pause</a></li>
-              <li><a class="bs-next" href="#">Next</a></li>
-            </ul>
-          </nav>
-        </footer>
-      </section>
-
-      <section class="demo">
-        <header>
-          <h2>Before and after events</h2>
-        </header>
-        <div class="slider-shadow">
-        <div id="box-slider-3" class="slider-viewport">
-          <div id="box-3" class="box">
-            <figure class="slide">
-              <img src="img/slide-1.png" alt="">
-              <figcaption class="description">
-                This is slide one's description
-              </figcaption>
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-2.png" alt="">
-              <figcaption class="description">
-                This is slide two's description
-              </figcaption>
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-3.png" alt="">
-              <figcaption class="description">
-                This is slide three's description
-              </figcaption>
-            </figure>
-            <figure class="slide">
-              <img src="img/slide-4.png" alt="">
-              <figcaption class="description">
-                This is slide four's description
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-        </div>
-        <div id="progress-indicator"></div>
       </section>
 
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="js/lib/jquery-1.7.2.min.js"><\/script>')</script>
 		<script src="js/box-slider.jquery.js"></script>
 		<script src="js/box-slider-scroll-vert-3d.js"></script>
 		<script>
 
 		  $(function () {
 
-        var $box1 = $('#box-1')
-          , $box2 = $('#box-2')
-          , $box3 = $('#box-3');
+        var $box = $('#box');
 
-		    $box1.boxSlider({
-            speed: 800
-          , perspective: 1200
-          , next: $('#controls-1').find('.bs-next')
-          , prev: $('#controls-1').find('.bs-prev')
-        });
-        $('#controls-1')
-          .find('.goto-slide')
-          .on('click', function (ev) {
-            $box1.boxSlider('showSlide', $(this).data('slideindex'));
-            ev.preventDefault();
-          });
-
-        $box2.boxSlider({
-            autoScroll: true
-          , speed: 1200
-          , timeout: 3000
+        // initialize the plugin with the desired settings
+        $box.boxSlider({
+            speed: 1500
+          , autoScroll: true
+          , timeout: 10000
           , pauseOnHover: true
-          , next: $('#controls-2').find('.bs-next')
-          , prev: $('#controls-2').find('.bs-prev')
-          , pause: $('#controls-2').find('.bs-play-pause')
+          , next: '#next'
+          , prev: '#prev'
         });
 
-        $box3.boxSlider({
-            autoScroll: true
-          , speed: 1800
-          , timeout: 5000
-          , onbefore: function () {
-              $('#progress-indicator').fadeTo(750, 0);
-            }
-          , onafter: function ($prev, $curr) {
-              showTimeoutProgress(5000 - 1800);
-              $prev.find('.description').hide();
-              $curr.find('.description').fadeIn(500);
-            }
+        // pagination isn't built in simply because it's easy to 
+        // roll your own with the plugin API methods
+        $('#controls').on('click', '.goto-slide', function (ev) {
+          $box.boxSlider('showSlide', $(this).data('slideindex'));
+          ev.preventDefault();
         });
-
-        var showTimeoutProgress = function (t) {
-          $('#progress-indicator')
-            .css('width', '0px')
-            .fadeTo(0, 1)
-            .animate({width: '100%'}, t);
-        };
-
-        showTimeoutProgress(5000);
 
 		  });
 

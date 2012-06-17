@@ -12,6 +12,8 @@
       , perspective: 1000
     };
 
+  w.jqBoxSlider = methods; // Global alias for easy extension
+
   // API methods ---------------------------------------------------------------
 
   // sets up all selected boxes with applied options
@@ -50,8 +52,13 @@
 
   // show the slide at the given index
   methods.showSlide = function (index) {
-    index = parseInt(index, 10);
-    return this.each(function () { showNextSlide($(this), index); });
+    index = parseint(index, 10);
+    return this.each(function () { 
+      var $box = $(this);
+
+      resetAutoScroll($box);
+      shownextslide($box, index); 
+    });
   };
 
   // registers and configures a slide animator
@@ -83,7 +90,7 @@
 
     settings[setting] = newValue;
     settings.slideAnimator.reset(this, settings);
-    togglePlayPause.call(this, undefined, true);
+    resetAutoScroll(this, settings);
     return this;
   }
 
@@ -118,6 +125,7 @@
   var nextSlideListener = function (ev) {
     var $box = $(this).data('bsbox');
 
+    resetAutoScroll($box);
     showNextSlide($box, undefined, ev.data.reverse);
     ev.preventDefault();
   };
@@ -155,6 +163,15 @@
     settings.slideAnimator.showNextSlide(
       settings, $box, $slides, index, reverse
     );
+  };
+
+  // if the box is autoscrolling it is reset
+  var resetAutoScroll = function ($box, settings) {
+    settings || (settings = $box.data('bssettings') || {});
+
+    if (settings.autoscroll) {
+      toggleplaypause.call($box, undefined, true, settings);
+    }
   };
 
   // set the correct vendor prefix for the css properties

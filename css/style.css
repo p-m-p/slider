@@ -1,5 +1,7 @@
 body {
   font: .85em/1.2 helvetica, arial, sans-serif;
+  background-color: #222;
+  color: #fefefe;
 }
 
 #page {
@@ -7,40 +9,26 @@ body {
   margin: 40px auto;
 }
 
-figure {
+.slide {
   margin: 0;
   padding: 0;
+  width: 640px;
+  height: 422px;
 }
 
-.description {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  padding: 10px;
-  background: #444;
-  width: 200px;
-  color: white;
-  display: none;
-}
-.slide:first-child .description {
-  display: block;
+.slide img {
+  width: 100%;
+  height: 100%;
 }
 
-.demo {
-  margin: 0 0 40px;
-}
-
-.box { height: 100%; position: relative; }
-.slide img { width: 100%; height: 100%; }
-
-.slider-viewport {
+#slider-viewport {
   width: 640px;
   height: 422px;
   overflow: hidden;
   margin: 0 auto;
 }
 
-.slider-shadow {
+#slider-shadow {
   padding: 0 0 35px;
   background: url(../img/box-shadow.png) center bottom no-repeat;
 }
@@ -49,10 +37,6 @@ figure {
   overflow: hidden;
 }
 
-#box-slider-1 {
-  width: 640px;
-  height: 482px;
-}
 /* pagination example */
 .controls, .controls li {
   list-style: none;
@@ -61,16 +45,15 @@ figure {
   overflow: hidden;
 }
 
-.controls {
+#controls {
   float: right;
-  margin: 10px 0 0;
 }
 
-.controls li {
+#controls li {
   display: inline;
 }
 
-.controls li a {
+#controls li a {
   display: block;
   float: left;
   padding: 4px 6px;
@@ -80,11 +63,4 @@ figure {
   text-decoration: none;
   font-weight: bold;
   text-transform: uppercase;
-}
-
-#progress-indicator {
-  margin: 10px 0 0;
-  height: 12px;
-  background-color: #999;
-  width: 0px;
 }

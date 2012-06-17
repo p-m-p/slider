@@ -55,7 +55,9 @@ size of the viewport so that the slides don't spew down the page at load time.
 .slider-viewport { width: 560px; height: 380px; overflow: hidden }
 ```
 
-Then on page load the usual jQuery sugaryness applies...
+Include the `box-slider.jquery.js` (this one first) and the desired effect
+scripts (these second) in your page and then on page load the usual jQuery 
+sugaryness applies...
 
 ```javascript
 $('#content-box').boxSlider( /* options */ );
@@ -136,4 +138,30 @@ and the current slide as its second.
 $('#content-box').boxSlider('option', 'onafter', function ($previousSlide, $currentSlide) {
   // 'this' is effectively $('#content-box')
 });
+```
+
+Effects
+---
+
+So far there is only one 3D effect which is the vertical box rotation transition which 
+comes with the plugin as the default. The animation effects come as adaptors that are 
+registered with the main box slider plugin using the `registerAnimator` method in one
+of the following ways.
+
+```javascript
+$.fn.boxSlider('registerAnimator', 'effect name', AnimatorObject); // on $.fn
+window.jqBoxSlider.registerAnimator('effect name' AnimatorObject); // on the global alias
+```
+Slide animators must follow the following interface and adhere to some fundamental rules.
+
+### `configure(Boolean supports3D, String vendorPrefix)`
+
+This method is optional and is called during the adaptor registration process. The `supports3D`
+parameter shows whether the host browser supports 3d CSS transformations and the `vendorPrefix`
+parameter provides the host browser CSS vendor prefix, e.g '-moz-', '-webkit-'.
+
+```javascript
+adaptor.configure = function (supports3D, venderPrefix) {
+  // implementation omitted
+};
 ```

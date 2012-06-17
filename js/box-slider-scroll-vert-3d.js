@@ -1,6 +1,6 @@
 ;(function (w, $, undefined) {
 
-  $.fn.boxSlider('registerAnimator', 'scrollVert3d', (function () {
+  w.jqBoxSlider.registerAnimator('scrollVert3d', (function () {
 
     var api = {}
       , supports3D = false
