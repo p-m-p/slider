@@ -104,8 +104,8 @@ $('#content-box').boxSlider('playPause');
 Get or set a specific option
 
 ```javascript
-$('#content-box').option('speed'); // returns speed option value
-$('#content-box').option('speed', 1200); // sets the speed option to 1200
+$('#content-box').boxSlider('option', 'speed'); // returns speed option value
+$('#content-box').boxSlider('option', 'speed', 1200); // sets the speed option to 1200
 ```
 
 Events
@@ -118,7 +118,7 @@ to the jQuerified box and will receive the current slide as it's first parameter
 and the next slide as its second.
 
 ```javascript
-$('#content-box').option('onbefore', function ($currentSlide, $nextSlide) {
+$('#content-box').boxSlider('option', 'onbefore', function ($currentSlide, $nextSlide) {
   // 'this' is effectively $('#content-box')
 });
 ```
@@ -130,7 +130,7 @@ to the jQuerified box and will receive the previous slide as it's first paramete
 and the current slide as its second.
 
 ```javascript
-$('#content-box').option('onafter', function ($previousSlide, $currentSlide) {
+$('#content-box').boxSlider('option', 'onafter', function ($previousSlide, $currentSlide) {
   // 'this' is effectively $('#content-box')
 });
 ```
