@@ -82,6 +82,9 @@
     }
 
     settings[setting] = newValue;
+    settings.slideAnimator.reset(this, settings);
+    togglePlayPause.call(this, undefined, true);
+    return this;
   }
 
   // Event listeners and controls ----------------------------------------------
@@ -130,18 +133,18 @@
   };
 
   // event listener for pause on hover
-  var togglePlayPause = function (ev) {
+  var togglePlayPause = function (ev, reset) {
     var $box = $(this)
       , settings = $box.data('bssettings');
 
-    if (settings.autointv != null) {
+    if (settings.autointv != null || reset) {
       settings.autointv = clearInterval(settings.autointv);
+      if (!reset) return;
     }
-    else {
-      settings.autointv = setInterval(function () {
-        showNextSlide($box);
-      }, settings.timeout);
-    }
+
+    settings.autointv = setInterval(function () {
+      showNextSlide($box);
+    }, settings.timeout);
   };
 
   // moves the slider to the next or previous slide

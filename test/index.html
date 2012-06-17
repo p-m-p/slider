@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cubic slider</title>
+
+  <link rel="stylesheet" type="text/css" href="jasmine-1.2.0/jasmine.css">
+
+  <style>
+    figure { margin: 0; padding: 0; border: solid 1px black; }
+    #page { width: 600px; margin: 40px auto 0 }
+    #box-slider-1, .slide {
+      width: 600px;
+      height: 400px;
+      display: block
+    }
+    .slide img { width: 100%; height: 100% }
+  </style>
+</head>
+  <body>
+    <div id="page">
+
+      <div id="box-slider-1">
+        <div id="box-1" class="box">
+          <figure id="slide-1" class="slide">
+            <img src="../img/cuba/slide-1.jpg" alt="">
+          </figure>
+          <figure id="slide-2" class="slide">
+            <img src="../img/cuba/slide-2.jpg" alt="">
+          </figure>
+          <figure id="slide-3" class="slide">
+            <img src="../img/cuba/slide-3.jpg" alt="">
+          </figure>
+          <figure id="slide-4" class="slide">
+            <img src="../img/cuba/slide-4.jpg" alt="">
+          </figure>
+          <figure id="slide-5" class="slide">
+            <img src="../img/cuba/slide-5.jpg" alt="">
+          </figure>
+          <figure id="slide-6" class="slide">
+            <img src="../img/cuba/slide-6.jpg" alt="">
+          </figure>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../js/jquery-1.7.2.min.js"><\/script>')</script>
+    <script src="../js/box-slider.jquery.js"></script>
+    <script src="../js/box-slider-scroll-vert-3d.js"></script>
+
+    <script src="jasmine-1.2.0/jasmine.js"></script>
+    <script src="jasmine-1.2.0/jasmine-html.js"></script>
+
+    <script src="spec/box-slider.js"></script>
+
+    <script>
+      $(function () { Specs.run($('#box-1').boxSlider({autoScroll: true})); });
+    </script>
+  </body>
+</html>

@@ -1,6 +1,5 @@
 ;(function (w, $, undefined) {
 
-
   $.fn.boxSlider('registerAnimator', 'scrollVert3d', (function () {
 
     var api = {}
@@ -15,8 +14,7 @@
 
     // sets the box and slides initial state via css
     api.initialize = function ($box, $slides, settings) {
-      var speed = (settings.speed / 1000) + 's'
-        , $parent = $box.parent()
+      var $parent = $box.parent()
         , width = $parent.innerWidth()
         , height = $parent.innerHeight()
         , positioning = {
@@ -59,22 +57,24 @@
         );
 
         // wait then apply transition for box rotation
-        setTimeout(function () {
-          $box.css(
-              vendorPrefix + 'transition'
-            , vendorPrefix + 'transform ' + speed
-          );
-        }, 10);
+        setTimeout(function () { api.reset($box, settings); }, 10);
       }
       else { // using fade hide all but first slide
         $slides.filter(':gt(0)').hide();
       }
     };
 
-    // moves the slider to the next, prev or 'index' slide
+    // update the settings on an option change
+    api.reset = function ($box, settings) {
+      var speed = (settings.speed / 1000) + 's';
+
+      $box.css(vendorPrefix + 'transition', vendorPrefix +'transform '+ speed);
+    };
+
+    // moves the slider to the next, prev or 'index' slide --------------------- TODO: too much going on here, break it up a bit
     api.showNextSlide = function (settings, $box, $slides, index, reverse) {
       // only go forward if not already in motion
-      if ($box.hasClass('jbs-in-motion')) { return; }
+      if ($box.hasClass('jbs-in-motion')) return;
 
       var angle = settings.bsangle + (reverse ? 90 : -90)
         , currIndex = settings.bsfaceindex || 0
