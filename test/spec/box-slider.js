@@ -60,9 +60,9 @@
 
       describe('Before an after event callbacks', function () {
 
-        var complete = false;
-
         it('should run the before event', function () {
+
+          var complete = false;
 
           runs(function () {
             $box.boxSlider('option', 'onbefore', function ($s1, $s2) {
@@ -73,12 +73,31 @@
           waitsFor(
               function () { return complete; }
             , 'Should have run onbefore'
-            , 5500
+            , 1500
+          );
+
+        });
+
+        it('should run the after event', function () {
+
+          var complete = false;
+
+          runs(function () {
+            $box.boxSlider('option', 'onafter', function ($s1, $s2) {
+              complete = true;
+            });
+          });
+
+          waitsFor(
+              function () { return complete; }
+            , 'Should have run onafter'
+            , 1500
           );
 
         });
 
       });
+
 
       env.execute();
 

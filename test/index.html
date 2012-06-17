@@ -56,7 +56,11 @@
     <script src="spec/box-slider.js"></script>
 
     <script>
-      $(function () { Specs.run($('#box-1').boxSlider({autoScroll: true})); });
+
+      $(function () { 
+        Specs.run( $('#box-1').boxSlider({autoScroll: true, timeout: 1000, speed: 800}) ); 
+      });
+
     </script>
   </body>
 </html>

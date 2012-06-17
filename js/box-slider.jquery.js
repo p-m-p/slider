@@ -48,16 +48,16 @@
     return this.each(function (i, el) {
       togglePlayPause.call($(this));
     });
-  }
+  };
 
   // show the slide at the given index
   methods.showSlide = function (index) {
-    index = parseint(index, 10);
+    index = parseInt(index, 10);
     return this.each(function () { 
       var $box = $(this);
 
       resetAutoScroll($box);
-      shownextslide($box, index); 
+      showNextSlide($box, index); 
     });
   };
 
@@ -92,7 +92,7 @@
     settings.slideAnimator.reset(this, settings);
     resetAutoScroll(this, settings);
     return this;
-  }
+  };
 
   // Event listeners and controls ----------------------------------------------
 
@@ -158,11 +158,48 @@
   // moves the slider to the next or previous slide
   var showNextSlide = function ($box, index, reverse) {
     var settings = $box.data('bssettings')
-      , $slides = $box.children();
+      , $slides = $box.children()
+      , currIndex = settings.bsfaceindex || 0
+      , nextIndex = calculateIndex(currIndex, $slides.length, reverse, index)
+      , $currSlide
+      , $nextSlide;
 
-    settings.slideAnimator.showNextSlide(
-      settings, $box, $slides, index, reverse
+    // only go forward if not already in motion
+    // and user defined index is not out of bounds
+    if ($box.hasClass('jbs-in-motion') || nextIndex === -1) return;
+
+    $currSlide = $slides.eq(currIndex);
+    $nextSlide = $slides.eq(nextIndex);
+    $box.addClass('jbs-in-motion'); // stops user clunking through faces ----- FIXME: queue user clicks and keep rotating the box
+
+    if (typeof settings.onbefore === 'function') {
+      settings.onbefore.call($box, $currSlide, $nextSlide);
+    }
+
+    // add additional settings for the transition and 
+    // call the slide animation
+    $.extend(settings, settings.slideAnimator.transition($.extend({
+        $box: $box
+      , $slides: $slides
+      , $currSlide: $currSlide
+      , $nextSlide: $nextSlide
+      , reverse: reverse
+      , currIndex: currIndex
+      , nextIndex: nextIndex
+    }, settings)));
+
+    setTimeout( // remove the active flag class once transition is complete
+        function () {
+          $box.removeClass('jbs-in-motion');
+          if (typeof settings.onafter === 'function') {
+            settings.onafter.call($box, $currSlide, $nextSlide);
+          }
+        }
+      , settings.speed
     );
+
+    // cache settings for next transition
+    settings.bsfaceindex = nextIndex;
   };
 
   // if the box is autoscrolling it is reset
@@ -172,6 +209,28 @@
     if (settings.autoscroll) {
       toggleplaypause.call($box, undefined, true, settings);
     }
+  };
+
+  // get the next slides index
+  var calculateIndex = function (currIndex, slidesLen, reverse, index) {
+    var nextIndex = index;
+
+    if (nextIndex == null) { // came from next button click
+      if (reverse) {
+        nextIndex = currIndex - 1 < 0 ? slidesLen - 1 : currIndex - 1;
+      }
+      else {
+        nextIndex = currIndex + 1 < slidesLen ? currIndex + 1 : 0;
+      }
+    }
+
+    if ( // already on selected slide or incorrect index
+      nextIndex === currIndex ||
+      nextIndex >= slidesLen ||
+      nextIndex < 0
+    ) { return -1; }
+
+    return nextIndex;
   };
 
   // set the correct vendor prefix for the css properties

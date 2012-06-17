@@ -38,13 +38,6 @@
         settings.translateZ = height / 2;
         settings.bsangle = 0;
 
-        // set front slide
-        $slides.eq(0).css(
-            vendorPrefix + 'transform'
-          , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
-            settings.translateZ + 'px)'
-        );
-
         // set the parent as the 3D viewport
         $parent.css(vendorPrefix + 'perspective', settings.perspective);
         $parent.css('overflow', 'visible');
@@ -54,6 +47,13 @@
         $box.css(
             vendorPrefix + 'transform'
           , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
+        );
+
+        // set front slide
+        $slides.eq(0).css(
+            vendorPrefix + 'transform'
+          , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
+            settings.translateZ + 'px)'
         );
 
         // wait then apply transition for box rotation
@@ -71,75 +71,49 @@
       $box.css(vendorPrefix + 'transition', vendorPrefix +'transform '+ speed);
     };
 
-    // moves the slider to the next, prev or 'index' slide --------------------- TODO: too much going on here, break it up a bit
-    api.showNextSlide = function (settings, $box, $slides, index, reverse) {
-      // only go forward if not already in motion
-      if ($box.hasClass('jbs-in-motion')) return;
-
-      var angle = settings.bsangle + (reverse ? 90 : -90)
-        , currIndex = settings.bsfaceindex || 0
-        , nextIndex = calculateIndex(currIndex, $slides.length, reverse, index)
-        , $currSlide
-        , $nextSlide;
-
-      // user defined index is out of bounds
-      if (nextIndex === -1) return;
-
-      $currSlide = $slides.eq(currIndex);
-      $nextSlide = $slides.eq(nextIndex);
-      $box.addClass('jbs-in-motion'); // stops user clunking through faces ----- FIXME: queue user clicks and keep rotating the box
-
-      if (typeof settings.onbefore === 'function') {
-        settings.onbefore.call($box, $currSlide, $nextSlide);
-      }
+    // moves the slider to the next, prev or 'index' slide
+    api.transition = function (settings) {
+      var angle = settings.bsangle + (settings.reverse ? 90 : -90)
 
       if (!supports3D) { // no 3D support just use a basic fade transition
-        $slides.filter(function (index) { return currIndex !== index; }).hide();
-        $currSlide.fadeOut(s);
-        $nextSlide.fadeIn(s);
+        settings.$slides.filter(function (index) {
+          return settings.currIndex !== index; }
+        ).hide();
+        settings.$currSlide.fadeOut(s);
+        settings.$nextSlide.fadeIn(s);
       }
       else {
         // correct angle if going from prev to next or vice versa
         if (angle === 0) {
-          angle = reverse ? 360 : -360;
+          angle = settings.reverse ? 360 : -360;
         }
 
-        $slides // remove transform from all slides except current front face
-          .filter(function (index) { return currIndex !== index;})
+        settings.$slides // remove transform from all slides except current front face
+          .filter(function (index) { return settings.currIndex !== index;})
           .css(vendorPrefix + 'transform', 'none')
           .css('display', 'none');
-        $nextSlide.css( // move next slide to the effective next face
+        settings.$nextSlide.css( // move next slide to the effective next face
             vendorPrefix + 'transform'
           , rotation(angle) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
         ).css('display', 'block');
 
-        $box.css( // rotate the box to show next face
+        settings.$box.css( // rotate the box to show next face
             vendorPrefix + 'transform'
           , 'translate3d(0, 0, -' + settings.translateZ +
-            'px) rotateX(' + angle + 'deg)'
+            'px) rotate3d(1, 0, 0, ' + angle + 'deg)'
         );
 
         // the box has gone full circle so start again from 0deg
         if (Math.abs(angle) === 360) {
-          $box.css(
+          settings.$box.css(
               vendorPrefix + 'transform'
             , 'translate3d(0, 0, -' + settings.translateZ + 'px)'
           );
           angle = 0;
         }
+        
+        return {bsangle: angle};
       }
-
-      setTimeout( // remove the active flag class once transition is complete
-          function () {
-            $box.removeClass('jbs-in-motion');
-            if (typeof settings.onafter === 'function') {
-              settings.onafter.call($box, $currSlide, $nextSlide);
-            }
-          }
-        , settings.speed
-      );
-      // cache settings for next transition
-      $.extend(settings, {bsangle: angle, bsfaceindex: nextIndex});
     };
 
     // returns the correct face rotation based on the box's rotated angle
@@ -150,28 +124,6 @@
         case 180: case -180: return 'rotate3d(1, 0, 0, 180deg)'; // back
         case 270: case -90:  return 'rotate3d(1, 0, 0, 90deg)'; // top
       }
-    };
-
-    // get the next slides index
-    var calculateIndex = function (currIndex, slidesLen, reverse, index) {
-      var nextIndex = index;
-
-      if (nextIndex == null) { // came from next button click
-        if (reverse) {
-          nextIndex = currIndex - 1 < 0 ? slidesLen - 1 : currIndex - 1;
-        }
-        else {
-          nextIndex = currIndex + 1 < slidesLen ? currIndex + 1 : 0;
-        }
-      }
-
-      if ( // already on selected slide or incorrect index
-        nextIndex === currIndex ||
-        nextIndex >= slidesLen ||
-        nextIndex < 0
-      ) { return -1; }
-
-      return nextIndex;
     };
 
     return api;
