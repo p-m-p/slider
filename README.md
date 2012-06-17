@@ -158,7 +158,7 @@ Slide animators must follow the following interface and adhere to some fundament
 
 This method is optional and is called during the adaptor registration process. The `supports3D`
 parameter shows whether the host browser supports 3d CSS transformations and the `vendorPrefix`
-parameter provides the host browser CSS vendor prefix, e.g '-moz-', '-webkit-'.
+parameter provides the host browser CSS vendor prefix, e.g `'-moz-'`, `'-webkit-'`.
 
 ```javascript
 adaptor.configure = function (supports3D, venderPrefix) {
