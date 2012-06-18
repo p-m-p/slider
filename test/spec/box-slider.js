@@ -73,7 +73,7 @@
           waitsFor(
               function () { return complete; }
             , 'Should have run onbefore'
-            , 1500
+            , 2500
           );
 
         });
@@ -91,7 +91,7 @@
           waitsFor(
               function () { return complete; }
             , 'Should have run onafter'
-            , 1500
+            , 2500
           );
 
         });
