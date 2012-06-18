@@ -226,7 +226,7 @@ adaptor.reset($box, settings) {
 Below is the very minimal you could do to get a fade transition working as a 2D effect named `showHide`.
 
 ```javascript
-w.jqBoxSlider.registerAnimator('showHide', (function () {
+window.jqBoxSlider.registerAnimator('showHide', (function () {
 
   var adaptor = {};
 
