@@ -79,8 +79,8 @@
         settings.$slides.filter(function (index) {
           return settings.currIndex !== index; }
         ).hide();
-        settings.$currSlide.fadeOut(s);
-        settings.$nextSlide.fadeIn(s);
+        settings.$currSlide.fadeOut(settings.speed);
+        settings.$nextSlide.fadeIn(settings.speed);
       }
       else {
         // correct angle if going from prev to next or vice versa
