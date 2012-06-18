@@ -61,7 +61,6 @@
       describe('Before an after event callbacks', function () {
 
         it('should run the before event', function () {
-
           var complete = false;
 
           runs(function () {
@@ -73,13 +72,11 @@
           waitsFor(
               function () { return complete; }
             , 'Should have run onbefore'
-            , 1500
+            , 2500
           );
-
         });
 
         it('should run the after event', function () {
-
           var complete = false;
 
           runs(function () {
@@ -91,9 +88,8 @@
           waitsFor(
               function () { return complete; }
             , 'Should have run onafter'
-            , 1500
+            , 2500
           );
-
         });
 
       });

@@ -34,7 +34,7 @@
       if (settings.autoScroll) {
         settings.autointv = setInterval(function () {
           showNextSlide($this);
-        }, settings.timeout);
+        }, settings.timeout + settings.speed);
 
         if (settings.pauseOnHover) {
           $this.on('hover', togglePlayPause);
@@ -57,7 +57,7 @@
       var $box = $(this);
 
       resetAutoScroll($box);
-      showNextSlide($box, index); 
+      showNextSlide($box, index);
     });
   };
 
@@ -155,7 +155,7 @@
 
     settings.autointv = setInterval(function () {
       showNextSlide($box);
-    }, settings.timeout);
+    }, settings.timeout + settings.speed);
   };
 
   // moves the slider to the next or previous slide

@@ -6,7 +6,8 @@ interface for creating cool 2D or 3D slide animation transitions. It comes, by
 default, with a 3D vertical scrolling box transition and I intend to create
 more cool effects as I find time.
 
-Not officially released yet but browse index.html for demos.
+Not officially released yet and the API is still a little volatile but all working. 
+Browse index.html for demos.
 
 Support
 ---
@@ -166,7 +167,7 @@ adaptor.configure = function (supports3D, vendorPrefix) {
 };
 ```
 
-### `initialize($box, $slides, settings)`
+### `initialize(jQuery $box, jQuery $slides, Object settings)`
 
 This method is required and sets up the initial state of each content slider. The first parameter
 `$box` is the jQuery content sliders main box (the selected element when the plugin is initialised), the 
@@ -176,6 +177,35 @@ the third parameter `settings` is the settings for the current content slider.
 ```javascript
 adaptor.initialize = function ($box, $slides, settings) {
   // implementation omitted
+};
+```
+
+### `transition(Object settings)`
+
+This method is required and completes the transition from the current slide to the next slide. 
+The `settings` parameter is the plugin settings for the content slider extended with the following.
+
+```javascript
+{
+    $box: // jQuery object containing the content slider box
+  , $slides: // jQuery object containing all of the content slides
+  , $currSlide: // jQuery object containing the current visible slide
+  , $nextSlide: // jQuery object containing the next slide to show
+  , reverse: // the direction in which to travel (read forwards, backwards)
+  , currIndex: // the index at which $currSlide resides within $slides 
+  , nextIndex: // the index at which $nextSlide resides within $slides
+}
+```
+
+This method must support browsers that do not support 3D transformations by degrading gracefully to
+some other method of transitioning the slides. Any settings that need to be cached against the 
+content slider for the next transition should be returned as a simple object which will be mixed 
+into the plugin settings.
+
+```javascript
+adaptor.transition = function (settings) {
+  // move to the next previous slides
+  return { mycustomsetting: 'value' };
 };
 ```
 
