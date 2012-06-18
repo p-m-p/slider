@@ -92,8 +92,11 @@
         , settings = $box.data('bssettings') || {};
 
       settings[setting] = newValue;
-      settings.slideAnimator.reset($box, settings);
       resetAutoScroll($box, settings);
+
+      if (typeof settings.slideAnimator.reset === 'function') {
+        settings.slideAnimator.reset($box, settings);
+      }
     });
   };
 

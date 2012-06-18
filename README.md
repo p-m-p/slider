@@ -212,4 +212,34 @@ adaptor.transition = function (settings) {
 ### `reset(jQuery $box, Object settings)`
 
 This method is optional and provides a method to reset the state of the plugin when an option is updated
-or the plugin is re-initialised.
+or the plugin is re-initialised. The first parameter `$box` is the content slider and the second `settings`
+is the options for the content slider.
+
+```javascript
+adaptor.reset($box, settings) {
+  // reset the content slider's state
+}
+```
+
+### Example adaptor
+
+Below is the very minimal you could do to get a fade transition working as a 2D effect named `showHide`.
+
+```javascript
+w.jqBoxSlider.registerAnimator('showHide', (function () {
+
+  var adaptor = {};
+
+  adaptor.initialize = function ($box, $slides, settings) {
+    $slides.filter(':gt(0)').hide();
+  };
+
+  adaptor.transition = function (settings) {
+    settings.$nextSlide.fadeIn(settings.speed);
+    settings.$currSlide.fadeOut(settings.speed);
+  };
+
+  return adaptor;
+
+}()));
+```
