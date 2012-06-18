@@ -182,8 +182,8 @@ adaptor.initialize = function ($box, $slides, settings) {
 
 ### `transition(Object settings)`
 
-This method completes the transition from the current slide to the next slide. The `settings` parameter
-is the plugin settings for the content slider extended with the following.
+This method is required and completes the transition from the current slide to the next slide. 
+The `settings` parameter is the plugin settings for the content slider extended with the following.
 
 ```javascript
 {
