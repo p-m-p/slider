@@ -178,3 +178,8 @@ adaptor.initialize = function ($box, $slides, settings) {
   // implementation omitted
 };
 ```
+
+### `reset(jQuery $box, Object settings)`
+
+This method is optional and provides a method to reset the state of the plugin when an option is updated
+or the plugin is re-initialised.

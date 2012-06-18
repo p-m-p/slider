@@ -82,16 +82,19 @@
 
   // sets or gets an option for the set of matched sliders
   methods.option = function (setting, newValue) {
-    var settings = this.data('bssettings') || {};
 
     if (typeof newValue === 'undefined') {
-      return settings[setting];
+      return (this.data('bssettings') || {})[setting];
     }
 
-    settings[setting] = newValue;
-    settings.slideAnimator.reset(this, settings);
-    resetAutoScroll(this, settings);
-    return this;
+    return this.each(function (i, el) {
+      var $box = $(this)
+        , settings = $box.data('bssettings') || {};
+
+      settings[setting] = newValue;
+      settings.slideAnimator.reset($box, settings);
+      resetAutoScroll($box, settings);
+    });
   };
 
   // Event listeners and controls ----------------------------------------------
