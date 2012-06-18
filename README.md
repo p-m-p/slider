@@ -6,7 +6,8 @@ interface for creating cool 2D or 3D slide animation transitions. It comes, by
 default, with a 3D vertical scrolling box transition and I intend to create
 more cool effects as I find time.
 
-Not officially released yet but browse index.html for demos.
+Not officially released yet and the API is still a little volatile but all working. 
+Browse index.html for demos.
 
 Support
 ---
@@ -186,13 +187,13 @@ is the plugin settings for the content slider extended with the following.
 
 ```javascript
 {
-    $box: // jQuery object with the content slider box
-  , $slides: // jQuery object with all of the content slides
+    $box: // jQuery object containing the content slider box
+  , $slides: // jQuery object containing all of the content slides
   , $currSlide: // jQuery object containing the current visible slide
   , $nextSlide: // jQuery object containing the next slide to show
   , reverse: // the direction in which to travel (read forwards, backwards)
   , currIndex: // the index at which $currSlide resides within $slides 
-  , nextIndex: // the index at which $nextSlide resides within $slide
+  , nextIndex: // the index at which $nextSlide resides within $slides
 }
 ```
 
