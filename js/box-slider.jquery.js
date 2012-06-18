@@ -57,7 +57,7 @@
       var $box = $(this);
 
       resetAutoScroll($box);
-      showNextSlide($box, index); 
+      showNextSlide($box, index);
     });
   };
 

@@ -61,7 +61,6 @@
       describe('Before an after event callbacks', function () {
 
         it('should run the before event', function () {
-
           var complete = false;
 
           runs(function () {
@@ -75,11 +74,9 @@
             , 'Should have run onbefore'
             , 2500
           );
-
         });
 
         it('should run the after event', function () {
-
           var complete = false;
 
           runs(function () {
@@ -93,7 +90,6 @@
             , 'Should have run onafter'
             , 2500
           );
-
         });
 
       });
