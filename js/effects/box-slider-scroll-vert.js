@@ -14,28 +14,27 @@
         $box.css('position', 'relative');
       }
       
+      // fix the box height and stop slide oveflow showing
       $box.css({height: boxHeight, overflow: 'hidden'});
       $slides
-        .css({
+        .css({ // ensure all slides are same size and positioned
             position: 'absolute'
           , top: 0
           , left: 0
           , width: width
           , height: height
         })
-        .filter(':gt(0)').hide();
-        
-      $slides.eq(1).css('top', -height + 'px');
+        .filter(':gt(0)').hide(); // hide all but first slide
     };
 
-    // fade current out and next in
+    // slide current out of view and next into view
     adaptor.transition = function (settings) {
       var fromTop = settings.reverse ? boxHeight : -boxHeight;
       
-      settings.$nextSlide
+      settings.$nextSlide // animate into position
         .css({top: fromTop + 'px', display: 'block'})
         .animate({top: '0px'}, settings.speed);
-      settings.$currSlide.animate(
+      settings.$currSlide.animate( // animate out of position
           {top: (settings.reverse ? -boxHeight : boxHeight) + 'px'}
         , settings.speed
       );
