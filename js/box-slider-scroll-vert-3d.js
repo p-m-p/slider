@@ -73,7 +73,8 @@
 
     // moves the slider to the next, prev or 'index' slide
     api.transition = function (settings) {
-      var angle = settings.bsangle + (settings.reverse ? 90 : -90)
+      var angle = settings.bsangle + (settings.reverse ? 90 : -90);
+      
 
       if (!supports3D) { // no 3D support just use a basic fade transition
         settings.$slides.filter(function (index) {
