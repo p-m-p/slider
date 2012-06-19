@@ -82,7 +82,6 @@
 
   // sets or gets an option for the set of matched sliders
   methods.option = function (setting, newValue) {
-
     if (typeof newValue === 'undefined') {
       return (this.data('bssettings') || {})[setting];
     }
@@ -93,6 +92,11 @@
 
       settings[setting] = newValue;
       resetAutoScroll($box, settings);
+
+      if (setting === 'effect') {
+        settings.slideAnimator = methods.slideAnimator(newValue);
+        settings.slideAnimator.reset($box, settings);
+      }
 
       if (typeof settings.slideAnimator.reset === 'function') {
         settings.slideAnimator.reset($box, settings);

@@ -1,6 +1,6 @@
 ;(function (w, $, undefined) {
 
-  w.jqBoxSlider.registerAnimator('showHide', (function () {
+  w.jqBoxSlider.registerAnimator('fade', (function () {
 
     var adaptor = {};
 
