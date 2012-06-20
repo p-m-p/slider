@@ -9,6 +9,23 @@
     adaptor.initialize = function ($box, $slides, settings) {
       var width = $box.width()
         , height = boxHeight = $slides.eq(0).height();
+
+      // cache original css for reset and destroy
+      settings.origCSS = {
+          box: {
+              height: $box.css('height')
+            , position: $box.css('position')
+            , overflow: $box.css('overflow')
+          }
+        , slides: {
+              position: $slides.css('position')
+            , top: $slides.css('top')
+            , left: $slides.css('left')
+            , width: $slides.css('width')
+            , height: $slides.css('height')
+            , display: $slides.css('display')
+          }
+      };
         
       if ('static auto'.indexOf($box.css('position')) !== -1) {
         $box.css('position', 'relative');
@@ -41,8 +58,8 @@
     };
 
     adaptor.destroy = function ($box, settings) {
-      // ------------------------------------------------------------- TODO reset css here
-      $box.children().css('display', 'block');
+      $box.children().css(settings.origCSS.slides);
+      $box.css(settings.origCSS.box);
     };
 
     return adaptor;

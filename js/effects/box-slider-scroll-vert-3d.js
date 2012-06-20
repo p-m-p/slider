@@ -162,7 +162,8 @@
         $box.css(settings.origCSS.box);
         $slides.css(settings.origCSS.slides);
         $parent.css(settings.origCSS.viewport);
-        settings.bsangle = 0;
+        delete settings.bsangle;
+        delete settings.translateZ;
       }
     };
 
