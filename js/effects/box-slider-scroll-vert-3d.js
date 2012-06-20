@@ -24,7 +24,43 @@
           , width: width
           , height: height
         };
-
+        
+      // cache original css and set new ------------------------------ TODO refactor this
+      settings.origCSS = {};
+      settings.origCSS.box = {
+          position: $box.css('position')
+        , top: $box.css('top')
+        , left: $box.css('left')
+        , width: $box.css('width')
+        , height: $box.css('height')
+      };
+      settings.origCSS.box[vendorPrefix + 'transform'] = (
+        $box.css(vendorPrefix + 'transform')
+      );
+      settings.origCSS.box[vendorPrefix + 'transition'] = (
+        $box.css(vendorPrefix + 'transition')
+      );
+      settings.origCSS.box[vendorPrefix + 'transform-style'] = (
+        $box.css(vendorPrefix + 'transform-style')
+      );
+      settings.origCSS.slides = {
+          position: $slides.css('position')
+        , top: $slides.css('top')
+        , left: $slides.css('left')
+        , width: $slides.css('width')
+        , height: $slides.css('height')
+        , display: $slides.css('display')
+      };
+      settings.origCSS.slides[vendorPrefix + 'transform'] = (
+        $slides.css(vendorPrefix + 'transform')
+      );
+      settings.origCSS.viewport = {
+          position: $parent.css('position')
+        , overflow: $parent.css('overflow')
+      };
+      settings.origCSS.viewport[vendorPrefix + 'perspective'] = (
+        $parent.css(vendorPrefix + 'perspective')
+      );
       $slides.css(positioning);
       $box.css(positioning);
 
@@ -114,6 +150,19 @@
         }
         
         return {bsangle: angle};
+      }
+    };
+
+    // just resets the box and slides to their original css
+    api.destroy = function ($box, settings) {
+      var $slides = $box.children()
+        , $parent = $box.parent();
+        
+      if (settings.origCSS) {
+        $box.css(settings.origCSS.box);
+        $slides.css(settings.origCSS.slides);
+        $parent.css(settings.origCSS.viewport);
+        settings.bsangle = 0;
       }
     };
 

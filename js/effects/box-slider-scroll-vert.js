@@ -40,6 +40,11 @@
       );
     };
 
+    adaptor.destroy = function ($box, settings) {
+      // ------------------------------------------------------------- TODO reset css here
+      $box.children().css('display', 'block');
+    };
+
     return adaptor;
 
   }()));

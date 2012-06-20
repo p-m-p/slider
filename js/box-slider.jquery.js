@@ -94,13 +94,33 @@
       resetAutoScroll($box, settings);
 
       if (setting === 'effect') {
+        settings.slideAnimator.destroy($box, settings);
         settings.slideAnimator = methods.slideAnimator(newValue);
-        settings.slideAnimator.reset($box, settings);
+        settings.bsfaceindex = 0;
+        settings.slideAnimator.initialize($box, $box.children(), settings);
+        return;
       }
 
       if (typeof settings.slideAnimator.reset === 'function') {
         settings.slideAnimator.reset($box, settings);
       }
+    });
+  };
+  
+  // destroy the plugin for the selected sliders
+  methods.destroy = function () {
+    return this.each(function () {
+      var $box = $(this)
+        , data = $box.data() || {}
+        , settings = data.bssettings;
+        
+      if (settings && typeof settings.slideAnimator === 'object') {        
+        if (settings.autointv) {
+          clearInterval(settings.autointv);
+        }
+        // ----------------------------------------------------------- TODO unbind control event listeners
+        settings.slideAnimator.destroy($box, settings);
+      }      
     });
   };
 
