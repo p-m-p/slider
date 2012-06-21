@@ -43,7 +43,7 @@
       $box.css(positioning);
 
       // ensure parent is positioned to hold the box
-      if ('static auto'.indexOf($parent.css('position')) !== -1) {
+      if ('static inherit'.indexOf($parent.css('position')) !== -1) {
         $parent.css('position', 'relative');
       }
 
