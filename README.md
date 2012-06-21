@@ -248,7 +248,7 @@ You do not need to define this method as it will be applied to the animation ada
 the time it is registered with the plugin through the call to `registerAnimator`. This 
 method will cache the original CSS of the given jQuery object in the 
 `bssettings` data set for the slider, the `settings` object passed to all of the adaptor
-functions so that the original CSS may be applied when the plugin is destroyed or reset. 
+functions, so that the original CSS may be applied when the plugin is destroyed or reset. 
 By default the following CSS attributes are cached `position, top, left, display, overflow, width, height`. 
 Any additional attributes should be passed in as an array or strings in the `extraAttributes` parameter.
 
@@ -262,7 +262,6 @@ adaptor.initialize = function ($box, $slides, settings) {
   ]);
 
   // implementation omitted
-  
 }
 ```
 
@@ -280,7 +279,8 @@ adaptor.destroy = function ($box, settings) {
 
 ### Example adaptor
 
-Below is the very minimal you could do to get a fade transition working as a 2D effect named `showHide`.
+Below is an example of a simple 2D fade transition registered with the plugin
+as the `fade` effect.
 
 ```javascript
 ;(function (w, $, undefined) {
