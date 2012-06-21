@@ -9,7 +9,7 @@
       adaptor._cacheOriginalCSS($box, 'box', settings);
       adaptor._cacheOriginalCSS($slides, 'slides', settings);
 
-      if ('static auto'.indexOf($box.css('position')) !== -1) {
+      if ('static inherit'.indexOf($box.css('position')) !== -1) {
         $box.css('position', 'relative');
       }
       
