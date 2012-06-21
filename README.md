@@ -229,11 +229,11 @@ adaptor.reset($box, settings) {
 }
 ```
 
-### `destroy(jQuery $box, settings)`
+### `destroy(jQuery $box, Object settings)`
 
 This method is required and handles the clean up required to return the 
 element contained in the `$box` jQuery object back to it's original state
-before `initialize` was called. Any additional settings applied to settings 
+before `initialize` was called. Any additional settings applied to `settings` 
 should also be removed.
 
 ```javascript
@@ -245,13 +245,12 @@ adaptor.destroy = function ($box, settings) {
 ### `_cacheOriginalCSS(jQuery $el, String name, Object settings, Array extraAttributes)`
 
 You do not need to define this method as it will be applied to the animation adaptor at
-the time it is registered with the plugin throught the call to `registerAnimator`. This 
-method will cache the original CSS of the given jQuery object on the 
-settings of a slider so that the original CSS may be applied when the 
-plugin is destroyed or reset. By default the following CSS attributes
-are cached `position, top, left, display, overflow, width, height`. Any 
-additional attributes should be passed in as an array or strings in the 
-`extraAttributes` parameter.
+the time it is registered with the plugin through the call to `registerAnimator`. This 
+method will cache the original CSS of the given jQuery object in the 
+`bssettings` data set for the slider, the `settings` object passed to all of the adaptor
+functions so that the original CSS may be applied when the plugin is destroyed or reset. 
+By default the following CSS attributes are cached `position, top, left, display, overflow, width, height`. 
+Any additional attributes should be passed in as an array or strings in the `extraAttributes` parameter.
 
 ```javascript
 adaptor.initialize = function ($box, $slides, settings) {
