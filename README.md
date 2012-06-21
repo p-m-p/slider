@@ -114,6 +114,14 @@ $('#content-box').boxSlider('option', 'speed'); // returns speed option value
 $('#content-box').boxSlider('option', 'speed', 1200); // sets the speed option to 1200
 ```
 
+### `destroy`
+
+Destroys the plugin for the selected sliders
+
+```javascript
+$('#content-box').boxSlider('destroy');
+```
+
 Events
 ---
 
@@ -221,30 +229,98 @@ adaptor.reset($box, settings) {
 }
 ```
 
+### `destroy(jQuery $box, settings)`
+
+This method is required and handles the clean up required to return the 
+element contained in the `$box` jQuery object back to it's original state
+before `initialize` was called. Any additional settings applied to settings 
+should also be removed.
+
+```javascript
+adaptor.destroy = function ($box, settings) {
+  // reset css and remove any additional settings
+};
+```
+
+### `_cacheOriginalCSS(jQuery $el, String name, Object settings, Array extraAttributes)`
+
+You do not need to define this method as it will be applied to the animation adaptor at
+the time it is registered with the plugin throught the call to `registerAnimator`. This 
+method will cache the original CSS of the given jQuery object on the 
+settings of a slider so that the original CSS may be applied when the 
+plugin is destroyed or reset. By default the following CSS attributes
+are cached `position, top, left, display, overflow, width, height`. Any 
+additional attributes should be passed in as an array or strings in the 
+`extraAttributes` parameter.
+
+```javascript
+adaptor.initialize = function ($box, $slides, settings) {
+  // cache the original css for reset or destroy
+  adaptor._cacheOriginalCSS($box, 'box', settings);
+  adaptor._cacheOriginalCSS($slides, 'slides', settings, [
+      vendorPrefix + 'transform'
+    , vendorPrefix + 'transition'
+  ]);
+
+  // implementation omitted
+  
+}
+```
+
+The cached CSS will then be available on the slider settings via the 
+`origCSS` object under the item `name` provided when `_cacheOriginalCSS`
+was called.
+
+```javascript
+adaptor.destroy = function ($box, settings) {
+  // reset the original css
+  $box.children().css(settings.origCSS.slides);
+  $box.css(settings.origCSS.box);
+};
+```
+
 ### Example adaptor
 
 Below is the very minimal you could do to get a fade transition working as a 2D effect named `showHide`.
 
 ```javascript
-window.jqBoxSlider.registerAnimator('showHide', (function () {
+;(function (w, $, undefined) {
 
-  var adaptor = {};
+  w.jqBoxSlider.registerAnimator('fade', (function () {
 
-  // setup slide and box css
-  adaptor.initialize = function ($box, $slides, settings) {
-    $box.css('position', 'relative');
-    $slides
-      .css({ position: 'absolute', top: 0, left: 0 })
-      .filter(':gt(0)').hide();
-  };
+    var adaptor = {};
 
-  // fade current out and next in
-  adaptor.transition = function (settings) {
-    settings.$nextSlide.fadeIn(settings.speed);
-    settings.$currSlide.fadeOut(settings.speed);
-  };
+    // setup slide and box css
+    adaptor.initialize = function ($box, $slides, settings) {
+      // cache the original css for reset or destroy
+      adaptor._cacheOriginalCSS($box, 'box', settings);
+      adaptor._cacheOriginalCSS($slides, 'slides', settings);
 
-  return adaptor;
+      if ('static auto'.indexOf($box.css('position')) !== -1) {
+        $box.css('position', 'relative');
+      }
+      
+      $box.css({height: $slides.eq(0).height(), overflow: 'hidden'});
+      $slides
+        .css({ position: 'absolute', top: 0, left: 0 })
+        .filter(':gt(0)').hide();
+    };
 
-}()));
+    // fade current out and next in
+    adaptor.transition = function (settings) {
+      settings.$nextSlide.fadeIn(settings.speed);
+      settings.$currSlide.fadeOut(settings.speed);
+    };
+
+    // reset the original css
+    adaptor.destroy = function ($box, settings) {
+      $box.children().css(settings.origCSS.slides);
+      $box.css(settings.origCSS.box);
+    };
+
+    return adaptor;
+
+  }()));
+
+}(window, jQuery || Zepto));
 ```
