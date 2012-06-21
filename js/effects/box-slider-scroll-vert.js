@@ -11,21 +11,8 @@
         , height = boxHeight = $slides.eq(0).height();
 
       // cache original css for reset and destroy
-      settings.origCSS = {
-          box: {
-              height: $box.css('height')
-            , position: $box.css('position')
-            , overflow: $box.css('overflow')
-          }
-        , slides: {
-              position: $slides.css('position')
-            , top: $slides.css('top')
-            , left: $slides.css('left')
-            , width: $slides.css('width')
-            , height: $slides.css('height')
-            , display: $slides.css('display')
-          }
-      };
+      adaptor._cacheOriginalCSS($box, 'box', settings);
+      adaptor._cacheOriginalCSS($slides, 'slides', settings);
         
       if ('static auto'.indexOf($box.css('position')) !== -1) {
         $box.css('position', 'relative');

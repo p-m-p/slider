@@ -2,18 +2,18 @@
 
   w.jqBoxSlider.registerAnimator('scrollVert3d', (function () {
 
-    var api = {}
+    var adaptor = {}
       , supports3D = false
       , vendorPrefix = '';
 
     // set local flags for 3D support and css vendor prefix
-    api.configure = function (can3D, prefix) {
+    adaptor.configure = function (can3D, prefix) {
       supports3D = can3D;
       vendorPrefix = prefix;
     };
 
     // sets the box and slides initial state via css
-    api.initialize = function ($box, $slides, settings) {
+    adaptor.initialize = function ($box, $slides, settings) {
       var $parent = $box.parent()
         , width = $parent.innerWidth()
         , height = $parent.innerHeight()
@@ -25,42 +25,20 @@
           , height: height
         };
         
-      // cache original css and set new ------------------------------ TODO refactor this
-      settings.origCSS = {};
-      settings.origCSS.box = {
-          position: $box.css('position')
-        , top: $box.css('top')
-        , left: $box.css('left')
-        , width: $box.css('width')
-        , height: $box.css('height')
-      };
-      settings.origCSS.box[vendorPrefix + 'transform'] = (
-        $box.css(vendorPrefix + 'transform')
-      );
-      settings.origCSS.box[vendorPrefix + 'transition'] = (
-        $box.css(vendorPrefix + 'transition')
-      );
-      settings.origCSS.box[vendorPrefix + 'transform-style'] = (
-        $box.css(vendorPrefix + 'transform-style')
-      );
-      settings.origCSS.slides = {
-          position: $slides.css('position')
-        , top: $slides.css('top')
-        , left: $slides.css('left')
-        , width: $slides.css('width')
-        , height: $slides.css('height')
-        , display: $slides.css('display')
-      };
-      settings.origCSS.slides[vendorPrefix + 'transform'] = (
-        $slides.css(vendorPrefix + 'transform')
-      );
-      settings.origCSS.viewport = {
-          position: $parent.css('position')
-        , overflow: $parent.css('overflow')
-      };
-      settings.origCSS.viewport[vendorPrefix + 'perspective'] = (
-        $parent.css(vendorPrefix + 'perspective')
-      );
+      // cache original css
+      adaptor._cacheOriginalCSS($box, 'box', settings, [
+          vendorPrefix + 'transform'
+        , vendorPrefix + 'transition'
+        , vendorPrefix + 'transform-style'
+      ]);
+      adaptor._cacheOriginalCSS($slides, 'slides', settings, [
+        vendorPrefix + 'transform'
+      ]);
+      adaptor._cacheOriginalCSS($slides, 'viewport', settings, [
+        vendorPrefix + 'perspective'
+      ]);
+      
+      // apply new css
       $slides.css(positioning);
       $box.css(positioning);
 
@@ -93,7 +71,7 @@
         );
 
         // wait then apply transition for box rotation
-        setTimeout(function () { api.reset($box, settings); }, 10);
+        setTimeout(function () { adaptor.reset($box, settings); }, 10);
       }
       else { // using fade hide all but first slide
         $slides.filter(':gt(0)').hide();
@@ -101,14 +79,14 @@
     };
 
     // update the settings on an option change
-    api.reset = function ($box, settings) {
+    adaptor.reset = function ($box, settings) {
       var speed = (settings.speed / 1000) + 's';
 
       $box.css(vendorPrefix + 'transition', vendorPrefix +'transform '+ speed);
     };
 
     // moves the slider to the next, prev or 'index' slide
-    api.transition = function (settings) {
+    adaptor.transition = function (settings) {
       var angle = settings.bsangle + (settings.reverse ? 90 : -90);
       
 
@@ -154,7 +132,7 @@
     };
 
     // just resets the box and slides to their original css
-    api.destroy = function ($box, settings) {
+    adaptor.destroy = function ($box, settings) {
       var $slides = $box.children()
         , $parent = $box.parent();
         
@@ -177,7 +155,7 @@
       }
     };
 
-    return api;
+    return adaptor;
 
   }()));
 

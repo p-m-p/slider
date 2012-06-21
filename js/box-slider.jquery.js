@@ -64,6 +64,7 @@
   // registers and configures a slide animator
   methods.registerAnimator = function (name, animator) {
     slideAnimators[name] = animator;
+    slideAnimators[name]._cacheOriginalCSS = cacheCSS;
     if (typeof animator.configure === 'function') {
       animator.configure(supports3D, vendorPrefix);
     }
@@ -262,6 +263,21 @@
     ) { return -1; }
 
     return nextIndex;
+  };
+
+  // caches the desired css for reapplying the original styling when
+  // the plugin is destroyed or reset
+  var cacheCSS = function ($el, name, settings, extraAtts) {
+    var attributes = [
+      'position',   'top',    'left',   'display',  'overflow', 
+      'width',      'height'
+    ].concat(extraAtts || []);
+    settings.origCSS || (settings.origCSS = {});
+    settings.origCSS[name] || (settings.origCSS[name] = {});
+    
+    $.each(attributes, function (i, att) {
+      settings.origCSS[name][att] = $el.css(att);
+    });    
   };
 
   // set the correct vendor prefix for the css properties

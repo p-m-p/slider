@@ -6,20 +6,14 @@
 
     // setup slide and box css
     adaptor.initialize = function ($box, $slides, settings) {
-      settings.origCSS = {
-          box: {position: $box.css('position')}
-        , slides: {
-              position: $slides.css('position')
-            , top: $slides.css('top')
-            , left: $slides.css('left')
-            , display: $slides.css('display')
-          }
-      };
+      adaptor._cacheOriginalCSS($box, 'box', settings);
+      adaptor._cacheOriginalCSS($slides, 'slides', settings);
 
       if ('static auto'.indexOf($box.css('position')) !== -1) {
         $box.css('position', 'relative');
       }
-
+      
+      $box.css({height: $slides.eq(0).height(), overflow: 'hidden'});
       $slides
         .css({ position: 'absolute', top: 0, left: 0 })
         .filter(':gt(0)').hide();
