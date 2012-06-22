@@ -173,7 +173,7 @@
 
   // event listener for pause on hover
   var togglePlayPause = function (ev, reset, settings) {
-    var $box = $(this)
+    var $box = $(this);
     
     settings || (settings = $box.data('bssettings'));
 
