@@ -4,9 +4,14 @@ body {
   color: #fefefe;
 }
 
+h1 {
+  font-size: 1.8em;
+}
+
 #page {
   width: 640px;
   margin: 40px auto;
+  position: relative;
 }
 
 .slide {
@@ -14,6 +19,7 @@ body {
   padding: 0;
   width: 640px;
   height: 422px;
+  border: solid 1px #555;
 }
 
 .slide img {
@@ -63,4 +69,10 @@ body {
   text-decoration: none;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+#effect-selector {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
