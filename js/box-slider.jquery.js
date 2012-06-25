@@ -62,9 +62,13 @@
   };
 
   // registers and configures a slide animator
-  methods.registerAnimator = function (name, animator) {
-    slideAnimators[name] = animator;
-    slideAnimators[name]._cacheOriginalCSS = cacheCSS;
+  methods.registerAnimator = function (names, animator) {
+    $.each(names.split(','), function (i, name) {
+      slideAnimators[name] = animator;
+    });
+    
+    animator._cacheOriginalCSS = cacheCSS;
+    
     if (typeof animator.configure === 'function') {
       animator.configure(supports3D, vendorPrefix);
     }
@@ -238,8 +242,8 @@
   var resetAutoScroll = function ($box, settings) {
     settings || (settings = $box.data('bssettings') || {});
 
-    if (settings.autoscroll) {
-      toggleplaypause.call($box, undefined, true, settings);
+    if (settings.autoScroll) {
+      togglePlayPause.call($box, undefined, true, settings);
     }
   };
 

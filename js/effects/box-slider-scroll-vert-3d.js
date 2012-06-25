@@ -1,6 +1,6 @@
 ;(function (w, $, undefined) {
 
-  w.jqBoxSlider.registerAnimator('scrollVert3d', (function () {
+  w.jqBoxSlider.registerAnimator('scrollVert3d,scrollHorz3d', (function () {
 
     var adaptor = {}
       , supports3D = false
@@ -49,7 +49,7 @@
 
       if (supports3D) {
         // set the Z axis translation amount on the settings for this box
-        settings.translateZ = height / 2;
+        settings.translateZ = settings.effect === 'scrollVert3d' ? height / 2 : height + (height / 2);
         settings.bsangle = 0;
 
         // set the parent as the 3D viewport
@@ -87,8 +87,8 @@
 
     // moves the slider to the next, prev or 'index' slide
     adaptor.transition = function (settings) {
-      var angle = settings.bsangle + (settings.reverse ? 90 : -90);
-      
+      var angle = settings.bsangle + (settings.reverse ? 90 : -90)
+        , isVert = settings.effect === 'scrollVert3d';
 
       if (!supports3D) { // no 3D support just use a basic fade transition
         settings.$slides.filter(function (index) {
@@ -109,13 +109,13 @@
           .css('display', 'none');
         settings.$nextSlide.css( // move next slide to the effective next face
             vendorPrefix + 'transform'
-          , rotation(angle) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
+          , rotation(angle, isVert) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
         ).css('display', 'block');
 
         settings.$box.css( // rotate the box to show next face
             vendorPrefix + 'transform'
-          , 'translate3d(0, 0, -' + settings.translateZ +
-            'px) rotate3d(1, 0, 0, ' + angle + 'deg)'
+          , 'translate3d(0, 0, -' + settings.translateZ + 'px) rotate3d(' +
+            (isVert ? '1, 0, 0, ' : '0, 1, 0, ') + angle + 'deg)'
         );
 
         // the box has gone full circle so start again from 0deg
@@ -146,12 +146,12 @@
     };
 
     // returns the correct face rotation based on the box's rotated angle
-    var rotation = function (angle) {
+    var rotation = function (angle, isVert) {
       switch (angle) {
         case 360: case -360: return 'rotate3d(0, 1, 0, 0deg)'; // front
-        case 90:  case -270: return 'rotate3d(1, 0, 0, -90deg)'; // bottom
+        case 90:  case -270: return 'rotate3d(' + (isVert ? '1, 0, 0, -90deg' : '0, 1, 0, -90deg') + ')'; // bottom / left side
         case 180: case -180: return 'rotate3d(1, 0, 0, 180deg)'; // back
-        case 270: case -90:  return 'rotate3d(1, 0, 0, 90deg)'; // top
+        case 270: case -90:  return 'rotate3d(' + (isVert ? '1, 0, 0, 90deg' : '0, 1, 0, 90deg') + ')'; // top / right side
       }
     };
 
