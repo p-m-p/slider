@@ -103,6 +103,7 @@
           angle = settings.reverse ? 360 : -360;
         }
 
+        settings.$currSlide.css('z-index', 1);
         settings.$slides // remove transform from all slides except current front face
           .filter(function (index) { return settings.currIndex !== index;})
           .css(vendorPrefix + 'transform', 'none')
@@ -110,7 +111,7 @@
         settings.$nextSlide.css( // move next slide to the effective next face
             vendorPrefix + 'transform'
           , rotation(angle, isVert) + ' translate3d(0, 0,' + settings.translateZ + 'px)'
-        ).css('display', 'block');
+        ).css({display: 'block', zIndex: 2})
 
         settings.$box.css( // rotate the box to show next face
             vendorPrefix + 'transform'
