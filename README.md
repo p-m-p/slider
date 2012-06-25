@@ -151,17 +151,15 @@ $('#content-box').boxSlider('option', 'onafter', function ($previousSlide, $curr
 
 Effects
 ---
-
-So far there is only one 3D effect which is the vertical box rotation transition which 
-comes with the plugin as the default. The animation effects come as adaptors that are 
-registered with the main box slider plugin using the `registerAnimator` method in one
-of the following ways.
+The animation effects come as adaptors that are registered with the main box slider plugin 
+using the `registerAnimator` method in one of the following ways. If the adaptor supports
+more than one animation effect then these must be passed in as a comma separated list.
 
 ```javascript
-$.fn.boxSlider('registerAnimator', 'effect name', AnimatorObject); // on $.fn
-window.jqBoxSlider.registerAnimator('effect name' AnimatorObject); // on the global alias
+$.fn.boxSlider('registerAnimator', 'effectName', AnimatorObject); // on $.fn
+window.jqBoxSlider.registerAnimator('effect1,effect2' AnimatorObject); // on the global alias
 ```
-Slide animators must follow the following interface and adhere to some fundamental rules.
+Slide animators must implement the following interface and adhere to some fundamental rules.
 
 ### `configure(Boolean supports3D, String vendorPrefix)`
 
