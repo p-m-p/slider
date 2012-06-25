@@ -49,7 +49,7 @@
 
       if (supports3D) {
         // set the Z axis translation amount on the settings for this box
-        settings.translateZ = settings.effect === 'scrollVert3d' ? height / 2 : height + (height / 2);
+        settings.translateZ = settings.effect === 'scrollVert3d' ? height * 0.5 : height * 0.75;
         settings.bsangle = 0;
 
         // set the parent as the 3D viewport
@@ -149,9 +149,9 @@
     var rotation = function (angle, isVert) {
       switch (angle) {
         case 360: case -360: return 'rotate3d(0, 1, 0, 0deg)'; // front
-        case 90:  case -270: return 'rotate3d(' + (isVert ? '1, 0, 0, -90deg' : '0, 1, 0, -90deg') + ')'; // bottom / left side
-        case 180: case -180: return 'rotate3d(1, 0, 0, 180deg)'; // back
-        case 270: case -90:  return 'rotate3d(' + (isVert ? '1, 0, 0, 90deg' : '0, 1, 0, 90deg') + ')'; // top / right side
+        case 90:  case -270: return 'rotate3d(' + (isVert ? '1, 0, 0,' : '0, 1, 0,') + ' -90deg)'; // bottom / left side
+        case 180: case -180: return 'rotate3d(' + (isVert ? '1, 0, 0,' : '0, 1, 0,') + ' 180deg)'; // back
+        case 270: case -90:  return 'rotate3d(' + (isVert ? '1, 0, 0,' : '0, 1, 0,') + ' 90deg)'; // top / right side
       }
     };
 

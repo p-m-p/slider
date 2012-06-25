@@ -19,6 +19,7 @@
         <form id="effect-selector">
           <select id="effects">
             <option value="scrollVert3d">3D vertical scroll</option>
+            <option value="scrollHorz3d">3D horizontal scroll</option>
             <option value="scrollVert">Vertical scroll</option>
             <option value="fade">Fade</option>
           </select>
@@ -56,6 +57,7 @@
               <li><a class="goto-slide" href="#" data-slideindex="3">4</a></li>
               <li><a class="goto-slide" href="#" data-slideindex="4">5</a></li>
               <li><a id="next" href="#">next</a></li>
+              <li><a id="pause" href="#">pause</a></li>
             </ul>
           </nav>
         </footer>
@@ -83,7 +85,7 @@
           , pauseOnHover: true
           , next: '#next'
           , prev: '#prev'
-          //, effect: 'scrollHorz3d'
+          , pause: '#pause'
         });
 
         // pagination isn't built in simply because it's easy to 
