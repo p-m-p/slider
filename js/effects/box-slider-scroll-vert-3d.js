@@ -49,7 +49,7 @@
 
       if (supports3D) {
         // set the Z axis translation amount on the settings for this box
-        settings.translateZ = settings.effect === 'scrollVert3d' ? height * 0.5 : height * 0.75;
+        settings.translateZ = settings.effect === 'scrollVert3d' ? height / 2 : width / 2;
         settings.bsangle = 0;
 
         // set the parent as the 3D viewport
