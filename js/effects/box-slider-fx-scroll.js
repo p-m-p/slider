@@ -68,8 +68,6 @@
         offs.anim = {left: '0px'};
       }
       
-      console.log(offs);
-      
       return offs;
     };
 
