@@ -37,6 +37,7 @@
       $box.append(wrapper);
 
       settings.blinds = wrapper;
+      settings._slideFilter = filterOutBlinds;
 
     };
 
@@ -45,9 +46,7 @@
         , height = settings.$box.height()
         , $blinds = $(settings.blinds).children();
 
-      console.log(settings.$slides.filter(function (i) { 
-        return settings.$slides.get(i) !== settings.blinds; 
-      }).hide());
+      settings.$slides.hide();
       settings.$nextSlide.show();
 
       $blinds.each(function (i, el) {
@@ -67,6 +66,11 @@
           , top: 0
         });
       }, settings.speed * 2);
+    };
+    
+    // filters the blinds wrapper out of the content slides
+    var filterOutBlinds = function (index, settings) {
+      return this.get(index) !== settings.blinds;
     };
 
     return adaptor;

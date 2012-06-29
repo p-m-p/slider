@@ -195,11 +195,26 @@
   var showNextSlide = function ($box, index, reverse) {
     var settings = $box.data('bssettings')
       , $slides = $box.children()
-      , currIndex = settings.bsfaceindex || 0
-      , nextIndex = calculateIndex(currIndex, $slides.length, reverse, index)
+      , currIndex
+      , nextIndex
       , $currSlide
       , $nextSlide;
-
+    
+    // apply slide filter so we only have the content slides
+    if (settings._slideFilter != null) {
+      if (typeof settings._slideFilter === 'function') {
+        $slides = $slides.filter(function (index) {
+          return settings._slideFilter.call($slides, index, settings);
+        });
+      }
+      else {
+        $slides = $slides.filter(settings.slideFilter);
+      }
+    }
+    
+    currIndex = settings.bsfaceindex || 0;
+    nextIndex = calculateIndex(currIndex, $slides.length, reverse, index);
+    
     // only go forward if not already in motion
     // and user defined index is not out of bounds
     if ($box.hasClass('jbs-in-motion') || nextIndex === -1) return;
