@@ -196,7 +196,7 @@ recieve the index as the first paramter and the plugin settings as the second.
 adaptor.initialize = function ($box, $slides, settings) {
   // implementation omitted
   
-  settings._sliderFilter = function (index, settings) {
+  settings._slideFilter = function (index, settings) {
     return this.get(index) !== settings.$blinds; // 'this' will be $slides
   }
 };
