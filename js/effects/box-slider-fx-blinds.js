@@ -112,7 +112,7 @@
       var css = {backgroundImage: 'url('+slideImageURL(settings.$nextSlide)+')'};
       
       switch (settings.effect) {
-        case 'blindDown': css.top = '100%'; break;
+        case 'blindDown': css.top = '0px'; break;
         case 'blindLeft': css.width = settings.blindSize; break;
       }
       
