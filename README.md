@@ -84,6 +84,13 @@ Options
   that when clicked will advance the slider to the previous slide
 * `effect (default: 'scrollVert3d')` The slide animation effect to use when
   scrolling through content slides
+
+
+Effect options
+---
+
+### `srollVert3d,scrollHorz3d`
+
 * `perspective (default: 1000)` The 3D perspective at which the content slides
   are placed from the view port during transition
 
