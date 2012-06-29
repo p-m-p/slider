@@ -101,6 +101,7 @@
       if (setting === 'effect') {
         settings.slideAnimator.destroy($box, settings);
         settings.slideAnimator = methods.slideAnimator(newValue);
+        settings._slideFilter = null;
         settings.bsfaceindex = 0;
         settings.slideAnimator.initialize($box, $box.children(), settings);
         return;
