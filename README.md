@@ -186,6 +186,22 @@ adaptor.initialize = function ($box, $slides, settings) {
 };
 ```
 
+During the initialisation process you may set the `_slideFilter` attribute on `settings` which will
+be used to filter the set of slides (`$slides`) before the transition takes place. An example of this
+can be seen in the `box-slider-fx-blinds.js` adaptor. This filter uses the jQuery filter method but
+if you pass a function then that function will be bound to the unfiltered `$slides` jQuery object and will
+recieve the index as the first paramter and the plugin settings as the second.
+
+```javascript
+adaptor.initialize = function ($box, $slides, settings) {
+  // implementation omitted
+  
+  settings._sliderFilter = function (index, settings) {
+    return this.get(index) !== settings.$blinds; // 'this' will be $slides
+  }
+};
+```
+
 ### `transition(Object settings)`
 
 This method is required and completes the transition from the current slide to the next slide. 
