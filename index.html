@@ -44,6 +44,7 @@
             </div>
           </div>
 
+          <div id="time-indicator"></div>
         </div>
 
         <footer>
@@ -72,6 +73,10 @@
         </ul>
       </aside>
 
+      <footer id="credits">
+        <p>Created and maintained by <a href="http://www.philparsons.co.uk">Phil Parsons</a> | Images courtesy of the awesome <a href="http://www.davehillphoto.com/">Dave Hill</a></p> 
+      </footer>
+
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.7.2.min.js"><\/script>')</script>
@@ -86,25 +91,34 @@
 
         var $box = $('#box')
           , $indicators = $('.goto-slide')
-          , $effects = $('.effect');
+          , $effects = $('.effect')
+          , $timeIndicator = $('#time-indicator')
+          , slideInterval = 5000;
 
         var switchIndicator = function ($c, $n, currIndex, nextIndex) {
+          $timeIndicator.stop().css('width', 0);
           $indicators.removeClass('current').eq(nextIndex).addClass('current');
+        };
+
+        var startTimeIndicator = function () {
+          $timeIndicator.animate({width: '680px'}, slideInterval);
         };
 
         // initialize the plugin with the desired settings
         $box.boxSlider({
             speed: 1000
           , autoScroll: true
-          , timeout: 5000
-          , pauseOnHover: true
+          , timeout: slideInterval
           , next: '#next'
           , prev: '#prev'
           , pause: '#pause'
-          , effect: 'scrollHorz3d'
+          , effect: 'scrollVert3d'
           , blindCount: 15
           , onbefore: switchIndicator
+          , onafter: startTimeIndicator
         });
+
+        startTimeIndicator();
 
         // pagination isn't built in simply because it's easy to
         // roll your own with the plugin API methods
@@ -117,8 +131,8 @@
           var $effect = $(this);
 
           $box.boxSlider('option', 'effect', $effect.data('fx'));
-          $effect.addClass('current');
           $effects.removeClass('current');
+          $effect.addClass('current');
 
           switchIndicator(null, null, 0, 0);
           ev.preventDefault();
