@@ -1,7 +1,7 @@
-jQuery 3D content slider
+Adaptor, a jQuery 3D content slider
 ===
 
-This jQuery plugin is a light-weight content slider that provides a simple
+Adaptor is a light-weight content slider that provides a simple
 interface for creating cool 2D or 3D slide animation transitions. It comes, by
 default, with a 3D vertical scrolling box transition and I intend to create
 more cool effects as I find time.
@@ -14,6 +14,8 @@ Support
 
 Currently, I've only added 3D support for webkit and Firefox, all other browsers
 will fallback gracefully to a simple fade transition.
+
+All 2D slide transitions have been tested in IE6+ and all other modern browsers.
 
 Usage
 ---
