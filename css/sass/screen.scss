@@ -2,9 +2,9 @@
 
 $elem_cl: #2edbac;
 
-html { 
-  background: url(img/page-bg.png) repeat-x #333; 
-  font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif; 
+html {
+  background: url(img/page-bg.png) repeat-x #333;
+  font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif;
   color: #999;
 }
 
@@ -64,16 +64,25 @@ footer { margin: 0 140px; }
 }
 
 #next, #prev {
+
   position: absolute;
   top: 80px;
   width: 30px;
   height: 300px;
-  background: $elem_cl;
+  background: url(img/next-prev-sprite.png) no-repeat;
   display: block;
+  -webkit-transition: background .4s;
+  -moz-transition: background .4s;
+  transition: background .4s;
+
+  &:hover {
+    background: url(img/next-prev-sprite-hover.png) no-repeat;
+  }
+
 }
 
-#prev { left: 100px; }
-#next { left: 830px; }
+#prev { left: 90px; }
+#next, #next:hover { left: 840px; background-position: -30px 0; }
 
 #effect-switcher {
 
@@ -86,8 +95,8 @@ footer { margin: 0 140px; }
 
 }
 
-#effect-list { 
-  overflow: hidden; 
+#effect-list {
+  overflow: hidden;
   li { display: inline; }
 }
 
