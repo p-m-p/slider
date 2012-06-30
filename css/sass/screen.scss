@@ -2,13 +2,13 @@
 
 $elem_cl: #2edbac;
 
-html { background: url(img/page-bg.png) repeat-x #333; }
-
-header {
-  margin: 20px 140px;
-  font-family: 'Aldrich';
+html { 
+  background: url(img/page-bg.png) repeat-x #333; 
+  font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif; 
+  color: #999;
 }
 
+header { margin: 20px 140px; }
 h1 { font-size: 48px; color: $elem_cl; text-transform: uppercase; }
 h2 { font-size: 22px; color: #555; }
 
@@ -18,13 +18,97 @@ h2 { font-size: 22px; color: #555; }
 }
 
 #viewport-shadow {
+  position: relative;
   width: 680px;
   padding: 0 140px 70px;
   background: url(img/box-shadow.png) bottom no-repeat;
 }
 
-#viewport {
+
+#viewport, #box, .slide {
   width: 680px;
   height: 460px;
-  overflow: hidden;
 }
+
+#viewport { overflow: hidden; }
+
+footer { margin: 0 140px; }
+
+#controls {
+
+  position: relative;
+  top: -40px;
+  float: right;
+  overflow: hidden;
+
+  li { display: inline; }
+
+}
+
+.goto-slide {
+
+  margin-left: 10px;
+  width: 14px;
+  height: 14px;
+  display: block;
+  float: left;
+  border: solid 1px #000;
+  background-color: #555;
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0px 0px 8px #333;
+  -moz-box-shadow: inset 0px 0px 8px #333;
+  box-shadow: inset 0px 0px 8px #333;
+
+  &.current { background-color: $elem_cl; }
+
+}
+
+#next, #prev {
+  position: absolute;
+  top: 80px;
+  width: 30px;
+  height: 300px;
+  background: $elem_cl;
+  display: block;
+}
+
+#prev { left: 100px; }
+#next { left: 830px; }
+
+#effect-switcher {
+
+  margin: 0 0 60px;
+
+  h2 {
+    border-bottom: solid 1px #555;
+    margin: 0 0 10px;
+  }
+
+}
+
+#effect-list { 
+  overflow: hidden; 
+  li { display: inline; }
+}
+
+.effect {
+
+  display: block;
+  float: left;
+  margin: 0 10px 0 0;
+  border: solid 1px black;
+  border-radius: 7px;
+  padding: 10px 12px 6px;
+  color: #ccc;
+  text-decoration: none;
+  background-color: #555;
+  -webkit-box-shadow: inset 0px 0px 8px #000;
+  -moz-box-shadow: inset 0px 0px 8px #333;
+  box-shadow: inset 0px 0px 8px #333;
+
+  &.current {
+    color: $elem_cl;
+  }
+
+}
+

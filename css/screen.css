@@ -1,4 +1,4 @@
-/* line 17, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 20, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 20, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 body {
   line-height: 1;
 }
 
-/* line 22, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 24, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 26, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 28, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 101, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 101, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 30, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 114, ../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 114, ../../../../../Library/Ruby/Gems/1.8/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -66,12 +66,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* line 5, sass/screen.scss */
 html {
   background: url(img/page-bg.png) repeat-x #333333;
+  font: 0.85em/1 "Aldrich", Helvetica, Arial, sans-serif;
+  color: #999;
 }
 
-/* line 7, sass/screen.scss */
+/* line 11, sass/screen.scss */
 header {
   margin: 20px 140px;
-  font-family: 'Aldrich';
 }
 
 /* line 12, sass/screen.scss */
@@ -95,14 +96,114 @@ h2 {
 
 /* line 20, sass/screen.scss */
 #viewport-shadow {
+  position: relative;
   width: 680px;
   padding: 0 140px 70px;
   background: url(img/box-shadow.png) bottom no-repeat;
 }
 
-/* line 26, sass/screen.scss */
-#viewport {
+/* line 28, sass/screen.scss */
+#viewport, #box, .slide {
   width: 680px;
   height: 460px;
+}
+
+/* line 33, sass/screen.scss */
+#viewport {
   overflow: hidden;
+}
+
+/* line 35, sass/screen.scss */
+footer {
+  margin: 0 140px;
+}
+
+/* line 37, sass/screen.scss */
+#controls {
+  position: relative;
+  top: -40px;
+  float: right;
+  overflow: hidden;
+}
+/* line 44, sass/screen.scss */
+#controls li {
+  display: inline;
+}
+
+/* line 48, sass/screen.scss */
+.goto-slide {
+  margin-left: 10px;
+  width: 14px;
+  height: 14px;
+  display: block;
+  float: left;
+  border: solid 1px #000;
+  background-color: #555;
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0px 0px 8px #333;
+  -moz-box-shadow: inset 0px 0px 8px #333;
+  box-shadow: inset 0px 0px 8px #333;
+}
+/* line 62, sass/screen.scss */
+.goto-slide.current {
+  background-color: #2edbac;
+}
+
+/* line 66, sass/screen.scss */
+#next, #prev {
+  position: absolute;
+  top: 80px;
+  width: 30px;
+  height: 300px;
+  background: #2edbac;
+  display: block;
+}
+
+/* line 75, sass/screen.scss */
+#prev {
+  left: 100px;
+}
+
+/* line 76, sass/screen.scss */
+#next {
+  left: 830px;
+}
+
+/* line 78, sass/screen.scss */
+#effect-switcher {
+  margin: 0 0 60px;
+}
+/* line 82, sass/screen.scss */
+#effect-switcher h2 {
+  border-bottom: solid 1px #555;
+  margin: 0 0 10px;
+}
+
+/* line 89, sass/screen.scss */
+#effect-list {
+  overflow: hidden;
+}
+/* line 91, sass/screen.scss */
+#effect-list li {
+  display: inline;
+}
+
+/* line 94, sass/screen.scss */
+.effect {
+  display: block;
+  float: left;
+  margin: 0 10px 0 0;
+  border: solid 1px black;
+  border-radius: 7px;
+  padding: 10px 12px 6px;
+  color: #ccc;
+  text-decoration: none;
+  background-color: #555;
+  -webkit-box-shadow: inset 0px 0px 8px #000;
+  -moz-box-shadow: inset 0px 0px 8px #333;
+  box-shadow: inset 0px 0px 8px #333;
+}
+/* line 109, sass/screen.scss */
+.effect.current {
+  color: #2edbac;
 }

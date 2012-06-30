@@ -11,46 +11,66 @@
 	<body>
 	  <div id="page">
 
-      <header>
-        <hgroup>
-          <h1>Adaptor</h1>
-          <h2>jQuery content slider</h2>
-        </hgroup>
-      </header>
+      <section>
+        <header>
+          <hgroup>
+            <h1>Adaptor</h1>
+            <h2>jQuery content slider</h2>
+          </hgroup>
+        </header>
 
-      <div id="viewport-shadow">
-        <div id="viewport">
-          <div id="box">
-            <figure class="slide">
-              <img src="img/the-battle.jpg">
-            </figure>
-            <figure class="slide">
-              <img src="img/hiding-the-map.jpg">
-            </figure>
-            <figure class="slide">
-              <img src="img/theres-the-buoy.jpg">
-            </figure>
-            <figure class="slide">
-              <img src="img/finding-the-key.jpg">
-            </figure>
-            <figure class="slide">
-              <img src="img/lets-get-out-of-here.jpg">
-            </figure>
+        <div id="viewport-shadow">
+
+          <a href="#" id="prev" title="go to the next slide"></a>
+          <a href="#" id="next" title="go to the next slide"></a>
+
+          <div id="viewport">
+            <div id="box">
+              <figure class="slide">
+                <img src="img/the-battle.jpg">
+              </figure>
+              <figure class="slide">
+                <img src="img/hiding-the-map.jpg">
+              </figure>
+              <figure class="slide">
+                <img src="img/theres-the-buoy.jpg">
+              </figure>
+              <figure class="slide">
+                <img src="img/finding-the-key.jpg">
+              </figure>
+              <figure class="slide">
+                <img src="img/lets-get-out-of-here.jpg">
+              </figure>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <footer>
-        <nav class="slider-controls">
-          <ul id="controls">
-            <li><a class="goto-slide" href="#" data-slideindex="0"></a></li>
-            <li><a class="goto-slide" href="#" data-slideindex="1"></a></li>
-            <li><a class="goto-slide" href="#" data-slideindex="2"></a></li>
-            <li><a class="goto-slide" href="#" data-slideindex="3"></a></li>
-            <li><a class="goto-slide" href="#" data-slideindex="4"></a></li>
-          </ul>
-        </nav>
-      </footer>
+        </div>
+
+        <footer>
+          <nav class="slider-controls">
+            <ul id="controls">
+              <li><a class="goto-slide current" href="#" data-slideindex="0"></a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="1"></a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="2"></a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="3"></a></li>
+              <li><a class="goto-slide" href="#" data-slideindex="4"></a></li>
+            </ul>
+          </nav>
+        </footer>
+      </section>
+
+      <aside id="effect-switcher">
+        <h2>Select effect</h2>
+        <ul id="effect-list">
+          <li><a href="#" class="effect current" data-fx="scrollVert3d">Vertical 3D scroll</a></li>
+          <li><a href="#" class="effect" data-fx="scrollHorz3d">Horizontal 3D scroll</a></li>
+          <li><a href="#" class="effect" data-fx="scrollVert">Vertical scroll</a></li>
+          <li><a href="#" class="effect" data-fx="scrollHorz">Horizontal scroll</a></li>
+          <li><a href="#" class="effect" data-fx="blindLeft">Blind left</a></li>
+          <li><a href="#" class="effect" data-fx="blindDown">Blind down</a></li>
+          <li><a href="#" class="effect" data-fx="fade">Fade</a></li>
+        </ul>
+      </aside>
 
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
@@ -64,7 +84,13 @@
 
 		  $(function () {
 
-        var $box = $('#box');
+        var $box = $('#box')
+          , $indicators = $('.goto-slide')
+          , $effects = $('.effect');
+
+        var switchIndicator = function ($c, $n, currIndex, nextIndex) {
+          $indicators.removeClass('current').eq(nextIndex).addClass('current');
+        };
 
         // initialize the plugin with the desired settings
         $box.boxSlider({
@@ -77,6 +103,7 @@
           , pause: '#pause'
           , effect: 'scrollHorz3d'
           , blindCount: 15
+          , onbefore: switchIndicator
         });
 
         // pagination isn't built in simply because it's easy to
@@ -86,8 +113,15 @@
           ev.preventDefault();
         });
 
-        $('#effects').on('change', function () {
-          $box.boxSlider('option', 'effect', this.value);
+        $('#effect-list').on('click', '.effect', function (ev) {
+          var $effect = $(this);
+
+          $box.boxSlider('option', 'effect', $effect.data('fx'));
+          $effect.addClass('current');
+          $effects.removeClass('current');
+
+          switchIndicator(null, null, 0, 0);
+          ev.preventDefault();
         });
 
 		  });
