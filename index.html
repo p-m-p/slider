@@ -2,70 +2,55 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Cubic slider</title>
+	<title>Adaptor :: jQuery content slider</title>
 
-	<link href="css/style.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+	<link href="css/screen.css" rel="stylesheet">
   <script src="js/lib/modernizr.min.js"></script>
 </head>
 	<body>
 	  <div id="page">
 
-      <section>
+      <header>
+        <hgroup>
+          <h1>Adaptor</h1>
+          <h2>jQuery content slider</h2>
+        </hgroup>
+      </header>
 
-        <header>
-          <h1>jQuery 3D content slider</h1>
-        </header>
-
-        <form id="effect-selector">
-          <select id="effects">
-            <option value="scrollVert3d">3D vertical scroll</option>
-            <option value="scrollHorz3d">3D horizontal scroll</option>
-            <option value="scrollVert">Vertical scroll</option>
-            <option value="scrollHorz">Horizontal scroll</option>
-            <option value="blindDown">Blind down</option>
-            <option value="blindLeft">Blind Left</option>
-            <option value="fade">Fade</option>
-          </select>
-        </form>
-      
-        <div id="slider-shadow">
-          <div id="slider-viewport">
-            <div id="box">
-              <figure class="slide">
-                <img src="img/slide-1.png" alt="Example image for slide one">
-              </figure>
-              <figure class="slide">
-                <img src="img/slide-2.png" alt="Example image for slide two">
-              </figure>
-              <figure class="slide">
-                <img src="img/slide-3.png" alt="Example image for slide three">
-              </figure>
-              <figure class="slide">
-                <img src="img/slide-4.png" alt="Example image for slide four">
-              </figure>
-              <figure class="slide">
-                <img src="img/slide-5.png" alt="Example image for slide five">
-              </figure>
-            </div>
+      <div id="viewport-shadow">
+        <div id="viewport">
+          <div id="box">
+            <figure class="slide">
+              <img src="img/the-battle.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/hiding-the-map.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/theres-the-buoy.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/finding-the-key.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/lets-get-out-of-here.jpg">
+            </figure>
           </div>
         </div>
+      </div>
 
-        <footer>
-          <nav class="slider-controls">
-            <ul id="controls">
-              <li><a id="prev" href="#">prev</a></li>
-              <li><a class="goto-slide" href="#" data-slideindex="0">1</a></li>
-              <li><a class="goto-slide" href="#" data-slideindex="1">2</a></li>
-              <li><a class="goto-slide" href="#" data-slideindex="2">3</a></li>
-              <li><a class="goto-slide" href="#" data-slideindex="3">4</a></li>
-              <li><a class="goto-slide" href="#" data-slideindex="4">5</a></li>
-              <li><a id="next" href="#">next</a></li>
-              <li><a id="pause" href="#">pause</a></li>
-            </ul>
-          </nav>
-        </footer>
-
-      </section>
+      <footer>
+        <nav class="slider-controls">
+          <ul id="controls">
+            <li><a class="goto-slide" href="#" data-slideindex="0"></a></li>
+            <li><a class="goto-slide" href="#" data-slideindex="1"></a></li>
+            <li><a class="goto-slide" href="#" data-slideindex="2"></a></li>
+            <li><a class="goto-slide" href="#" data-slideindex="3"></a></li>
+            <li><a class="goto-slide" href="#" data-slideindex="4"></a></li>
+          </ul>
+        </nav>
+      </footer>
 
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
@@ -83,16 +68,18 @@
 
         // initialize the plugin with the desired settings
         $box.boxSlider({
-            speed: 750
+            speed: 1000
           , autoScroll: true
           , timeout: 5000
           , pauseOnHover: true
           , next: '#next'
           , prev: '#prev'
           , pause: '#pause'
+          , effect: 'scrollHorz3d'
+          , blindCount: 15
         });
 
-        // pagination isn't built in simply because it's easy to 
+        // pagination isn't built in simply because it's easy to
         // roll your own with the plugin API methods
         $('#controls').on('click', '.goto-slide', function (ev) {
           $box.boxSlider('showSlide', $(this).data('slideindex'));

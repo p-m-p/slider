@@ -1,0 +1,30 @@
+@import 'compass/reset', 'base';
+
+$elem_cl: #2edbac;
+
+html { background: url(img/page-bg.png) repeat-x #333; }
+
+header {
+  margin: 20px 140px;
+  font-family: 'Aldrich';
+}
+
+h1 { font-size: 48px; color: $elem_cl; text-transform: uppercase; }
+h2 { font-size: 22px; color: #555; }
+
+#page {
+  width: 960px;
+  margin: 0 auto;
+}
+
+#viewport-shadow {
+  width: 680px;
+  padding: 0 140px 70px;
+  background: url(img/box-shadow.png) bottom no-repeat;
+}
+
+#viewport {
+  width: 680px;
+  height: 460px;
+  overflow: hidden;
+}

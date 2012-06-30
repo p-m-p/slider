@@ -6,7 +6,7 @@ interface for creating cool 2D or 3D slide animation transitions. It comes, by
 default, with a 3D vertical scrolling box transition and I intend to create
 more cool effects as I find time.
 
-Not officially released yet and the API is still a little volatile but all working. 
+Not officially released yet and the API is still a little volatile but all working.
 Browse index.html for demos.
 
 Support
@@ -47,8 +47,8 @@ a box containing slides of content.
 Technically no CSS is required but if the outer box `div.slider-viewport` is
 statically positioned the plugin will apply relative positioning to it so that
 it can hold the absolutely positioned box. It should be noted that the viewport
-and box should be the same width and height as the content slides so that the 
-rotation does not appear off center. It is also a good idea to constrain the 
+and box should be the same width and height as the content slides so that the
+rotation does not appear off center. It is also a good idea to constrain the
 size of the viewport so that the slides don't spew down the page at load time.
 
 ```css
@@ -57,7 +57,7 @@ size of the viewport so that the slides don't spew down the page at load time.
 ```
 
 Include the `box-slider.jquery.js` (this one first) and the desired effect
-scripts (these second) in your page and then on page load the usual jQuery 
+scripts (these second) in your page and then on page load the usual jQuery
 sugaryness applies...
 
 ```javascript
@@ -135,11 +135,12 @@ Events
 ### `onbefore`
 
 Fires before each slide transition starts. The function parameter will be bound
-to the jQuerified box and will receive the current slide as it's first parameter
-and the next slide as its second.
+to the jQuerified box and will receive the current slide as it's first parameter,
+the next slide as its second, the current slide index as it's third and the next
+slide index as it's last.
 
 ```javascript
-$('#content-box').boxSlider('option', 'onbefore', function ($currentSlide, $nextSlide) {
+$('#content-box').boxSlider('option', 'onbefore', function ($currentSlide, $nextSlide, currIndex, nextIndex) {
   // 'this' is effectively $('#content-box')
 });
 ```
@@ -147,18 +148,19 @@ $('#content-box').boxSlider('option', 'onbefore', function ($currentSlide, $next
 ### `onafter`
 
 Fires after each slide transition is complete. The function parameter will be bound
-to the jQuerified box and will receive the previous slide as it's first parameter
-and the current slide as its second.
+to the jQuerified box and will receive the previous slide as it's first parameter,
+the next slide as its second, the current slide index as it's third and the next
+slide index as it's last.
 
 ```javascript
-$('#content-box').boxSlider('option', 'onafter', function ($previousSlide, $currentSlide) {
+$('#content-box').boxSlider('option', 'onafter', function ($previousSlide, $currentSlide, currIndex, nextIndex) {
   // 'this' is effectively $('#content-box')
 });
 ```
 
 Effects
 ---
-The animation effects come as adaptors that are registered with the main box slider plugin 
+The animation effects come as adaptors that are registered with the main box slider plugin
 using the `registerAnimator` method in one of the following ways. If the adaptor supports
 more than one animation effect then these must be passed in as a comma separated list.
 
@@ -183,8 +185,8 @@ adaptor.configure = function (supports3D, vendorPrefix) {
 ### `initialize(jQuery $box, jQuery $slides, Object settings)`
 
 This method is required and sets up the initial state of each content slider. The first parameter
-`$box` is the jQuery content sliders main box (the selected element when the plugin is initialised), the 
-second parameter is the jQuery `$slides` object containing all of the individual slide elements and 
+`$box` is the jQuery content sliders main box (the selected element when the plugin is initialised), the
+second parameter is the jQuery `$slides` object containing all of the individual slide elements and
 the third parameter `settings` is the settings for the current content slider.
 
 ```javascript
@@ -202,7 +204,7 @@ recieve the index as the first paramter and the plugin settings as the second.
 ```javascript
 adaptor.initialize = function ($box, $slides, settings) {
   // implementation omitted
-  
+
   settings._slideFilter = function (index, settings) {
     return this.get(index) !== settings.$blinds; // 'this' will be $slides
   }
@@ -211,7 +213,7 @@ adaptor.initialize = function ($box, $slides, settings) {
 
 ### `transition(Object settings)`
 
-This method is required and completes the transition from the current slide to the next slide. 
+This method is required and completes the transition from the current slide to the next slide.
 The `settings` parameter is the plugin settings for the content slider extended with the following.
 
 ```javascript
@@ -221,14 +223,14 @@ The `settings` parameter is the plugin settings for the content slider extended 
   , $currSlide: // jQuery object containing the current visible slide
   , $nextSlide: // jQuery object containing the next slide to show
   , reverse: // the direction in which to travel (read forwards, backwards)
-  , currIndex: // the index at which $currSlide resides within $slides 
+  , currIndex: // the index at which $currSlide resides within $slides
   , nextIndex: // the index at which $nextSlide resides within $slides
 }
 ```
 
 This method must support browsers that do not support 3D transformations by degrading gracefully to
-some other method of transitioning the slides. Any settings that need to be cached against the 
-content slider for the next transition should be returned as a simple object which will be mixed 
+some other method of transitioning the slides. Any settings that need to be cached against the
+content slider for the next transition should be returned as a simple object which will be mixed
 into the plugin settings.
 
 ```javascript
@@ -252,9 +254,9 @@ adaptor.reset($box, settings) {
 
 ### `destroy(jQuery $box, Object settings)`
 
-This method is required and handles the clean up required to return the 
+This method is required and handles the clean up required to return the
 element contained in the `$box` jQuery object back to it's original state
-before `initialize` was called. Any additional settings applied to `settings` 
+before `initialize` was called. Any additional settings applied to `settings`
 should also be removed.
 
 ```javascript
@@ -266,11 +268,11 @@ adaptor.destroy = function ($box, settings) {
 ### `_cacheOriginalCSS(jQuery $el, String name, Object settings, Array extraAttributes)`
 
 You do not need to define this method as it will be applied to the animation adaptor at
-the time it is registered with the plugin through the call to `registerAnimator`. This 
-method will cache the original CSS of the given jQuery object in the 
+the time it is registered with the plugin through the call to `registerAnimator`. This
+method will cache the original CSS of the given jQuery object in the
 `bssettings` data set for the slider, the `settings` object passed to all of the adaptor
-functions, so that the original CSS may be applied when the plugin is destroyed or reset. 
-By default the following CSS attributes are cached `position, top, left, display, overflow, width, height`. 
+functions, so that the original CSS may be applied when the plugin is destroyed or reset.
+By default the following CSS attributes are cached `position, top, left, display, overflow, width, height`.
 Any additional attributes should be passed in as an array or strings in the `extraAttributes` parameter.
 
 ```javascript
@@ -286,7 +288,7 @@ adaptor.initialize = function ($box, $slides, settings) {
 }
 ```
 
-The cached CSS will then be available on the slider settings via the 
+The cached CSS will then be available on the slider settings via the
 `origCSS` object under the item `name` provided when `_cacheOriginalCSS`
 was called.
 
@@ -319,7 +321,7 @@ as the `fade` effect.
       if ('static auto'.indexOf($box.css('position')) !== -1) {
         $box.css('position', 'relative');
       }
-      
+
       $box.css({height: $slides.eq(0).height(), overflow: 'hidden'});
       $slides
         .css({ position: 'absolute', top: 0, left: 0 })

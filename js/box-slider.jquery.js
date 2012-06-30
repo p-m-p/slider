@@ -53,7 +53,7 @@
   // show the slide at the given index
   methods.showSlide = function (index) {
     index = parseInt(index, 10);
-    return this.each(function () { 
+    return this.each(function () {
       var $box = $(this);
 
       resetAutoScroll($box);
@@ -66,9 +66,9 @@
     $.each(names.split(','), function (i, name) {
       slideAnimators[name] = animator;
     });
-    
+
     animator._cacheOriginalCSS = cacheCSS;
-    
+
     if (typeof animator.configure === 'function') {
       animator.configure(supports3D, vendorPrefix);
     }
@@ -112,21 +112,21 @@
       }
     });
   };
-  
+
   // destroy the plugin for the selected sliders
   methods.destroy = function () {
     return this.each(function () {
       var $box = $(this)
         , data = $box.data() || {}
         , settings = data.bssettings;
-        
-      if (settings && typeof settings.slideAnimator === 'object') {        
+
+      if (settings && typeof settings.slideAnimator === 'object') {
         if (settings.autointv) {
           clearInterval(settings.autointv);
         }
         // ----------------------------------------------------------- TODO unbind control event listeners
         settings.slideAnimator.destroy($box, settings);
-      }      
+      }
     });
   };
 
@@ -179,7 +179,7 @@
   // event listener for pause on hover
   var togglePlayPause = function (ev, reset, settings) {
     var $box = $(this);
-    
+
     settings || (settings = $box.data('bssettings'));
 
     if (settings.autointv != null || reset) {
@@ -200,7 +200,7 @@
       , nextIndex
       , $currSlide
       , $nextSlide;
-    
+
     // apply slide filter so we only have the content slides
     if (settings._slideFilter != null) {
       if (typeof settings._slideFilter === 'function') {
@@ -212,10 +212,10 @@
         $slides = $slides.filter(settings.slideFilter);
       }
     }
-    
+
     currIndex = settings.bsfaceindex || 0;
     nextIndex = calculateIndex(currIndex, $slides.length, reverse, index);
-    
+
     // only go forward if not already in motion
     // and user defined index is not out of bounds
     if ($box.hasClass('jbs-in-motion') || nextIndex === -1) return;
@@ -225,10 +225,10 @@
     $box.addClass('jbs-in-motion'); // stops user clunking through faces ----- FIXME: queue user clicks and keep rotating the box
 
     if (typeof settings.onbefore === 'function') {
-      settings.onbefore.call($box, $currSlide, $nextSlide);
+      settings.onbefore.call($box, $currSlide, $nextSlide, currIndex, nextIndex);
     }
 
-    // add additional settings for the transition and 
+    // add additional settings for the transition and
     // call the slide animation
     $.extend(settings, settings.slideAnimator.transition($.extend({
         $box: $box
@@ -244,7 +244,7 @@
         function () {
           $box.removeClass('jbs-in-motion');
           if (typeof settings.onafter === 'function') {
-            settings.onafter.call($box, $currSlide, $nextSlide);
+            settings.onafter.call($box, $currSlide, $nextSlide, currIndex, nextIndex);
           }
         }
       , settings.speed
@@ -289,15 +289,15 @@
   // the plugin is destroyed or reset
   var cacheCSS = function ($el, name, settings, extraAtts) {
     var attributes = [
-      'position',   'top',    'left',   'display',  'overflow', 
+      'position',   'top',    'left',   'display',  'overflow',
       'width',      'height'
     ].concat(extraAtts || []);
     settings.origCSS || (settings.origCSS = {});
     settings.origCSS[name] || (settings.origCSS[name] = {});
-    
+
     $.each(attributes, function (i, att) {
       settings.origCSS[name][att] = $el.css(att);
-    });    
+    });
   };
 
   // set the correct vendor prefix for the css properties
