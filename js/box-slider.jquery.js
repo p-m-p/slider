@@ -178,11 +178,17 @@
 
   // event listener for pause on hover
   var togglePlayPause = function (ev, reset, settings) {
-    var $box = $(this);
+    var $box = $(this)
+      , playing;
 
     settings || (settings = $box.data('bssettings'));
+    playing = settings.autointv != null;
 
-    if (settings.autointv != null || reset) {
+    if (typeof settings.onplaypause === 'function') {
+      settings.onplaypause.call($box, playing ? 'pause' : 'play');
+    }
+
+    if (playing || reset) {
       settings.autointv = clearInterval(settings.autointv);
       if (!reset) return;
     }

@@ -63,7 +63,7 @@
         offs.anim = {top: '0px'};
       }
       else {
-        offs.next.left = (reverse ? $box.width() : -$box.width()) + 'px';
+        offs.next.left = (reverse ? -$box.width() : $box.width()) + 'px';
         offs.curr.left = -parseInt(offs.next.left, 10) + 'px';
         offs.anim = {left: '0px'};
       }
