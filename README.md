@@ -126,6 +126,22 @@ Destroys the plugin for the selected sliders
 $('#content-box').boxSlider('destroy');
 ```
 
+### `next`
+
+Moves the slider to the next slide
+
+```javascript
+$('#content-box').boxSlider('next');
+```
+
+### `prev`
+
+Moves the slider to the previous slide
+
+```javascript
+$('#content-box').boxSlider('prev');
+```
+
 Events
 ---
 
