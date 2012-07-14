@@ -60,6 +60,24 @@
       showNextSlide($box, index);
     });
   };
+  
+  // moves the slider to the next slide
+  methods.next = function () {
+    return this.each(function () {
+      var $box = $(this);
+      
+      showNextSlide($box);
+    });
+  };
+  
+  // moves the slider to the previous slide
+  methods.prev = function () {
+    return this.each(function () {
+      var $box = $(this);
+      
+      showNextSlide($box, null, true);
+    });
+  };
 
   // registers and configures a slide animator
   methods.registerAnimator = function (names, animator) {

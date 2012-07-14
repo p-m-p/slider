@@ -21,8 +21,6 @@
             position: 'absolute'
           , top: 0
           , left: 0
-          , width: width
-          , height: height
         };
         
       // cache original css
@@ -34,13 +32,13 @@
       adaptor._cacheOriginalCSS($slides, 'slides', settings, [
         vendorPrefix + 'transform'
       ]);
-      adaptor._cacheOriginalCSS($slides, 'viewport', settings, [
+      adaptor._cacheOriginalCSS($parent, 'viewport', settings, [
         vendorPrefix + 'perspective'
       ]);
       
       // apply new css
       $slides.css(positioning);
-      $box.css(positioning);
+      $box.css($.extend(positioning, { width: width, height: height }));
 
       // ensure parent is positioned to hold the box
       if ('static inherit'.indexOf($parent.css('position')) !== -1) {
