@@ -66,7 +66,7 @@ Options
 
 * `speed (default: 800)` The time interval in milliseconds within which the
   slide animation will complete
-* `autoscroll (default: false)` Set true to automatically transition through
+* `autoScroll (default: false)` Set true to automatically transition through
   the slides
 * `timeout (default: 5000)` The time interval between slide transitions. For use
   with autoscroll
