@@ -80,7 +80,12 @@
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.7.2.min.js"><\/script>')</script>
-    <script src="js/box-slider.jquery.js"></script>
+		<script src="js/box-slider.jquery.js"></script>
+		<script src="js/effects/box-slider-fx-scroll-3d.js"></script>
+		<script src="js/effects/box-slider-fx-fade.js"></script>
+		<script src="js/effects/box-slider-fx-scroll.js"></script>
+		<script src="js/effects/box-slider-fx-blinds.js"></script>
+		<script src="js/effects/box-slider-fx-carousel-3d.js"></script>
 		<script src="js/effects/box-slider-fx-tile-3d.js"></script>
 		<script>
 
@@ -92,12 +97,17 @@
           , $timeIndicator = $('#time-indicator')
           , slideInterval = 5000;
 
+        // This function runs before the slide transition starts
         var switchIndicator = function ($c, $n, currIndex, nextIndex) {
+          // kills the timeline by setting it's width to zero
           $timeIndicator.stop().css('width', 0);
+          // Highlights the next slide pagination control
           $indicators.removeClass('current').eq(nextIndex).addClass('current');
         };
 
+        // This function runs after the slide transition finishes
         var startTimeIndicator = function () {
+          // start the timeline animation
           $timeIndicator.animate({width: '680px'}, slideInterval);
         };
 
@@ -115,15 +125,16 @@
 //          , onafter: startTimeIndicator
         });
 
-        startTimeIndicator();
+        startTimeIndicator(); // start the time line for the first slide
 
-        // pagination isn't built in simply because it's easy to
-        // roll your own with the plugin API methods
+        // Paginate the slides using the indicator controls
         $('#controls').on('click', '.goto-slide', function (ev) {
           $box.boxSlider('showSlide', $(this).data('slideindex'));
           ev.preventDefault();
         });
 
+        // This is for demo purposes only, kills the plugin and resets it with 
+        // the newly selected effect
         $('#effect-list').on('click', '.effect', function (ev) {
           var $effect = $(this);
 
