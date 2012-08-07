@@ -40,7 +40,9 @@
       $box.css('position', 'relative').append($wrapper);
       $slides.hide();
       settings.$tileWrapper = $wrapper;
-      settings.nextFace = 'back';
+      settings._slideFilter = function (index, settings) {
+        return this.get(index) !== settings.$tileWrapper.get(0);
+      }
     };
 
     adaptor.reset = function ($box, settings) {};
@@ -49,29 +51,33 @@
       var $tiles = settings.$tileWrapper.find('.bs-tile')
         , intv = 20
         , imgSrc = slideImageURL(settings.$nextSlide)
-        , faceClass = '.bs-tile-face-' + settings.nextFace
-        , startat = 0;
+        , nextFace = settings.nextFace || 'back'
+        , faceClass = '.bs-tile-face-' + nextFace
+        , ret = {}
+        , angle;
 
-      //if (settings.nextFace === 'back') {
-      //  $tiles.css(vendorPrefix + 'transform', 'rotate3d(0,1,0,0deg)');
-      //  startat = 150;
-      //}
-      
-      //setTimeout(function () {
-        $tiles.each(function (i, tile) {
-          (function () {
-            var to = i * intv
-              , $tile = $(tile);
+      if (nextFace === 'back') {
+        ret.nextFace = 'front';
+        angle = 180;
+      }
+      else {
+        ret.nextFace = 'back';
+        angle = 0;
+      }
 
-            $tile.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
-            setTimeout(function () {
-              $tile.css(vendorPrefix + 'transform', 'rotate3d(0,1,0,180deg)');
-            }, to);
-          }());
-        });
-      //}, startat);
+      $tiles.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
 
-      settings.nextFace = settings.nextFace === 'back' ? 'front' : 'back';
+      $tiles.each(function (i, tile) {
+        (function () {
+          var to = i * intv
+            , $tile = $(tile);
+
+          setTimeout(function () {
+            $tile.css(vendorPrefix + 'transform', 'rotate3d(0,1,0,' + angle + 'deg)');
+          }, to);
+        }());
+      });
+      return ret;
     };
 
     adaptor.destroy = function ($box, settings) {};
@@ -124,6 +130,10 @@
         .appendTo($tile);
 
       return $tileHolder;
+    };
+
+    var spinTiles = function ($tiles, faceClass, imgSrc, intv) {
+      var angle = faceClass
     };
 
     return adaptor;
