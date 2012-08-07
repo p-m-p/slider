@@ -11,8 +11,8 @@
 	<body>
 	  <div id="page">
 
-      <section>
-        <header>
+      <section role="main">
+        <header role="branding">
           <hgroup>
             <h1>Adaptor</h1>
             <h2>jQuery content slider</h2>
@@ -76,8 +76,16 @@
       </aside>
 
       <footer id="credits">
-        <p>Created and maintained by <a href="http://www.philparsons.co.uk">Phil Parsons</a> | Images courtesy of the awesome <a href="http://www.davehillphoto.com/">Dave Hill</a></p>
+        <p>Created and maintained by <a href="http://www.philparsons.co.uk">Phil Parsons</a> | Images courtesy of the awesome <a href="http://www.davehillphoto.com/">Dave Hill</a></p> 
+        <div id="tweet-btn">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-via="phil_parsons" data-lang="en">Tweet</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
       </footer>
+
+      <a id="fork-me" href="https://github.com/p-m-p/jquery-box-slider">
+        <img src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub">
+      </a>
 
 	  </div>
 		<script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
@@ -128,6 +136,7 @@
           , prev: '#prev'
           , pause: '#pause'
           , effect: 'scrollVert3d'
+          , blindCount: 25
           , onbefore: switchIndicator
           , onafter: startTimeIndicator
         });
