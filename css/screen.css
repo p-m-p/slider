@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* line 17, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 17, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,77 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-<<<<<<< HEAD
 /* line 22, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 22, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 html {
   line-height: 1;
 }
 
-<<<<<<< HEAD
 /* line 24, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 24, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 ol, ul {
   list-style: none;
 }
 
-<<<<<<< HEAD
 /* line 26, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 26, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-<<<<<<< HEAD
 /* line 28, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 28, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-<<<<<<< HEAD
 /* line 30, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
 /* line 103, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 30, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-<<<<<<< HEAD
 /* line 32, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 32, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 a img {
   border: none;
 }
 
-<<<<<<< HEAD
 /* line 116, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-=======
-/* line 116, ../../../.rvm/gems/ruby-1.8.7-p358/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
->>>>>>> Create demo site
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -293,19 +257,19 @@ footer {
   position: relative;
 }
 
-/* line 140, sass/screen.scss */
+/* line 144, sass/screen.scss */
 #fork-me {
   position: absolute;
   top: 0;
   left: 0;
   display: block;
 }
-/* line 147, sass/screen.scss */
+/* line 151, sass/screen.scss */
 #fork-me:hover {
   border: none;
 }
 
-/* line 150, sass/screen.scss */
+/* line 154, sass/screen.scss */
 #tweet-btn {
   position: absolute;
   top: 4px;
