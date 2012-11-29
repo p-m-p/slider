@@ -65,6 +65,8 @@
         <ul id="effect-list">
           <li><a href="#" class="effect current" data-fx="scrollVert3d">Vertical 3D scroll</a></li>
           <li><a href="#" class="effect" data-fx="scrollHorz3d">Horizontal 3D scroll</a></li>
+          <li><a href="#" class="effect" data-fx="tile3d">3D tiles<span class="new-effect">new!</span></a></li>
+          <li><a href="#" class="effect" data-fx="tile">2D tiles<span class="new-effect">new!</span></a></li>
           <li><a href="#" class="effect" data-fx="scrollVert">Vertical scroll</a></li>
           <li><a href="#" class="effect" data-fx="scrollHorz">Horizontal scroll</a></li>
           <li><a href="#" class="effect" data-fx="blindLeft">Blind left</a></li>
@@ -95,7 +97,13 @@
           , $indicators = $('.goto-slide')
           , $effects = $('.effect')
           , $timeIndicator = $('#time-indicator')
-          , slideInterval = 5000;
+          , slideInterval = 5000
+          , effectOptions = {
+              'blindLeft': {blindCount: 15}
+            , 'blindDown': {blindCount: 15}
+            , 'tile3d': {tileRows: 6, rowOffset: 80}
+            , 'tile': {tileRows: 6, rowOffset: 80}
+          };
 
         // This function runs before the slide transition starts
         var switchIndicator = function ($c, $n, currIndex, nextIndex) {
@@ -119,10 +127,7 @@
           , next: '#next'
           , prev: '#prev'
           , pause: '#pause'
-          , effect: 'tile3d'
-          , blindCount: 15
-          , tileRows: 6
-          , rowOffset: 80 
+          , effect: 'scrollVert3d'
           , onbefore: switchIndicator
           , onafter: startTimeIndicator
         });
@@ -136,15 +141,24 @@
         });
 
         // This is for demo purposes only, kills the plugin and resets it with 
-        // the newly selected effect
+        // the newly selected effect FIXME clean this up!
         $('#effect-list').on('click', '.effect', function (ev) {
-          var $effect = $(this);
+          var $effect = $(this)
+            , fx = $effect.data('fx')
+            , extraOptions = effectOptions[fx];
 
-          $box.boxSlider('option', 'effect', $effect.data('fx'));
           $effects.removeClass('current');
           $effect.addClass('current');
-
           switchIndicator(null, null, 0, 0);
+
+          if (extraOptions) {
+            $.each(extraOptions, function (opt, val) {
+              $box.boxSlider('option', opt, val);
+            });
+          }
+
+          $box.boxSlider('option', 'effect', $effect.data('fx'));
+
           ev.preventDefault();
         });
 

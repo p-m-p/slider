@@ -1,6 +1,6 @@
 ;(function (w, $, undefined) {
 
-  w.jqBoxSlider.registerAnimator('tile3d', (function () {
+  w.jqBoxSlider.registerAnimator('tile3d,tile', (function () {
 
     var adaptor = {}
       , supports3d = true
@@ -33,6 +33,7 @@
             , fromLeft: j * side
             , imgURL: imgURL 
             , side: side
+            , supports3d: supports3d && settings.effect === 'tile3d'
           }));
         }
       }
@@ -93,10 +94,17 @@
                   , $tile = $tiles.eq(j);
 
                 setTimeout(function () {
-                  $tile.css(
-                      vendorPrefix + 'transform'
-                    , 'rotate3d(0,1,0,' + angle + 'deg)'
-                  );
+                  if (supports3d && settings.effect === 'tile3d') {
+                    $tile.css(
+                        vendorPrefix + 'transform'
+                      , 'rotate3d(0,1,0,' + angle + 'deg)'
+                    );
+                  }
+                  else {
+                    $tile.find('.bs-tile-face-' + ret.nextFace).fadeOut(100, function () {
+                      $tile.find(faceClass).fadeIn(300); 
+                    }); 
+                  }
                 }, tileTimeout);
               }());
 
@@ -135,8 +143,9 @@
       var $tileHolder = $(document.createElement('div'))
         , $tile = $(document.createElement('div'))
         , $front = $(document.createElement('div'))
-        , back = document.createElement('div'); 
+        , $back = $(document.createElement('div')); 
 
+      // All browser styling
       $tileHolder
         .css({
             position: 'absolute'
@@ -144,23 +153,19 @@
           , left: opts.fromLeft
           , width: opts.side
           , height: opts.side
-        })
-        .css(vendorPrefix + 'perspective', 400);
+        });
 
       $tile
         .addClass('bs-tile')
         .css({width: opts.side, height: opts.side})
-        .css(vendorPrefix + 'transform-style', 'preserve-3d')
-        .css(vendorPrefix + 'transition', vendorPrefix + 'transform .4s')
         .appendTo($tileHolder);
 
-      back.style[vendorPrefix + 'transform'] = 'rotateY(180deg)';
-      back.className = 'bs-tile-face-back';
+      $back.addClass('bs-tile-face-back');
 
       $front
         .addClass('bs-tile-face-front')
         .css('backgroundImage', 'url(' + opts.imgURL + ')')
-        .add(back)
+        .add($back)
         .css({
             width: opts.side
           , height: opts.side
@@ -169,8 +174,20 @@
           , top: 0
           , left: 0
         })
-        .css(vendorPrefix + 'backface-visibility', 'hidden')
         .appendTo($tile);
+
+      // 3D and non supported styling
+      if (opts.supports3d) {
+        $tileHolder.css(vendorPrefix + 'perspective', 400);
+        $tile
+          .css(vendorPrefix + 'transform-style', 'preserve-3d')
+          .css(vendorPrefix + 'transition', vendorPrefix + 'transform .4s');
+        $front.add($back).css(vendorPrefix + 'backface-visibility', 'hidden');
+        $back.css(vendorPrefix + 'transform', 'rotateY(180deg)');
+      }
+      else {
+        $back.css('display', 'none');
+      }
 
       return $tileHolder;
     };
