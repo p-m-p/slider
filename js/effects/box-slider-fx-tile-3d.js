@@ -22,6 +22,7 @@
         , i = 0
         , j = 0;
 
+      // set up the tile grid with background images
       for (; i < rows; ++i) {
         fromTop = i * side;
 
@@ -36,26 +37,35 @@
         }
       }
 
+      // cache css and setup tile wrapper
+      this._cacheOriginalCSS($box, 'box', settings);
       $wrapper.css({position: 'absolute', top: 0, left: 0});
       $box.css('position', 'relative').append($wrapper);
       $slides.hide();
+
+      // cache effect settings for the transition
+      settings.tileGrid = {x: cols, y: rows};
       settings.$tileWrapper = $wrapper;
       settings._slideFilter = function (index, settings) {
         return this.get(index) !== settings.$tileWrapper.get(0);
       }
     };
 
-    adaptor.reset = function ($box, settings) {};
-
     adaptor.transition = function (settings) {
       var $tiles = settings.$tileWrapper.find('.bs-tile')
-        , intv = 20
+        , rowIntv = settings.rowOffset || 100
+        , tileIntv = (
+            (settings.speed - rowIntv * (settings.tileGrid.y - 1)) /
+            settings.tileGrid.x
+          )
         , imgSrc = slideImageURL(settings.$nextSlide)
         , nextFace = settings.nextFace || 'back'
         , faceClass = '.bs-tile-face-' + nextFace
         , ret = {}
+        , i = 0
         , angle;
 
+      // select the correct face to flip
       if (nextFace === 'back') {
         ret.nextFace = 'front';
         angle = 180;
@@ -66,21 +76,54 @@
       }
 
       $tiles.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
-
-      $tiles.each(function (i, tile) {
+      // first run through each row and set a timeout to offset the start of 
+      // that rows tiles animating
+      for (; i < settings.tileGrid.y; ++i) {
         (function () {
-          var to = i * intv
-            , $tile = $(tile);
-
+          var j = rowStart = i * settings.tileGrid.x 
+            , rowEnd = rowStart + settings.tileGrid.x
+            , rowTimeout = i * rowIntv
+            , timerIndex = 0;
+          
           setTimeout(function () {
-            $tile.css(vendorPrefix + 'transform', 'rotate3d(0,1,0,' + angle + 'deg)');
-          }, to);
+            // animate each tile in the current row
+            for (; j < rowEnd; ++j) {
+              (function () {
+                var tileTimeout =  timerIndex * tileIntv
+                  , $tile = $tiles.eq(j);
+
+                setTimeout(function () {
+                  $tile.css(
+                      vendorPrefix + 'transform'
+                    , 'rotate3d(0,1,0,' + angle + 'deg)'
+                  );
+                }, tileTimeout);
+              }());
+
+              timerIndex += 1;
+            }
+          }, rowTimeout);
         }());
-      });
+      }
+
       return ret;
     };
 
-    adaptor.destroy = function ($box, settings) {};
+    // reset effect css and remove tile grid
+    adaptor.destroy = function ($box, settings) {
+      settings.$tileWrapper.remove();   
+      // show the hidden tiles
+      $box.children().show();
+
+      if (settings.origCSS) {
+        $box.css(settings.origCSS.box);
+        delete settings.tileRows;
+        delete settings.rowOffset;
+        delete settings.tileGrid;
+        delete settings.$tileWrapper;
+        delete settings._slideFilter;
+      }
+    };
 
     // locate the slides image and get it's url
     var slideImageURL = function ($slide) {
@@ -130,10 +173,6 @@
         .appendTo($tile);
 
       return $tileHolder;
-    };
-
-    var spinTiles = function ($tiles, faceClass, imgSrc, intv) {
-      var angle = faceClass
     };
 
     return adaptor;
