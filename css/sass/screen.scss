@@ -35,18 +35,15 @@ a:hover { border-bottom: solid 1px $elem_cl; }
 footer { margin: 0 140px; }
 
 #controls {
-
   position: relative;
   top: -40px;
   float: right;
   overflow: hidden;
 
   li { display: inline; }
-
 }
 
 .goto-slide {
-
   margin-left: 10px;
   width: 14px;
   height: 14px;
@@ -60,11 +57,9 @@ footer { margin: 0 140px; }
   box-shadow: inset 0px 0px 8px #333;
 
   &.current { background-color: $elem_cl; }
-
 }
 
 #next, #prev {
-
   position: absolute;
   top: 80px;
   width: 30px;
@@ -79,19 +74,16 @@ footer { margin: 0 140px; }
     background: url(img/next-prev-sprite-hover.png) no-repeat;
     border: none;
   }
-
 }
 
 #prev { left: 90px; }
 #next, #next:hover { left: 840px; background-position: -30px 0; }
 
 #effect-switcher {
-
   h2 {
     border-bottom: solid 1px #555;
     margin: 0 0 10px;
   }
-
 }
 
 #effect-list {
@@ -100,10 +92,9 @@ footer { margin: 0 140px; }
 }
 
 .effect, .effect:hover {
-
   display: block;
   float: left;
-  margin: 0 10px 0 0;
+  margin: 10px 10px 0 0;
   border: solid 1px black;
   border-radius: 7px;
   padding: 10px 12px 6px;
@@ -113,11 +104,24 @@ footer { margin: 0 140px; }
   -webkit-box-shadow: inset 0px 0px 8px #000;
   -moz-box-shadow: inset 0px 0px 8px #333;
   box-shadow: inset 0px 0px 8px #333;
+  position: relative;
 
   &.current {
     color: $elem_cl;
   }
 
+  span {
+    font-size: .7em;
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    background-color: red;
+    border-radius: 6px;
+    border: solid 1px #555;
+    color: white;
+    padding: 3px 4px 2px;
+    display: inline-block;
+  }
 }
 
 #time-indicator {
