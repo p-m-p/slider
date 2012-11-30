@@ -87,22 +87,30 @@ Effect options
 ---
 
 ### `srollVert3d,scrollHorz3d`
-
 * `perspective (default: 1000)` The 3D perspective at which the content slides
   are placed from the view port during transition
+
+### `tile3d,tile`
+* `rowCount (default: 5)` The number of tile rows into which the slide should 
+  be split
+* `rowOffset (default: 100)` The time offset for starting to animate the tiles
+  in a row
+
+### `blindLeft,blindDown`
+* `blindCount (default: 10)` The number of blinds into which the slide should
+  be split
 
 Methods
 ---
 
 ### `showSlide`
-
 Shows a slide at the specified index starting from 0
 
 ```javascript
 $('#content-box').boxSlider('showSlide', 3); // show 4th slide
 ```
-### `playPause`
 
+### `playPause`
 Start autoScrolling a slideshow or pause an already running slideshow
 
 ```javascript
@@ -110,7 +118,6 @@ $('#content-box').boxSlider('playPause');
 ```
 
 ### `option`
-
 Get or set a specific option
 
 ```javascript
@@ -119,7 +126,6 @@ $('#content-box').boxSlider('option', 'speed', 1200); // sets the speed option t
 ```
 
 ### `destroy`
-
 Destroys the plugin for the selected sliders
 
 ```javascript
@@ -127,7 +133,6 @@ $('#content-box').boxSlider('destroy');
 ```
 
 ### `next`
-
 Moves the slider to the next slide
 
 ```javascript
@@ -135,7 +140,6 @@ $('#content-box').boxSlider('next');
 ```
 
 ### `prev`
-
 Moves the slider to the previous slide
 
 ```javascript
@@ -146,7 +150,6 @@ Events
 ---
 
 ### `onbefore`
-
 Fires before each slide transition starts. The function parameter will be bound
 to the jQuerified box and will receive the current slide as it's first parameter,
 the next slide as its second, the current slide index as it's third and the next
@@ -159,7 +162,6 @@ $('#content-box').boxSlider('option', 'onbefore', function ($currentSlide, $next
 ```
 
 ### `onafter`
-
 Fires after each slide transition is complete. The function parameter will be bound
 to the jQuerified box and will receive the previous slide as it's first parameter,
 the next slide as its second, the current slide index as it's third and the next
@@ -167,6 +169,17 @@ slide index as it's last.
 
 ```javascript
 $('#content-box').boxSlider('option', 'onafter', function ($previousSlide, $currentSlide, currIndex, nextIndex) {
+  // 'this' is effectively $('#content-box')
+});
+```
+
+### `onplaypause`
+Fires when the play/pause state of the slideshow is changed. The function parameter
+will be bound to the jQuerified box and will receive the state of the slideshow
+as it's only parameter `play|pause`.
+
+```javascript
+$('#content-box').boxSlider('option', 'onplaypause', function (state) {
   // 'this' is effectively $('#content-box')
 });
 ```
