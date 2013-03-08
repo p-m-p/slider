@@ -45,7 +45,7 @@ module.exports = function (grunt) {
         files: {
           'js/box-slider-tile.jquery.min.js': [
               'js/box-slider.jquery.js'
-            , 'js/effects/box-slider-fx-tile.js'
+            , 'js/effects/box-slider-fx-tile-3d.js'
           ]
         }
       }
