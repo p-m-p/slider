@@ -31,18 +31,22 @@
           $wrapper.append(createTile({
               fromTop: fromTop
             , fromLeft: j * side
-            , imgURL: imgURL 
+            , imgURL: imgURL
             , side: side
             , supports3d: supports3d && settings.effect === 'tile3d'
           }));
         }
       }
 
+      if ('absolute, relative'.indexOf($box.css('position')) === -1) {
+        $box.css('position', 'relative');
+      }
+
       // cache css and setup tile wrapper
       this._cacheOriginalCSS($box, 'box', settings);
       $wrapper.css({position: 'absolute', top: 0, left: 0});
-      $box.css('position', 'relative').append($wrapper);
       $slides.hide();
+      $box.append($wrapper);
 
       // cache effect settings for the transition
       settings.tileGrid = {x: cols, y: rows};
@@ -77,15 +81,15 @@
       }
 
       $tiles.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
-      // first run through each row and set a timeout to offset the start of 
+      // first run through each row and set a timeout to offset the start of
       // that rows tiles animating
       for (; i < settings.tileGrid.y; ++i) {
         (function () {
-          var j = rowStart = i * settings.tileGrid.x 
+          var j = rowStart = i * settings.tileGrid.x
             , rowEnd = rowStart + settings.tileGrid.x
             , rowTimeout = i * rowIntv
             , timerIndex = 0;
-          
+
           setTimeout(function () {
             // animate each tile in the current row
             for (; j < rowEnd; ++j) {
@@ -102,8 +106,8 @@
                   }
                   else {
                     $tile.find('.bs-tile-face-' + ret.nextFace).fadeOut(100, function () {
-                      $tile.find(faceClass).fadeIn(300); 
-                    }); 
+                      $tile.find(faceClass).fadeIn(300);
+                    });
                   }
                 }, tileTimeout);
               }());
@@ -119,7 +123,7 @@
 
     // reset effect css and remove tile grid
     adaptor.destroy = function ($box, settings) {
-      settings.$tileWrapper.remove();   
+      settings.$tileWrapper.remove();
       // show the hidden tiles
       $box.children().show();
 
@@ -143,7 +147,7 @@
       var $tileHolder = $(document.createElement('div'))
         , $tile = $(document.createElement('div'))
         , $front = $(document.createElement('div'))
-        , $back = $(document.createElement('div')); 
+        , $back = $(document.createElement('div'));
 
       // All browser styling
       $tileHolder
