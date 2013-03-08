@@ -1,0 +1,22 @@
+{
+  "name": "jquery-box-slider",
+  "version": "0.0.1",
+  "description": "3D content slider",
+  "main": "grunt.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/p-m-p/jquery-box-slider"
+  },
+  "author": "Phil Parsons",
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-uglify": "~0.1.2"
+  }
+}
