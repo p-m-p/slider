@@ -254,4 +254,24 @@ footer {
   padding: 10px 0 0;
   color: #555;
   font-size: .9em;
+  position: relative;
+}
+
+/* line 144, sass/screen.scss */
+#fork-me {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+/* line 151, sass/screen.scss */
+#fork-me:hover {
+  border: none;
+}
+
+/* line 154, sass/screen.scss */
+#tweet-btn {
+  position: absolute;
+  top: 4px;
+  right: 0;
 }
