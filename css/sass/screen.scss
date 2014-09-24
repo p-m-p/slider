@@ -1,4 +1,4 @@
-@import 'compass/reset', 'base';
+@import 'compass/css3', 'compass/reset', 'base';
 
 $elem_cl: #2edbac;
 
@@ -55,9 +55,7 @@ a:hover { border-bottom: solid 1px $elem_cl; }
   border: solid 1px #000;
   background-color: #555;
   border-radius: 8px;
-  -webkit-box-shadow: inset 0px 0px 8px #333;
-  -moz-box-shadow: inset 0px 0px 8px #333;
-  box-shadow: inset 0px 0px 8px #333;
+  @include box-shadow(inset 0px 0px 8px #333);
 
   &.current { background-color: $elem_cl; }
 }

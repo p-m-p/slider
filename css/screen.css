@@ -147,35 +147,35 @@ a:hover {
   border: solid 1px #000;
   background-color: #555;
   border-radius: 8px;
-  -webkit-box-shadow: inset 0px 0px 8px #333;
-  -moz-box-shadow: inset 0px 0px 8px #333;
-  box-shadow: inset 0px 0px 8px #333;
+  -webkit-box-shadow: inset 0px 0px 8px #333333;
+  -moz-box-shadow: inset 0px 0px 8px #333333;
+  box-shadow: inset 0px 0px 8px #333333;
 }
-/* line 62, sass/screen.scss */
+/* line 60, sass/screen.scss */
 .goto-slide.current {
   background-color: #2edbac;
 }
 
-/* line 65, sass/screen.scss */
+/* line 63, sass/screen.scss */
 #effect-switcher {
   clear: both;
 }
-/* line 68, sass/screen.scss */
+/* line 66, sass/screen.scss */
 #effect-switcher h2 {
   border-bottom: solid 1px #555;
   margin: 0 0 10px;
 }
 
-/* line 74, sass/screen.scss */
+/* line 72, sass/screen.scss */
 #effect-list {
   overflow: hidden;
 }
-/* line 76, sass/screen.scss */
+/* line 74, sass/screen.scss */
 #effect-list li {
   display: inline;
 }
 
-/* line 79, sass/screen.scss */
+/* line 77, sass/screen.scss */
 .effect, .effect:hover {
   display: block;
   float: left;
@@ -191,11 +191,11 @@ a:hover {
   box-shadow: inset 0px 0px 8px #333;
   position: relative;
 }
-/* line 94, sass/screen.scss */
+/* line 92, sass/screen.scss */
 .effect.current, .effect:hover.current {
   color: #2edbac;
 }
-/* line 98, sass/screen.scss */
+/* line 96, sass/screen.scss */
 .effect span, .effect:hover span {
   font-size: .7em;
   position: absolute;
@@ -209,7 +209,7 @@ a:hover {
   display: inline-block;
 }
 
-/* line 112, sass/screen.scss */
+/* line 110, sass/screen.scss */
 #time-indicator {
   width: 0px;
   height: 3px;
@@ -219,7 +219,7 @@ a:hover {
   left: 140px;
 }
 
-/* line 121, sass/screen.scss */
+/* line 119, sass/screen.scss */
 #credits {
   margin: 20px 0 40px;
   padding: 10px 0 0;
