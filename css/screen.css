@@ -1,4 +1,4 @@
-/* line 17, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../.rvm/gems/ruby-1.9.3-p125/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../var/lib/gems/2.1.0/gems/compass-0.12.7/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -66,7 +66,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* line 5, sass/screen.scss */
 html {
   background: url(img/page-bg.png) repeat-x #333333;
-  font: 0.85em/1 "Aldrich", Helvetica, Arial, sans-serif;
+  font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif;
   color: #999;
 }
 
@@ -101,47 +101,55 @@ a:hover {
 
 /* line 17, sass/screen.scss */
 #page {
-  width: 960px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
 /* line 22, sass/screen.scss */
 #viewport-shadow {
   position: relative;
-  width: 680px;
+  max-width: 680px;
   padding: 0 140px 70px;
   background: url(img/box-shadow.png) bottom no-repeat;
 }
 
 /* line 29, sass/screen.scss */
-#viewport, #box, .slide {
-  width: 680px;
-  height: 460px;
+#viewport {
+  max-width: 680px;
+  min-height: 460px;
+  margin: 0 auto;
 }
 
-/* line 34, sass/screen.scss */
+/* line 36, sass/screen.scss */
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* line 43, sass/screen.scss */
 #viewport {
   overflow: hidden;
 }
 
-/* line 35, sass/screen.scss */
+/* line 44, sass/screen.scss */
 footer {
   margin: 0 140px;
 }
 
-/* line 37, sass/screen.scss */
+/* line 46, sass/screen.scss */
 #controls {
   position: relative;
   top: -40px;
   float: right;
   overflow: hidden;
 }
-/* line 43, sass/screen.scss */
+/* line 52, sass/screen.scss */
 #controls li {
   display: inline;
 }
 
-/* line 46, sass/screen.scss */
+/* line 55, sass/screen.scss */
 .goto-slide {
   margin-left: 10px;
   width: 14px;
@@ -155,56 +163,27 @@ footer {
   -moz-box-shadow: inset 0px 0px 8px #333;
   box-shadow: inset 0px 0px 8px #333;
 }
-/* line 59, sass/screen.scss */
+/* line 68, sass/screen.scss */
 .goto-slide.current {
   background-color: #2edbac;
 }
 
-/* line 62, sass/screen.scss */
-#next, #prev {
-  position: absolute;
-  top: 80px;
-  width: 30px;
-  height: 300px;
-  background: url(img/next-prev-sprite.png) no-repeat;
-  display: block;
-  -webkit-transition: background .4s;
-  -moz-transition: background .4s;
-  transition: background .4s;
-}
-/* line 73, sass/screen.scss */
-#next:hover, #prev:hover {
-  background: url(img/next-prev-sprite-hover.png) no-repeat;
-  border: none;
-}
-
-/* line 79, sass/screen.scss */
-#prev {
-  left: 90px;
-}
-
-/* line 80, sass/screen.scss */
-#next, #next:hover {
-  left: 840px;
-  background-position: -30px 0;
-}
-
-/* line 83, sass/screen.scss */
+/* line 72, sass/screen.scss */
 #effect-switcher h2 {
   border-bottom: solid 1px #555;
   margin: 0 0 10px;
 }
 
-/* line 89, sass/screen.scss */
+/* line 78, sass/screen.scss */
 #effect-list {
   overflow: hidden;
 }
-/* line 91, sass/screen.scss */
+/* line 80, sass/screen.scss */
 #effect-list li {
   display: inline;
 }
 
-/* line 94, sass/screen.scss */
+/* line 83, sass/screen.scss */
 .effect, .effect:hover {
   display: block;
   float: left;
@@ -220,11 +199,11 @@ footer {
   box-shadow: inset 0px 0px 8px #333;
   position: relative;
 }
-/* line 109, sass/screen.scss */
+/* line 98, sass/screen.scss */
 .effect.current, .effect:hover.current {
   color: #2edbac;
 }
-/* line 113, sass/screen.scss */
+/* line 102, sass/screen.scss */
 .effect span, .effect:hover span {
   font-size: .7em;
   position: absolute;
@@ -238,7 +217,7 @@ footer {
   display: inline-block;
 }
 
-/* line 127, sass/screen.scss */
+/* line 116, sass/screen.scss */
 #time-indicator {
   width: 0px;
   height: 3px;
@@ -248,7 +227,7 @@ footer {
   left: 140px;
 }
 
-/* line 136, sass/screen.scss */
+/* line 125, sass/screen.scss */
 #credits {
   margin: 20px 0 40px;
   padding: 10px 0 0;

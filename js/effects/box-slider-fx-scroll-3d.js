@@ -1,7 +1,6 @@
 ;(function (w, $, undefined) {
 
   w.jqBoxSlider.registerAnimator('scrollVert3d,scrollHorz3d', (function () {
-
     var adaptor = {}
       , supports3D = false
       , vendorPrefix = '';
@@ -14,15 +13,8 @@
 
     // sets the box and slides initial state via css
     adaptor.initialize = function ($box, $slides, settings) {
-      var $parent = $box.parent()
-        , width = $parent.innerWidth()
-        , height = $parent.innerHeight()
-        , positioning = {
-            position: 'absolute'
-          , top: 0
-          , left: 0
-        };
-        
+      var $parent = $box.parent();
+
       // cache original css
       adaptor._cacheOriginalCSS($box, 'box', settings, [
           vendorPrefix + 'transform'
@@ -35,9 +27,30 @@
       adaptor._cacheOriginalCSS($parent, 'viewport', settings, [
         vendorPrefix + 'perspective'
       ]);
-      
+
+      adaptor.applyStyling($parent, $box, $slides, settings);
+
+      if (supports3D) {
+        // wait then apply transition for box rotation
+        setTimeout(function () { adaptor.reset($box, settings); }, 10);
+      }
+      else { // using fade hide all but first slide
+        $slides.filter(':gt(0)').hide();
+      }
+    };
+
+    adaptor.applyStyling = function ($parent, $box, $slides, settings) {
+      var width = $parent.innerWidth()
+        , height = $slides.innerHeight()
+        , positioning = {
+            position: 'absolute'
+          , top: 0
+          , left: 0
+        };
+
       // apply new css
       $slides.css(positioning);
+      $slides.eq(settings.bsfaceindex || 0).css('z-index', 2);
       $box.css($.extend(positioning, { width: width, height: height }));
 
       // ensure parent is positioned to hold the box
@@ -48,7 +61,6 @@
       if (supports3D) {
         // set the Z axis translation amount on the settings for this box
         settings.translateZ = settings.effect === 'scrollVert3d' ? height / 2 : width / 2;
-        settings.bsangle = 0;
 
         // set the parent as the 3D viewport
         $parent.css(vendorPrefix + 'perspective', settings.perspective);
@@ -62,25 +74,19 @@
         );
 
         // set front slide
-        $slides.eq(0).css(
+        $slides.eq(settings.bsfaceindex || 0).css(
             vendorPrefix + 'transform'
           , 'rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ' +
             settings.translateZ + 'px)'
         );
-
-        // wait then apply transition for box rotation
-        setTimeout(function () { adaptor.reset($box, settings); }, 10);
-      }
-      else { // using fade hide all but first slide
-        $slides.filter(':gt(0)').hide();
       }
     };
 
     // update the settings on an option change
     adaptor.reset = function ($box, settings) {
       var speed = (settings.speed / 1000) + 's';
-
-      $box.css(vendorPrefix + 'transition', vendorPrefix +'transform '+ speed);
+      settings.bsangle = 0;
+      $box.css(vendorPrefix + 'transition', vendorPrefix + 'transform '+ speed);
     };
 
     // moves the slider to the next, prev or 'index' slide
@@ -103,7 +109,7 @@
 
         settings.$currSlide.css('z-index', 1);
         settings.$slides // remove transform from all slides except current front face
-          .filter(function (index) { return settings.currIndex !== index;})
+          .filter(function (index) { return settings.currIndex !== index; })
           .css(vendorPrefix + 'transform', 'none')
           .css('display', 'none');
         settings.$nextSlide.css( // move next slide to the effective next face
@@ -125,7 +131,7 @@
           );
           angle = 0;
         }
-        
+
         return {bsangle: angle};
       }
     };
@@ -134,7 +140,7 @@
     adaptor.destroy = function ($box, settings) {
       var $slides = $box.children()
         , $parent = $box.parent();
-        
+
       if (settings.origCSS) {
         $box.css(settings.origCSS.box);
         $slides.css(settings.origCSS.slides);
@@ -144,18 +150,34 @@
       }
     };
 
+    adaptor.resize = function ($box, settings) {
+      var $slides = $box.children()
+        , origCSS = settings.origCSS;
+
+      if (origCSS) {
+        // Pop it
+        $box.css(origCSS.box);
+        $slides.css(origCSS.slides);
+
+        // ...and lock it
+        setTimeout(function () {
+          adaptor.applyStyling($box.parent(), $box, $slides, settings);
+          adaptor.reset($box, settings);
+        }, 0);
+      }
+    };
+
     // returns the correct face rotation based on the box's rotated angle
     var rotation = function (angle, isVert) {
       switch (angle) {
         case 360: case -360: return 'rotate3d(0, 1, 0, 0deg)'; // front
-        case 90:  case -270: return 'rotate3d(' + (isVert ? '1, 0, 0,' : '0, 1, 0,') + ' -90deg)'; // bottom / left side
-        case 180: case -180: return 'rotate3d(' + (isVert ? '1, 0, 0,' : '0, 1, 0,') + ' 180deg)'; // back
-        case 270: case -90:  return 'rotate3d(' + (isVert ? '1, 0, 0,' : '0, 1, 0,') + ' 90deg)'; // top / right side
+        case 90:  case -270: return 'rotate3d(' + (isVert? '1, 0, 0,' : '0, 1, 0,') + ' -90deg)'; // bottom / left side
+        case 180: case -180: return 'rotate3d(' + (isVert? '1, 0, 0,' : '0, 1, 0,') + ' 180deg)'; // back
+        case 270: case -90:  return 'rotate3d(' + (isVert? '1, 0, 0,' : '0, 1, 0,') + ' 90deg)'; // top / right side
       }
     };
 
     return adaptor;
-
   }()));
 
 }(window, jQuery || Zepto));

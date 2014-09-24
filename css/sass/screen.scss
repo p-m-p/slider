@@ -15,20 +15,29 @@ a { color: $elem_cl; text-decoration: none; }
 a:hover { border-bottom: solid 1px $elem_cl; }
 
 #page {
-  width: 960px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
 #viewport-shadow {
   position: relative;
-  width: 680px;
+  max-width: 680px;
   padding: 0 140px 70px;
   background: url(img/box-shadow.png) bottom no-repeat;
 }
 
-#viewport, #box, .slide {
-  width: 680px;
-  height: 460px;
+#viewport {
+  max-width: 680px;
+  min-height: 460px;
+  margin: 0 auto;
+}
+
+.slide {
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 #viewport { overflow: hidden; }
@@ -58,26 +67,6 @@ footer { margin: 0 140px; }
 
   &.current { background-color: $elem_cl; }
 }
-
-#next, #prev {
-  position: absolute;
-  top: 80px;
-  width: 30px;
-  height: 300px;
-  background: url(img/next-prev-sprite.png) no-repeat;
-  display: block;
-  -webkit-transition: background .4s;
-  -moz-transition: background .4s;
-  transition: background .4s;
-
-  &:hover {
-    background: url(img/next-prev-sprite-hover.png) no-repeat;
-    border: none;
-  }
-}
-
-#prev { left: 90px; }
-#next, #next:hover { left: 840px; background-position: -30px 0; }
 
 #effect-switcher {
   h2 {
