@@ -65,14 +65,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* line 5, sass/screen.scss */
 html {
-  background: url(img/page-bg.png) repeat-x #333333;
   font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif;
-  color: #999;
+  background-color: #f2f2f2;
+  color: #222;
 }
 
 /* line 11, sass/screen.scss */
 header {
-  margin: 20px 140px;
+  margin: 10px 0 20px 0;
 }
 
 /* line 12, sass/screen.scss */
@@ -101,55 +101,43 @@ a:hover {
 
 /* line 17, sass/screen.scss */
 #page {
-  max-width: 960px;
+  max-width: 680px;
+  padding: 10px;
   margin: 0 auto;
 }
 
-/* line 22, sass/screen.scss */
-#viewport-shadow {
-  position: relative;
-  max-width: 680px;
-  padding: 0 140px 70px;
-  background: url(img/box-shadow.png) bottom no-repeat;
-}
-
-/* line 29, sass/screen.scss */
+/* line 23, sass/screen.scss */
 #viewport {
-  max-width: 680px;
-  min-height: 460px;
   margin: 0 auto;
 }
 
-/* line 36, sass/screen.scss */
+/* line 27, sass/screen.scss */
+.slide {
+  display: none;
+}
+/* line 30, sass/screen.scss */
 .slide img {
   width: 100%;
   height: auto;
   display: block;
 }
-
-/* line 43, sass/screen.scss */
-#viewport {
-  overflow: hidden;
+/* line 36, sass/screen.scss */
+.slide:first-child {
+  display: block;
 }
 
-/* line 44, sass/screen.scss */
-footer {
-  margin: 0 140px;
-}
-
-/* line 46, sass/screen.scss */
+/* line 41, sass/screen.scss */
 #controls {
-  position: relative;
-  top: -40px;
+  margin: 10px 0 20px;
   float: right;
   overflow: hidden;
 }
-/* line 52, sass/screen.scss */
+/* line 46, sass/screen.scss */
 #controls li {
   display: inline;
 }
 
-/* line 55, sass/screen.scss */
+/* line 49, sass/screen.scss */
 .goto-slide {
   margin-left: 10px;
   width: 14px;
@@ -163,27 +151,31 @@ footer {
   -moz-box-shadow: inset 0px 0px 8px #333;
   box-shadow: inset 0px 0px 8px #333;
 }
-/* line 68, sass/screen.scss */
+/* line 62, sass/screen.scss */
 .goto-slide.current {
   background-color: #2edbac;
 }
 
-/* line 72, sass/screen.scss */
+/* line 65, sass/screen.scss */
+#effect-switcher {
+  clear: both;
+}
+/* line 68, sass/screen.scss */
 #effect-switcher h2 {
   border-bottom: solid 1px #555;
   margin: 0 0 10px;
 }
 
-/* line 78, sass/screen.scss */
+/* line 74, sass/screen.scss */
 #effect-list {
   overflow: hidden;
 }
-/* line 80, sass/screen.scss */
+/* line 76, sass/screen.scss */
 #effect-list li {
   display: inline;
 }
 
-/* line 83, sass/screen.scss */
+/* line 79, sass/screen.scss */
 .effect, .effect:hover {
   display: block;
   float: left;
@@ -199,11 +191,11 @@ footer {
   box-shadow: inset 0px 0px 8px #333;
   position: relative;
 }
-/* line 98, sass/screen.scss */
+/* line 94, sass/screen.scss */
 .effect.current, .effect:hover.current {
   color: #2edbac;
 }
-/* line 102, sass/screen.scss */
+/* line 98, sass/screen.scss */
 .effect span, .effect:hover span {
   font-size: .7em;
   position: absolute;
@@ -217,7 +209,7 @@ footer {
   display: inline-block;
 }
 
-/* line 116, sass/screen.scss */
+/* line 112, sass/screen.scss */
 #time-indicator {
   width: 0px;
   height: 3px;
@@ -227,7 +219,7 @@ footer {
   left: 140px;
 }
 
-/* line 125, sass/screen.scss */
+/* line 121, sass/screen.scss */
 #credits {
   margin: 20px 0 40px;
   padding: 10px 0 0;

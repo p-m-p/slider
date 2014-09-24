@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
+  <meta name="viewport" content="max-device-width">
 	<title>Adaptor :: jQuery content slider</title>
 
   <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
@@ -19,36 +20,33 @@
           </hgroup>
         </header>
 
-        <div id="viewport-shadow">
-
-          <a href="#" id="prev" title="go to the next slide">Prev</a>
-          <a href="#" id="next" title="go to the next slide">Next</a>
-
-          <div id="viewport">
-            <div id="box">
-              <figure class="slide">
-                <img src="img/the-battle.jpg">
-              </figure>
-              <figure class="slide">
-                <img src="img/hiding-the-map.jpg">
-              </figure>
-              <figure class="slide">
-                <img src="img/theres-the-buoy.jpg">
-              </figure>
-              <figure class="slide">
-                <img src="img/finding-the-key.jpg">
-              </figure>
-              <figure class="slide">
-                <img src="img/lets-get-out-of-here.jpg">
-              </figure>
-            </div>
+        <div id="viewport">
+          <div id="box">
+            <figure class="slide">
+              <img src="img/the-battle.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/hiding-the-map.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/theres-the-buoy.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/finding-the-key.jpg">
+            </figure>
+            <figure class="slide">
+              <img src="img/lets-get-out-of-here.jpg">
+            </figure>
           </div>
-
-          <div id="time-indicator"></div>
         </div>
+
+        <div id="time-indicator"></div>
 
         <footer>
           <nav class="slider-controls">
+            <a href="#" id="prev" title="go to the next slide">Prev</a>
+            <a href="#" id="next" title="go to the next slide">Next</a>
+
             <ul id="controls">
               <li><a class="goto-slide current" href="#" data-slideindex="0"></a></li>
               <li><a class="goto-slide" href="#" data-slideindex="1"></a></li>
@@ -76,7 +74,7 @@
       </aside>
 
       <footer id="credits">
-        <p>Created and maintained by <a href="http://www.philparsons.co.uk">Phil Parsons</a> | Images courtesy of the awesome <a href="http://www.davehillphoto.com/">Dave Hill</a></p>
+        <p>Created and maintained by <a href="http://www.philparsons.co.uk">Phil Parsons</a></p>
       </footer>
 
 	  </div>

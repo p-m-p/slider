@@ -31,8 +31,7 @@
       adaptor.applyStyling($parent, $box, $slides, settings);
 
       if (supports3D) {
-        // wait then apply transition for box rotation
-        setTimeout(function () { adaptor.reset($box, settings); }, 10);
+        adaptor.reset($box, settings);
       }
       else { // using fade hide all but first slide
         $slides.filter(':gt(0)').hide();
@@ -48,13 +47,17 @@
           , left: 0
         };
 
+      // Fix the parents height so absolute positioning of the box
+      // doesn't cause page jank
+      $parent.css('height', height);
+
       // apply new css
       $slides.css(positioning);
       $slides.eq(settings.bsfaceindex || 0).css('z-index', 2);
       $box.css($.extend(positioning, { width: width, height: height }));
 
       // ensure parent is positioned to hold the box
-      if ('static inherit'.indexOf($parent.css('position')) !== -1) {
+      if ('absolute fixed relative'.indexOf($parent.css('position')) === -1) {
         $parent.css('position', 'relative');
       }
 
@@ -86,7 +89,11 @@
     adaptor.reset = function ($box, settings) {
       var speed = (settings.speed / 1000) + 's';
       settings.bsangle = 0;
-      $box.css(vendorPrefix + 'transition', vendorPrefix + 'transform '+ speed);
+
+      // queue the transition for box rotation so it doesn't animate into place
+      setTimeout(function () {
+        $box.css(vendorPrefix + 'transition', vendorPrefix + 'transform '+ speed);
+      }, 0);
     };
 
     // moves the slider to the next, prev or 'index' slide

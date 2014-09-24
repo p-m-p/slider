@@ -3,49 +3,43 @@
 $elem_cl: #2edbac;
 
 html {
-  background: url(img/page-bg.png) repeat-x #333;
   font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif;
-  color: #999;
+  background-color: #f2f2f2;
+  color: #222;
 }
 
-header { margin: 20px 140px; }
+header { margin: 10px 0 20px 0; }
 h1 { font-size: 48px; color: $elem_cl; text-transform: uppercase; }
 h2 { font-size: 22px; color: #555; }
 a { color: $elem_cl; text-decoration: none; }
 a:hover { border-bottom: solid 1px $elem_cl; }
 
 #page {
-  max-width: 960px;
+  max-width: 680px;
+  padding: 10px;
   margin: 0 auto;
 }
 
-#viewport-shadow {
-  position: relative;
-  max-width: 680px;
-  padding: 0 140px 70px;
-  background: url(img/box-shadow.png) bottom no-repeat;
-}
-
 #viewport {
-  max-width: 680px;
-  min-height: 460px;
   margin: 0 auto;
 }
 
 .slide {
+  display: none;
+
   img {
     width: 100%;
     height: auto;
     display: block;
   }
+
+  &:first-child {
+    display: block;
+  }
 }
 
-#viewport { overflow: hidden; }
-footer { margin: 0 140px; }
-
 #controls {
-  position: relative;
-  top: -40px;
+  margin: 10px 0 20px;
   float: right;
   overflow: hidden;
 
@@ -69,6 +63,8 @@ footer { margin: 0 140px; }
 }
 
 #effect-switcher {
+  clear: both;
+
   h2 {
     border-bottom: solid 1px #555;
     margin: 0 0 10px;

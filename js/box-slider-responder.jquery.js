@@ -2,11 +2,20 @@
   w.jqBoxSlider = w.jqBoxSlider || {};
 
   var sliders = []
-    , throttle = 0;
+    , throttle = 0
+    , isWatching = false;
 
   jqBoxSlider.responder = {
+    isWatching: function () {
+      return isWatching;
+    },
+
     watch: function ($slider) {
       sliders.push($slider);
+
+      if (!isWatching) {
+        $(w).on('resize', onResize);
+      }
     },
 
     stopWatching: function ($slider) {
@@ -22,17 +31,21 @@
       if (i !== -1) {
         sliders.splice(index, 1);
       }
+
+      if (sliders.length === 0) {
+        $(w).off('resize', onResize);
+        isWatching = false;
+      }
     }
   };
 
-  // XXX need to throttle the reset
-  // XXX only listen when there are sliders in watch list
-  $(w).on('resize', function () {
+  var onResize = function () {
     clearTimeout(throttle);
     throttle = setTimeout(function () {
       $.each(sliders, function (i, $slider) {
         jqBoxSlider.resize($slider);
       });
-    }, 500); // XXX
-  });
+    }, 20);
+  };
+
 }(this));
