@@ -289,6 +289,9 @@
     setTimeout( // remove the active flag class once transition is complete
         function () {
           $box.removeClass('jbs-in-motion');
+          $currSlide.removeClass('jbs-current');
+          $nextSlide.addClass('jbs-current');
+
           if (typeof settings.onafter === 'function') {
             settings.onafter.call($box, $currSlide, $nextSlide, currIndex, nextIndex);
           }

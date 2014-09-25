@@ -14,15 +14,14 @@
 
       <section>
         <header>
-          <hgroup>
-            <h1>Adaptor</h1>
-            <h2>jQuery content slider</h2>
-          </hgroup>
+          <h1>Adaptor</h1>
+          <h2>jQuery content slider</h2>
+          <div id="time-indicator"></div>
         </header>
 
         <div id="viewport">
           <div id="box">
-            <figure class="slide">
+            <figure class="slide jbs-current">
               <img src="img/the-battle.jpg">
             </figure>
             <figure class="slide">
@@ -39,8 +38,6 @@
             </figure>
           </div>
         </div>
-
-        <div id="time-indicator"></div>
 
         <footer>
           <nav class="slider-controls">
@@ -59,12 +56,12 @@
       </section>
 
       <aside id="effect-switcher">
-        <h2>Select effect</h2>
+        <h2>Select an effect</h2>
         <ul id="effect-list">
-          <li><a href="#" class="effect current" data-fx="scrollVert3d">Vertical 3D scroll</a></li>
-          <li><a href="#" class="effect" data-fx="scrollHorz3d">Horizontal 3D scroll</a></li>
-          <li><a href="#" class="effect" data-fx="tile3d">3D tiles<span class="new-effect">new!</span></a></li>
-          <li><a href="#" class="effect" data-fx="tile">2D tiles<span class="new-effect">new!</span></a></li>
+          <li><a href="#" class="effect current" data-fx="scrollVert3d">Vertical 3D scroll<span class="new-effect">responsive</span></a></li>
+          <li><a href="#" class="effect" data-fx="scrollHorz3d">Horizontal 3D scroll<span class="new-effect">responsive</span></a></li>
+          <li><a href="#" class="effect" data-fx="tile3d">3D tiles</a></li>
+          <li><a href="#" class="effect" data-fx="tile">2D tiles</a></li>
           <li><a href="#" class="effect" data-fx="scrollVert">Vertical scroll</a></li>
           <li><a href="#" class="effect" data-fx="scrollHorz">Horizontal scroll</a></li>
           <li><a href="#" class="effect" data-fx="blindLeft">Blind left</a></li>
@@ -91,7 +88,6 @@
 		<script>
 
 		  $(function () {
-
         var $box = $('#box')
           , $indicators = $('.goto-slide')
           , $effects = $('.effect')
@@ -115,23 +111,23 @@
         // This function runs after the slide transition finishes
         var startTimeIndicator = function () {
           // start the timeline animation
-          $timeIndicator.animate({width: '680px'}, slideInterval);
+          $timeIndicator.animate({width: '100%'}, slideInterval);
         };
 
         // initialize the plugin with the desired settings
         $box.boxSlider({
             speed: 1000
           , autoScroll: false
-          //, timeout: slideInterval
+          , timeout: slideInterval
           , next: '#next'
           , prev: '#prev'
           , pause: '#pause'
           , effect: 'scrollVert3d'
-          //, onbefore: switchIndicator
-          //, onafter: startTimeIndicator
+          , onbefore: switchIndicator
+          , onafter: startTimeIndicator
         });
 
-        //startTimeIndicator(); // start the time line for the first slide
+        startTimeIndicator(); // start the time line for the first slide
 
         // Paginate the slides using the indicator controls
         $('#controls').on('click', '.goto-slide', function (ev) {
@@ -157,12 +153,9 @@
           }
 
           $box.boxSlider('option', 'effect', $effect.data('fx'));
-
           ev.preventDefault();
         });
-
 		  });
-
 		</script>
 
     <!-- ---------------- do not copy below this line !! ------------------- -->

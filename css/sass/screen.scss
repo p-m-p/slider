@@ -33,7 +33,7 @@ a:hover { border-bottom: solid 1px $elem_cl; }
     display: block;
   }
 
-  &:first-child {
+  &.jbs-current {
     display: block;
   }
 }
@@ -108,12 +108,10 @@ a:hover { border-bottom: solid 1px $elem_cl; }
 }
 
 #time-indicator {
+  margin: 20px 0;
   width: 0px;
   height: 3px;
   background-color: $elem_cl;
-  position: absolute;
-  top: 460px;
-  left: 140px;
 }
 
 #credits {
