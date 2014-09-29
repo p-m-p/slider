@@ -12,7 +12,6 @@ header { margin: 10px 0 20px 0; }
 h1 { font-size: 48px; color: $elem_cl; text-transform: uppercase; }
 h2 { font-size: 22px; color: #555; }
 a { color: $elem_cl; text-decoration: none; }
-a:hover { border-bottom: solid 1px $elem_cl; }
 
 #page {
   max-width: 680px;
@@ -44,6 +43,16 @@ a:hover { border-bottom: solid 1px $elem_cl; }
   overflow: hidden;
 
   li { display: inline; }
+}
+
+.increment-control {
+  line-height: 1;
+  display: inline-block;
+  padding: 10px 5px;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .goto-slide {

@@ -149,8 +149,9 @@
         if (settings.autointv) {
           clearInterval(settings.autointv);
         }
-        // XXX need to unbind control event listeners
         settings.slideAnimator.destroy($box, settings);
+        //=> XXX unbind control event listeners
+        //=> XXX clear bssettings data
       }
     });
   };

@@ -51,7 +51,7 @@
       // doesn't cause page jank
       $parent.css('height', height);
 
-      // apply new css
+      // apply new styling
       $slides.css(positioning);
       $slides.eq(settings.bsfaceindex || 0).css('z-index', 2);
       $box.css($.extend(positioning, { width: width, height: height }));
@@ -63,7 +63,7 @@
 
       if (supports3D) {
         // set the Z axis translation amount on the settings for this box
-        settings.translateZ = settings.effect === 'scrollVert3d' ? height / 2 : width / 2;
+        settings.translateZ = (settings.effect === 'scrollVert3d')? height / 2 : width / 2;
 
         // set the parent as the 3D viewport
         $parent.css(vendorPrefix + 'perspective', settings.perspective);
@@ -98,7 +98,7 @@
 
     // moves the slider to the next, prev or 'index' slide
     adaptor.transition = function (settings) {
-      var angle = settings.bsangle + (settings.reverse ? 90 : -90)
+      var angle = settings.bsangle + (settings.reverse? 90 : -90)
         , isVert = settings.effect === 'scrollVert3d';
 
       if (!supports3D) { // no 3D support just use a basic fade transition
@@ -111,7 +111,7 @@
       else {
         // correct angle if going from prev to next or vice versa
         if (angle === 0) {
-          angle = settings.reverse ? 360 : -360;
+          angle = settings.reverse? 360 : -360;
         }
 
         settings.$currSlide.css('z-index', 1);
