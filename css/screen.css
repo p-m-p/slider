@@ -78,7 +78,7 @@ header {
 /* line 12, sass/screen.scss */
 h1 {
   font-size: 48px;
-  color: #2edbac;
+  color: #6610c6;
   text-transform: uppercase;
 }
 
@@ -90,13 +90,13 @@ h2 {
 
 /* line 14, sass/screen.scss */
 a {
-  color: #2edbac;
+  color: #6610c6;
   text-decoration: none;
 }
 
 /* line 15, sass/screen.scss */
 a:hover {
-  border-bottom: solid 1px #2edbac;
+  border-bottom: solid 1px #6610c6;
 }
 
 /* line 17, sass/screen.scss */
@@ -145,15 +145,15 @@ a:hover {
   display: block;
   float: left;
   border: solid 1px #000;
-  background-color: #555;
+  background-color: #efefef;
   border-radius: 8px;
-  -webkit-box-shadow: inset 0px 0px 8px #333333;
-  -moz-box-shadow: inset 0px 0px 8px #333333;
-  box-shadow: inset 0px 0px 8px #333333;
+  -webkit-box-shadow: inset 0px 0px 8px #aaaaaa;
+  -moz-box-shadow: inset 0px 0px 8px #aaaaaa;
+  box-shadow: inset 0px 0px 8px #aaaaaa;
 }
 /* line 60, sass/screen.scss */
 .goto-slide.current {
-  background-color: #2edbac;
+  background-color: #6610c6;
 }
 
 /* line 63, sass/screen.scss */
@@ -183,19 +183,19 @@ a:hover {
   border: solid 1px black;
   border-radius: 7px;
   padding: 10px 12px 6px;
-  color: #ccc;
   text-decoration: none;
-  background-color: #555;
-  -webkit-box-shadow: inset 0px 0px 8px #000;
-  -moz-box-shadow: inset 0px 0px 8px #333;
-  box-shadow: inset 0px 0px 8px #333;
+  background-color: #efefef;
+  -webkit-box-shadow: inset 0px 0px 8px #aaaaaa;
+  -moz-box-shadow: inset 0px 0px 8px #aaaaaa;
+  box-shadow: inset 0px 0px 8px #aaaaaa;
   position: relative;
 }
-/* line 92, sass/screen.scss */
+/* line 89, sass/screen.scss */
 .effect.current, .effect:hover.current {
-  color: #2edbac;
+  background-color: #6610c6;
+  color: #efefef;
 }
-/* line 96, sass/screen.scss */
+/* line 94, sass/screen.scss */
 .effect span, .effect:hover span {
   font-size: .7em;
   position: absolute;
@@ -209,15 +209,15 @@ a:hover {
   display: inline-block;
 }
 
-/* line 110, sass/screen.scss */
+/* line 108, sass/screen.scss */
 #time-indicator {
   margin: 20px 0;
   width: 0px;
   height: 3px;
-  background-color: #2edbac;
+  background-color: #6610c6;
 }
 
-/* line 117, sass/screen.scss */
+/* line 115, sass/screen.scss */
 #credits {
   margin: 20px 0 40px;
   padding: 10px 0 0;

@@ -1,6 +1,6 @@
 @import 'compass/css3', 'compass/reset', 'base';
 
-$elem_cl: #2edbac;
+$elem_cl: #6610c6;
 
 html {
   font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif;
@@ -53,9 +53,9 @@ a:hover { border-bottom: solid 1px $elem_cl; }
   display: block;
   float: left;
   border: solid 1px #000;
-  background-color: #555;
+  background-color: #efefef;
   border-radius: 8px;
-  @include box-shadow(inset 0px 0px 8px #333);
+  @include box-shadow(inset 0px 0px 8px #aaa);
 
   &.current { background-color: $elem_cl; }
 }
@@ -81,16 +81,14 @@ a:hover { border-bottom: solid 1px $elem_cl; }
   border: solid 1px black;
   border-radius: 7px;
   padding: 10px 12px 6px;
-  color: #ccc;
   text-decoration: none;
-  background-color: #555;
-  -webkit-box-shadow: inset 0px 0px 8px #000;
-  -moz-box-shadow: inset 0px 0px 8px #333;
-  box-shadow: inset 0px 0px 8px #333;
+  background-color: #efefef;
+  @include box-shadow(inset 0px 0px 8px #aaa);
   position: relative;
 
   &.current {
-    color: $elem_cl;
+    background-color: $elem_cl;
+    color: #efefef;
   }
 
   span {

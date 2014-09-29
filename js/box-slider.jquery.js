@@ -42,7 +42,7 @@
         }
       }
 
-      if (settings.responsive && jqBoxSlider.responder) { // XXX
+      if (settings.responsive && jqBoxSlider.responder) {
         jqBoxSlider.responder.watch($this);
       }
     });
@@ -102,6 +102,7 @@
     if (typeof slideAnimators[effect] === 'object') {
       return slideAnimators[effect];
     }
+
     throw new Error(
       'The slide animator for the ' + effect +
       ' effect has not been registered'
@@ -121,7 +122,8 @@
       settings[setting] = newValue;
       resetAutoScroll($box, settings);
 
-      if (setting === 'effect') { // XXX should all of this be in the adaptor?
+      // XXX doing this and calling initialize isn't ideal
+      if (setting === 'effect') {
         settings.slideAnimator.destroy($box, settings);
         settings.slideAnimator = methods.slideAnimator(newValue);
         settings._slideFilter = null;
@@ -147,12 +149,13 @@
         if (settings.autointv) {
           clearInterval(settings.autointv);
         }
-        // ----------------------------------------------------------- TODO unbind control event listeners
+        // XXX need to unbind control event listeners
         settings.slideAnimator.destroy($box, settings);
       }
     });
   };
 
+  // Called on window resize if the responder is being used
   methods.resize = function ($sliders) {
     return $.each($sliders || this, function (i, slider) {
       var $slider = $(slider)
