@@ -122,12 +122,10 @@
       settings[setting] = newValue;
       resetAutoScroll($box, settings);
 
-      // XXX doing this and calling initialize isn't ideal
       if (setting === 'effect') {
         settings.slideAnimator.destroy($box, settings);
         settings.slideAnimator = methods.slideAnimator(newValue);
         settings._slideFilter = null;
-        settings.bsfaceindex = 0;
         settings.slideAnimator.initialize($box, $box.children(), settings);
         return;
       }
@@ -146,12 +144,10 @@
         , settings = data.bssettings;
 
       if (settings && typeof settings.slideAnimator === 'object') {
-        if (settings.autointv) {
-          clearInterval(settings.autointv);
-        }
+        clearInterval(settings.autointv);
         settings.slideAnimator.destroy($box, settings);
-        //=> XXX unbind control event listeners
-        //=> XXX clear bssettings data
+        tearDownControls(settings);
+        $box.removeData('bssettings');
       }
     });
   };
@@ -199,6 +195,17 @@
     }
 
     $controls.data('bsbox', $box);
+  };
+
+  var tearDownControls = function (settings) {
+    $(
+      settings.next,
+      settings.prev,
+      settings.pause
+    )
+    .off('click', nextSlideListener)
+    .off('click', playPauseListener)
+    .removeData('bsbox');
   };
 
   // event listener for a next button
