@@ -1,7 +1,6 @@
 ;(function (w, $, undefined) {
 
   w.jqBoxSlider.registerAnimator('tile3d,tile', (function () {
-
     var adaptor = {}
       , supports3d = true
       , vendorPrefix = '';
@@ -12,47 +11,61 @@
     };
 
     adaptor.initialize = function ($box, $slides, settings) {
-      var rows = (settings.tileRows || 5)
-        , side = $box.height() / rows
+      var height = $slides.first().outerHeight()
+        , rows = (settings.tileRows || 8)
+        , side = height / rows
         , cols = Math.ceil($box.width() / side)
         , imgURL = slideImageURL($slides.eq(0))
-        , $wrapper = $(document.createElement('div'))
+        , $wrapper = $('<div />');
+
+      // cache css and setup tile wrapper
+      this._cacheOriginalCSS($box, 'box', settings);
+
+      // cache effect settings for the transition
+      settings.tileGrid = {
+          cols: cols
+        , rows: rows
+        , sideLength: side
+        , height: height
+      };
+      settings.$tileWrapper = $wrapper;
+      settings._slideFilter = function (index, settings) {
+        return this.get(index) !== settings.$tileWrapper.get(0);
+      }
+
+      $box.append($wrapper);
+      adaptor.applyStyling($box, $slides, settings);
+    };
+
+    adaptor.applyStyling = function ($box, $slides, settings) {
+      var imgURL = slideImageURL($slides.eq(0))
         , fromLeft = 0
         , fromTop = 0
         , i = 0
         , j = 0;
 
-      // set up the tile grid with background images
-      for (; i < rows; ++i) {
-        fromTop = i * side;
-
-        for (j = 0; j < cols; ++j) {
-          fromLeft = j * side;
-          $wrapper.append(createTile({
-              fromTop: fromTop
-            , fromLeft: j * side
-            , imgURL: imgURL
-            , side: side
-            , supports3d: supports3d && settings.effect === 'tile3d'
-          }));
-        }
-      }
-
-      if ('absolute, relative'.indexOf($box.css('position')) === -1) {
+      if ('fixed absolute relative'.indexOf($box.css('position')) === -1) {
         $box.css('position', 'relative');
       }
 
-      // cache css and setup tile wrapper
-      this._cacheOriginalCSS($box, 'box', settings);
-      $wrapper.css({position: 'absolute', top: 0, left: 0});
+      $box.css({height: settings.tileGrid.height + 'px', overflow: 'hidden'});
+      settings.$tileWrapper.css({position: 'absolute', top: 0, left: 0});
       $slides.hide();
-      $box.append($wrapper);
 
-      // cache effect settings for the transition
-      settings.tileGrid = {x: cols, y: rows};
-      settings.$tileWrapper = $wrapper;
-      settings._slideFilter = function (index, settings) {
-        return this.get(index) !== settings.$tileWrapper.get(0);
+      // set up the tile grid with background images
+      for (; i < settings.tileGrid.rows; ++i) {
+        fromTop = i * settings.tileGrid.sideLength;
+
+        for (j = 0; j < settings.tileGrid.cols; ++j) {
+          fromLeft = j * settings.tileGrid.sideLength;
+          settings.$tileWrapper.append(createTile({
+              fromTop: fromTop
+            , fromLeft: j * settings.tileGrid.sideLength
+            , imgURL: imgURL
+            , side: settings.tileGrid.sideLength
+            , supports3d: supports3d && settings.effect === 'tile3d'
+          }));
+        }
       }
     };
 
@@ -60,8 +73,8 @@
       var $tiles = settings.$tileWrapper.find('.bs-tile')
         , rowIntv = settings.rowOffset || 100
         , tileIntv = (
-            (settings.speed - rowIntv * (settings.tileGrid.y - 1)) /
-            settings.tileGrid.x
+            (settings.speed - rowIntv * (settings.tileGrid.rows - 1)) /
+            settings.tileGrid.cols
           )
         , imgSrc = slideImageURL(settings.$nextSlide)
         , nextFace = settings.nextFace || 'back'
@@ -83,10 +96,10 @@
       $tiles.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
       // first run through each row and set a timeout to offset the start of
       // that rows tiles animating
-      for (; i < settings.tileGrid.y; ++i) {
+      for (; i < settings.tileGrid.rows; ++i) {
         (function () {
-          var j = rowStart = i * settings.tileGrid.x
-            , rowEnd = rowStart + settings.tileGrid.x
+          var j = rowStart = i * settings.tileGrid.cols
+            , rowEnd = rowStart + settings.tileGrid.cols
             , rowTimeout = i * rowIntv
             , timerIndex = 0;
 
@@ -135,6 +148,10 @@
         delete settings.$tileWrapper;
         delete settings._slideFilter;
       }
+    };
+
+    adaptor.resize = function ($box, settings) {
+
     };
 
     // locate the slides image and get it's url
@@ -197,7 +214,6 @@
     };
 
     return adaptor;
-
   }()));
 
 }(window, jQuery || Zepto));
