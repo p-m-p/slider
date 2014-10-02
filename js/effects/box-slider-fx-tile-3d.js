@@ -11,30 +11,31 @@
     };
 
     adaptor.initialize = function ($box, $slides, settings) {
-      var height = $slides.first().outerHeight()
-        , rows = (settings.tileRows || 8)
-        , side = height / rows
-        , cols = Math.ceil($box.width() / side)
-        , imgURL = slideImageURL($slides.eq(0))
-        , $wrapper = $('<div />');
-
       // cache css and setup tile wrapper
       this._cacheOriginalCSS($box, 'box', settings);
 
-      // cache effect settings for the transition
-      settings.tileGrid = {
+      settings.tileGrid = this.calculateGrid($box, $slides, settings);
+      settings.$tileWrapper = $('<div />');
+      settings._slideFilter = function (index, settings) {
+        return this.get(index) !== settings.$tileWrapper.get(0);
+      }
+
+      $box.append(settings.$tileWrapper);
+      adaptor.applyStyling($box, $slides, settings);
+    };
+
+    adaptor.calculateGrid = function ($box, $slides, settings) {
+      var height = $slides.first().outerHeight()
+        , rows = (settings.tileRows || 8)
+        , side = height / rows
+        , cols = Math.ceil($box.width() / side);
+
+      return {
           cols: cols
         , rows: rows
         , sideLength: side
         , height: height
       };
-      settings.$tileWrapper = $wrapper;
-      settings._slideFilter = function (index, settings) {
-        return this.get(index) !== settings.$tileWrapper.get(0);
-      }
-
-      $box.append($wrapper);
-      adaptor.applyStyling($box, $slides, settings);
     };
 
     adaptor.applyStyling = function ($box, $slides, settings) {
@@ -49,7 +50,13 @@
       }
 
       $box.css({height: settings.tileGrid.height + 'px', overflow: 'hidden'});
-      settings.$tileWrapper.css({position: 'absolute', top: 0, left: 0});
+      settings.$tileWrapper.css({
+          position: 'absolute'
+        , top: 0
+        , left: 0
+        , width: '100%'
+        , height: '100%'
+      });
       $slides.hide();
 
       // set up the tile grid with background images
@@ -134,24 +141,34 @@
       return ret;
     };
 
-    // reset effect css and remove tile grid
-    adaptor.destroy = function ($box, settings) {
-      settings.$tileWrapper.remove();
-      // show the hidden tiles
+    adaptor.reset = function ($box, settings) {
       $box.children().show();
+      settings.$tileWrapper.empty();
 
       if (settings.origCSS) {
         $box.css(settings.origCSS.box);
-        delete settings.tileRows;
-        delete settings.rowOffset;
-        delete settings.tileGrid;
-        delete settings.$tileWrapper;
-        delete settings._slideFilter;
       }
     };
 
-    adaptor.resize = function ($box, settings) {
+    // reset effect css and remove tile grid
+    adaptor.destroy = function ($box, settings) {
+      this.reset($box, settings);
+      settings.$tileWrapper.remove();
 
+      delete settings.tileGrid;
+      delete settings.$tileWrapper;
+      delete settings._slideFilter;
+    };
+
+    adaptor.resize = function ($box, settings) {
+      var $slides = $box.children();
+
+      this.reset($box, settings);
+      $slides = $slides.filter(function (index) {
+        return settings._slideFilter.call($slides, index, settings);
+      });
+      settings.tileGrid = this.calculateGrid($box, $slides, settings);
+      this.applyStyling($box, $slides, settings);
     };
 
     // locate the slides image and get it's url
