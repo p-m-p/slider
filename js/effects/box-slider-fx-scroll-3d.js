@@ -157,9 +157,8 @@
       }
     };
 
-    adaptor.resize = function ($box, settings) {
-      var $slides = $box.children()
-        , origCSS = settings.origCSS;
+    adaptor.resize = function ($box, $slides, settings) {
+      var origCSS = settings.origCSS;
 
       if (origCSS) {
         // Pop it

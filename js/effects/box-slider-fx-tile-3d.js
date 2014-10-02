@@ -160,13 +160,8 @@
       delete settings._slideFilter;
     };
 
-    adaptor.resize = function ($box, settings) {
-      var $slides = $box.children();
-
+    adaptor.resize = function ($box, $slides,  settings) {
       this.reset($box, settings);
-      $slides = $slides.filter(function (index) {
-        return settings._slideFilter.call($slides, index, settings);
-      });
       settings.tileGrid = this.calculateGrid($box, $slides, settings);
       this.applyStyling($box, $slides, settings);
     };

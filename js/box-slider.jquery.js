@@ -163,7 +163,11 @@
         settings.slideAnimator &&
         $.isFunction(settings.slideAnimator.resize)
       ) {
-        settings.slideAnimator.resize($slider, settings);
+        settings.slideAnimator.resize(
+            $slider
+          , filterSlides($slider, settings)
+          , settings
+        );
       }
     });
   };
@@ -252,23 +256,11 @@
   // moves the slider to the next or previous slide
   var showNextSlide = function ($box, index, reverse) {
     var settings = $box.data('bssettings')
-      , $slides = $box.children()
+      , $slides = filterSlides($box, settings)
       , currIndex
       , nextIndex
       , $currSlide
       , $nextSlide;
-
-    // apply slide filter so we only have the content slides
-    if (settings._slideFilter != null) {
-      if (typeof settings._slideFilter === 'function') {
-        $slides = $slides.filter(function (index) {
-          return settings._slideFilter.call($slides, index, settings);
-        });
-      }
-      else {
-        $slides = $slides.filter(settings.slideFilter);
-      }
-    }
 
     currIndex = settings.bsfaceindex || 0;
     nextIndex = calculateIndex(currIndex, $slides.length, reverse, index);
@@ -312,6 +304,21 @@
 
     // cache settings for next transition
     settings.bsfaceindex = nextIndex;
+  };
+
+  var filterSlides = function ($box, settings) {
+    var $slides = $box.children();
+
+    if (typeof settings._slideFilter === 'function') {
+      $slides = $slides.filter(function (index) {
+        return settings._slideFilter.call($slides, index, settings);
+      });
+    }
+    else {
+      $slides = $slides.filter(settings.slideFilter);
+    }
+
+    return $slides;
   };
 
   // if the box is autoscrolling it is reset
