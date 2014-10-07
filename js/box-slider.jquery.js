@@ -309,13 +309,16 @@
   var filterSlides = function ($box, settings) {
     var $slides = $box.children();
 
+    // User defined slide filter
+    if (typeof settings.slideFilter === 'function') {
+      $slides = $slides.filter(settings.slideFilter);
+    }
+
+    // Effect defined filter
     if (typeof settings._slideFilter === 'function') {
       $slides = $slides.filter(function (index) {
         return settings._slideFilter.call($slides, index, settings);
       });
-    }
-    else {
-      $slides = $slides.filter(settings.slideFilter);
     }
 
     return $slides;
