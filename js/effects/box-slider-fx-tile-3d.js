@@ -40,6 +40,7 @@
 
     adaptor.applyStyling = function ($box, $slides, settings) {
       var imgURL = slideImageURL($slides.eq(settings.bsfaceindex || 0))
+        , $frag = $()
         , fromLeft = 0
         , fromTop = 0
         , i = 0
@@ -65,7 +66,7 @@
 
         for (j = 0; j < settings.tileGrid.cols; ++j) {
           fromLeft = j * settings.tileGrid.sideLength;
-          settings.$tileWrapper.append(createTile({
+          $frag = $frag.add(createTile({
               fromTop: fromTop
             , fromLeft: j * settings.tileGrid.sideLength
             , imgURL: imgURL
@@ -76,6 +77,8 @@
           }));
         }
       }
+
+      settings.$tileWrapper.html($frag);
     };
 
     adaptor.transition = function (settings) {
@@ -88,21 +91,22 @@
         , imgSrc = slideImageURL(settings.$nextSlide)
         , nextFace = settings.nextFace || 'back'
         , faceClass = '.bs-tile-face-' + nextFace
-        , ret = {}
+        , tileSettings = {}
         , i = 0
         , angle;
 
       // select the correct face to flip
       if (nextFace === 'back') {
-        ret.nextFace = 'front';
+        tileSettings.nextFace = 'front';
         angle = 180;
       }
       else {
-        ret.nextFace = 'back';
+        tileSettings.nextFace = 'back';
         angle = 0;
       }
 
       $tiles.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
+
       // first run through each row and set a timeout to offset the start of
       // that rows tiles animating
       for (; i < settings.tileGrid.rows; ++i) {
@@ -127,7 +131,7 @@
                     );
                   }
                   else {
-                    $tile.find('.bs-tile-face-' + ret.nextFace).fadeOut(100, function () {
+                    $tile.find('.bs-tile-face-' + tileSettings.nextFace).fadeOut(100, function () {
                       $tile.find(faceClass).fadeIn(300);
                     });
                   }
@@ -140,12 +144,11 @@
         }());
       }
 
-      return ret;
+      return tileSettings;
     };
 
     adaptor.reset = function ($box, settings) {
       $box.children().show();
-      settings.$tileWrapper.empty();
 
       if (settings.origCSS) {
         $box.css(settings.origCSS.box);
