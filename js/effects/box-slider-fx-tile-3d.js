@@ -39,7 +39,7 @@
     };
 
     adaptor.applyStyling = function ($box, $slides, settings) {
-      var imgURL = slideImageURL($slides.eq(0))
+      var imgURL = slideImageURL($slides.eq(settings.bsfaceindex || 0))
         , fromLeft = 0
         , fromTop = 0
         , i = 0
@@ -71,6 +71,8 @@
             , imgURL: imgURL
             , side: settings.tileGrid.sideLength
             , supports3d: supports3d && settings.effect === 'tile3d'
+            , boxWidth: $box.innerWidth()
+            , boxHeight: $box.innerHeight()
           }));
         }
       }
@@ -190,7 +192,10 @@
 
       $tile
         .addClass('bs-tile')
-        .css({width: opts.side, height: opts.side})
+        .css({
+            width: opts.side
+          , height: opts.side
+        })
         .appendTo($tileHolder);
 
       $back.addClass('bs-tile-face-back');
@@ -203,6 +208,7 @@
             width: opts.side
           , height: opts.side
           , backgroundPosition: -opts.fromLeft + 'px ' + -opts.fromTop + 'px'
+          , backgroundSize: opts.boxWidth + 'px ' + opts.boxHeight + 'px'
           , position: 'absolute'
           , top: 0
           , left: 0
