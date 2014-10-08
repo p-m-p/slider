@@ -1,4 +1,5 @@
 ;(function (w, $, undefined) {
+  'use strict';
 
   w.jqBoxSlider.registerAnimator('tile3d,tile', (function () {
     var adaptor = {}
@@ -111,8 +112,8 @@
       // that rows tiles animating
       for (; i < settings.tileGrid.rows; ++i) {
         (function () {
-          var j = rowStart = i * settings.tileGrid.cols
-            , rowEnd = rowStart + settings.tileGrid.cols
+          var j = i * settings.tileGrid.cols
+            , rowEnd = j + settings.tileGrid.cols
             , rowTimeout = i * rowIntv
             , timerIndex = 0;
 
@@ -120,7 +121,7 @@
             // animate each tile in the current row
             for (; j < rowEnd; ++j) {
               (function () {
-                var tileTimeout =  timerIndex * tileIntv
+                var tileTimeout = timerIndex * tileIntv
                   , $tile = $tiles.eq(j);
 
                 setTimeout(function () {
@@ -131,9 +132,11 @@
                     );
                   }
                   else {
-                    $tile.find('.bs-tile-face-' + tileSettings.nextFace).fadeOut(100, function () {
-                      $tile.find(faceClass).fadeIn(300);
-                    });
+                    $tile
+                      .find('.bs-tile-face-' + tileSettings.nextFace)
+                      .fadeOut(100, function () {
+                        $tile.find(faceClass).fadeIn(300);
+                      });
                   }
                 }, tileTimeout);
               }());
@@ -160,14 +163,16 @@
       this.reset($box, settings);
       settings.$tileWrapper.remove();
 
+      delete settings.nextface;
       delete settings.tileGrid;
       delete settings.$tileWrapper;
       delete settings._slideFilter;
     };
 
-    adaptor.resize = function ($box, $slides,  settings) {
+    adaptor.resize = function ($box, $slides, settings) {
       this.reset($box, settings);
       settings.tileGrid = this.calculateGrid($box, $slides, settings);
+      delete settings.nextface;
       this.applyStyling($box, $slides, settings);
     };
 
