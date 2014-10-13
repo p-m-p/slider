@@ -5,32 +5,32 @@
 
     // creates the blinds and sets up the content slider css
     adaptor.initialize = function ($box, $slides, settings) {
-      var $wrapper = $(document.createElement('div'))
-        , imgSrc = slideImageURL($slides.eq(0))
-        , fromLeft
-        , i = 0;
-
       settings.blindCount = settings.blindCount || 10;
       settings.blindSpeed = settings.speed;
       settings.blindintv = settings.speed / settings.blindCount;
       settings.speed += settings.blindintv * settings.blindCount;
-      settings.blindSize = $box.width() / settings.blindCount;
       this._cacheOriginalCSS($box, 'box', settings);
       this._cacheOriginalCSS($slides, 'slides', settings);
 
+      adaptor.applyStyling($box, $slides, settings);
+      settings._slideFilter = filterOutBlinds;
+    };
+
+    adaptor.applyStyling = function ($box, $slides, settings) {
+      var $wrapper = $(document.createElement('div'))
+        , imgSrc = slideImageURL($slides.eq(settings.bsfaceindex || 0))
+        , $frag = $()
+        , i = 0;
+
+      settings.blindSize = $box.width() / settings.blindCount;
+
       for (; i < settings.blindCount; ++i) {
-        fromLeft = (i * settings.blindSize);
-        $(document.createElement('div'))
-          .css({
-              position: 'absolute'
-            , top: '0px'
-            , left: fromLeft + 'px'
-            , width: settings.blindSize + 'px'
-            , height: '100%'
-            , backgroundImage: 'url(' + imgSrc + ')'
-            , backgroundPosition: -fromLeft + 'px 0px'
-          })
-          .appendTo($wrapper);
+        $frag = $frag.add(createBlind(
+            $slides
+          , settings.blindSize
+          , imgSrc
+          , (i * settings.blindSize)
+        ));
       }
 
       $box.css('position', 'relative');
@@ -45,11 +45,10 @@
           , height: '100%'
           , zIndex: 2
         })
+        .html($frag)
         .appendTo($box);
 
       settings.$blinds = $wrapper;
-      settings._slideFilter = filterOutBlinds;
-
     };
 
     // moves the next slide behind the wall of blinds then
@@ -89,6 +88,28 @@
       delete settings.blindSize;
     };
 
+    adaptor.reset = function ($box, settings) {
+
+    };
+
+    adaptor.resize = function ($box, $slides, settings) {
+      var origCSS = settings.origCSS;
+
+      if (origCSS) {
+        settings.$blinds.empty();
+
+        // Pop it
+        $box.css(origCSS.box);
+        $slides.css(origCSS.slides);
+
+        // ...and lock it
+        setTimeout(function () {
+          adaptor.applyStyling($box, $slides, settings);
+          adaptor.reset($box, settings);
+        }, 0);
+      }
+    };
+
     // filters the blinds wrapper out of the content slides
     var filterOutBlinds = function (index, settings) {
       return this.get(index) !== settings.$blinds.get(0);
@@ -118,8 +139,23 @@
       return css;
     };
 
-    return adaptor;
+    var createBlind = function ($slides, width, src, leftPos) {
+      var boxWidth = $slides.innerWidth()
+        , boxHeight = $slides.innerHeight();
 
+      return $(document.createElement('div')).css({
+          position: 'absolute'
+        , top: '0px'
+        , left: leftPos + 'px'
+        , width: width + 'px'
+        , height: '100%'
+        , backgroundImage: 'url(' + src + ')'
+        , backgroundPosition: -leftPos + 'px 0px'
+        , backgroundSize: boxWidth + 'px '  + boxHeight + 'px'
+      });
+    };
+
+    return adaptor;
   }()));
 
 }(window, jQuery || Zepto));
