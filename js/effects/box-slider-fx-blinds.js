@@ -12,13 +12,13 @@
       this._cacheOriginalCSS($box, 'box', settings);
       this._cacheOriginalCSS($slides, 'slides', settings);
 
+      settings.$blinds = $('<div />').appendTo($box);
       adaptor.applyStyling($box, $slides, settings);
       settings._slideFilter = filterOutBlinds;
     };
 
     adaptor.applyStyling = function ($box, $slides, settings) {
-      var $wrapper = $(document.createElement('div'))
-        , imgSrc = slideImageURL($slides.eq(settings.bsfaceindex || 0))
+      var imgSrc = slideImageURL($slides.eq(settings.bsfaceindex || 0))
         , $frag = $()
         , i = 0;
 
@@ -34,9 +34,9 @@
       }
 
       $box.css('position', 'relative');
-      $box.css({height: $slides.css('height'), overflow: 'hidden'});
+      $box.css({height: $slides.innerHeight(), overflow: 'hidden'});
       $slides.css({zIndex: 1, position: 'absolute', top: 0, left: 0});
-      $wrapper
+      settings.$blinds
         .css({
             position: 'absolute'
           , top: '0px'
@@ -45,10 +45,7 @@
           , height: '100%'
           , zIndex: 2
         })
-        .html($frag)
-        .appendTo($box);
-
-      settings.$blinds = $wrapper;
+        .html($frag);
     };
 
     // moves the next slide behind the wall of blinds then
@@ -70,7 +67,7 @@
       }());});
 
       setTimeout(function () {
-        $blinds.css(resetCSS(settings));
+        $blinds.css( resetCSS(settings) );
       }, settings.speed);
     };
 
