@@ -8,7 +8,7 @@
       settings.blindCount = settings.blindCount || 10;
       settings.blindSpeed = settings.speed;
       settings.blindintv = settings.speed / settings.blindCount;
-      settings.speed += settings.blindintv * settings.blindCount;
+      settings.speed += settings.blindintv * settings.blindCount; // XXX WAT??
       this._cacheOriginalCSS($box, 'box', settings);
       this._cacheOriginalCSS($slides, 'slides', settings);
 
@@ -74,8 +74,9 @@
     // removes the blinds and resets plugin settings and css
     adaptor.destroy = function ($box, settings) {
       settings.$blinds.remove();
-      $box.css(settings.origCSS.box);
-      $box.children().css(settings.origCSS.slides);
+      // XXX slide filter needs to be applied and slides should then be
+      // passed into this function
+      adaptor.reset($box, $box.children(), settings);
 
       settings.speed = settings.blindSpeed;
       delete settings.blindCount;
@@ -85,26 +86,22 @@
       delete settings.blindSize;
     };
 
-    adaptor.reset = function ($box, settings) {
-
-    };
-
-    adaptor.resize = function ($box, $slides, settings) {
+    adaptor.reset = function ($box, $slides, settings) {
       var origCSS = settings.origCSS;
 
       if (origCSS) {
         settings.$blinds.empty();
-
-        // Pop it
         $box.css(origCSS.box);
         $slides.css(origCSS.slides);
-
-        // ...and lock it
-        setTimeout(function () {
-          adaptor.applyStyling($box, $slides, settings);
-          adaptor.reset($box, settings);
-        }, 0);
       }
+    };
+
+    adaptor.resize = function ($box, $slides, settings) {
+      adaptor.reset($box, $slides, settings);
+
+      setTimeout(function () {
+        adaptor.applyStyling($box, $slides, settings);
+      }, 10);
     };
 
     // filters the blinds wrapper out of the content slides

@@ -117,17 +117,21 @@
         // initialize the plugin with the desired settings
         $box.boxSlider({
             speed: 1200
-          , autoScroll: true
+          , autoScroll: false
           //, autoScroll: false
           , timeout: slideInterval
           , next: '#next'
           , prev: '#prev'
           , pause: '#pause'
+          //, effect: 'scrollHorz'
+          , effect: 'scrollVert'
+          //, effect: 'scrollHorz3d'
           //, effect: 'scrollVert3d'
           //, effect: 'tile3d'
           //, effect: 'blindLeft'
           //, effect: 'blindDown'
-          , effect: 'blindLeft'
+          //, effect: 'blindLeft'
+          , blindCount: 14
           , onbefore: switchIndicator
           , onafter: startTimeIndicator
         });
