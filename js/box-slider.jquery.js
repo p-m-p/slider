@@ -117,7 +117,8 @@
 
     return this.each(function (i, el) {
       var $box = $(this)
-        , settings = $box.data('bssettings') || {};
+        , settings = $box.data('bssettings') || {}
+        , $slides = filterSlides($box.children(), settings);
 
       settings[setting] = newValue;
       resetAutoScroll($box, settings);
@@ -126,12 +127,12 @@
         settings.slideAnimator.destroy($box, settings);
         settings.slideAnimator = methods.slideAnimator(newValue);
         settings._slideFilter = null;
-        settings.slideAnimator.initialize($box, $box.children(), settings);
+        settings.slideAnimator.initialize($box, $slides, settings);
         return;
       }
 
       if (typeof settings.slideAnimator.reset === 'function') {
-        settings.slideAnimator.reset($box, settings);
+        settings.slideAnimator.reset($box, $slides, settings);
       }
     });
   };
