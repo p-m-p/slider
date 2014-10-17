@@ -1,7 +1,7 @@
 ;(function (w, $, undefined) {
+  'use strict';
 
   w.jqBoxSlider.registerAnimator('tile3d,tile', (function () {
-
     var adaptor = {}
       , supports3d = true
       , vendorPrefix = '';
@@ -12,81 +12,108 @@
     };
 
     adaptor.initialize = function ($box, $slides, settings) {
-      var rows = (settings.tileRows || 5)
-        , side = $box.height() / rows
-        , cols = Math.ceil($box.width() / side)
-        , imgURL = slideImageURL($slides.eq(0))
-        , $wrapper = $(document.createElement('div'))
+      // cache css and setup tile wrapper
+      this._cacheOriginalCSS($box, 'box', settings);
+
+      settings.tileGrid = this.calculateGrid($box, $slides, settings);
+      settings.$tileWrapper = $('<div />');
+      settings._slideFilter = function (index, settings) {
+        return this.get(index) !== settings.$tileWrapper.get(0);
+      }
+
+      $box.append(settings.$tileWrapper);
+      adaptor.applyStyling($box, $slides, settings);
+    };
+
+    adaptor.calculateGrid = function ($box, $slides, settings) {
+      var height = $slides.first().outerHeight()
+        , rows = (settings.tileRows || 8)
+        , side = height / rows
+        , cols = Math.ceil($box.width() / side);
+
+      return {
+          cols: cols
+        , rows: rows
+        , sideLength: side
+        , height: height
+      };
+    };
+
+    adaptor.applyStyling = function ($box, $slides, settings) {
+      var imgURL = slideImageURL($slides.eq(settings.bsfaceindex || 0))
+        , $frag = $()
         , fromLeft = 0
         , fromTop = 0
         , i = 0
         , j = 0;
 
-      // set up the tile grid with background images
-      for (; i < rows; ++i) {
-        fromTop = i * side;
+      if ('fixed absolute relative'.indexOf($box.css('position')) === -1) {
+        $box.css('position', 'relative');
+      }
 
-        for (j = 0; j < cols; ++j) {
-          fromLeft = j * side;
-          $wrapper.append(createTile({
+      $box.css({height: settings.tileGrid.height + 'px', overflow: 'hidden'});
+      settings.$tileWrapper.css({
+          position: 'absolute'
+        , top: 0
+        , left: 0
+        , width: '100%'
+        , height: '100%'
+      });
+      $slides.hide();
+
+      // set up the tile grid with background images
+      for (; i < settings.tileGrid.rows; ++i) {
+        fromTop = i * settings.tileGrid.sideLength;
+
+        for (j = 0; j < settings.tileGrid.cols; ++j) {
+          fromLeft = j * settings.tileGrid.sideLength;
+          $frag = $frag.add(createTile({
               fromTop: fromTop
-            , fromLeft: j * side
+            , fromLeft: j * settings.tileGrid.sideLength
             , imgURL: imgURL
-            , side: side
+            , side: settings.tileGrid.sideLength
             , supports3d: supports3d && settings.effect === 'tile3d'
+            , boxWidth: $box.innerWidth()
+            , boxHeight: $box.innerHeight()
           }));
         }
       }
 
-      if ('absolute, relative'.indexOf($box.css('position')) === -1) {
-        $box.css('position', 'relative');
-      }
-
-      // cache css and setup tile wrapper
-      this._cacheOriginalCSS($box, 'box', settings);
-      $wrapper.css({position: 'absolute', top: 0, left: 0});
-      $slides.hide();
-      $box.append($wrapper);
-
-      // cache effect settings for the transition
-      settings.tileGrid = {x: cols, y: rows};
-      settings.$tileWrapper = $wrapper;
-      settings._slideFilter = function (index, settings) {
-        return this.get(index) !== settings.$tileWrapper.get(0);
-      }
+      settings.$tileWrapper.html($frag);
     };
 
     adaptor.transition = function (settings) {
       var $tiles = settings.$tileWrapper.find('.bs-tile')
         , rowIntv = settings.rowOffset || 100
         , tileIntv = (
-            (settings.speed - rowIntv * (settings.tileGrid.y - 1)) /
-            settings.tileGrid.x
+            (settings.speed - rowIntv * (settings.tileGrid.rows - 1)) /
+            settings.tileGrid.cols
           )
         , imgSrc = slideImageURL(settings.$nextSlide)
         , nextFace = settings.nextFace || 'back'
         , faceClass = '.bs-tile-face-' + nextFace
-        , ret = {}
+        , tileSettings = {}
         , i = 0
         , angle;
 
       // select the correct face to flip
       if (nextFace === 'back') {
-        ret.nextFace = 'front';
+        tileSettings.nextFace = 'front';
         angle = 180;
       }
       else {
-        ret.nextFace = 'back';
+        tileSettings.nextFace = 'back';
         angle = 0;
       }
 
       $tiles.find(faceClass).css('background-image', 'url(' + imgSrc + ')');
+
       // first run through each row and set a timeout to offset the start of
       // that rows tiles animating
-      for (; i < settings.tileGrid.y; ++i) {
+      for (; i < settings.tileGrid.rows; ++i) {
         (function () {
-          var j = rowStart = i * settings.tileGrid.x
-            , rowEnd = rowStart + settings.tileGrid.x
+          var j = i * settings.tileGrid.cols
+            , rowEnd = j + settings.tileGrid.cols
             , rowTimeout = i * rowIntv
             , timerIndex = 0;
 
@@ -94,7 +121,7 @@
             // animate each tile in the current row
             for (; j < rowEnd; ++j) {
               (function () {
-                var tileTimeout =  timerIndex * tileIntv
+                var tileTimeout = timerIndex * tileIntv
                   , $tile = $tiles.eq(j);
 
                 setTimeout(function () {
@@ -105,9 +132,11 @@
                     );
                   }
                   else {
-                    $tile.find('.bs-tile-face-' + ret.nextFace).fadeOut(100, function () {
-                      $tile.find(faceClass).fadeIn(300);
-                    });
+                    $tile
+                      .find('.bs-tile-face-' + tileSettings.nextFace)
+                      .fadeOut(100, function () {
+                        $tile.find(faceClass).fadeIn(300);
+                      });
                   }
                 }, tileTimeout);
               }());
@@ -118,23 +147,33 @@
         }());
       }
 
-      return ret;
+      return tileSettings;
     };
 
-    // reset effect css and remove tile grid
-    adaptor.destroy = function ($box, settings) {
-      settings.$tileWrapper.remove();
-      // show the hidden tiles
+    adaptor.reset = function ($box, settings) {
       $box.children().show();
 
       if (settings.origCSS) {
         $box.css(settings.origCSS.box);
-        delete settings.tileRows;
-        delete settings.rowOffset;
-        delete settings.tileGrid;
-        delete settings.$tileWrapper;
-        delete settings._slideFilter;
       }
+    };
+
+    // reset effect css and remove tile grid
+    adaptor.destroy = function ($box, settings) {
+      this.reset($box, settings);
+      settings.$tileWrapper.remove();
+
+      delete settings.nextface;
+      delete settings.tileGrid;
+      delete settings.$tileWrapper;
+      delete settings._slideFilter;
+    };
+
+    adaptor.resize = function ($box, $slides, settings) {
+      this.reset($box, settings);
+      settings.tileGrid = this.calculateGrid($box, $slides, settings);
+      delete settings.nextface;
+      this.applyStyling($box, $slides, settings);
     };
 
     // locate the slides image and get it's url
@@ -161,7 +200,10 @@
 
       $tile
         .addClass('bs-tile')
-        .css({width: opts.side, height: opts.side})
+        .css({
+            width: opts.side
+          , height: opts.side
+        })
         .appendTo($tileHolder);
 
       $back.addClass('bs-tile-face-back');
@@ -174,6 +216,7 @@
             width: opts.side
           , height: opts.side
           , backgroundPosition: -opts.fromLeft + 'px ' + -opts.fromTop + 'px'
+          , backgroundSize: opts.boxWidth + 'px ' + opts.boxHeight + 'px'
           , position: 'absolute'
           , top: 0
           , left: 0
@@ -197,7 +240,6 @@
     };
 
     return adaptor;
-
   }()));
 
 }(window, jQuery || Zepto));

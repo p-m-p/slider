@@ -1,46 +1,58 @@
-@import 'compass/reset', 'base';
+@import 'compass/css3', 'compass/reset', 'base';
 
-$elem_cl: #2edbac;
+$elem_cl: #6610c6;
 
 html {
-  background: url(img/page-bg.png) repeat-x #333;
   font: .85em/1 'Aldrich', Helvetica, Arial, sans-serif;
-  color: #999;
+  background-color: #f2f2f2;
+  color: #222;
 }
 
-header { margin: 20px 140px; }
+header { margin: 10px 0 20px 0; }
 h1 { font-size: 48px; color: $elem_cl; text-transform: uppercase; }
 h2 { font-size: 22px; color: #555; }
 a { color: $elem_cl; text-decoration: none; }
-a:hover { border-bottom: solid 1px $elem_cl; }
 
 #page {
-  width: 960px;
+  max-width: 680px;
+  padding: 10px;
   margin: 0 auto;
 }
 
-#viewport-shadow {
-  position: relative;
-  width: 680px;
-  padding: 0 140px 70px;
-  background: url(img/box-shadow.png) bottom no-repeat;
+#viewport {
+  margin: 0 auto;
 }
 
-#viewport, #box, .slide {
-  width: 680px;
-  height: 460px;
-}
+.slide {
+  display: none;
 
-#viewport { overflow: hidden; }
-footer { margin: 0 140px; }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  &.jbs-current {
+    display: block;
+  }
+}
 
 #controls {
-  position: relative;
-  top: -40px;
+  margin: 10px 0 20px;
   float: right;
   overflow: hidden;
 
   li { display: inline; }
+}
+
+.increment-control {
+  line-height: 1;
+  display: inline-block;
+  padding: 10px 5px;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .goto-slide {
@@ -50,36 +62,16 @@ footer { margin: 0 140px; }
   display: block;
   float: left;
   border: solid 1px #000;
-  background-color: #555;
+  background-color: #efefef;
   border-radius: 8px;
-  -webkit-box-shadow: inset 0px 0px 8px #333;
-  -moz-box-shadow: inset 0px 0px 8px #333;
-  box-shadow: inset 0px 0px 8px #333;
+  @include box-shadow(inset 0px 0px 8px #aaa);
 
   &.current { background-color: $elem_cl; }
 }
 
-#next, #prev {
-  position: absolute;
-  top: 80px;
-  width: 30px;
-  height: 300px;
-  background: url(img/next-prev-sprite.png) no-repeat;
-  display: block;
-  -webkit-transition: background .4s;
-  -moz-transition: background .4s;
-  transition: background .4s;
-
-  &:hover {
-    background: url(img/next-prev-sprite-hover.png) no-repeat;
-    border: none;
-  }
-}
-
-#prev { left: 90px; }
-#next, #next:hover { left: 840px; background-position: -30px 0; }
-
 #effect-switcher {
+  clear: both;
+
   h2 {
     border-bottom: solid 1px #555;
     margin: 0 0 10px;
@@ -98,16 +90,14 @@ footer { margin: 0 140px; }
   border: solid 1px black;
   border-radius: 7px;
   padding: 10px 12px 6px;
-  color: #ccc;
   text-decoration: none;
-  background-color: #555;
-  -webkit-box-shadow: inset 0px 0px 8px #000;
-  -moz-box-shadow: inset 0px 0px 8px #333;
-  box-shadow: inset 0px 0px 8px #333;
+  background-color: #efefef;
+  @include box-shadow(inset 0px 0px 8px #aaa);
   position: relative;
 
   &.current {
-    color: $elem_cl;
+    background-color: $elem_cl;
+    color: #efefef;
   }
 
   span {
@@ -125,12 +115,10 @@ footer { margin: 0 140px; }
 }
 
 #time-indicator {
+  margin: 20px 0;
   width: 0px;
   height: 3px;
   background-color: $elem_cl;
-  position: absolute;
-  top: 460px;
-  left: 140px;
 }
 
 #credits {
