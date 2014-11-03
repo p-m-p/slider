@@ -45,25 +45,9 @@ a box containing slides of content.
 Technically no CSS is required for the plugin to work but if the outer box,
 `div.slider-viewport` in this example, is statically positioned the plugin
 will apply relative positioning to it so that it can hold the positioned box.
-It is required that you only show the first slide on page load or constrain the
-height of content box to that of the slide height so that the box dimensions
-can be correctly calculated. If only showing the first slide it is advised to
-give that slide the `jbs-current` class name and set it's display property.
 
-```scss
-#content-box {
-  figure {
-    display: none;
-
-    &.jbs-current {
-      display: block;
-    }
-  }
-}
-```
-
-Include the plugin with desired effect in your page and then on page load apply
-the plugin to the content box with the desired options.
+Include the required build of the plugin with desired effect in your page and
+on page load apply the plugin to the content box with the desired options.
 
 ```javascript
 $('#content-box').boxSlider( /* options */ );
@@ -382,3 +366,4 @@ as the `fade` effect.
 
 }(window, jQuery || Zepto));
 ```
+
