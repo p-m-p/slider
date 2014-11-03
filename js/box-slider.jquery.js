@@ -115,6 +115,10 @@
       return (this.data('bssettings') || {})[setting];
     }
 
+    if (setting === 'effect') {
+      throw new Error('Effect can only be set during plugin initialisation');
+    }
+
     return this.each(function (i, el) {
       var $box = $(this)
         , settings = $box.data('bssettings') || {}
@@ -122,14 +126,6 @@
 
       settings[setting] = newValue;
       resetAutoScroll($box, settings);
-
-      if (setting === 'effect') {
-        settings.slideAnimator.destroy($box, settings);
-        settings.slideAnimator = methods.slideAnimator(newValue);
-        settings._slideFilter = null;
-        settings.slideAnimator.initialize($box, $slides, settings);
-        return;
-      }
 
       if (typeof settings.slideAnimator.reset === 'function') {
         settings.slideAnimator.reset($box, $slides, settings);
