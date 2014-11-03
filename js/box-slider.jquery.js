@@ -24,12 +24,13 @@
 
     return this.each(function () {
       var $this = $(this)
-        , $slides = $this.children()
-        , settings = $.extend({}, defaultSettings);
+        , settings = $.extend({}, defaultSettings)
+        , $slides = $this.children();
 
       $this.data('bssettings', settings);
       settings.slideAnimator = animator;
       settings.slideAnimator.initialize($this, $slides, settings);
+      $slides.eq(settings.bsfaceindex || 0).addClass('jbs-current');
       setupControls($this, settings);
 
       if (settings.autoScroll) {
@@ -144,7 +145,11 @@
         clearInterval(settings.autointv);
         settings.slideAnimator.destroy($box, settings);
         tearDownControls(settings);
-        $box.removeData('bssettings');
+        $box
+          .removeData('bssettings')
+          .removeClass('jbs-in-motion')
+          .find('.jbs-current')
+          .removeClass('jbs-current');
       }
     });
   };
