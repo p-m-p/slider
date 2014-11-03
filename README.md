@@ -1,16 +1,17 @@
 Adaptor, a jQuery 3D content slider
 ===
 
-Adaptor is a light-weight content slider that aims to provide a simple
-interface for developers to create cool 2D or 3D slide animation transitions.
+Adaptor is a light-weight, responsive content slider that aims to provide a
+simple interface for developers to create cool 2D or 3D slide animation
+transitions.
 
 Support
 ---
 
-Currently, I've only added 3D support for webkit and Firefox, all other browsers
-will fallback gracefully to a simple fade transition when using the 3D effects.
-
-All 2D slide transitions have been tested in IE6+ and all other modern browsers.
+3D animations are implemented using CSS3 transforms and are therefore only
+supported by the browsers which support these. For browsers that do not support
+3D transforms the 2D alternative will be used in it's place allowing for a
+graceful fallback.
 
 Usage
 ---
@@ -21,7 +22,7 @@ a box containing slides of content.
 ```html
 <div class="slider-viewport"><!-- works as a viewport for the 3D transitions -->
   <div id="content-box"><!-- the 3d box -->
-    <figure><!-- slide -->
+    <figure class="jbs-current"><!-- slide -->
       <img src="img/slide-1.png">
       <figcaption>This is slide one's description</figcaption>
     </figure>
@@ -41,21 +42,28 @@ a box containing slides of content.
 </div>
 ```
 
-Technically no CSS is required but if the outer box `div.slider-viewport` is
-statically positioned the plugin will apply relative positioning to it so that
-it can hold the absolutely positioned box. It should be noted that the viewport
-and box should be the same width and height as the content slides so that the
-rotation does not appear off center. It is also a good idea to constrain the
-size of the viewport so that the slides don't spew down the page at load time.
+Technically no CSS is required for the plugin to work but if the outer box,
+`div.slider-viewport` in this example, is statically positioned the plugin
+will apply relative positioning to it so that it can hold the positioned box.
+It is required that you only show the first slide on page load or constrain the
+height of content box to that of the slide height so that the box dimensions
+can be correctly calculated. If only showing the first slide it is advised to
+give that slide the `jbs-current` class name and set it's display property.
 
-```css
-/* overfow will get set to visible on initialisation of the plugin */
-.slider-viewport { width: 560px; height: 380px; overflow: hidden }
+```scss
+#content-box {
+  figure {
+    display: none;
+
+    &.jbs-current {
+      display: block;
+    }
+  }
+}
 ```
 
-Include the `box-slider.jquery.js` (this one first) and the desired effect
-scripts (these second) in your page and then on page load the usual jQuery
-sugaryness applies...
+Include the plugin with desired effect in your page and then on page load apply
+the plugin to the content box with the desired options.
 
 ```javascript
 $('#content-box').boxSlider( /* options */ );
@@ -64,6 +72,8 @@ $('#content-box').boxSlider( /* options */ );
 Options
 ---
 
+* `responsive (default: true)` Tells the plugin to listen for page size changes
+  and adapt the box to fit the screen
 * `speed (default: 800)` The time interval in milliseconds within which the
   slide animation will complete
 * `autoScroll (default: false)` Set true to automatically transition through
@@ -91,7 +101,7 @@ Effect options
   are placed from the view port during transition
 
 ### `tile3d,tile`
-* `rowCount (default: 5)` The number of tile rows into which the slide should 
+* `rowCount (default: 5)` The number of tile rows into which the slide should
   be split
 * `rowOffset (default: 100)` The time offset for starting to animate the tiles
   in a row
