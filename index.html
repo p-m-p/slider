@@ -100,6 +100,20 @@
         });
 
         var init = function () {
+          // This function runs before the slide transition starts
+          var switchIndicator = function ($c, $n, currIndex, nextIndex) {
+            // kills the timeline by setting it's width to zero
+            $timeIndicator.stop().css('width', 0);
+            // Highlights the next slide pagination control
+            $indicators.removeClass('current').eq(nextIndex).addClass('current');
+          };
+
+          // This function runs after the slide transition finishes
+          var startTimeIndicator = function () {
+            // start the timeline animation
+            $timeIndicator.animate({width: '100%'}, slideInterval);
+          };
+
           var $box = $('#box')
             , $indicators = $('.goto-slide')
             , $effects = $('.effect')
@@ -121,20 +135,6 @@
               , 'tile3d': {tileRows: 6, rowOffset: 80}
               , 'tile': {tileRows: 6, rowOffset: 80}
             };
-
-          // This function runs before the slide transition starts
-          var switchIndicator = function ($c, $n, currIndex, nextIndex) {
-            // kills the timeline by setting it's width to zero
-            $timeIndicator.stop().css('width', 0);
-            // Highlights the next slide pagination control
-            $indicators.removeClass('current').eq(nextIndex).addClass('current');
-          };
-
-          // This function runs after the slide transition finishes
-          var startTimeIndicator = function () {
-            // start the timeline animation
-            $timeIndicator.animate({width: '100%'}, slideInterval);
-          };
 
           // initialize the plugin with the desired settings
           $box.boxSlider(defaultOptions);
