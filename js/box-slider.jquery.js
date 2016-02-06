@@ -61,9 +61,10 @@
     index = parseInt(index, 10);
     return this.each(function () {
       var $box = $(this);
+      var settings = $box.data('bssettings');
 
       resetAutoScroll($box);
-      showNextSlide($box, index);
+      showNextSlide($box, index, index < settings.bsfaceindex);
     });
   };
 
