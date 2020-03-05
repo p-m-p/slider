@@ -91,13 +91,20 @@
 		  $(function () {
         var $images = $('.slide > img');
         var imagesLeftToLoad = $images.length;
-        $images.on('load', function () {
-          imagesLeftToLoad -= 1;
+        $images
+          .on('load', function () {
+            imagesLeftToLoad -= 1;
 
-          if (imagesLeftToLoad === 0) {
-            init();
-          }
-        });
+            if (imagesLeftToLoad === 0) {
+              init();
+            }
+          })
+          .each(function () {
+            if (this.complete) {
+              ${this}.load();
+            }
+          });
+
 
         var init = function () {
           // This function runs before the slide transition starts
