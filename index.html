@@ -89,23 +89,6 @@
 		<script src="js/box-slider-all.jquery.min.js"></script>
 		<script>
 		  $(function () {
-        var $images = $('.slide > img');
-        var imagesLeftToLoad = $images.length;
-        $images
-          .on('load', function () {
-            imagesLeftToLoad -= 1;
-
-            if (imagesLeftToLoad === 0) {
-              init();
-            }
-          })
-          .each(function () {
-            if (this.complete) {
-              $(this).load();
-            }
-          });
-
-
         var init = function () {
           // This function runs before the slide transition starts
           var switchIndicator = function ($c, $n, currIndex, nextIndex) {
@@ -172,6 +155,22 @@
             ev.preventDefault();
           });
         };
+
+        var $images = $('.slide > img');
+        var imagesLeftToLoad = $images.length;
+        $images
+          .on('load', function () {
+            imagesLeftToLoad -= 1;
+
+            if (imagesLeftToLoad === 0) {
+              init();
+            }
+          })
+          .each(function () {
+            if (this.complete) {
+              $(this).load();
+            }
+          });
 		  });
 		</script>
 
