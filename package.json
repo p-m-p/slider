@@ -7,16 +7,20 @@
     "test": "test"
   },
   "scripts": {
-    "test": "grunt test"
+    "build": "webpack --mode=production"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/p-m-p/jquery-box-slider"
   },
   "author": "Phil Parsons",
-  "license": "BSD",
+  "license": "MIT",
   "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-uglify": "~0.11.1"
-  }
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {}
 }
