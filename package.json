@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "lint": "eslint . --ext .ts",
     "build": "webpack --mode=production"
   },
   "repository": {
@@ -22,5 +23,9 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0"
+  }
 }
