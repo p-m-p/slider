@@ -23,6 +23,7 @@
     "@storybook/html": "^5.3.18",
     "babel-loader": "^8.1.0",
     "cz-conventional-changelog": "^3.1.0",
+    "eslint-loader": "^4.0.0",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
