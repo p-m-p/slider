@@ -5,6 +5,7 @@ export interface BoxSliderOptions {
   autoScroll?: boolean;
   pauseOnHover?: boolean;
   perspective?: number;
+  startIndex?: number;
 }
 
 export const defaults: BoxSliderOptions = {
@@ -13,5 +14,6 @@ export const defaults: BoxSliderOptions = {
   timeout: 5000,
   autoScroll: false,
   pauseOnHover: false,
-  perspective: 1000
+  perspective: 1000,
+  startIndex: 0
 };

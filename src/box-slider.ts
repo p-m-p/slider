@@ -15,7 +15,7 @@ export abstract class BoxSlider implements Effect {
     this.el = el;
     this.options = { ...defaults, ...options };
     this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
-    this.activeIndex = 0; // XXX Allow this to be set from options
+    this.activeIndex = this.options.startIndex;
 
     if (this.slides.length > this.activeIndex) {
       this.slides[this.activeIndex].classList.add(ACTIVE_SLIDE_CLASS);
@@ -38,11 +38,47 @@ export abstract class BoxSlider implements Effect {
   }
 
   next(): Promise<BoxSlider> {
+    return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1);
+  }
+
+  prev(): Promise<BoxSlider> {
+    return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1);
+  }
+
+  skipTo(nextIndex: number): Promise<BoxSlider> {
+    if (nextIndex < 0 || nextIndex >= this.slides.length) {
+      throw new Error(`${nextIndex} is not a valid slide index`);
+    }
+
     const currentIndex = this.activeIndex;
-    const nextIndex = this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1;
+
+    if (this.options.autoScroll) {
+      this.pause();
+    }
 
     this.activeIndex = nextIndex;
-    return this.transition({ currentIndex, nextIndex }).then(() => this);
+
+    return this.transition({ currentIndex, nextIndex }).then(() => {
+      if (this.options.autoScroll) {
+        this.play();
+      }
+
+      return this;
+    });
+  }
+
+  pause(): BoxSlider {
+    if (this.autoScrollTimer) {
+      window.clearTimeout(this.autoScrollTimer);
+    }
+
+    return this;
+  }
+
+  play(): BoxSlider {
+    this.setAutoScroll();
+
+    return this;
   }
 
   protected setStyle(style: string | { [style: string]: string }, value?: string): BoxSlider {
@@ -56,6 +92,10 @@ export abstract class BoxSlider implements Effect {
   }
 
   private setAutoScroll(): void {
+    if (this.autoScrollTimer) {
+      this.pause();
+    }
+
     this.autoScrollTimer = window.setTimeout(() =>
       this.next().then(() => this.setAutoScroll()), this.options.timeout);
   }
