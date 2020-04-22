@@ -1,1 +1,2 @@
-export { BoxSlider, BoxSliderOptions } from './box-slider';
+export { BoxSlider } from './box-slider';
+export { BoxSliderOptions, defaults } from './box-slider-options';

@@ -8,7 +8,9 @@
   },
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,9 @@
   "author": "Phil Parsons",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@storybook/html": "^5.3.18",
+    "babel-loader": "^8.1.0",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",

@@ -1,0 +1,28 @@
+.slider {
+    width: 600px;
+    height: 400px;
+}
+
+.slide {
+    box-sizing: border-box;
+    display: block;
+    margin: 0;
+    padding: 40px;
+}
+
+.slide:nth-child(1) {
+    background: lightblue;
+}
+.slide:nth-child(2) {
+    background: salmon;
+}
+.slide:nth-child(3) {
+    background: tan;
+}
+.slide:nth-child(4) {
+    background: aquamarine;
+}
+.slide:nth-child(5) {
+    background: orchid;
+}
+
