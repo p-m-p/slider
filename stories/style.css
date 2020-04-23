@@ -1,13 +1,16 @@
 .slider {
     width: 600px;
     height: 400px;
+    overflow: hidden;
 }
 
 .slide {
     box-sizing: border-box;
     display: block;
+    height: 100%;
     margin: 0;
     padding: 40px;
+    width: 100%;
 }
 
 .slide:nth-child(1) {

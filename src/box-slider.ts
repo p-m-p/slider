@@ -42,10 +42,10 @@ export abstract class BoxSlider implements Effect {
   }
 
   prev(): Promise<BoxSlider> {
-    return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1);
+    return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1, true);
   }
 
-  skipTo(nextIndex: number): Promise<BoxSlider> {
+  skipTo(nextIndex: number, backwards = false): Promise<BoxSlider> {
     if (nextIndex < 0 || nextIndex >= this.slides.length) {
       throw new Error(`${nextIndex} is not a valid slide index`);
     }
@@ -58,7 +58,11 @@ export abstract class BoxSlider implements Effect {
 
     this.activeIndex = nextIndex;
 
-    return this.transition({ currentIndex, nextIndex }).then(() => {
+    return this.transition({
+      currentIndex,
+      nextIndex,
+      isPrevious: backwards
+    }).then(() => {
       if (this.options.autoScroll) {
         this.play();
       }
