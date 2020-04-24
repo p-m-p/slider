@@ -20,15 +20,14 @@ export class CarouselSlider extends BoxSlider {
     this.slides.forEach((slide, index) => {
       applyCss(slide, {
         height: this.slideHeight,
-        left: '0',
+        left: this.slideWidth,
         position: 'absolute',
         top: '0',
-        transition: `left ${this.options.speed}ms`,
         width: this.slideWidth
       });
 
-      if (index !== this.activeIndex) {
-        applyCss(slide, { visibility: 'hidden' });
+      if (index === this.activeIndex) {
+        applyCss(slide, { left: '0' });
       }
     });
   }
@@ -40,8 +39,6 @@ export class CarouselSlider extends BoxSlider {
 
       applyCss(nextSlide, {
         left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth,
-        visibility: 'visible',
-        transition: 'none'
       });
 
       window.setTimeout(() => {
@@ -50,11 +47,12 @@ export class CarouselSlider extends BoxSlider {
           transition: `left ${this.options.speed}ms`
         });
         applyCss(currentSlide, {
-          left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`
+          left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
+          transition: `left ${this.options.speed}ms`
         });
 
         window.setTimeout(() => {
-          applyCss(currentSlide, { left: '0', visibility: 'hidden' });
+          applyCss(currentSlide, { left: this.slideWidth, transition: 'left 0ms' });
           resolve(settings);
         }, this.options.speed);
       }, 1);

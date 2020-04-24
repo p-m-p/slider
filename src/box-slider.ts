@@ -11,6 +11,8 @@ export abstract class BoxSlider implements Effect {
   protected activeIndex: number;
   protected autoScrollTimer: number;
 
+  private transitionPromise: Promise<BoxSlider>;
+
   constructor(el: HTMLElement, options: BoxSliderOptions = {}) {
     this.el = el;
     this.options = { ...defaults, ...options };
@@ -50,25 +52,28 @@ export abstract class BoxSlider implements Effect {
       throw new Error(`${nextIndex} is not a valid slide index`);
     }
 
-    const currentIndex = this.activeIndex;
-
-    if (this.options.autoScroll) {
-      this.pause();
-    }
-
+    const settings = {
+      currentIndex: this.activeIndex,
+      isPrevious: backwards,
+      nextIndex,
+    };
     this.activeIndex = nextIndex;
 
-    return this.transition({
-      currentIndex,
-      nextIndex,
-      isPrevious: backwards
-    }).then(() => {
+    this.transitionPromise = (this.transitionPromise || Promise.resolve(this)).then(() => {
       if (this.options.autoScroll) {
-        this.play();
+        this.pause();
       }
 
-      return this;
+      return this.transition(settings).then(() => {
+        if (this.options.autoScroll) {
+          this.play();
+        }
+
+        return this;
+      });
     });
+
+    return this.transitionPromise;
   }
 
   pause(): BoxSlider {
