@@ -1,23 +1,22 @@
-import { BoxSlider } from '../box-slider';
 import { BoxSliderOptions } from '../box-slider-options';
-import { TransitionSettings } from './effect';
+import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
 
-export class CarouselSlider extends BoxSlider {
+export class CarouselSlider implements Effect {
   private slideWidth: string;
   private slideHeight: string;
 
-  initialize(options: BoxSliderOptions): void {
-    this.slideWidth = `${this.el.offsetWidth}px`;
-    this.slideHeight = `${this.el.offsetHeight}px`;
+  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
+    this.slideWidth = `${el.offsetWidth}px`;
+    this.slideHeight = `${el.offsetHeight}px`;
 
-    // XXX Move this to protected method on the box
-    if ('static inherit'.indexOf(this.el.style.position) !== -1) {
-      this.setStyle('position', 'relative');
+    if ('static inherit'.indexOf(el.style.position) !== -1) {
+      applyCss(el, { position: 'relative'});
     }
 
-    this.setStyle('overflow', 'hidden');
-    this.slides.forEach((slide, index) => {
+    applyCss(el, { overflow: 'hidden' });
+
+    slides.forEach((slide, index) => {
       applyCss(slide, {
         height: this.slideHeight,
         left: this.slideWidth,
@@ -26,7 +25,7 @@ export class CarouselSlider extends BoxSlider {
         width: this.slideWidth
       });
 
-      if (index === this.activeIndex) {
+      if (index === options.startIndex) {
         applyCss(slide, { left: '0' });
       }
     });
@@ -34,28 +33,29 @@ export class CarouselSlider extends BoxSlider {
 
   transition(settings: TransitionSettings): Promise<TransitionSettings> {
     return  new Promise(resolve => {
-      const currentSlide = this.slides[settings.currentIndex];
-      const nextSlide = this.slides[settings.nextIndex]
+      const currentSlide = settings.slides[settings.currentIndex];
+      const nextSlide = settings.slides[settings.nextIndex]
 
       applyCss(nextSlide, {
         left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth,
       });
 
-      window.setTimeout(() => {
+      requestAnimationFrame(() => {
         applyCss(nextSlide, {
           left: '0',
-          transition: `left ${this.options.speed}ms`
+          transition: `left ${settings.speed}ms`
         });
+
         applyCss(currentSlide, {
           left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
-          transition: `left ${this.options.speed}ms`
+          transition: `left ${settings.speed}ms`
         });
 
         window.setTimeout(() => {
           applyCss(currentSlide, { left: this.slideWidth, transition: 'left 0ms' });
           resolve(settings);
-        }, this.options.speed);
-      }, 1);
+        }, settings.speed);
+      });
     });
   }
 }

@@ -1,4 +1,7 @@
+import { Effect } from './effects/effect';
+
 export interface BoxSliderOptions {
+  effect: Effect
   speed?: number;
   responsive?: boolean;
   timeout?: number;
@@ -9,6 +12,7 @@ export interface BoxSliderOptions {
 }
 
 export const defaults: BoxSliderOptions = {
+  effect: null,
   speed: 800,
   responsive: true,
   timeout: 5000,

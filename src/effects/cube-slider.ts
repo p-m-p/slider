@@ -1,27 +1,26 @@
-import { BoxSlider } from '../box-slider';
-import { BoxSliderOptions } from '../box-slider-options';
-import { TransitionSettings } from './effect';
+import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
+import { BoxSliderOptions } from '../box-slider-options';
 
-export class CubeSlider extends BoxSlider {
+export class CubeSlider implements Effect {
 
   private translateZ: number;
 
-  initialize(options: BoxSliderOptions): void {
-    const width = this.el.clientWidth;
-    const height = this.el.offsetHeight;
+  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
+    const width = el.clientWidth;
+    const height = el.offsetHeight;
     const perspective = '1000px';
-    const viewport = this.el.parentElement; // XXX Need a better defined way to get this element
+    const viewport = el.parentElement; // XXX Need a better defined way to get this element
 
     this.translateZ = width / 2;
 
-    this.slides.forEach((slide: HTMLElement) => applyCss(slide, {
+    slides.forEach((slide: HTMLElement) => applyCss(slide, {
       left: '0',
       position: 'absolute',
       top: '0'
     }));
 
-    this.setStyle({
+    applyCss(el, {
       height: `${height}px`,
       left: '0',
       position: 'absolute',
@@ -39,16 +38,18 @@ export class CubeSlider extends BoxSlider {
       overflow: 'visible'
     });
 
-    applyCss(this.slides[this.activeIndex], {
+    applyCss(slides[options.startIndex], {
       transform: `rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ${this.translateZ}px)`
     });
 
-    this.setStyle({
+    applyCss(el, {
       'transform-style': 'preserve-3d',
       transform: `translate3d(0, 0, -${this.translateZ}px)`
     });
 
-    requestAnimationFrame(() => this.setStyle('transition', `transform ${this.options.speed}ms`));
+    requestAnimationFrame(() => applyCss(el, {
+      transition: `transform ${options.speed}ms`
+    }));
   }
 
   transition(settings: TransitionSettings): Promise<TransitionSettings> {
@@ -57,35 +58,35 @@ export class CubeSlider extends BoxSlider {
       const isVert = false;
 
       requestAnimationFrame(() => {
-        applyCss(this.slides[settings.nextIndex], {
+        applyCss(settings.slides[settings.nextIndex], {
           transform: `rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, ${-angle}deg) translate3d(0, 0, ${this.translateZ}px)`,
           'z-index': '2'
         });
 
-        this.setStyle({
-          transition: `transform ${this.options.speed}ms`,
+        applyCss(settings.el, {
+          transition: `transform ${settings.speed}ms`,
           transform: `translate3d(0, 0, -${this.translateZ}px) rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, ${angle}deg)`
         });
 
         setTimeout(() => {
-          this.slides.forEach((s, index) => {
+          settings.slides.forEach((s, index) => {
             if (index !== settings.nextIndex) {
               applyCss(s, { transform: 'initial' });
             }
           });
 
-          this.setStyle({
+          applyCss(settings.el, {
             transition: 'initial',
             transform: `translate3d(0, 0, -${this.translateZ}px) rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, 0deg)`
           });
 
-          applyCss(this.slides[settings.nextIndex], {
+          applyCss(settings.slides[settings.nextIndex], {
             transform: `rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, 0deg) translate3d(0, 0, ${this.translateZ}px)`,
             'z-index': '1'
           });
 
           resolve(settings);
-        }, this.options.speed);
+        }, settings.speed);
       });
     });
   }

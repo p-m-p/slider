@@ -1,7 +1,9 @@
 import { FadeSlider } from '../src/effects/fade-slider';
-import './style.css';
 import { CarouselSlider } from '../src/effects/carousel-slider';
 import { CubeSlider } from '../src/effects/cube-slider';
+import { BoxSlider } from '../src/box-slider';
+
+import './style.css';
 
 export default {
   title: 'Box Slider',
@@ -26,6 +28,18 @@ function createPage(slider: HTMLElement): HTMLElement {
   page.querySelector('section').appendChild(slider);
 
   return page;
+}
+
+function setUpNavigation(page: HTMLElement, slider: BoxSlider): void {
+  const next = page.querySelector('.next');
+  const prev = page.querySelector('.prev');
+  const pause = page.querySelector('.pause');
+  const play = page.querySelector('.play');
+
+  next.addEventListener('click', () => slider.next());
+  prev.addEventListener('click', () => slider.prev());
+  pause.addEventListener('click', () => slider.pause());
+  play.addEventListener('click', () => slider.play());
 }
 
 export const Fade = (): HTMLElement => {
@@ -55,21 +69,14 @@ export const Fade = (): HTMLElement => {
   const page = createPage(box);
 
   setTimeout(() => {
-    const slider = new FadeSlider(box.querySelector('.slider'), {
+    const slider = new BoxSlider(box.querySelector('.slider'), {
+      effect: new FadeSlider(),
       timeout: 5000,
       speed: 1000,
       autoScroll: false
     });
 
-    const next = page.querySelector('.next');
-    const prev = page.querySelector('.prev');
-    const pause = page.querySelector('.pause');
-    const play = page.querySelector('.play');
-
-    next.addEventListener('click', () => slider.next());
-    prev.addEventListener('click', () => slider.prev());
-    pause.addEventListener('click', () => slider.pause());
-    play.addEventListener('click', () => slider.play());
+    setUpNavigation(page, slider);
   }, 500);
 
   return page;
@@ -102,21 +109,14 @@ export const Carousel = (): HTMLElement => {
   const page = createPage(box);
 
   setTimeout(() => {
-    const slider = new CarouselSlider(box.querySelector('.slider'), {
+    const slider = new BoxSlider(box.querySelector('.slider'), {
+      effect: new CarouselSlider(),
       timeout: 5000,
       speed: 1000,
       autoScroll: false
     });
 
-    const next = page.querySelector('.next');
-    const prev = page.querySelector('.prev');
-    const pause = page.querySelector('.pause');
-    const play = page.querySelector('.play');
-
-    next.addEventListener('click', () => slider.next());
-    prev.addEventListener('click', () => slider.prev());
-    pause.addEventListener('click', () => slider.pause());
-    play.addEventListener('click', () => slider.play());
+    setUpNavigation(page, slider);
   }, 500);
 
   return page;
@@ -140,27 +140,23 @@ export const Cube = (): HTMLElement => {
       <figure class="slide">
         <span>FOUR</span>
       </figure>
+      <figure class="slide">
+        <span>FIVE</span>
+      </figure>
     </div>
   `;
 
   const page = createPage(box);
 
   setTimeout(() => {
-    const slider = new CubeSlider(box.querySelector('.slider'), {
+    const slider = new BoxSlider(box.querySelector('.slider'), {
+      effect: new CubeSlider(),
       timeout: 5000,
       speed: 1000,
       autoScroll: false
     });
 
-    const next = page.querySelector('.next');
-    const prev = page.querySelector('.prev');
-    const pause = page.querySelector('.pause');
-    const play = page.querySelector('.play');
-
-    next.addEventListener('click', () => slider.next());
-    prev.addEventListener('click', () => slider.prev());
-    pause.addEventListener('click', () => slider.pause());
-    play.addEventListener('click', () => slider.play());
+    setUpNavigation(page, slider);
   }, 500);
 
   return page;

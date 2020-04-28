@@ -1,42 +1,38 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
 import { applyCss } from './utils';
-import { Effect, TransitionSettings } from './effects/effect';
+import { Effect } from './effects/effect';
 
 export const ACTIVE_SLIDE_CLASS = 'bs-active';
 
-export abstract class BoxSlider implements Effect {
-  protected el: HTMLElement;
-  protected options: BoxSliderOptions;
-  protected slides: HTMLElement[];
-  protected activeIndex: number;
-  protected autoScrollTimer: number;
+export class BoxSlider {
+  private readonly el: HTMLElement;
+  private readonly effect: Effect;
+  private readonly options: BoxSliderOptions;
+  private readonly slides: HTMLElement[];
 
+  private activeIndex: number;
+  private autoScrollTimer: number;
   private transitionPromise: Promise<BoxSlider>;
 
-  constructor(el: HTMLElement, options: BoxSliderOptions = {}) {
+  constructor(el: HTMLElement, options: BoxSliderOptions) {
+    if (!options.effect) {
+      throw new Error('No slide effect defined in box options');
+    }
+
     this.el = el;
+    this.effect = options.effect;
     this.options = { ...defaults, ...options };
     this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
     this.activeIndex = this.options.startIndex;
 
     if (this.slides.length > this.activeIndex) {
       this.slides[this.activeIndex].classList.add(ACTIVE_SLIDE_CLASS);
-      this.initialize(this.options);
+      this.effect.initialize(this.el, this.slides, { ...this.options, effect: undefined });
 
       if (options.autoScroll) {
         this.setAutoScroll();
       }
     }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  initialize(options: BoxSliderOptions): void {
-    throw new Error('Effect must implement the initialize method');
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  transition(settings: TransitionSettings): Promise<TransitionSettings> {
-    throw new Error('Effect must implement the transition method');
   }
 
   next(): Promise<BoxSlider> {
@@ -53,6 +49,9 @@ export abstract class BoxSlider implements Effect {
     }
 
     const settings = {
+      el: this.el,
+      slides: this.slides,
+      speed: this.options.speed,
       currentIndex: this.activeIndex,
       isPrevious: backwards,
       nextIndex,
@@ -64,7 +63,7 @@ export abstract class BoxSlider implements Effect {
         this.pause();
       }
 
-      return this.transition(settings).then(() => {
+      return this.effect.transition(settings).then(() => {
         if (this.options.autoScroll) {
           this.play();
         }
