@@ -1,7 +1,11 @@
-.slider {
-    width: 600px;
+.viewport {
     height: 400px;
-    overflow: hidden;
+    width: 600px;
+}
+
+.slider {
+    height: 400px;
+    width: 600px;
 }
 
 .slide {
