@@ -48,7 +48,7 @@ export class CubeSlider extends BoxSlider {
       transform: `translate3d(0, 0, -${this.translateZ}px)`
     });
 
-    setTimeout(() => this.setStyle('transition', `transform ${this.options.speed}ms`), 1);
+    requestAnimationFrame(() => this.setStyle('transition', `transform ${this.options.speed}ms`));
   }
 
   transition(settings: TransitionSettings): Promise<TransitionSettings> {
@@ -56,7 +56,7 @@ export class CubeSlider extends BoxSlider {
       const angle = settings.isPrevious ? 90 : -90;
       const isVert = false;
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         applyCss(this.slides[settings.nextIndex], {
           transform: `rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, ${-angle}deg) translate3d(0, 0, ${this.translateZ}px)`,
           'z-index': '2'
@@ -86,7 +86,7 @@ export class CubeSlider extends BoxSlider {
 
           resolve(settings);
         }, this.options.speed);
-      }, 1);
+      });
     });
   }
 }
