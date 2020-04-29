@@ -1,14 +1,15 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
-import { applyCss } from './utils';
 import { Effect } from './effects/effect';
 
 export const ACTIVE_SLIDE_CLASS = 'bs-active';
+export type EventType = 'before' | 'after' | 'play' | 'pause';
 
 export class BoxSlider {
   private readonly el: HTMLElement;
   private readonly effect: Effect;
   private readonly options: BoxSliderOptions;
   private readonly slides: HTMLElement[];
+  private readonly eventListeners: { [ev: string]: ((payload: any) => void)[] };
 
   private activeIndex: number;
   private autoScrollTimer: number;
@@ -24,6 +25,7 @@ export class BoxSlider {
     this.options = { ...defaults, ...options };
     this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
     this.activeIndex = this.options.startIndex;
+    this.eventListeners = {};
 
     if (this.slides.length > this.activeIndex) {
       this.slides[this.activeIndex].classList.add(ACTIVE_SLIDE_CLASS);
@@ -63,10 +65,18 @@ export class BoxSlider {
         this.pause();
       }
 
+      this.emit('before', {
+        currentIndex: settings.currentIndex,
+        nextIndex: settings.nextIndex,
+        speed: settings.speed
+      });
+
       return this.effect.transition(settings).then(() => {
         if (this.options.autoScroll) {
           this.play();
         }
+
+        this.emit('after', { activeIndex: settings.nextIndex });
 
         return this;
       });
@@ -78,6 +88,7 @@ export class BoxSlider {
   pause(): BoxSlider {
     if (this.autoScrollTimer) {
       window.clearTimeout(this.autoScrollTimer);
+      this.emit('pause');
     }
 
     return this;
@@ -85,18 +96,28 @@ export class BoxSlider {
 
   play(): BoxSlider {
     this.setAutoScroll();
+    this.emit('play');
 
     return this;
   }
 
-  protected setStyle(style: string | { [style: string]: string }, value?: string): BoxSlider {
-    if (typeof style === 'string') {
-      this.el.style.setProperty(style, value);
-    } else {
-      applyCss(this.el, style);
+  addEventListener(ev: EventType, callback: (payload: any) => void): BoxSlider {
+    this.eventListeners[ev] = this.eventListeners[ev] || [];
+    this.eventListeners[ev].push(callback);
+
+    return this;
+  }
+
+  removeEventListener(ev: EventType, callback: Function): BoxSlider {
+    if (this.eventListeners[ev]) {
+      this.eventListeners[ev] = this.eventListeners[ev].filter(cb => cb !== callback);
     }
 
     return this;
+  }
+
+  private emit(ev: EventType, payload?: any): void {
+    (this.eventListeners[ev] || []).forEach(cb => cb(payload));
   }
 
   private setAutoScroll(): void {

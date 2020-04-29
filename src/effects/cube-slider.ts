@@ -29,7 +29,7 @@ export class CubeSlider implements Effect {
     });
 
     // ensure parent is positioned to hold the box
-    if (['absolute', 'fixed', 'relative'].indexOf(viewport.style.position) === -1) {
+    if (['absolute', 'fixed', 'relative'].indexOf(getComputedStyle(viewport).position) === -1) {
       applyCss(viewport, { position: 'relative' });
     }
 

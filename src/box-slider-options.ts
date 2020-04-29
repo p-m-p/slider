@@ -1,7 +1,7 @@
 import { Effect } from './effects/effect';
 
 export interface BoxSliderOptions {
-  effect: Effect
+  effect: Effect;
   speed?: number;
   responsive?: boolean;
   timeout?: number;

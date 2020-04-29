@@ -10,7 +10,7 @@ export class CarouselSlider implements Effect {
     this.slideWidth = `${el.offsetWidth}px`;
     this.slideHeight = `${el.offsetHeight}px`;
 
-    if ('static inherit'.indexOf(el.style.position) !== -1) {
+    if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative'});
     }
 
@@ -52,7 +52,11 @@ export class CarouselSlider implements Effect {
         });
 
         window.setTimeout(() => {
-          applyCss(currentSlide, { left: this.slideWidth, transition: 'left 0ms' });
+          applyCss(currentSlide, {
+            left: this.slideWidth,
+            transition: 'initial'
+          });
+
           resolve(settings);
         }, settings.speed);
       });

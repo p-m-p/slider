@@ -5,7 +5,7 @@ import { applyCss } from '../utils';
 export class FadeSlider implements Effect {
 
   initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
-    if ('static inherit'.indexOf(el.style.position) !== -1) {
+    if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative' });
     }
 
