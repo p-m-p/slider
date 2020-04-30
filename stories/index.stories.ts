@@ -165,7 +165,7 @@ export const Cube = (): HTMLElement => {
 
   setTimeout(() => {
     const slider = new BoxSlider(box.querySelector('.slider'), {
-      effect: new CubeSlider(),
+      effect: new CubeSlider({ direction: 'horizontal' }),
       timeout: 5000,
       speed: 1000,
       autoScroll: false

@@ -2,17 +2,32 @@ import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
 import { BoxSliderOptions } from '../box-slider-options';
 
+export interface CubeSliderOptions {
+  direction?: 'horizontal' | 'vertical';
+  perspective?: number;
+}
+
+export const defaults: CubeSliderOptions = {
+  perspective: 1000,
+  direction: 'horizontal'
+};
+
 export class CubeSlider implements Effect {
 
+  private readonly options: CubeSliderOptions;
   private translateZ: number;
 
-  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
-    const width = el.clientWidth;
-    const height = el.offsetHeight;
-    const perspective = '1000px';
-    const viewport = el.parentElement; // XXX Need a better defined way to get this element
+  constructor(options: CubeSliderOptions = {}) {
+    this.options = { ...defaults, ...options };
+  }
 
-    this.translateZ = width / 2;
+  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
+    const width = el.offsetWidth;
+    const height = el.offsetHeight;
+    const perspective = `${this.options.perspective}px`;
+    const viewport = el.parentElement;
+
+    this.translateZ = this.options.direction === 'vertical' ? height / 2 : width / 2;
 
     slides.forEach((slide: HTMLElement) => applyCss(slide, {
       left: '0',
@@ -39,7 +54,7 @@ export class CubeSlider implements Effect {
     });
 
     applyCss(slides[options.startIndex], {
-      transform: `rotate3d(0, 1, 0, 0deg) translate3d(0, 0, ${this.translateZ}px)`
+      transform: `${this.rotation(0)} translate3d(0, 0, ${this.translateZ}px)`
     });
 
     applyCss(el, {
@@ -55,17 +70,16 @@ export class CubeSlider implements Effect {
   transition(settings: TransitionSettings): Promise<TransitionSettings> {
     return new Promise(resolve => {
       const angle = settings.isPrevious ? 90 : -90;
-      const isVert = false;
 
       requestAnimationFrame(() => {
         applyCss(settings.slides[settings.nextIndex], {
-          transform: `rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, ${-angle}deg) translate3d(0, 0, ${this.translateZ}px)`,
+          transform: `${this.rotation(-angle)} translate3d(0, 0, ${this.translateZ}px)`,
           'z-index': '2'
         });
 
         applyCss(settings.el, {
           transition: `transform ${settings.speed}ms`,
-          transform: `translate3d(0, 0, -${this.translateZ}px) rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, ${angle}deg)`
+          transform: `translate3d(0, 0, -${this.translateZ}px) ${this.rotation(angle)}`
         });
 
         setTimeout(() => {
@@ -77,11 +91,11 @@ export class CubeSlider implements Effect {
 
           applyCss(settings.el, {
             transition: 'initial',
-            transform: `translate3d(0, 0, -${this.translateZ}px) rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, 0deg)`
+            transform: `translate3d(0, 0, -${this.translateZ}px) ${this.rotation(0)}`
           });
 
           applyCss(settings.slides[settings.nextIndex], {
-            transform: `rotate3d(${isVert ? '1, 0, 0' : '0, 1, 0'}, 0deg) translate3d(0, 0, ${this.translateZ}px)`,
+            transform: `${this.rotation(0)} translate3d(0, 0, ${this.translateZ}px)`,
             'z-index': '1'
           });
 
@@ -89,5 +103,9 @@ export class CubeSlider implements Effect {
         }, settings.speed);
       });
     });
+  }
+
+  private rotation(angle: number): string {
+    return `rotate3d(${this.options.direction === 'vertical' ? '1, 0, 0' : '0, 1, 0'}, ${angle}deg)`;
   }
 }
