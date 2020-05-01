@@ -1,4 +1,5 @@
 import { BoxSliderOptions } from '../box-slider-options';
+import { StyleStore } from '../style-store';
 
 export interface TransitionSettings {
   el: HTMLElement;
@@ -11,7 +12,7 @@ export interface TransitionSettings {
 
 export interface Effect {
 
-  initialize(el: HTMLElement, slides: HTMLElement[], options?: BoxSliderOptions): void;
+  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options?: BoxSliderOptions): void;
 
   transition(settings: TransitionSettings): Promise<TransitionSettings>;
 }

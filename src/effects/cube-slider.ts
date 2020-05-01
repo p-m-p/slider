@@ -1,6 +1,7 @@
 import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
 import { BoxSliderOptions } from '../box-slider-options';
+import { StyleStore } from '../style-store';
 
 export interface CubeSliderOptions {
   direction?: 'horizontal' | 'vertical';
@@ -12,6 +13,10 @@ export const defaults: CubeSliderOptions = {
   direction: 'horizontal'
 };
 
+const SLIDE_STYLES = ['left', 'position', 'top', 'transform', 'z-index'];
+const BOX_STYLES = ['height', 'left', 'position', 'top', 'transform', 'transform-style', 'transition', 'width', 'z-index' ];
+const VIEWPORT_STYLES = ['overflow', 'perspective', 'position'];
+
 export class CubeSlider implements Effect {
 
   private readonly options: CubeSliderOptions;
@@ -21,13 +26,17 @@ export class CubeSlider implements Effect {
     this.options = { ...defaults, ...options };
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
     const width = el.offsetWidth;
     const height = el.offsetHeight;
     const perspective = `${this.options.perspective}px`;
     const viewport = el.parentElement;
 
     this.translateZ = this.options.direction === 'vertical' ? height / 2 : width / 2;
+
+    styleStore.store(slides, SLIDE_STYLES);
+    styleStore.store(el, BOX_STYLES);
+    styleStore.store(viewport, VIEWPORT_STYLES);
 
     slides.forEach((slide: HTMLElement) => applyCss(slide, {
       left: '0',
@@ -49,8 +58,8 @@ export class CubeSlider implements Effect {
     }
 
     applyCss(viewport, {
-      perspective: perspective,
-      overflow: 'visible'
+      overflow: 'visible',
+      perspective: perspective
     });
 
     applyCss(slides[options.startIndex], {
@@ -62,9 +71,9 @@ export class CubeSlider implements Effect {
       transform: `translate3d(0, 0, -${this.translateZ}px)`
     });
 
-    requestAnimationFrame(() => applyCss(el, {
+    setTimeout(() => applyCss(el, {
       transition: `transform ${options.speed}ms`
-    }));
+    }), 1);
   }
 
   transition(settings: TransitionSettings): Promise<TransitionSettings> {

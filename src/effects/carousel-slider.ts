@@ -1,14 +1,21 @@
 import { BoxSliderOptions } from '../box-slider-options';
 import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
+import { StyleStore } from '../style-store';
+
+const SLIDE_STYLES = ['height', 'left', 'position', 'top', 'transition', 'width'];
+const BOX_STYLES = ['overflow', 'position'];
 
 export class CarouselSlider implements Effect {
   private slideWidth: string;
   private slideHeight: string;
 
-  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
     this.slideWidth = `${el.offsetWidth}px`;
     this.slideHeight = `${el.offsetHeight}px`;
+
+    styleStore.store(slides, SLIDE_STYLES);
+    styleStore.store(el, BOX_STYLES);
 
     if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative'});

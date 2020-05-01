@@ -1,19 +1,21 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
 import { Effect } from './effects/effect';
+import { StyleStore } from './style-store';
 
-export const ACTIVE_SLIDE_CLASS = 'bs-active';
-export type EventType = 'before' | 'after' | 'play' | 'pause';
+export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play';
 
 export class BoxSlider {
-  private readonly el: HTMLElement;
-  private readonly effect: Effect;
   private readonly options: BoxSliderOptions;
-  private readonly slides: HTMLElement[];
-  private readonly eventListeners: { [ev: string]: ((payload: any) => void)[] };
 
   private activeIndex: number;
   private autoScrollTimer: number;
+  private el: HTMLElement;
+  private effect: Effect;
+  private eventListeners: { [ev: string]: ((payload: any) => void)[] };
+  private slides: HTMLElement[];
   private transitionPromise: Promise<BoxSlider>;
+  private styleStore: StyleStore;
+  private isDestroyed: boolean;
 
   constructor(el: HTMLElement, options: BoxSliderOptions) {
     if (!options.effect) {
@@ -26,10 +28,11 @@ export class BoxSlider {
     this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
     this.activeIndex = this.options.startIndex;
     this.eventListeners = {};
+    this.styleStore = new StyleStore();
+    this.isDestroyed = false;
 
     if (this.slides.length > this.activeIndex) {
-      this.slides[this.activeIndex].classList.add(ACTIVE_SLIDE_CLASS);
-      this.effect.initialize(this.el, this.slides, { ...this.options, effect: undefined });
+      this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options, effect: undefined });
 
       if (options.autoScroll) {
         this.setAutoScroll();
@@ -46,6 +49,10 @@ export class BoxSlider {
   }
 
   skipTo(nextIndex: number, backwards = false): Promise<BoxSlider> {
+    if(this.isDestroyed) {
+      throw new Error('Invalid attempt made to move destroyed slider instance');
+    }
+
     if (nextIndex < 0 || nextIndex >= this.slides.length) {
       throw new Error(`${nextIndex} is not a valid slide index`);
     }
@@ -87,7 +94,7 @@ export class BoxSlider {
 
   pause(): BoxSlider {
     if (this.autoScrollTimer) {
-      window.clearTimeout(this.autoScrollTimer);
+      this.stopAutoPlay();
       this.emit('pause');
     }
 
@@ -114,6 +121,26 @@ export class BoxSlider {
     }
 
     return this;
+  }
+
+  destroy(): void {
+    this.isDestroyed = true;
+    this.stopAutoPlay();
+
+    (this.transitionPromise || Promise.resolve(null)).then(() => {
+      this.styleStore.revert();
+      this.emit('destroy');
+
+      delete this.el;
+      delete this.slides;
+      delete this.eventListeners;
+      delete this.styleStore;
+      delete this.effect;
+    });
+  }
+
+  private stopAutoPlay(): void {
+    window.clearTimeout(this.autoScrollTimer);
   }
 
   private emit(ev: EventType, payload?: any): void {

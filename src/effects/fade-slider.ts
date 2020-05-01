@@ -1,10 +1,17 @@
 import { Effect, TransitionSettings } from './effect';
 import { BoxSliderOptions } from '../box-slider-options';
 import { applyCss } from '../utils';
+import { StyleStore } from '../style-store';
+
+const SLIDE_STYLES = ['display', 'height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index'];
+const BOX_STYLES = ['height', 'overflow', 'position'];
 
 export class FadeSlider implements Effect {
 
-  initialize(el: HTMLElement, slides: HTMLElement[], options: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
+    styleStore.store(slides, SLIDE_STYLES);
+    styleStore.store(el, BOX_STYLES);
+
     if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative' });
     }
@@ -20,8 +27,8 @@ export class FadeSlider implements Effect {
         left: '0',
         position: 'absolute',
         top: '0',
-        width: '100%',
-        transition: `opacity ${options.speed}ms`
+        transition: `opacity ${options.speed}ms`,
+        width: '100%'
       });
 
       if (index !== options.startIndex) {
