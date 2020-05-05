@@ -1,7 +1,7 @@
 ;(function (w, $, undefined) {
   'use strict';
 
-  w.jqBoxSlider.registerAnimator('tile3d,tile', (function () {
+  w.jqBoxSlider.registerAnimator('tile3d,static', (function () {
     var adaptor = {}
       , supports3d = true
       , vendorPrefix = '';
@@ -12,7 +12,7 @@
     };
 
     adaptor.initialize = function ($box, $slides, settings) {
-      // cache css and setup tile wrapper
+      // cache css and setup static wrapper
       this._cacheOriginalCSS($box, 'box', settings);
 
       settings.tileGrid = this.calculateGrid($box, $slides, settings);
@@ -61,7 +61,7 @@
       });
       $slides.hide();
 
-      // set up the tile grid with background images
+      // set up the static grid with background images
       for (; i < settings.tileGrid.rows; ++i) {
         fromTop = i * settings.tileGrid.sideLength;
 
@@ -83,7 +83,7 @@
     };
 
     adaptor.transition = function (settings) {
-      var $tiles = settings.$tileWrapper.find('.bs-tile')
+      var $tiles = settings.$tileWrapper.find('.bs-static')
         , rowIntv = settings.rowOffset || 100
         , tileIntv = (
             (settings.speed - rowIntv * (settings.tileGrid.rows - 1)) /
@@ -91,7 +91,7 @@
           )
         , imgSrc = slideImageURL(settings.$nextSlide)
         , nextFace = settings.nextFace || 'back'
-        , faceClass = '.bs-tile-face-' + nextFace
+        , faceClass = '.bs-static-face-' + nextFace
         , tileSettings = {}
         , i = 0
         , angle;
@@ -118,7 +118,7 @@
             , timerIndex = 0;
 
           setTimeout(function () {
-            // animate each tile in the current row
+            // animate each static in the current row
             for (; j < rowEnd; ++j) {
               (function () {
                 var tileTimeout = timerIndex * tileIntv
@@ -133,7 +133,7 @@
                   }
                   else {
                     $tile
-                      .find('.bs-tile-face-' + tileSettings.nextFace)
+                      .find('.bs-static-face-' + tileSettings.nextFace)
                       .fadeOut(100, function () {
                         $tile.find(faceClass).fadeIn(300);
                       });
@@ -158,7 +158,7 @@
       }
     };
 
-    // reset effect css and remove tile grid
+    // reset effect css and remove static grid
     adaptor.destroy = function ($box, settings) {
       this.reset($box, settings);
       settings.$tileWrapper.remove();
@@ -181,7 +181,7 @@
       return $slide.attr('src') || $slide.find('img').attr('src');
     };
 
-    // creates a tile section
+    // creates a static section
     var createTile = function (opts) {
       var $tileHolder = $(document.createElement('div'))
         , $tile = $(document.createElement('div'))
@@ -199,17 +199,17 @@
         });
 
       $tile
-        .addClass('bs-tile')
+        .addClass('bs-static')
         .css({
             width: opts.side
           , height: opts.side
         })
         .appendTo($tileHolder);
 
-      $back.addClass('bs-tile-face-back');
+      $back.addClass('bs-static-face-back');
 
       $front
-        .addClass('bs-tile-face-front')
+        .addClass('bs-static-face-front')
         .css('backgroundImage', 'url(' + opts.imgURL + ')')
         .add($back)
         .css({

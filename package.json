@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "webpack --mode=production",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./stories/static",
     "build-storybook": "build-storybook"
   },
   "repository": {
@@ -24,6 +24,7 @@
     "babel-loader": "^8.1.0",
     "cz-conventional-changelog": "^3.1.0",
     "eslint-loader": "^4.0.0",
+    "file-loader": "^6.0.0",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
