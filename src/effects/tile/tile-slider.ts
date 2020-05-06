@@ -1,11 +1,14 @@
-import { Effect, TransitionSettings } from './effect';
-import { StyleStore } from '../style-store';
-import { BoxSliderOptions } from '../box-slider-options';
-import { applyCss, locateSlideImageSrc } from '../utils';
+import { Effect, TransitionSettings } from '../effect';
+import { StyleStore } from '../../style-store';
+import { BoxSliderOptions } from '../../box-slider-options';
+import { applyCss, locateSlideImageSrc } from '../../utils';
+import { FadeTransition } from './fade-transition';
+import { FlipTransition } from './flip-transition';
 
 export interface TileSliderOptions {
-  rows: number;
-  rowOffset: number;
+  tileEffect?: 'flip' | 'fade';
+  rows?: number;
+  rowOffset?: number;
 }
 
 interface TileGrid {
@@ -16,27 +19,36 @@ interface TileGrid {
 }
 
 const defaults: TileSliderOptions = {
+  tileEffect: 'flip',
   rows: 8,
   rowOffset: 100
 }
 
-const SLIDE_STYLES = [];
-const BOX_STYLES = [];
+const TILE_CLASS = 'bs-tile';
+const SLIDE_STYLES = ['display'];
+const BOX_STYLES = ['height', 'overflow', 'position'];
 
 export class TileSlider implements Effect {
-  options: TileSliderOptions;
-  grid: TileGrid;
-  tileWrapper: HTMLElement;
-  activeFace: 'front' | 'back';
+  private tileTransition: FadeTransition | FlipTransition;
+  private options: TileSliderOptions;
+  private grid: TileGrid;
+  private tileWrapper: HTMLElement;
+  private activeFace: 'front' | 'back';
 
   constructor(options: TileSliderOptions = defaults) {
     this.options = { ...defaults, ...options };
     this.activeFace = 'front';
+    this.tileTransition = this.options.tileEffect === 'fade'
+      ? new FadeTransition()
+      : new FlipTransition();
   }
 
   initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options?: BoxSliderOptions): void {
     const imgSrc = locateSlideImageSrc(slides[options.startIndex]);
     const fragment = document.createDocumentFragment();
+
+    styleStore.store(el, BOX_STYLES);
+    styleStore.store(slides, SLIDE_STYLES);
 
     this.grid = this.calculateGrid(el, slides);
     this.tileWrapper = document.createElement('div');
@@ -60,23 +72,20 @@ export class TileSlider implements Effect {
     });
     slides.forEach(s => applyCss(s, { display: 'none' }));
 
-    let fromLeft = 0;
-    let fromTop = 0;
-
-    // set up the static grid with background images
     for (let i = 0; i < this.grid.rows; ++i) {
-      fromTop = i * this.grid.sideLength;
+      const fromTop = i * this.grid.sideLength;
 
       for (let j = 0; j < this.grid.cols; ++j) {
-        fromLeft = j * this.grid.sideLength;
-
-        fragment.appendChild(this.createTile({
+        fragment.appendChild(this.tileTransition.createTile({
+          backClass: 'back',
+          boxWidth: el.offsetWidth,
+          boxHeight: el.offsetHeight,
           fromTop: fromTop,
           fromLeft: j * this.grid.sideLength,
+          frontClass: 'front',
           imgSrc,
           side: this.grid.sideLength,
-          boxWidth: el.offsetWidth,
-          boxHeight: el.offsetHeight
+          tileClass: TILE_CLASS
         }));
       }
     }
@@ -86,12 +95,11 @@ export class TileSlider implements Effect {
 
   transition(settings: TransitionSettings): Promise<TransitionSettings> {
     return new Promise(resolve => {
-      const tiles = this.tileWrapper.querySelectorAll('.bs-tile');
-      const rowIntv = this.options.rowOffset;
-      const tileIntv = ((settings.speed - rowIntv * (this.grid.rows - 1)) / this.grid.cols);
+      const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`);
+      const rowInterval = this.options.rowOffset;
+      const tileInterval = ((settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols);
       const imgSrc = locateSlideImageSrc(settings.slides[settings.nextIndex]);
       const nextFace = this.activeFace === 'front' ? 'back' : 'front';
-      const angle = nextFace === 'back' ? 180 : 0;
 
       this.tileWrapper.querySelectorAll(`.${nextFace}`)
         .forEach((tile: HTMLElement) => applyCss(tile, { 'background-image': `url(${imgSrc})` }));
@@ -102,15 +110,15 @@ export class TileSlider implements Effect {
           let timerIndex = 0;
 
           const rowEnd = j + this.grid.cols;
-          const rowTimeout = i * rowIntv;
+          const rowTimeout = i * rowInterval;
 
           setTimeout(() => {
             for (; j < rowEnd; ++j) {
-              const tileTimeout = timerIndex * tileIntv;
+              const tileTimeout = timerIndex * tileInterval;
               const tile = tiles[j] as HTMLElement;
 
               setTimeout(() => {
-                applyCss(tile, { transform: `rotate3d(0, 1, 0, ${angle}deg)`})
+                this.tileTransition.transition(tile, nextFace);
 
                 if (tile === tiles[tiles.length - 1]) {
                   this.activeFace = nextFace;
@@ -126,6 +134,10 @@ export class TileSlider implements Effect {
     });
   }
 
+  destroy(el: HTMLElement): void {
+    el.removeChild(this.tileWrapper);
+  }
+
   private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {
     const height = slides[0].offsetHeight;
     const rows = this.options.rows;
@@ -133,53 +145,5 @@ export class TileSlider implements Effect {
     const cols = Math.ceil(el.offsetWidth / sideLength);
 
     return { cols, rows, sideLength, height };
-  }
-
-  private createTile(tileSettings: any): HTMLElement {
-    const tileHolder = document.createElement('div');
-    const tile = document.createElement('div');
-    const front = document.createElement('div');
-    const back = document.createElement('div');
-
-    applyCss(tileHolder, {
-      height: `${tileSettings.side}px`,
-      left: `${tileSettings.fromLeft}px`,
-      perspective: '400px',
-      position: 'absolute',
-      top: `${tileSettings.fromTop}px`,
-      width: `${tileSettings.side}px`
-    });
-
-    tile.classList.add('bs-tile');
-    applyCss(tile, {
-      height: `${tileSettings.side}px`,
-      'transform-style': 'preserve-3d',
-      transition: 'transform 400ms',
-      width: `${tileSettings.side}px`
-    });
-
-    tileHolder.appendChild(tile);
-
-    applyCss(front, { 'background-image': `url(${tileSettings.imgSrc})` });
-
-    [front, back].forEach(t => applyCss(t, {
-      'background-position': `-${tileSettings.fromLeft}px -${tileSettings.fromTop}px`,
-      'background-size': `${tileSettings.boxWidth}px ${tileSettings.boxHeight}px`,
-      'backface-visibility': 'hidden',
-      height: `${tileSettings.side}px`,
-      left: '0',
-      position: 'absolute',
-      top: '0',
-      width: `${tileSettings.side}px`
-    }));
-
-    front.classList.add('front');
-    tile.appendChild(front);
-    back.classList.add('back');
-    tile.appendChild(back);
-
-    applyCss(back, { transform: 'rotateY(180deg)' });
-
-    return tileHolder;
   }
 }

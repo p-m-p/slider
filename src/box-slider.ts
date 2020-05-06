@@ -128,6 +128,10 @@ export class BoxSlider {
     this.stopAutoPlay();
 
     (this.transitionPromise || Promise.resolve(null)).then(() => {
+      if (this.effect.destroy) {
+        this.effect.destroy(this.el);
+      }
+
       this.styleStore.revert();
       this.emit('destroy');
 

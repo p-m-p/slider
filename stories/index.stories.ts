@@ -6,5 +6,5 @@ export default {
 
 export { Fade } from './fade.stories';
 export { Carousel } from './carousel.stories';
-export { Tile } from './tile.stories';
+export { TileFlip, TileFade } from './tile.stories';
 export { HorizontalCube, VerticalCube } from './cube.stories';

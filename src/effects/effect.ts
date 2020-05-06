@@ -15,4 +15,6 @@ export interface Effect {
   initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options?: BoxSliderOptions): void;
 
   transition(settings: TransitionSettings): Promise<TransitionSettings>;
+
+  destroy?: (el: HTMLElement) => void;
 }
