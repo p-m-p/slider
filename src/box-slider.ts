@@ -12,10 +12,10 @@ export class BoxSlider {
   private el: HTMLElement;
   private effect: Effect;
   private eventListeners: { [ev: string]: ((payload: any) => void)[] };
-  private slides: HTMLElement[];
-  private transitionPromise: Promise<BoxSlider>;
-  private styleStore: StyleStore;
   private isDestroyed: boolean;
+  private slides: HTMLElement[];
+  private styleStore: StyleStore;
+  private transitionPromise: Promise<BoxSlider>;
 
   constructor(el: HTMLElement, options: BoxSliderOptions) {
     if (!options.effect) {
@@ -30,6 +30,8 @@ export class BoxSlider {
     this.eventListeners = {};
     this.styleStore = new StyleStore();
     this.isDestroyed = false;
+
+    this.applyEventListeners();
 
     if (this.slides.length > this.activeIndex) {
       this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options, effect: undefined });
@@ -158,5 +160,40 @@ export class BoxSlider {
 
     this.autoScrollTimer = window.setTimeout(() =>
       this.next().then(() => this.setAutoScroll()), this.options.timeout);
+  }
+
+  private applyEventListeners(): void {
+    if (this.options.pauseOnHover) { // XXX Need to properly check if it's actually set to play/pause in options
+      this.el.addEventListener('mouseenter', () => this.pause());
+      this.el.addEventListener('mouseleave', () => this.play());
+    }
+
+    if (this.options.swipe) {
+      this.addSwipeNavigation();
+    }
+  }
+
+  private addSwipeNavigation(): void {
+    let pointerTraceX = 0;
+    let pointerTraceY = 0;
+
+    this.el.addEventListener('pointerdown', ev => {
+      pointerTraceX = ev.clientX;
+      pointerTraceY = ev.clientY;
+    });
+
+    this.el.addEventListener('pointerup', ev => {
+      const distanceX = ev.clientX - pointerTraceX;
+      const distanceY = ev.clientY - pointerTraceY;
+
+      // XXX Need to be able to determine if effect scrolling is vertical
+      if (Math.abs(distanceX) >= this.options.swipeTolerance) {
+        if (distanceX > 0) {
+          this.prev();
+        } else {
+          this.next();
+        }
+      }
+    });
   }
 }

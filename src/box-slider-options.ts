@@ -9,6 +9,8 @@ export interface BoxSliderOptions {
   pauseOnHover?: boolean;
   perspective?: number;
   startIndex?: number;
+  swipe?: boolean;
+  swipeTolerance?: number;
 }
 
 export const defaults: BoxSliderOptions = {
@@ -19,5 +21,7 @@ export const defaults: BoxSliderOptions = {
   autoScroll: false,
   pauseOnHover: false,
   perspective: 1000,
-  startIndex: 0
+  startIndex: 0,
+  swipe: true,
+  swipeTolerance: 30
 };
