@@ -1,11 +1,8 @@
 {
-  "name": "jquery-box-slider",
+  "name": "box-slider",
   "version": "0.0.1",
-  "description": "3D content slider",
-  "main": "grunt.js",
-  "directories": {
-    "test": "test"
-  },
+  "description": "Flexible and light weight content slider",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "webpack --mode=production",
