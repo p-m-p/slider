@@ -1,53 +1,59 @@
 .viewport {
-    height: 400px;
-    width: 600px;
+  height: 400px;
+  width: 600px;
 }
 
 .slider {
-    height: 400px;
-    width: 600px;
+  height: 400px;
+  width: 600px;
 }
 
 .slide {
-    box-sizing: border-box;
-    display: block;
-    height: 100%;
-    margin: 0;
-    padding: 40px;
-    width: 100%;
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 40px;
+  width: 100%;
 }
 
 .carousel {
-    position: relative;
+  position: relative;
 }
 
 .text-captions {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
 }
 
 .text {
-    background: rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
-    color: white;
-    padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  color: white;
+  padding: 20px;
 }
 
 .slide:nth-child(1) {
-    background: lightblue;
+  background: lightblue;
 }
 .slide:nth-child(2) {
-    background: salmon;
+  background: salmon;
 }
 .slide:nth-child(3) {
-    background: tan;
+  background: tan;
 }
 .slide:nth-child(4) {
-    background: aquamarine;
+  background: aquamarine;
 }
 .slide:nth-child(5) {
-    background: orchid;
+  background: orchid;
 }
 
+@media screen and (max-width: 800px) {
+  .viewport, .slider {
+    height: 200px;
+    width: 300px;
+  }
+}

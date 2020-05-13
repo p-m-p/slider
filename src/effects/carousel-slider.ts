@@ -38,7 +38,7 @@ export class CarouselSlider implements Effect {
     });
   }
 
-  transition(settings: TransitionSettings): Promise<TransitionSettings> {
+  transition(settings: TransitionSettings): Promise<void> {
     return  new Promise(resolve => {
       const currentSlide = settings.slides[settings.currentIndex];
       const nextSlide = settings.slides[settings.nextIndex]
@@ -64,7 +64,7 @@ export class CarouselSlider implements Effect {
             transition: 'initial'
           });
 
-          resolve(settings);
+          resolve();
         }, settings.speed);
       });
     });

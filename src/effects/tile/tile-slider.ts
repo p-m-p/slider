@@ -51,8 +51,12 @@ export class TileSlider implements Effect {
     styleStore.store(slides, SLIDE_STYLES);
 
     this.grid = this.calculateGrid(el, slides);
-    this.tileWrapper = document.createElement('div');
 
+    if (this.tileWrapper) {
+      el.removeChild(this.tileWrapper);
+    }
+
+    this.tileWrapper = document.createElement('div');
     el.appendChild(this.tileWrapper);
 
     if ('fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1) {
@@ -93,7 +97,7 @@ export class TileSlider implements Effect {
     this.tileWrapper.appendChild(fragment);
   }
 
-  transition(settings: TransitionSettings): Promise<TransitionSettings> {
+  transition(settings: TransitionSettings): Promise<void> {
     return new Promise(resolve => {
       const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`);
       const rowInterval = this.options.rowOffset;
@@ -122,7 +126,7 @@ export class TileSlider implements Effect {
 
                 if (tile === tiles[tiles.length - 1]) {
                   this.activeFace = nextFace;
-                  resolve(settings);
+                  resolve();
                 }
               }, tileTimeout);
 

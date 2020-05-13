@@ -1,6 +1,7 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
 import { Effect } from './effects/effect';
 import { StyleStore } from './style-store';
+import { responder } from './responder';
 
 export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play';
 
@@ -32,6 +33,7 @@ export class BoxSlider {
     this.isDestroyed = false;
 
     this.applyEventListeners();
+    responder.add(this);
 
     if (this.slides.length > this.activeIndex) {
       this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options, effect: undefined });
@@ -40,6 +42,15 @@ export class BoxSlider {
         this.setAutoScroll();
       }
     }
+  }
+
+  reset(): void {
+    this.styleStore.revert();
+    this.effect.initialize(this.el, this.slides, this.styleStore, {
+      ...this.options,
+      effect: undefined,
+      startIndex: this.activeIndex
+    });
   }
 
   next(): Promise<BoxSlider> {
@@ -135,6 +146,7 @@ export class BoxSlider {
       }
 
       this.styleStore.revert();
+      responder.remove(this);
       this.emit('destroy');
 
       delete this.el;

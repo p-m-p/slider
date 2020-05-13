@@ -76,7 +76,7 @@ export class CubeSlider implements Effect {
     }), 1);
   }
 
-  transition(settings: TransitionSettings): Promise<TransitionSettings> {
+  transition(settings: TransitionSettings): Promise<void> {
     return new Promise(resolve => {
       const angle = settings.isPrevious ? 90 : -90;
 
@@ -108,7 +108,7 @@ export class CubeSlider implements Effect {
             'z-index': '1'
           });
 
-          resolve(settings);
+          resolve();
         }, settings.speed);
       });
     });

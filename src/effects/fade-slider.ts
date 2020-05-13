@@ -37,7 +37,7 @@ export class FadeSlider implements Effect {
     });
   }
 
-  transition(settings: TransitionSettings): Promise<TransitionSettings> {
+  transition(settings: TransitionSettings): Promise<void> {
     return new Promise(resolve => {
       const currentSlide = settings.slides[settings.currentIndex];
       const nextSlide = settings.slides[settings.nextIndex];
@@ -48,7 +48,7 @@ export class FadeSlider implements Effect {
       setTimeout(() => {
         applyCss(currentSlide, { display: 'none', opacity: '1' });
 
-        resolve(settings);
+        resolve();
       }, settings.speed);
     });
   }
