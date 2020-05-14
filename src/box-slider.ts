@@ -12,7 +12,7 @@ export class BoxSlider {
   private autoScrollTimer: number;
   private el: HTMLElement;
   private effect: Effect;
-  private eventListeners: { [ev: string]: ((payload: any) => void)[] };
+  private eventListeners: { [ev: string]: ((payload: object) => void)[] };
   private isDestroyed: boolean;
   private slides: HTMLElement[];
   private styleStore: StyleStore;
@@ -121,7 +121,7 @@ export class BoxSlider {
     return this;
   }
 
-  addEventListener(ev: EventType, callback: (payload: any) => void): BoxSlider {
+  addEventListener(ev: EventType, callback: (payload: object) => void): BoxSlider {
     this.eventListeners[ev] = this.eventListeners[ev] || [];
     this.eventListeners[ev].push(callback);
 
@@ -161,7 +161,7 @@ export class BoxSlider {
     window.clearTimeout(this.autoScrollTimer);
   }
 
-  private emit(ev: EventType, payload?: any): void {
+  private emit(ev: EventType, payload?: object): void {
     (this.eventListeners[ev] || []).forEach(cb => cb(payload));
   }
 
@@ -187,16 +187,13 @@ export class BoxSlider {
 
   private addSwipeNavigation(): void {
     let pointerTraceX = 0;
-    let pointerTraceY = 0;
 
     this.el.addEventListener('pointerdown', ev => {
       pointerTraceX = ev.clientX;
-      pointerTraceY = ev.clientY;
     });
 
     this.el.addEventListener('pointerup', ev => {
       const distanceX = ev.clientX - pointerTraceX;
-      const distanceY = ev.clientY - pointerTraceY;
 
       // XXX Need to be able to determine if effect scrolling is vertical
       if (Math.abs(distanceX) >= this.options.swipeTolerance) {
