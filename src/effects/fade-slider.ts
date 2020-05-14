@@ -3,10 +3,24 @@ import { BoxSliderOptions } from '../box-slider-options';
 import { applyCss } from '../utils';
 import { StyleStore } from '../style-store';
 
+export interface FadeSliderOptions {
+  timingFunction?: string;
+}
+
+const defaults: FadeSliderOptions = {
+  timingFunction: 'ease-in'
+}
+
 const SLIDE_STYLES = ['display', 'height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index'];
 const BOX_STYLES = ['height', 'overflow', 'position'];
 
 export class FadeSlider implements Effect {
+
+  private readonly  options: FadeSliderOptions;
+
+  constructor(options = defaults) {
+    this.options = { ...defaults, ...options };
+  }
 
   initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
     styleStore.store(slides, SLIDE_STYLES);
@@ -27,7 +41,7 @@ export class FadeSlider implements Effect {
         left: '0',
         position: 'absolute',
         top: '0',
-        transition: `opacity ${options.speed}ms`,
+        transition: `opacity ${options.speed}ms ${this.options.timingFunction}`,
         width: '100%'
       });
 

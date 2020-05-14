@@ -1,8 +1,9 @@
 {
-  "name": "box-slider",
-  "version": "0.0.1",
+  "name": "@boxslider/slider",
+  "version": "1.0.0",
   "description": "Flexible and light weight content slider",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "webpack --mode=production",
@@ -11,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/p-m-p/jquery-box-slider"
+    "url": "git://github.com/p-m-p/box-slider"
   },
   "author": "Phil Parsons",
   "license": "MIT",
