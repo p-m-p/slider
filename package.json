@@ -1,22 +1,41 @@
 {
-  "name": "jquery-box-slider",
-  "version": "0.0.1",
-  "description": "3D content slider",
-  "main": "grunt.js",
-  "directories": {
-    "test": "test"
-  },
+  "name": "@boxslider/slider",
+  "version": "1.0.2",
+  "description": "Flexible and light weight content slider",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "grunt test"
+    "lint": "eslint . --ext .ts",
+    "build": "webpack --mode=production",
+    "storybook": "start-storybook -p 6006 -s ./stories/static",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/p-m-p/jquery-box-slider"
+    "url": "https://github.com/boxslider/slider.git"
   },
   "author": "Phil Parsons",
-  "license": "BSD",
+  "license": "MIT",
   "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-uglify": "~0.11.1"
+    "@babel/core": "^7.9.0",
+    "@storybook/html": "^5.3.18",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "babel-loader": "^8.1.0",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^4.0.0",
+    "file-loader": "^6.0.0",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {},
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
