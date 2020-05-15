@@ -1,4 +1,4 @@
-import { Effect } from './effects/effect';
+import { Effect } from './effects';
 
 export interface BoxSliderOptions {
   effect: Effect;

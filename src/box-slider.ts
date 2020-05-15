@@ -1,5 +1,5 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
-import { Effect } from './effects/effect';
+import { Effect } from './effects';
 import { StyleStore } from './style-store';
 import { responder } from './responder';
 
