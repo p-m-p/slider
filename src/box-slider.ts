@@ -4,6 +4,7 @@ import { StyleStore } from './style-store';
 import { responder } from './responder';
 
 export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play';
+export type EventData = { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 export class BoxSlider {
   private readonly options: BoxSliderOptions;
@@ -12,7 +13,7 @@ export class BoxSlider {
   private autoScrollTimer: number;
   private el: HTMLElement;
   private effect: Effect;
-  private eventListeners: { [ev: string]: ((payload: object) => void)[] };
+  private eventListeners: { [ev: string]: ((payload: EventData) => void)[] };
   private isDestroyed: boolean;
   private slides: HTMLElement[];
   private styleStore: StyleStore;
@@ -121,7 +122,7 @@ export class BoxSlider {
     return this;
   }
 
-  addEventListener(ev: EventType, callback: (payload: object) => void): BoxSlider {
+  addEventListener(ev: EventType, callback: (payload: EventData) => void): BoxSlider {
     this.eventListeners[ev] = this.eventListeners[ev] || [];
     this.eventListeners[ev].push(callback);
 
@@ -161,7 +162,7 @@ export class BoxSlider {
     window.clearTimeout(this.autoScrollTimer);
   }
 
-  private emit(ev: EventType, payload?: object): void {
+  private emit(ev: EventType, payload?: EventData): void {
     (this.eventListeners[ev] || []).forEach(cb => cb(payload));
   }
 
