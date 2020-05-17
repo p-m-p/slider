@@ -1,6 +1,6 @@
 {
   "name": "@boxslider/slider",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Flexible and light weight content slider",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
