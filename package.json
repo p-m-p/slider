@@ -2,6 +2,7 @@
   "name": "@boxslider/slider",
   "version": "1.0.4",
   "description": "Flexible and light weight content slider",
+  "keywords": ["boxslider", "slider", "carousel", "cube", "3D", "typescript"],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
