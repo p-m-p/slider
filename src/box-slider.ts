@@ -19,12 +19,12 @@ export class BoxSlider {
   private styleStore: StyleStore;
   private transitionPromise: Promise<BoxSlider>;
 
-  constructor(el: HTMLElement, options: BoxSliderOptions) {
+  constructor(el: Element | HTMLElement, options: BoxSliderOptions) {
     if (!options.effect) {
       throw new Error('No slide effect defined in box options');
     }
 
-    this.el = el;
+    this.el = el as HTMLElement;
     this.effect = options.effect;
     this.options = { ...defaults, ...options };
     this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
