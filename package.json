@@ -15,8 +15,10 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "webpack --mode=production",
-    "storybook": "start-storybook -p 6006 -s ./stories/static",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "site:build": "webpack --config ./site/webpack.config.js --mode=production",
+    "site:serve": "webpack-dev-server --config ./site/webpack.config.js",
+    "storybook": "start-storybook -p 6006 -s ./stories/static"
   },
   "repository": {
     "type": "git",
@@ -30,10 +32,16 @@
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.5.3",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-loader": "^4.0.0",
+    "extract-loader": "^5.0.1",
     "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
