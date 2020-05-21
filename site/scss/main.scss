@@ -1,0 +1,44 @@
+@import 'color';
+@import 'dimensions';
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $purple;
+  color: $body-text-color;
+  font-family: 'Roboto', sans-serif;
+}
+
+.nav-bar {
+  background: $dark-purple;
+  display: flex;
+}
+
+.branding {
+  flex-grow: 1;
+
+  .logo {
+    color: $teal;
+    display: inline-block;
+    padding: $padding;
+  }
+}
+
+.main-navigation {
+  display: flex;
+
+  a {
+    color: $body-text-color;
+    display: block;
+    padding: $padding;
+    text-decoration: none;
+    transition: color 250ms;
+
+    &:hover {
+      color: $emphasis-text-color;
+    }
+  }
+}

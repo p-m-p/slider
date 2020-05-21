@@ -1,10 +1,14 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { resolve } = require('path');
 
 module.exports = {
   // mode: 'development',
-  entry: path.resolve(__dirname, 'index.ts'),
+  entry: [
+    resolve(__dirname, 'index.ts'),
+    resolve(__dirname, 'scss/main.scss')
+  ],
   module: {
     rules: [
       {
@@ -31,7 +35,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[hash].css',
+              name: '[name].css',
             },
           },
           { loader: 'extract-loader' },
@@ -41,7 +45,9 @@ module.exports = {
             options: {
               // Prefer Dart Sass
               implementation: require('sass'),
-
+              sassOptions: {
+                includePaths: ['node_modules'],
+              },
               // See https://github.com/webpack-contrib/sass-loader/issues/804
               webpackImporter: false,
             },
@@ -59,12 +65,16 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'index.html'),
-      inject: true
+      template: resolve(__dirname, 'index.ejs')
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: resolve(__dirname, 'img'), to: 'img' },
+      ],
     })
   ],
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, '../docs'),
+    path: resolve(__dirname, '../docs'),
   },
 };
