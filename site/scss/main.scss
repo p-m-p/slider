@@ -7,9 +7,10 @@ body, html {
 }
 
 body {
-  background: $purple;
+  background: $dark-purple;
   color: $body-text-color;
   font-family: 'Roboto', sans-serif;
+  line-height: 1;
 }
 
 .nav-bar {
@@ -23,6 +24,7 @@ body {
   .logo {
     color: $teal;
     display: inline-block;
+    font-weight: 600;
     padding: $padding;
   }
 }
@@ -40,5 +42,66 @@ body {
     &:hover {
       color: $emphasis-text-color;
     }
+  }
+}
+
+.hero {
+  background: linear-gradient($purple, $dark-purple);
+  padding: $section-padding 0;
+  text-align: center;
+
+  &-title {
+    display: block;
+    font-size: 72px;
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-tagline {
+    font-size: 24px;
+    font-weight: 300;
+    margin: $gutter;
+  }
+}
+
+.section-header {
+  margin: 0 0 $large-gutter;
+
+  &-title {
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Features
+// --------------------------------------------
+#features {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.feature {
+  box-sizing: border-box;;
+  padding: $padding;
+  text-align: center;
+  width: 25%;
+
+  &-icon {
+    fill: $purple;
+    height: 120px;
+    margin: 0 auto;
+    width: 80px;
+  }
+
+  &-description {
   }
 }
