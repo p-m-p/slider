@@ -85,8 +85,9 @@ body {
 #features {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: $large-content-bounds;
 }
 
 .feature {
@@ -103,5 +104,73 @@ body {
   }
 
   &-description {
+    &-heading {
+      font-size: 24px;
+      margin: 0 0 $gutter;
+      padding: 0;
+    }
+
+    &-text {
+      line-height: 1.4;
+    }
   }
+}
+
+// Examples
+// --------------------------------------------
+#examples {
+  margin: 120px auto 0;
+  max-width: $large-content-bounds;
+}
+
+.example {
+  box-sizing: border-box;
+  padding: $large-gutter;
+}
+
+.examples {
+  box-shadow: 0 10px 15px -10px rgba(0, 0, 0, 0.10);
+
+  &-navigation {
+    background: $blue;
+    display: flex;
+
+    button {
+      background: none;
+      border: none;
+      box-sizing: border-box;
+      color: $body-text-color;
+      cursor: pointer;
+      display: block;
+      font-size: 16px;
+      font-weight: 400;
+      margin: 0;
+      padding: $padding;
+      text-transform: uppercase;
+      transition: background-color 500ms;
+      width: 25%;
+
+      &.active, &:hover {
+        background: $purple;
+      }
+    }
+  }
+
+  &-slider {
+    background-color: $purple;
+    overflow: hidden;
+  }
+}
+
+.examples-slider {
+  position: relative;
+  height: 600px;
+}
+
+.example {
+  height: 400px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
