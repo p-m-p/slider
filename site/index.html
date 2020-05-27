@@ -15,8 +15,8 @@
       </div>
 
       <nav role="navigation" class="main-navigation">
-        <a href="#examples">Examples</a>
         <a href="#getting-started">Getting Started</a>
+        <a href="#examples">Examples</a>
         <a href="#angular">Angular</a>
         <a href="#react">React</a>
         <a href="#github">Github</a>
@@ -61,8 +61,12 @@
 
       <div class="feature">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="feature-icon">
-          <path d="M0 0h24v24H0V0z" fill="none"/>
-          <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+          <symbol id="code-icon">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+          </symbol>
+
+          <use href="#code-icon"></use>
         </svg>
 
         <div class="feature-description">
@@ -84,6 +88,30 @@
       </div>
     </section>
 
+    <section id="getting-started">
+      <article class="getting-started">
+        <h1>Installation and usage</h1>
+
+        <p>Install the BoxSlider package via NPM</p>
+        <pre><code>npm install @boxslider/slider</code></pre>
+
+        <p>Alternatively using Yarn </p>
+        <pre><code>yarn add @boxslider/slider</code></pre>
+
+        <p>Import the BoxSlider library with the desired effect and instantiate the slider. See the <a href="#examples">examples</a> for more details.</p>
+                <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">CubeSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
+
+<span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;cube-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #a6e22e">effect</span>: <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">CubeSlider</span><span style="color: #f8f8f2">({</span>
+    <span style="color: #a6e22e">direction</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;horizontal&#39;</span>
+  <span style="color: #f8f8f2">}),</span>
+  <span style="color: #a6e22e">autoScroll</span>: <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
+<span style="color: #f8f8f2">});</span>
+</pre>
+      </article>
+    </section>
+
     <section id="examples">
       <div class="examples">
         <nav class="examples-navigation">
@@ -93,48 +121,86 @@
           <button type="button">Fade</button>
         </nav>
 
-        <div class="examples-slider">
-          <article class="example">
-            <nav class="example-view-nav">
-              <button type="button" class="view-slider">slider</button>
-              <button type="button" class="view-code">code</button>
-            </nav>
+        <nav class="examples-view-selection">
+          <button type="button" id="view-code" class="examples-view-selection-item">
+            <svg viewBox="0 0 24 24">
+              <use href="#code-icon"></use>
+            </svg>
+          </button>
+          <button type="button" id="view-slider" class="examples-view-selection-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/>
+            </svg>
+          </button>
 
+          <div class="examples-view-selection-code disabled">
+            <button type="button" id="view-typescript" class="examples-view-selection-code-item active">
+              TypeScript
+            </button>
+            <button type="button" id="view-html" class="examples-view-selection-code-item">
+              HTML
+            </button>
+            <button type="button" id="view-css" class="examples-view-selection-code-item">
+              CSS
+            </button>
+          </div>
+        </nav>
+
+        <div class="examples-carousel">
+          <article class="example active">
             <div class="example-slider">
-              <div>Cube</div>
+              <div class="example-slider-wrapper">
+                <div id="cube-slider">
+                  <div class="slide">
+                    <img src="img/slide-1.jpg">
+                  </div>
+                  <div class="slide">
+                    <img src="img/slide-2.jpg">
+                  </div>
+                  <div class="slide">
+                    <img src="img/slide-3.jpg">
+                  </div>
+                  <div class="slide">
+                    <img src="img/slide-4.jpg">
+                  </div>
+                  <div class="slide">
+                    <img src="img/slide-5.jpg">
+                  </div>
+                  <div class="slide">
+                    <img src="img/slide-6.jpg">
+                  </div>
+                  <div class="slide">
+                    <img src="img/slide-7.jpg">
+                  </div>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="example">
-            <nav class="example-view-nav">
-              <button type="button" class="view-slider">slider</button>
-              <button type="button" class="view-code">code</button>
-            </nav>
+            <div class="example-code disabled">
+              <div class="example-code-item typescript">
+                <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">CubeSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
 
-            <div class="example-slider">
-              <div>Tile</div>
+<span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;cube-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #a6e22e">effect</span>: <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">CubeSlider</span><span style="color: #f8f8f2">({</span>
+    <span style="color: #a6e22e">direction</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;horizontal&#39;</span>
+  <span style="color: #f8f8f2">}),</span>
+  <span style="color: #a6e22e">autoScroll</span>: <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
+<span style="color: #f8f8f2">});</span>
+</pre>
+              </div>
+
+              <div class="example-code-item html disabled">
+                html
+              </div>
+              <div class="example-code-item css disabled">
+                css
+              </div>
             </div>
           </article>
         </div>
       </div>
-    </section>
-
-    <section id="Getting-started">
-      <article>
-        <h1>Installation and usage</h1>
-        <p>Install the BoxSlider package via NPM <pre><code>npm install --save @boxslider/slider</code></pre></p>
-        <p>Alternatively using Yarn <pre><code>yarn add @boxslider/slider</code></pre></p>
-
-        <p>Import the `BoxSlider` library with the desired effect and instantiate the slider.</p>
-        <section class="usage-languages">
-          <div class="typescript">
-            <pre><code>Example Typescript code</code></pre>
-          </div>
-          <div class="javascript">
-            <pre><code>Example JavaScript code</code></pre>
-          </div>
-        </section>
-      </article>
     </section>
 
     <section id="angular">

@@ -47,7 +47,7 @@ body {
 
 .hero {
   background: linear-gradient($purple, $dark-purple);
-  padding: $section-padding 0;
+  padding: ($large-padding * 4) 0;
   text-align: center;
 
   &-title {
@@ -116,19 +116,49 @@ body {
   }
 }
 
+// Getting started
+// --------------------------------------------
+.getting-started {
+  max-width: $large-content-bounds;
+  margin: 120px auto;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin: 0 0 $large-gutter;
+  }
+
+  a {
+    color: inherit;
+    transition: color 500ms;
+
+    &:hover, &:focus, &:active {
+      color: $orange;
+    }
+  }
+
+  p {
+    padding: 0;
+    margin: 0 0 $gutter;
+  }
+
+  pre {
+    background: $code-background;
+    margin: 0 0 $large-gutter;
+    padding: $padding;
+  }
+}
+
 // Examples
 // --------------------------------------------
 #examples {
-  margin: 120px auto 0;
+  margin: 120px auto;
   max-width: $large-content-bounds;
 }
 
-.example {
-  box-sizing: border-box;
-  padding: $large-gutter;
-}
-
 .examples {
+  background-color: $purple;
   box-shadow: 0 10px 15px -10px rgba(0, 0, 0, 0.10);
 
   &-navigation {
@@ -145,6 +175,7 @@ body {
       font-size: 16px;
       font-weight: 400;
       margin: 0;
+      outline: 0;
       padding: $padding;
       text-transform: uppercase;
       transition: background-color 500ms;
@@ -156,21 +187,100 @@ body {
     }
   }
 
-  &-slider {
-    background-color: $purple;
+  &-view-selection {
+    display: flex;
+    flex-direction: row-reverse;
+
+    &-item {
+      background: transparent;
+      border: none;
+      color: $body-text-color;
+      cursor: pointer;
+      outline: 0;
+      padding: $padding;
+
+      svg {
+        fill: $body-text-color;
+        height: 24px;
+        width: 24px;
+      }
+
+      &:hover, &.active {
+        svg {
+          fill: $orange;
+        }
+      }
+    }
+
+    &-code {
+      background: $code-background;
+      flex: 1;
+
+      &-item {
+        background: transparent;
+        border: 0;
+        border-bottom: solid 2px transparent;
+        color: $body-text-color;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+        outline: 0;
+        padding: $padding $large-padding;
+        transition: color, border-color 500ms;
+
+        &:hover, &.active {
+          color: $orange;
+          border-bottom-color: $orange;
+        }
+      }
+    }
+  }
+
+  &-carousel {
+    height: 556px;
     overflow: hidden;
+    position: relative;
   }
 }
 
-.examples-slider {
-  position: relative;
-  height: 600px;
-}
-
 .example {
-  height: 400px;
+  height: 556px;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
+
+  &-slider {
+    height: 520px;
+    margin: 0 auto;
+    width: 800px;
+
+    &-wrapper {
+      padding: 0 0 $large-padding;
+      position: relative;
+    }
+  }
+
+  &-code {
+    background: $code-background;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: auto;
+    padding: $padding;
+    width: 100%;
+
+    &-item {
+      font-size: 14px;
+    }
+  }
+}
+
+#cube-slider {
+  height: 100%;
+  width: 100%;
+}
+
+.disabled {
+  display: none;
 }
