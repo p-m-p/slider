@@ -55,14 +55,14 @@ export class BoxSlider {
   }
 
   next(): Promise<BoxSlider> {
-    return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1);
+    return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1, false);
   }
 
   prev(): Promise<BoxSlider> {
     return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1, true);
   }
 
-  skipTo(nextIndex: number, backwards = false): Promise<BoxSlider> {
+  skipTo(nextIndex: number, backwards?: boolean): Promise<BoxSlider> {
     if(this.isDestroyed) {
       throw new Error('Invalid attempt made to move destroyed slider instance');
     }
@@ -76,7 +76,7 @@ export class BoxSlider {
       slides: this.slides,
       speed: this.options.speed,
       currentIndex: this.activeIndex,
-      isPrevious: backwards,
+      isPrevious: backwards === undefined ? nextIndex < this.activeIndex : backwards,
       nextIndex,
     };
     this.activeIndex = nextIndex;
@@ -203,6 +203,8 @@ export class BoxSlider {
         } else {
           this.next();
         }
+
+        ev.stopPropagation();
       }
     });
   }
