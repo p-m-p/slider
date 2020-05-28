@@ -7,3 +7,7 @@ $small-gutter: $gutter / 2;
 $large-gutter: $gutter * 2;
 
 $large-content-bounds: 1200px;
+
+$example-slider-width: 800px;
+$example-slider-height: 520px;
+$example-carousel-height: $example-slider-height + (3 * $gutter)

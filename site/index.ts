@@ -1,4 +1,4 @@
-import { BoxSlider, CarouselSlider, CubeSlider } from '../src';
+import { BoxSlider, CarouselSlider, CubeSlider, Effect, FadeSlider, TileSlider } from '../src';
 
 const activeClassName = 'active';
 const disabledClassName = 'disabled';
@@ -8,15 +8,47 @@ const examplesSlider = new BoxSlider(document.querySelector('.examples-carousel'
   effect: new CarouselSlider()
 });
 const exampleNavButtons = document.querySelectorAll('.examples-navigation > button');
+const exampleSliderElements = document.querySelectorAll('.slider');
+
+const effects = [
+  new CubeSlider({
+    direction: 'horizontal'
+  }),
+  new TileSlider({
+    tileEffect: 'fade',
+    rowOffset: 60,
+    rows: 6
+  }),
+  new CarouselSlider({
+    timingFunction: 'cubic-bezier(0.375, 0.065, 0.280, 0.820)'
+  }),
+  new FadeSlider()
+];
+
+let activeSlider = new BoxSlider(exampleSliderElements.item(0), {
+  effect: effects[0],
+  autoScroll: true,
+  timeout: 5000,
+  pauseOnHover: true
+});
 
 exampleNavButtons.forEach((btn, index) =>
   btn.addEventListener('click', () => {
     exampleNavButtons.forEach(btn => btn.classList.remove(activeClassName));
     btn.classList.add(activeClassName);
-    examplesSlider.skipTo(index); // Fix slider to determine if backwards itself
+    examplesSlider.skipTo(index).then(() => {
+      activeSlider.destroy();
+
+      activeSlider = new BoxSlider(exampleSliderElements.item(index), {
+        effect: effects[index],
+        autoScroll: true,
+        timeout: 5000,
+        pauseOnHover: true
+      });
+    });
   }));
 
-// Code/slider view selection
+// Slider view selection
 const viewSliderButton = document.querySelector('#view-slider');
 const viewCodeButton = document.querySelector('#view-code');
 const codeSelectionNavigation = document.querySelector('.examples-view-selection-code');
@@ -49,13 +81,4 @@ codeExampleSelectionButtons.forEach((btn, index) => {
     codeExamples.forEach(example => example.classList.add(disabledClassName));
     codeExamples.item(index).classList.remove(disabledClassName);
   });
-});
-
-// Effect examples - need to active these only when visible in tab
-new BoxSlider(document.getElementById('cube-slider'), {
-  effect: new CubeSlider({
-    direction: 'horizontal'
-  }),
-  autoScroll: true,
-  timeout: 5000
 });

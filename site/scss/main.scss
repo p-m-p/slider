@@ -238,27 +238,29 @@ body {
   }
 
   &-carousel {
-    height: 556px;
+    height: $example-carousel-height;
     overflow: hidden;
     position: relative;
   }
 }
 
 .example {
-  height: 556px;
+  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
 
   &-slider {
-    height: 520px;
+    height: $example-slider-height;
     margin: 0 auto;
-    width: 800px;
+    width: $example-slider-width;
 
     &-wrapper {
+      height: $example-slider-height;
       padding: 0 0 $large-padding;
       position: relative;
+      width: $example-slider-width;
     }
   }
 
@@ -276,11 +278,12 @@ body {
   }
 }
 
-#cube-slider {
-  height: 100%;
-  width: 100%;
+.slider {
+  height: $example-slider-height;
+  width: $example-slider-width;
 }
 
 .disabled {
   display: none;
 }
+
