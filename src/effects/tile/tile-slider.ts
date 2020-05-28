@@ -140,6 +140,7 @@ export class TileSlider implements Effect {
 
   destroy(el: HTMLElement): void {
     el.removeChild(this.tileWrapper);
+    delete this.tileWrapper;
   }
 
   private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {

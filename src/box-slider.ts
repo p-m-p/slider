@@ -149,10 +149,10 @@ export class BoxSlider {
       this.styleStore.revert();
       responder.remove(this);
       this.emit('destroy');
+      this.eventListeners = {};
 
       delete this.el;
       delete this.slides;
-      delete this.eventListeners;
       delete this.styleStore;
       delete this.effect;
     });

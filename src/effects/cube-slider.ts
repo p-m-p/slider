@@ -73,7 +73,7 @@ export class CubeSlider implements Effect {
 
     setTimeout(() => applyCss(el, {
       transition: `transform ${options.speed}ms`
-    }), 1);
+    }), 50);
   }
 
   transition(settings: TransitionSettings): Promise<void> {
