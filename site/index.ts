@@ -1,14 +1,38 @@
-import { BoxSlider, CarouselSlider, CubeSlider, Effect, FadeSlider, TileSlider } from '../src';
+import { BoxSlider, CarouselSlider, CubeSlider, FadeSlider, TileSlider } from '../src';
 
 const activeClassName = 'active';
 const disabledClassName = 'disabled';
+const viewSliderButton = document.querySelector('#view-slider');
+const viewCodeButton = document.querySelector('#view-code');
+const examples = document.querySelectorAll('.example');
+const codeSelectionNavigation = document.querySelector('.examples-view-selection-code');
+const codeExampleSelectionButtons = document.querySelectorAll('.examples-view-selection-code-item');
+const exampleNavButtons = document.querySelectorAll('.examples-navigation > button');
+const exampleSliderElements = document.querySelectorAll('.slider');
+
+function showSlider(): void {
+  viewSliderButton.classList.add(activeClassName);
+  viewCodeButton.classList.remove(activeClassName);
+  codeSelectionNavigation.classList.add(disabledClassName);
+
+  document.querySelector('.example.active .example-slider').classList.remove(disabledClassName);
+  document.querySelector('.example.active .example-code').classList.add(disabledClassName);
+}
+
+function showCodeSamples(): void {
+  viewCodeButton.classList.add(activeClassName);
+  viewSliderButton.classList.remove(activeClassName);
+  codeSelectionNavigation.classList.remove(disabledClassName);
+
+  document.querySelector('.example.active .example-slider').classList.add(disabledClassName);
+  document.querySelector('.example.active .example-code').classList.remove(disabledClassName);
+}
 
 // Effect Examples slider
 const examplesSlider = new BoxSlider(document.querySelector('.examples-carousel'), {
-  effect: new CarouselSlider()
+  effect: new CarouselSlider(),
+  swipe: false
 });
-const exampleNavButtons = document.querySelectorAll('.examples-navigation > button');
-const exampleSliderElements = document.querySelectorAll('.slider');
 
 const effects = [
   new CubeSlider({
@@ -34,42 +58,31 @@ let activeSlider = new BoxSlider(exampleSliderElements.item(0), {
 
 exampleNavButtons.forEach((btn, index) =>
   btn.addEventListener('click', () => {
+    showSlider();
+
     exampleNavButtons.forEach(btn => btn.classList.remove(activeClassName));
     btn.classList.add(activeClassName);
-    examplesSlider.skipTo(index).then(() => {
-      activeSlider.destroy();
 
-      activeSlider = new BoxSlider(exampleSliderElements.item(index), {
-        effect: effects[index],
-        autoScroll: true,
-        timeout: 5000,
-        pauseOnHover: true
-      });
-    });
+    examplesSlider.skipTo(index);
   }));
 
+examplesSlider.addEventListener('before', () =>
+  examples.forEach(example => example.classList.remove(activeClassName)));
+examplesSlider.addEventListener('after', data => {
+  activeSlider.destroy();
+  examples.item(data.activeIndex).classList.add(activeClassName);
+
+  activeSlider = new BoxSlider(exampleSliderElements.item(data.activeIndex), {
+    effect: effects[data.activeIndex],
+    autoScroll: true,
+    timeout: 5000,
+    pauseOnHover: true
+  });
+});
+
 // Slider view selection
-const viewSliderButton = document.querySelector('#view-slider');
-const viewCodeButton = document.querySelector('#view-code');
-const codeSelectionNavigation = document.querySelector('.examples-view-selection-code');
-const codeExampleSelectionButtons = document.querySelectorAll('.examples-view-selection-code-item');
-
-viewSliderButton.addEventListener('click', () => {
-  viewSliderButton.classList.add(activeClassName);
-  viewCodeButton.classList.remove(activeClassName);
-  codeSelectionNavigation.classList.add(disabledClassName);
-
-  document.querySelector('.example.active .example-slider').classList.remove(disabledClassName);
-  document.querySelector('.example.active .example-code').classList.add(disabledClassName);
-});
-viewCodeButton.addEventListener('click', () => {
-  viewCodeButton.classList.add(activeClassName);
-  viewSliderButton.classList.remove(activeClassName);
-  codeSelectionNavigation.classList.remove(disabledClassName);
-
-  document.querySelector('.example.active .example-slider').classList.add(disabledClassName);
-  document.querySelector('.example.active .example-code').classList.remove(disabledClassName);
-});
+viewSliderButton.addEventListener('click', showSlider);
+viewCodeButton.addEventListener('click', showCodeSamples);
 
 codeExampleSelectionButtons.forEach((btn, index) => {
   btn.addEventListener('click', () => {
