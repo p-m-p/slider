@@ -10,6 +10,10 @@ const codeExampleSelectionButtons = document.querySelectorAll('.examples-view-se
 const exampleNavButtons = document.querySelectorAll('.examples-navigation > button');
 const exampleSliderElements = document.querySelectorAll('.slider');
 
+function removeLoader(): void {
+  document.querySelector('.examples-loader').classList.add(disabledClassName);
+}
+
 function showSlider(): void {
   viewSliderButton.classList.add(activeClassName);
   viewCodeButton.classList.remove(activeClassName);
@@ -26,6 +30,31 @@ function showCodeSamples(): void {
 
   document.querySelector('.example.active .example-slider').classList.add(disabledClassName);
   document.querySelector('.example.active .example-code').classList.remove(disabledClassName);
+}
+
+// Image loader
+const imagesBySrc = Array.from(document.querySelectorAll('.slide img'))
+  .reduce((imgBySrc: { [src: string]: HTMLImageElement }, img: HTMLImageElement) => {
+    imgBySrc[img.currentSrc] = img;
+
+    return imgBySrc;
+  }, {})
+const slideImagesToLoad = Object.keys(imagesBySrc)
+  .map(src => imagesBySrc[src])
+  .filter((img: HTMLImageElement) => !img.complete)
+
+if (slideImagesToLoad.length === 0) {
+  removeLoader();
+} else {
+  let toLoad = slideImagesToLoad.length;
+
+  slideImagesToLoad.forEach(img => img.addEventListener('load', () => {
+    toLoad -= 1;
+
+    if (toLoad === 0) {
+      removeLoader();
+    }
+  }));
 }
 
 // Effect Examples slider

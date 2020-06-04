@@ -17,9 +17,8 @@
       <nav role="navigation" class="main-navigation">
         <a href="#getting-started">Getting Started</a>
         <a href="#examples">Examples</a>
-        <a href="#angular">Angular</a>
-        <a href="#react">React</a>
-        <a href="#github">Github</a>
+        <a href="https://github.com/boxslider/angular">Angular</a>
+        <a href="https://github.com/boxslider/slider">Github</a>
       </nav>
     </section>
 
@@ -121,64 +120,65 @@
           <button type="button">Fade</button>
         </nav>
 
-        <nav class="examples-view-selection">
-          <button type="button" id="view-code" class="examples-view-selection-item">
-            <svg viewBox="0 0 24 24">
-              <use href="#code-icon"></use>
-            </svg>
-          </button>
-          <button type="button" id="view-slider" class="examples-view-selection-item active">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M0 0h24v24H0z" fill="none"/>
-              <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/>
-            </svg>
-          </button>
+        <div class="examples-wrapper">
+          <nav class="examples-view-selection">
+            <button type="button" id="view-code" class="examples-view-selection-item">
+              <svg viewBox="0 0 24 24">
+                <use href="#code-icon"></use>
+              </svg>
+            </button>
+            <button type="button" id="view-slider" class="examples-view-selection-item active">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/>
+              </svg>
+            </button>
 
-          <div class="examples-view-selection-code disabled">
-            <button type="button" id="view-typescript" class="examples-view-selection-code-item active">
-              TypeScript
-            </button>
-            <button type="button" id="view-html" class="examples-view-selection-code-item">
-              HTML
-            </button>
-            <button type="button" id="view-css" class="examples-view-selection-code-item">
-              CSS
-            </button>
-          </div>
-        </nav>
+            <div class="examples-view-selection-code disabled">
+              <button type="button" id="view-typescript" class="examples-view-selection-code-item active">
+                TypeScript
+              </button>
+              <button type="button" id="view-html" class="examples-view-selection-code-item">
+                HTML
+              </button>
+              <button type="button" id="view-css" class="examples-view-selection-code-item">
+                CSS
+              </button>
+            </div>
+          </nav>
 
-        <div class="examples-carousel">
-          <article class="example active">
-            <div class="example-slider">
-              <div class="example-slider-wrapper">
-                <div id="cube-slider" class="slider">
-                  <div class="slide">
-                    <img src="img/slide-1.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-2.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-3.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-4.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-5.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-6.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-7.jpg">
+          <div class="examples-carousel">
+            <article class="example active">
+              <div class="example-slider">
+                <div class="example-slider-wrapper">
+                  <div id="cube-slider" class="slider">
+                    <div class="slide">
+                      <img src="img/slide-1.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-2.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-3.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-4.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-5.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-6.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-7.jpg">
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="example-code disabled">
-              <div class="example-code-item typescript">
+              <div class="example-code disabled">
+                <div class="example-code-item typescript">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">CubeSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
 
 <span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;cube-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
@@ -189,9 +189,9 @@
   <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
 <span style="color: #f8f8f2">});</span>
 </pre>
-              </div>
+                </div>
 
-              <div class="example-code-item html disabled">
+                <div class="example-code-item html disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">class=</span><span style="color: #e6db74">&quot;cube-slider-viewport&quot;</span><span style="color: #f92672">&gt;</span>
   <span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">id=</span><span style="color: #e6db74">&quot;cube-slider&quot;</span><span style="color: #f92672">&gt;</span>
     <span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">class=</span><span style="color: #e6db74">&quot;slide&quot;</span><span style="color: #f92672">&gt;</span>
@@ -212,8 +212,8 @@
   <span style="color: #f92672">&lt;/div&gt;</span>
 <span style="color: #f92672">&lt;/div&gt;</span>
 </pre>
-              </div>
-              <div class="example-code-item css disabled">
+                </div>
+                <div class="example-code-item css disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">.slide</span><span style="color: #f92672">,</span> <span style="color: #f92672">img</span> <span style="color: #f8f8f2">{</span>
   <span style="color: #66d9ef">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
@@ -224,41 +224,41 @@
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">800px</span><span style="color: #f8f8f2">;</span>
 <span style="color: #f8f8f2">}</span>
 </pre>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="example active">
-            <div class="example-slider">
-              <div class="example-slider-wrapper">
-                <div id="tile-slider" class="slider">
-                  <div class="slide">
-                    <img src="img/slide-1.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-2.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-3.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-4.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-5.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-6.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-7.jpg">
+            <article class="example active">
+              <div class="example-slider">
+                <div class="example-slider-wrapper">
+                  <div id="tile-slider" class="slider">
+                    <div class="slide">
+                      <img src="img/slide-1.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-2.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-3.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-4.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-5.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-6.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-7.jpg">
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="example-code disabled">
-              <div class="example-code-item typescript">
+              <div class="example-code disabled">
+                <div class="example-code-item typescript">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">TileSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
 
 <span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;tile-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
@@ -271,8 +271,8 @@
   <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
 <span style="color: #f8f8f2">});</span>
 </pre>
-              </div>
-              <div class="example-code-item html disabled">
+                </div>
+                <div class="example-code-item html disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">id=</span><span style="color: #e6db74">&quot;tile-slider&quot;</span><span style="color: #f92672">&gt;</span>
   <span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">class=</span><span style="color: #e6db74">&quot;slide&quot;</span><span style="color: #f92672">&gt;</span>
     <span style="color: #f92672">&lt;img</span> <span style="color: #a6e22e">src=</span><span style="color: #e6db74">&quot;img/slide-1.jpg&quot;</span><span style="color: #f92672">&gt;</span>
@@ -291,8 +291,8 @@
   <span style="color: #f92672">&lt;/div&gt;</span>
 <span style="color: #f92672">&lt;/div&gt;</span>
 </pre>
-              </div>
-              <div class="example-code-item css disabled">
+                </div>
+                <div class="example-code-item css disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">.slide</span><span style="color: #f92672">,</span> <span style="color: #f92672">img</span> <span style="color: #f8f8f2">{</span>
   <span style="color: #66d9ef">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
@@ -303,41 +303,41 @@
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">800px</span><span style="color: #f8f8f2">;</span>
 <span style="color: #f8f8f2">}</span>
 </pre>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="example active">
-            <div class="example-slider">
-              <div class="example-slider-wrapper">
-                <div id="carousel-slider" class="slider">
-                  <div class="slide">
-                    <img src="img/slide-1.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-2.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-3.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-4.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-5.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-6.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-7.jpg">
+            <article class="example active">
+              <div class="example-slider">
+                <div class="example-slider-wrapper">
+                  <div id="carousel-slider" class="slider">
+                    <div class="slide">
+                      <img src="img/slide-1.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-2.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-3.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-4.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-5.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-6.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-7.jpg">
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="example-code disabled">
-              <div class="example-code-item typescript">
+              <div class="example-code disabled">
+                <div class="example-code-item typescript">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">CarouselSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
 
 <span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;carousel-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
@@ -348,8 +348,8 @@
   <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
 <span style="color: #f8f8f2">});</span>
 </pre>
-              </div>
-              <div class="example-code-item html disabled">
+                </div>
+                <div class="example-code-item html disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">id=</span><span style="color: #e6db74">&quot;carousel-slider&quot;</span><span style="color: #f92672">&gt;</span>
   <span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">class=</span><span style="color: #e6db74">&quot;slide&quot;</span><span style="color: #f92672">&gt;</span>
     <span style="color: #f92672">&lt;img</span> <span style="color: #a6e22e">src=</span><span style="color: #e6db74">&quot;img/slide-1.jpg&quot;</span><span style="color: #f92672">&gt;</span>
@@ -368,8 +368,8 @@
   <span style="color: #f92672">&lt;/div&gt;</span>
 <span style="color: #f92672">&lt;/div&gt;</span>
 </pre>
-              </div>
-              <div class="example-code-item css disabled">
+                </div>
+                <div class="example-code-item css disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">.slide</span><span style="color: #f92672">,</span> <span style="color: #f92672">img</span> <span style="color: #f8f8f2">{</span>
   <span style="color: #66d9ef">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
@@ -380,41 +380,41 @@
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">800px</span><span style="color: #f8f8f2">;</span>
 <span style="color: #f8f8f2">}</span>
 </pre>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="example active">
-            <div class="example-slider">
-              <div class="example-slider-wrapper">
-                <div id="fade-slider" class="slider">
-                  <div class="slide">
-                    <img src="img/slide-1.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-2.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-3.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-4.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-5.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-6.jpg">
-                  </div>
-                  <div class="slide">
-                    <img src="img/slide-7.jpg">
+            <article class="example active">
+              <div class="example-slider">
+                <div class="example-slider-wrapper">
+                  <div id="fade-slider" class="slider">
+                    <div class="slide">
+                      <img src="img/slide-1.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-2.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-3.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-4.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-5.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-6.jpg">
+                    </div>
+                    <div class="slide">
+                      <img src="img/slide-7.jpg">
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="example-code disabled">
-              <div class="example-code-item typescript">
+              <div class="example-code disabled">
+                <div class="example-code-item typescript">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">FadeSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
 
 <span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;fade-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
@@ -423,8 +423,8 @@
   <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
 <span style="color: #f8f8f2">});</span>
 </pre>
-              </div>
-              <div class="example-code-item html disabled">
+                </div>
+                <div class="example-code-item html disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">id=</span><span style="color: #e6db74">&quot;fade-slider&quot;</span><span style="color: #f92672">&gt;</span>
   <span style="color: #f92672">&lt;div</span> <span style="color: #a6e22e">class=</span><span style="color: #e6db74">&quot;slide&quot;</span><span style="color: #f92672">&gt;</span>
     <span style="color: #f92672">&lt;img</span> <span style="color: #a6e22e">src=</span><span style="color: #e6db74">&quot;img/slide-1.jpg&quot;</span><span style="color: #f92672">&gt;</span>
@@ -443,8 +443,8 @@
   <span style="color: #f92672">&lt;/div&gt;</span>
 <span style="color: #f92672">&lt;/div&gt;</span>
 </pre>
-              </div>
-              <div class="example-code-item css disabled">
+                </div>
+                <div class="example-code-item css disabled">
                 <pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">.slide</span><span style="color: #f92672">,</span> <span style="color: #f92672">img</span> <span style="color: #f8f8f2">{</span>
   <span style="color: #66d9ef">height</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">100</span><span style="color: #f92672">%</span><span style="color: #f8f8f2">;</span>
@@ -455,19 +455,14 @@
   <span style="color: #66d9ef">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">800px</span><span style="color: #f8f8f2">;</span>
 <span style="color: #f8f8f2">}</span>
 </pre>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section id="angular">
-
-    </section>
-
-    <section id="react">
-
+      <div class="examples-loader">Loading...</div>
     </section>
   </main>
 </body>

@@ -22,7 +22,7 @@ body {
   flex-grow: 1;
 
   .logo {
-    color: $teal;
+    color: $purple;
     display: inline-block;
     font-weight: 600;
     padding: $padding;
@@ -155,11 +155,26 @@ body {
 #examples {
   margin: 120px auto;
   max-width: $large-content-bounds;
+  position: relative;
 }
 
 .examples {
   background-color: $purple;
-  box-shadow: 0 10px 15px -10px rgba(0, 0, 0, 0.10);
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 40px 0;
+
+  &-loader {
+    background: $purple;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+
+  &-wrapper {
+    position: relative;
+  }
 
   &-navigation {
     background: $blue;
@@ -190,6 +205,11 @@ body {
   &-view-selection {
     display: flex;
     flex-direction: row-reverse;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
 
     &-item {
       background: transparent;
@@ -213,7 +233,6 @@ body {
     }
 
     &-code {
-      background: $code-background;
       flex: 1;
 
       &-item {
@@ -241,6 +260,7 @@ body {
     height: $example-carousel-height;
     overflow: hidden;
     position: relative;
+    z-index: 1;
   }
 }
 
@@ -253,12 +273,12 @@ body {
 
   &-slider {
     height: $example-slider-height;
-    margin: 0 auto;
+    margin: ($large-gutter * 2) auto 0;
     width: $example-slider-width;
 
     &-wrapper {
       height: $example-slider-height;
-      padding: 0 0 $large-padding;
+      padding: 0;
       position: relative;
       width: $example-slider-width;
     }
@@ -269,7 +289,7 @@ body {
     box-sizing: border-box;
     height: 100%;
     overflow: auto;
-    padding: $padding;
+    padding: ($large-padding * 2.5) $padding $padding;
     width: 100%;
 
     &-item {
