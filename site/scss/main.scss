@@ -326,6 +326,7 @@ body {
 
 .slider {
   height: $example-slider-height;
+  overflow: hidden;
   width: $example-slider-width;
 }
 
