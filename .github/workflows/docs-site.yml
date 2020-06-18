@@ -1,4 +1,4 @@
-name: Verify
+name: Github Pages Site
 
 on:
   push:
@@ -18,7 +18,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build Docs Site 📦
-        run: npm run site:build
+        run: |
+          npm ci
+          npm run site:build
       - name: Deploy GH Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
