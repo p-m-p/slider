@@ -3,8 +3,6 @@ name: Verify
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -19,11 +17,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Verify 🚦
-        run: |
-          npm ci
-          npm run lint
-          npm run build
-          npm test
-        env:
-          CI: true
+      - name: Build Docs Site 📦
+        run: npm run site:build
+      - name: Deploy GH Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs
