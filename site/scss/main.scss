@@ -202,6 +202,32 @@ body {
     }
   }
 
+  &-controls {
+    bottom: $gutter;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+
+    &-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none;
+
+      svg {
+        fill: $body-text-color;
+      }
+
+      &:hover {
+        svg {
+          fill: $orange
+        }
+      }
+    }
+  }
+
   &-view-selection {
     display: flex;
     flex-direction: row-reverse;

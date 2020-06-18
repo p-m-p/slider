@@ -109,6 +109,24 @@ examplesSlider.addEventListener('after', data => {
   });
 });
 
+const playButton = document.querySelector('.play');
+const pauseButton = document.querySelector('.pause');
+const nextButton = document.querySelector('.next');
+const prevButton = document.querySelector('.prev');
+
+pauseButton.addEventListener('click', () => {
+  activeSlider.pause();
+  playButton.classList.remove(disabledClassName);
+  pauseButton.classList.add(disabledClassName);
+});
+playButton.addEventListener('click', () => {
+  activeSlider.play();
+  playButton.classList.add(disabledClassName);
+  pauseButton.classList.remove(disabledClassName);
+});
+nextButton.addEventListener('click', () => activeSlider.next());
+prevButton.addEventListener('click', () => activeSlider.prev());
+
 // Slider view selection
 viewSliderButton.addEventListener('click', showSlider);
 viewCodeButton.addEventListener('click', showCodeSamples);
