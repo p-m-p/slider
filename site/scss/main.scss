@@ -63,7 +63,7 @@ body {
   &-tagline {
     font-size: 24px;
     font-weight: 300;
-    margin: $gutter;
+    margin: $gutter 0;
   }
 }
 
@@ -146,6 +146,7 @@ body {
   pre {
     background: $code-background;
     margin: 0 0 $large-gutter;
+    overflow: auto;
     padding: $padding;
   }
 }
@@ -334,3 +335,33 @@ body {
   display: none;
 }
 
+@media (max-width: 600px) {
+  .main-navigation {
+    font-size: 12px;
+
+    a {
+      line-height: 1;
+      padding: $padding / 2;
+    }
+  }
+
+  .hero {
+    padding: ($large-padding * 2) $large-padding;
+
+    &-title {
+      font-size: 58px;
+    }
+
+    &-tagline {
+      font-size: 18px;
+    }
+  }
+
+  .main {
+    padding: 0 $gutter;
+  }
+
+  .feature {
+    width: 100%;
+  }
+}
