@@ -30,11 +30,11 @@ export class CarouselSlider implements Effect {
     styleStore.store(slides, SLIDE_STYLES);
     styleStore.store(el, BOX_STYLES);
 
+    applyCss(el, { overflow: 'hidden' });
+
     if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative'});
     }
-
-    applyCss(el, { overflow: 'hidden' });
 
     slides.forEach((slide, index) => {
       applyCss(slide, {
@@ -52,34 +52,36 @@ export class CarouselSlider implements Effect {
   }
 
   transition(settings: TransitionSettings): Promise<void> {
-    return  new Promise(resolve => {
-      const currentSlide = settings.slides[settings.currentIndex];
-      const nextSlide = settings.slides[settings.nextIndex]
+    const currentSlide = settings.slides[settings.currentIndex];
+    const nextSlide = settings.slides[settings.nextIndex]
 
+    return new Promise(resolve => {
       applyCss(nextSlide, {
-        left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth,
+        left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth
       });
 
-      requestAnimationFrame(() => {
-        applyCss(nextSlide, {
-          left: '0',
-          transition: `left ${settings.speed}ms ${this.options.timingFunction}`
-        });
-
-        applyCss(currentSlide, {
-          left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
-          transition: `left ${settings.speed}ms ${this.options.timingFunction}`
-        });
-
-        window.setTimeout(() => {
-          applyCss(currentSlide, {
-            left: this.slideWidth,
-            transition: 'initial'
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          applyCss(nextSlide, {
+            left: '0',
+            transition: `left ${settings.speed}ms ${this.options.timingFunction}`
           });
 
-          resolve();
-        }, settings.speed);
-      });
+          applyCss(currentSlide, {
+            left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
+            transition: `left ${settings.speed}ms ${this.options.timingFunction}`
+          });
+
+          window.setTimeout(() => {
+            applyCss(currentSlide, {
+              left: this.slideWidth,
+              transition: 'initial'
+            });
+
+            resolve();
+          }, settings.speed + 10);
+        });
+      }, 1);
     });
   }
 }
