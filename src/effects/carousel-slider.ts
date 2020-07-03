@@ -60,8 +60,8 @@ export class CarouselSlider implements Effect {
         left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth
       });
 
-      setTimeout(() => {
-        requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
           applyCss(nextSlide, {
             left: '0',
             transition: `left ${settings.speed}ms ${this.options.timingFunction}`
@@ -80,8 +80,8 @@ export class CarouselSlider implements Effect {
 
             resolve();
           }, settings.speed + 10);
-        });
-      }, 1);
+        }, 10);
+      });
     });
   }
 }
