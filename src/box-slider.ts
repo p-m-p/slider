@@ -71,6 +71,10 @@ export class BoxSlider {
       throw new Error(`${nextIndex} is not a valid slide index`);
     }
 
+    if (nextIndex === this.activeIndex) {
+      return Promise.resolve(this);
+    }
+
     const settings = {
       el: this.el,
       slides: this.slides,
