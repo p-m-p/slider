@@ -10,20 +10,20 @@ export class FlipTransition implements TileTransition {
     const back = document.createElement('div');
 
     applyCss(tileHolder, {
-      height: `${tileSettings.side}px`,
+      height: `${tileSettings.height}px`,
       left: `${tileSettings.fromLeft}px`,
       perspective: '400px',
       position: 'absolute',
       top: `${tileSettings.fromTop}px`,
-      width: `${tileSettings.side}px`
+      width: `${tileSettings.width}px`
     });
 
     tile.classList.add(tileSettings.tileClass);
     applyCss(tile, {
-      height: `${tileSettings.side}px`,
+      height: `${tileSettings.height}px`,
       'transform-style': 'preserve-3d',
       transition: 'transform 400ms',
-      width: `${tileSettings.side}px`
+      width: `${tileSettings.width}px`
     });
 
     tileHolder.appendChild(tile);
@@ -34,11 +34,11 @@ export class FlipTransition implements TileTransition {
       'background-position': `-${tileSettings.fromLeft}px -${tileSettings.fromTop}px`,
       'background-size': `${tileSettings.boxWidth}px ${tileSettings.boxHeight}px`,
       'backface-visibility': 'hidden',
-      height: `${tileSettings.side}px`,
+      height: `${tileSettings.height}px`,
       left: '0',
       position: 'absolute',
       top: '0',
-      width: `${tileSettings.side}px`
+      width: `${tileSettings.width}px`
     }));
 
     front.classList.add(tileSettings.frontClass);

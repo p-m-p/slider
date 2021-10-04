@@ -64,7 +64,7 @@ export class TileSlider implements Effect {
     }
 
     applyCss(el, {
-      height: `${this.grid.height}px`,
+      height: `${el.offsetHeight}px`,
       overflow: 'hidden'
     });
     applyCss(this.tileWrapper, {
@@ -88,7 +88,8 @@ export class TileSlider implements Effect {
           fromLeft: j * this.grid.sideLength,
           frontClass: 'front',
           imgSrc,
-          side: this.grid.sideLength,
+          width: this.grid.sideLength,
+          height: this.grid.sideLength,
           tileClass: TILE_CLASS
         }));
       }
@@ -146,7 +147,7 @@ export class TileSlider implements Effect {
   private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {
     const height = slides[0].offsetHeight;
     const rows = this.options.rows;
-    const sideLength = height / rows;
+    const sideLength = Math.ceil(height / rows);
     const cols = Math.ceil(el.offsetWidth / sideLength);
 
     return { cols, rows, sideLength, height };

@@ -11,22 +11,22 @@ export class FadeTransition implements TileTransition {
     tile.classList.add(tileSettings.tileClass);
 
     applyCss(tile, {
-      height: `${tileSettings.side}px`,
+      height: `${tileSettings.height}px`,
       left: `${tileSettings.fromLeft}px`,
       position: 'absolute',
       top: `${tileSettings.fromTop}px`,
-      width: `${tileSettings.side}px`
+      width: `${tileSettings.width}px`
     });
 
     [front, back].forEach(t => applyCss(t, {
       'background-position': `-${tileSettings.fromLeft}px -${tileSettings.fromTop}px`,
       'background-size': `${tileSettings.boxWidth}px ${tileSettings.boxHeight}px`,
-      height: `${tileSettings.side}px`,
+      height: `${tileSettings.height}px`,
       left: '0',
       position: 'absolute',
       top: '0',
       transition: 'opacity 400ms',
-      width: `${tileSettings.side}px`
+      width: `${tileSettings.width}px`
     }));
 
     applyCss(front, { 'background-image': `url(${tileSettings.imgSrc})` });

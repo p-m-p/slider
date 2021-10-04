@@ -6,7 +6,8 @@ export interface TileSettings {
   fromTop: number;
   frontClass: string;
   imgSrc: string;
-  side: number;
+  width: number;
+  height: number;
   tileClass: string;
 }
 
