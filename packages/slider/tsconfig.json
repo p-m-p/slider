@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
+    "outDir": "../../dist/slider",
     "declaration": true,
     "noImplicitAny": true,
-    "outDir": "./dist/",
     "sourceMap": true,
     "module": "esnext",
     "moduleResolution": "node",
