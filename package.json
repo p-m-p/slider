@@ -1,28 +1,13 @@
 {
-  "name": "@boxslider/slider",
+  "name": "boxslider",
   "version": "1.1.2",
-  "description": "Flexible and light weight content slider",
-  "keywords": [
-    "boxslider",
-    "slider",
-    "carousel",
-    "cube",
-    "3D",
-    "typescript"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "private": true,
   "scripts": {
-    "lint": "eslint . --ext .ts",
-    "build": "webpack --mode=production",
+    "bootstrap": "lerna bootstrap",
     "build-storybook": "build-storybook",
     "site:build": "webpack --config ./site/webpack.config.js --mode=production",
     "site:serve": "webpack-dev-server --config ./site/webpack.config.js",
     "storybook": "start-storybook -p 6006 -s ./stories/static"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/boxslider/slider.git"
   },
   "author": "Phil Parsons",
   "license": "MIT",
@@ -41,6 +26,8 @@
     "extract-loader": "^5.0.1",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "lerna": "^3.10.8",
+    "rimraf": "^3.0.2",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "ts-loader": "^6.2.2",
@@ -49,7 +36,6 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "dependencies": {},
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

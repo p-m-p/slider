@@ -1,6 +1,6 @@
 import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { FadeSlider } from '../src/effects/fade-slider';
+import { BoxSlider } from '../packages/slider/src/box-slider';
+import { FadeSlider } from '../packages/slider/src/effects/fade-slider';
 
 export const Fade = (): HTMLElement => {
   const box = document.createElement('div');

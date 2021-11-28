@@ -1,6 +1,6 @@
 import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { CubeSlider } from '../src/effects/cube-slider';
+import { BoxSlider } from '../packages/slider/src/box-slider';
+import { CubeSlider } from '../packages/slider/src/effects/cube-slider';
 
 function createCubeStory(direction: 'horizontal' | 'vertical'): () => HTMLElement {
   return (): HTMLElement => {

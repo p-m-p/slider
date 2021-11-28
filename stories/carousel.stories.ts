@@ -1,7 +1,7 @@
 import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { CarouselSlider } from '../src/effects/carousel-slider';
-import { FadeSlider } from '../src/effects/fade-slider';
+import { BoxSlider } from '../packages/slider/src/box-slider';
+import { CarouselSlider } from '../packages/slider/src/effects/carousel-slider';
+import { FadeSlider } from '../packages/slider/src/effects/fade-slider';
 
 export const Carousel = (): HTMLElement => {
   const box = document.createElement('div');

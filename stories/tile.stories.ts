@@ -1,6 +1,6 @@
 import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { TileSlider } from '../src/effects/tile/tile-slider';
+import { BoxSlider } from '../packages/slider/src/box-slider';
+import { TileSlider } from '../packages/slider/src/effects/tile/tile-slider';
 
 export const TileFlip = (): HTMLElement => {
   const box = document.createElement('div');

@@ -1,4 +1,4 @@
-import { BoxSlider } from '../src/box-slider';
+import { BoxSlider } from '../packages/slider/src/box-slider';
 
 export function createPage(slider: HTMLElement): HTMLElement {
   const page = document.createElement('main');

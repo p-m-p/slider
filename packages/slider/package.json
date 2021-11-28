@@ -1,0 +1,27 @@
+{
+  "name": "@boxslider/slider",
+  "version": "1.1.2",
+  "description": "Flexible and light weight content slider",
+  "keywords": [
+    "boxslider",
+    "slider",
+    "carousel",
+    "cube",
+    "3D",
+    "typescript"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack --mode=production",
+    "prepublish": "npm run lint && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxslider/slider/packages/slider"
+  },
+  "author": "Phil Parsons",
+  "license": "MIT"
+}
