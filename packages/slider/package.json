@@ -16,7 +16,7 @@
     "lint": "eslint . --ext .ts",
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --mode=production",
-    "prepublish": "npm run lint && npm run build"
+    "prepare": "npm run lint && npm run build"
   },
   "repository": {
     "type": "git",

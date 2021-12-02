@@ -16,8 +16,8 @@ const BOX_STYLES = ['overflow', 'position'];
 
 export class CarouselSlider implements Effect {
   private readonly options: CarouselSliderOptions;
-  private slideWidth: string;
-  private slideHeight: string;
+  private slideWidth!: string;
+  private slideHeight!: string;
 
   constructor(options = defaults) {
     this.options = { ...defaults, ...options };

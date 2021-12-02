@@ -14,12 +14,13 @@ export class StyleStore {
     (Array.isArray(elements) ? elements : [elements]).forEach(el => {
       let elementStyles = this.elementStyles.find(s => s.el === el);
 
-      if (!elementStyles) {
+      if (elementStyles === undefined) {
         elementStyles = { el, styles: {} };
         this.elementStyles.push(elementStyles);
       }
 
-      properties.forEach((p: string) => elementStyles.styles[p] = el.style.getPropertyValue(p));
+      const styles = elementStyles.styles;
+      properties.forEach((p: string) => styles[p] = el.style.getPropertyValue(p));
     });
   }
 

@@ -6,9 +6,9 @@ import { FadeTransition } from './fade-transition';
 import { FlipTransition } from './flip-transition';
 
 export interface TileSliderOptions {
-  tileEffect?: 'flip' | 'fade';
-  rows?: number;
-  rowOffset?: number;
+  tileEffect: 'flip' | 'fade';
+  rows: number;
+  rowOffset: number;
 }
 
 interface TileGrid {
@@ -31,11 +31,11 @@ const BOX_STYLES = ['height', 'overflow', 'position'];
 export class TileSlider implements Effect {
   private tileTransition: FadeTransition | FlipTransition;
   private options: TileSliderOptions;
-  private grid: TileGrid;
-  private tileWrapper: HTMLElement;
+  private grid!: TileGrid;
+  private tileWrapper!: HTMLElement;
   private activeFace: 'front' | 'back';
 
-  constructor(options: TileSliderOptions = defaults) {
+  constructor(options?: Partial<TileSliderOptions>) {
     this.options = { ...defaults, ...options };
     this.activeFace = 'front';
     this.tileTransition = this.options.tileEffect === 'fade'
@@ -43,9 +43,13 @@ export class TileSlider implements Effect {
       : new FlipTransition();
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options?: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
     const imgSrc = locateSlideImageSrc(slides[options.startIndex]);
     const fragment = document.createDocumentFragment();
+
+    if (imgSrc === null) {
+      throw new Error(`Did not find any image src for slide at index ${options.startIndex}`);
+    }
 
     styleStore.store(el, BOX_STYLES);
     styleStore.store(slides, SLIDE_STYLES);
@@ -107,7 +111,9 @@ export class TileSlider implements Effect {
       const nextFace = this.activeFace === 'front' ? 'back' : 'front';
 
       this.tileWrapper.querySelectorAll(`.${nextFace}`)
-        .forEach((tile: HTMLElement) => applyCss(tile, { 'background-image': `url(${imgSrc})` }));
+        .forEach((tile) => applyCss(tile as HTMLElement, {
+          'background-image': `url(${imgSrc})`
+        }));
 
       requestAnimationFrame(() => {
         for (let i = 0 ; i < this.grid.rows; ++i) {
@@ -141,6 +147,7 @@ export class TileSlider implements Effect {
 
   destroy(el: HTMLElement): void {
     el.removeChild(this.tileWrapper);
+    // @ts-ignore
     delete this.tileWrapper;
   }
 

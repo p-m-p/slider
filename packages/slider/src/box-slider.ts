@@ -8,27 +8,26 @@ export type EventData = { [key: string]: any }; // eslint-disable-line @typescri
 
 export class BoxSlider {
   private readonly options: BoxSliderOptions;
-
-  private activeIndex: number;
-  private autoScrollTimer: number;
+  private activeIndex!: number;
+  private autoScrollTimer?: number;
   private el: HTMLElement;
   private effect: Effect;
   private eventListeners: { [ev: string]: ((payload: EventData) => void)[] };
   private isDestroyed: boolean;
   private slides: HTMLElement[];
   private styleStore: StyleStore;
-  private transitionPromise: Promise<BoxSlider>;
+  private transitionPromise!: Promise<BoxSlider>;
 
-  constructor(el: Element | HTMLElement, options: BoxSliderOptions) {
+  constructor(el: Element | HTMLElement, options: Partial<BoxSliderOptions>) {
     if (!options.effect) {
-      throw new Error('No slide effect defined in box options');
+      throw new Error('No slide effect defined in BoxSliderOptions');
     }
 
     this.el = el as HTMLElement;
     this.effect = options.effect;
-    this.options = { ...defaults, ...options };
+    this.options = { ...defaults, ...options } as BoxSliderOptions;
     this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
-    this.activeIndex = this.options.startIndex;
+    this.activeIndex = this.options.startIndex || 0;
     this.eventListeners = {};
     this.styleStore = new StyleStore();
     this.isDestroyed = false;
@@ -37,7 +36,7 @@ export class BoxSlider {
     responder.add(this);
 
     if (this.slides.length > this.activeIndex) {
-      this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options, effect: undefined });
+      this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options });
 
       if (options.autoScroll) {
         this.setAutoScroll();
@@ -49,7 +48,6 @@ export class BoxSlider {
     this.styleStore.revert();
     this.effect.initialize(this.el, this.slides, this.styleStore, {
       ...this.options,
-      effect: undefined,
       startIndex: this.activeIndex
     });
   }
@@ -145,7 +143,7 @@ export class BoxSlider {
     this.isDestroyed = true;
     this.stopAutoPlay();
 
-    (this.transitionPromise || Promise.resolve(null)).then(() => {
+    (this.transitionPromise || Promise.resolve()).then(() => {
       if (this.effect.destroy) {
         this.effect.destroy(this.el);
       }
@@ -155,9 +153,13 @@ export class BoxSlider {
       this.emit('destroy');
       this.eventListeners = {};
 
+      // @ts-ignore
       delete this.el;
+      // @ts-ignore
       delete this.slides;
+      // @ts-ignore
       delete this.styleStore;
+      // @ts-ignore
       delete this.effect;
     });
   }
@@ -167,7 +169,7 @@ export class BoxSlider {
   }
 
   private emit(ev: EventType, payload?: EventData): void {
-    (this.eventListeners[ev] || []).forEach(cb => cb(payload));
+    (this.eventListeners[ev] || []).forEach(cb => cb({ ...payload }));
   }
 
   private setAutoScroll(): void {

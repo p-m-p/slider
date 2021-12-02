@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ['../stories/**/*.stories.ts'],
+  stories: ['../packages/slider/stories/**/*.stories.ts'],
   webpackFinal: async (config, { configType }) => {
     config.module.rules.push({
       test: /\.ts$/,

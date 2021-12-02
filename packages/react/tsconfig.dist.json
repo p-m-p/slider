@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@boxslider/slider": ["../slider/src"],
+    },
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src/components"
+  ]
+}

@@ -4,21 +4,34 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build-storybook": "build-storybook",
     "site:build": "webpack --config ./site/webpack.config.js --mode=production",
     "site:serve": "webpack-dev-server --config ./site/webpack.config.js",
-    "storybook": "start-storybook -p 6006 -s ./stories/static"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "Phil Parsons",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
     "@babel/core": "^7.9.0",
-    "@storybook/html": "^5.3.18",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@storybook/addon-actions": "^6.4.4",
+    "@storybook/addon-essentials": "^6.4.4",
+    "@storybook/addon-links": "^6.4.4",
+    "@storybook/node-logger": "^6.4.4",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.4.4",
+    "@storybook/html": "^6.4.4",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.1",
+    "cross-env": "^7.0.3",
     "css-loader": "^3.5.3",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
@@ -31,7 +44,7 @@
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "ts-loader": "^6.2.2",
-    "typescript": "^3.8.3",
+    "typescript": "^4.4.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
@@ -40,5 +53,32 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "@boxslider/react": "file:packages/react",
+    "@boxslider/slider": "file:packages/slider",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3"
+  },
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      },
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   }
 }

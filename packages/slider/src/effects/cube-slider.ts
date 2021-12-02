@@ -8,7 +8,7 @@ export interface CubeSliderOptions {
   perspective?: number;
 }
 
-export const defaults: CubeSliderOptions = {
+const defaults: CubeSliderOptions = {
   perspective: 1000,
   direction: 'horizontal'
 };
@@ -20,7 +20,7 @@ const VIEWPORT_STYLES = ['overflow', 'perspective', 'position'];
 export class CubeSlider implements Effect {
 
   private readonly options: CubeSliderOptions;
-  private translateZ: number;
+  private translateZ!: number;
 
   constructor(options: CubeSliderOptions = {}) {
     this.options = { ...defaults, ...options };
@@ -31,6 +31,10 @@ export class CubeSlider implements Effect {
     const height = el.offsetHeight;
     const perspective = `${this.options.perspective}px`;
     const viewport = el.parentElement;
+
+    if (viewport === null) {
+      throw new Error("Cube slider must be contained within in a viewport container");
+    }
 
     this.translateZ = this.options.direction === 'vertical' ? height / 2 : width / 2;
 
