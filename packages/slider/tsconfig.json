@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist/slider",
+    "outDir": "dist",
     "declaration": true,
     "noImplicitAny": true,
     "sourceMap": true,
