@@ -3,9 +3,7 @@
     "packages/*"
   ],
   "command": {
-    "bootstrap": {
-      "npmClientArgs": ["--no-package-lock"]
-    },
+    "bootstrap": {},
     "version": {
       "allowBranch": "master",
       "conventionalCommits": true,
