@@ -7,8 +7,7 @@
     "slider",
     "carousel",
     "cube",
-    "3D",
-    "typescript"
+    "3D"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +15,7 @@
     "lint": "eslint . --ext .ts",
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --mode=production",
-    "prepare": "npm run lint && npm run build",
+    "prepare": "npm run build",
     "build-storybook": "build-storybook",
     "storybook": "start-storybook -p 6006 -s stories/static"
   },

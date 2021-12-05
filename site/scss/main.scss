@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import 'color';
 @import 'dimensions';
 
@@ -341,7 +342,7 @@ body {
 
     a {
       line-height: 1;
-      padding: $padding / 2;
+      padding: math.div($padding, 2);
     }
   }
 
