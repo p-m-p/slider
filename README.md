@@ -1,4 +1,4 @@
-<center>
+<p align="center">
     <h1>
         <img src="assets/icon.png" width="44px" height="44px" alt="bxl logo">
         BoxSlider
@@ -10,7 +10,7 @@
         <a href="https://www.npmjs.com/package/@boxslider/slider"><img alt="NPM Status" src="https://img.shields.io/npm/v/@boxslider/slider.svg?style=flat"></a>
         <img alt="Build Status" src="https://img.shields.io/github/workflow/status/boxslider/slider/Verify/master?style=flat">
     </p>
-</center> 
+</p> 
 
 ### About
 BoxSlider is a light-weight, responsive content slider that provides a
