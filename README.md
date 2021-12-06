@@ -1,8 +1,6 @@
-
-<h1 align="center">
-    <img src="assets/icon.png" width="42px" height="42px" alt="bxl logo">
-    BoxSlider
-</h1>
+<p align="center">
+    <img src="assets/logo.png" width="480px" alt="BxlSlider logo">
+</p>
 <p align="center">
     A modern, light weight content slider 
 </p> 
