@@ -12,10 +12,8 @@
     "test": "ng test --browsers=ChromeHeadless --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "version": "node update-version.js",
-    "prepare": "npm run build-boxslider"
+    "prepare": "npm run build-boxslider && node update-version.js"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~13.0.3",
     "@angular/common": "~13.0.3",

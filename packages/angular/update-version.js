@@ -1,4 +1,4 @@
-const packageJsonPath = './projects/boxslider/angular/package.json'
+const packageJsonPath = './dist/boxslider/angular/package.json'
 const fs = require('fs');
 const version = require('./package.json').version;
 const packageJson = require(packageJsonPath);

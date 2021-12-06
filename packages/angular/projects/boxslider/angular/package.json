@@ -1,7 +1,7 @@
 {
   "name": "@boxslider/angular",
   "author": "Phil Parsons",
-  "version": "1.1.2",
+  "version": "0.0.0",
   "description": "Angular directives for BoxSlider",
   "keywords": [
     "boxslider",
@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@angular/common": ">=9.0.0",
     "@angular/core": ">=9.0.0",
-    "@boxslider/slider": "^1.1.2"
+    "@boxslider/slider": "^0.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
