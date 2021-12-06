@@ -1,0 +1,56 @@
+{
+  "name": "boxslider-angular",
+  "version": "1.1.2",
+  "publishConfig": {
+    "directory": "dist/boxslider/angular"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build-boxslider": "ng build --project=@boxslider/angular --configuration=production",
+    "test": "ng test --browsers=ChromeHeadless --watch=false",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "version": "node update-version.js",
+    "prepare": "npm run build-boxslider"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.0.3",
+    "@angular/common": "~13.0.3",
+    "@angular/compiler": "~13.0.3",
+    "@angular/core": "~13.0.3",
+    "@angular/forms": "~13.0.3",
+    "@angular/platform-browser": "~13.0.3",
+    "@angular/platform-browser-dynamic": "~13.0.3",
+    "@angular/router": "~13.0.3",
+    "@boxslider/slider": "^1.1.2",
+    "rxjs": "~6.5.4",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.0.4",
+    "@angular-devkit/core": "^13.0.4",
+    "@angular/cli": "~13.0.4",
+    "@angular/compiler-cli": "~13.0.3",
+    "@types/jasmine": "~3.6.0",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^6.0.0",
+    "cz-conventional-changelog": "^3.2.0",
+    "jasmine-core": "~3.6.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "karma": "~6.3.9",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "~3.0.2",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^13.0.8",
+    "protractor": "~7.0.0",
+    "ts-node": "~8.3.0",
+    "tslint": "~6.1.0",
+    "typescript": "~4.4.4"
+  }
+}

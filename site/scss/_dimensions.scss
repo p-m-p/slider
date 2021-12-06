@@ -1,9 +1,11 @@
+@use 'sass:math';
+
 $padding: 16px;
-$small-padding: $padding / 2;
+$small-padding: math.div($padding, 2);
 $large-padding: $padding * 2;
 
 $gutter: $padding;
-$small-gutter: $gutter / 2;
+$small-gutter: math.div($gutter, 2);
 $large-gutter: $gutter * 2;
 
 $large-content-bounds: 1200px;

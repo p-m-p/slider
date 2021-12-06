@@ -1,0 +1,20 @@
+<h1>bounce</h1>
+
+<div class="viewport">
+  <div class="slider" bxlFadeSlider
+       [activeSlide]="activeSlide"
+       [autoScroll]="autoScroll"
+       (beforeSlide)="eventState = 'before'"
+       (afterSlide)="eventState = 'after'">
+    <div class="slide">One</div>
+    <div class="slide">Two</div>
+    <div class="slide">Three</div>
+    <div class="slide">Four</div>
+    <div class="slide">Five</div>
+    <div class="slide">Six</div>
+    <div class="slide">Seven</div>
+    <div class="slide">Eight</div>
+  </div>
+</div>
+
+<input [(ngModel)]="activeSlide" type="number"> {{ eventState }}

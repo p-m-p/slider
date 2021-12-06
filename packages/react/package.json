@@ -1,0 +1,86 @@
+{
+  "name": "@boxslider/react",
+  "version": "1.1.2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "boxslider",
+    "react",
+    "slider",
+    "carousel",
+    "cube",
+    "3D"
+  ],
+  "repository": {
+    "type": "Git",
+    "url": "https://github.com/boxslider/slider/packages/react"
+  },
+  "scripts": {
+    "start": "start-storybook -p 6006",
+    "build": "npm run clean && cross-env NODE_ENV=production babel src/components --out-dir dist --extensions \".ts,.tsx\" --ignore src/stories && npm run types",
+    "build-storybook": "build-storybook",
+    "clean": "rimraf dist",
+    "types": "tsc --project tsconfig.dist.json --emitDeclarationOnly --outDir dist",
+    "prepare": "npm run build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@boxslider/slider": "^1.1.2",
+    "@storybook/addon-actions": "^6.4.8",
+    "@storybook/addon-essentials": "^6.4.8",
+    "@storybook/addon-links": "^6.4.8",
+    "@storybook/node-logger": "^6.4.8",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.4.8",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.11",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
+    "cross-env": "^7.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.4.3",
+    "web-vitals": "^2.1.2"
+  },
+  "peerDependencies": {
+    "@boxslider/slider": "^1.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

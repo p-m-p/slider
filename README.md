@@ -1,21 +1,29 @@
-BoxSlider
-===
 
+<h1 align="center">
+    <img src="assets/icon.png" width="42px" height="42px" alt="bxl logo">
+    BoxSlider
+</h1>
+<p align="center">
+    A modern, light weight content slider 
+</p> 
+<p align="center">
+    <a href="https://www.npmjs.com/package/@boxslider/slider"><img alt="NPM Status" src="https://img.shields.io/npm/v/@boxslider/slider.svg?style=flat"></a>
+    <img alt="Build Status" src="https://img.shields.io/github/workflow/status/boxslider/slider/Verify/master?style=flat">
+</p>
+
+
+### About
 BoxSlider is a light-weight, responsive content slider that provides a
 simple interface for developers to easily integrate a range of cool content
 transitions like 3D cubes and tiles or more traditional scrolling carousels.
 
-Installation
----
-
+### Installation
 ```javascript
 npm install @boxslider/slider
 ```
 
-Usage
----
-
-Create the HTML structure for your content. Some effects require each slide to only 
+### Usage
+Create the HTML structure for your content. Some effects require each slide to only
 contain an image but others support any form of content. See the documentation for
 the desired effect for detailed instructions.
 
@@ -66,9 +74,7 @@ slider.next().then(() => {
 });
 ``` 
 
-Options
----
-
+### Options
 * `effect: Effect` **Required** option for the slide effect.
 * `speed: number (default: 800)` The time interval in milliseconds within which the
   slide animation will complete
@@ -78,41 +84,37 @@ Options
   with autoScroll
 * `pauseOnHover: boolean (default: false)` Pause an auto-scrolling slider when the users
   mouse hovers over it. For use with autoScroll or a slider in play mode.
-* `swipe: boolean (default: true)` Enable swiping the box to navigate to the next or 
+* `swipe: boolean (default: true)` Enable swiping the box to navigate to the next or
   previous slide.
 * `swipeTolerance: number (default 30)` The number of pixels between the pointer down
   and pointer up events during the swipe action that will trigger the transition.
 
-Effect Options
----
-  
-### CubeSlider
+### Effect Options
+#### CubeSlider
 * `direction: 'horizontal' | 'vertical' (default: horizontal)` The direction in which the
   cube should rotate to the next slide.
-* `perspective: number (default: 1000)` The perspective to apply to the parent viewport 
-  element containing the box. 
+* `perspective: number (default: 1000)` The perspective to apply to the parent viewport
+  element containing the box.
 
-### FadeSlider 
+#### FadeSlider
 * `timingFunction: string (default: ease-in)` The CSS transition timing function to use
   when fading slide opacity.
 
-### TileSlider 
+#### TileSlider
 * `tileEffect: 'fade' | 'flip' (default: flip)` The transition effect for animating the tiles during
-  slide transitions. 
+  slide transitions.
 * `rows: number (default: 8)` The number of tile rows into which the slide should
   be split
 * `rowOffset: number (default: 100)` The time offset for starting to animate the tiles
   in a row
 
-### CarouselSlider
+#### CarouselSlider
 * `timingFunction: string (default: ease-in-out)` The CSS transition timing function to use
   when animating slides into position.
 
-Methods
----
-
-### `skipTo`
-Shows a slide at the specified index starting from 0. Returns a promise that resolves 
+### Methods
+##### `skipTo`
+Shows a slide at the specified index starting from 0. Returns a promise that resolves
 when the transition is complete.
 
 ```javascript
@@ -121,28 +123,28 @@ slider.skipTo(3).then(() => {  // show 4th slide
 });
 ```
 
-### `play`
+#### `play`
 Start `autoScroll`'ing a slider
 
 ```javascript
 slider.play()
 ```
 
-### `pause`
+#### `pause`
 Pause an already `autoScroll`'ing a slider
 
 ```javascript
 slider.pause();
 ```
 
-### `destroy`
+#### `destroy`
 Destroys the slider and returns the HTML elements to their original state.
 
 ```javascript
 slider.destroy();
 ```
 
-### `next`
+#### `next`
 Moves the slider to the next slide. Returns a promise that resolves when the transition
 is complete.
 
@@ -152,8 +154,8 @@ slider.next().then(() => {
 });
 ```
 
-### `prev`
-Moves the slider to the previous slide. Returns a promise that resolves when the 
+#### `prev`
+Moves the slider to the previous slide. Returns a promise that resolves when the
 transition is complete.
 
 ```javascript
@@ -162,7 +164,7 @@ slider.prev().then(() => {
 });
 ```
 
-### `addEventListener`
+#### `addEventListener`
 Adds a listener for the specified event. See the event documentation for the available
 events.
 
@@ -174,18 +176,17 @@ const afterTransitionListener = () => {
 slider.addEventListener('after', afterTransitionListener);
 ```
 
-### `removeEventListener`
+#### `removeEventListener`
 Removes the listener for the specified event.
 
 ```javascript
 slider.removeEventListener('after', afterTransitionListener);
 ```
 
-Events
----
+### Events
 
-### `before`
-Fires before each slide transition starts. The current and next indexes are supplied in the 
+#### `before`
+Fires before each slide transition starts. The current and next indexes are supplied in the
 event data as well as the transition speed.
 
 ```javascript
@@ -198,7 +199,7 @@ slider.addEventListener('before', data => {
 });
 ```
 
-### `after`
+#### `after`
 Fires after each slide transition is complete. The active index is supplied in the event
 data
 
@@ -210,21 +211,21 @@ slider.addEventListener('after', data => {
 });
 ```
 
-### `play`
+#### `play`
 Fires when the slider is put into play mode.
 
 ```javascript
 slider.addEventListener('play', () => { /* no event data */ });
 ```
 
-### `pause`
+#### `pause`
 Fires when an `autoScroll`'ing slider is paused.
 
 ```javascript
 slider.addEventListener('pause', () => { /* no event data */ });
 ```
 
-### `destroy`
+#### `destroy`
 Fires when a slider is destroyed.
 
 ```javascript

@@ -1,0 +1,47 @@
+{
+  "name": "@boxslider/slider",
+  "version": "1.1.2",
+  "description": "Flexible and light weight content slider",
+  "keywords": [
+    "boxslider",
+    "slider",
+    "carousel",
+    "cube",
+    "3D"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack --mode=production",
+    "prepare": "npm run build",
+    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006 -s stories/static"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxslider/slider/packages/slider"
+  },
+  "author": "Phil Parsons",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@storybook/builder-webpack5": "^6.4.7",
+    "@storybook/html": "^6.4.7",
+    "@storybook/manager-webpack5": "^6.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^8.4.0",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0"
+  }
+}

@@ -1,4 +1,4 @@
-import { BoxSlider, CarouselSlider, CubeSlider, FadeSlider, TileSlider } from '../src';
+import { BoxSlider, CarouselSlider, CubeSlider, FadeSlider, TileSlider } from '../packages/slider/src';
 
 const activeClassName = 'active';
 const disabledClassName = 'disabled';

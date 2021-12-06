@@ -1,0 +1,14 @@
+.slider {
+  height: 400px;
+  overflow: hidden;
+  width: 800px;
+}
+
+.slide {
+  background-color: #444444;
+  box-sizing: border-box;
+  color: white;
+  height: 100%;
+  padding: 40px;
+  width: 100%;
+}

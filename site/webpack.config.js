@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { resolve } = require('path');
 
@@ -14,19 +15,6 @@ module.exports = {
       {
         test: /\.ts$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.ts$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              eslintPath: require.resolve('eslint'),
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
         exclude: /node_modules/,
       },
       {
@@ -71,7 +59,8 @@ module.exports = {
       patterns: [
         { from: resolve(__dirname, 'img'), to: 'img' },
       ],
-    })
+    }),
+    new EslintPlugin()
   ],
   output: {
     filename: '[name].[hash].js',
