@@ -113,7 +113,7 @@ slider.next().then(() => {
   when animating slides into position.
 
 ### Methods
-##### `skipTo`
+#### `skipTo`
 Shows a slide at the specified index starting from 0. Returns a promise that resolves
 when the transition is complete.
 
