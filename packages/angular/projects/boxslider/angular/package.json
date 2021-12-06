@@ -21,5 +21,8 @@
     "@angular/core": "^9.1.7",
     "@boxslider/slider": "^1.1.2"
   },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "license": "MIT"
 }
