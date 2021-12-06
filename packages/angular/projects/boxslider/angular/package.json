@@ -17,8 +17,8 @@
     "url": "https://github.com/boxslider/packages/angular"
   },
   "peerDependencies": {
-    "@angular/common": "^9.1.7",
-    "@angular/core": "^9.1.7",
+    "@angular/common": ">=9.0.0",
+    "@angular/core": ">=9.0.0",
     "@boxslider/slider": "^1.1.2"
   },
   "dependencies": {
