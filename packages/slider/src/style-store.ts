@@ -1,31 +1,57 @@
 interface StoreItem {
   el: HTMLElement;
   styles: { [style: string]: string };
+  attributes: { [attribute: string]: string };
 }
 
 export class StyleStore {
-  private elementStyles: StoreItem[];
+  private elementStore: StoreItem[];
 
   constructor() {
-    this.elementStyles = [];
+    this.elementStore = [];
   }
 
-  store(elements: HTMLElement[] | HTMLElement, properties: string[]): void {
+  store(elements: HTMLElement[] | HTMLElement, styles: string[]): void {
     (Array.isArray(elements) ? elements : [elements]).forEach(el => {
-      let elementStyles = this.elementStyles.find(s => s.el === el);
+      let elementStore = this.elementStore.find(s => s.el === el);
 
-      if (!elementStyles) {
-        elementStyles = { el, styles: {} };
-        this.elementStyles.push(elementStyles);
+      if (!elementStore) {
+        elementStore = { el, styles: {}, attributes: {} };
+        this.elementStore.push(elementStore);
       }
 
-      properties.forEach((p: string) => elementStyles.styles[p] = el.style.getPropertyValue(p));
+      styles.forEach((property: string) => elementStore.styles[property] = el.style.getPropertyValue(property));
+    });
+  }
+
+  storeAttributes(elements: HTMLElement[] | HTMLElement, attributes: string[]): void {
+    (Array.isArray(elements) ? elements : [elements]).forEach(el => {
+      let elementStore = this.elementStore.find(s => s.el === el);
+
+      if (!elementStore) {
+        elementStore = { el, styles: {}, attributes: {} };
+        this.elementStore.push(elementStore);
+      }
+
+      attributes.forEach((attribute: string) => elementStore.attributes[attribute] = el.getAttribute(attribute));
     });
   }
 
   revert(): void {
-    this.elementStyles.forEach(elementStyles => Object.keys(elementStyles.styles).forEach(property =>
-      elementStyles.el.style.setProperty(property, elementStyles.styles[property])));
-    this.elementStyles = [];
+    this.elementStore.forEach(elementStore => {
+      Object.keys(elementStore.styles).forEach(property =>
+        elementStore.el.style.setProperty(property, elementStore.styles[property]));
+
+      Object.keys(elementStore.attributes).forEach(attribute => {
+        const cachedValue = elementStore.attributes[attribute];
+
+        if (attribute === null || attribute === '') {
+          elementStore.el.removeAttribute(attribute);
+        } else {
+          elementStore.el.setAttribute(attribute, cachedValue)
+        }
+      });
+    });
+    this.elementStore = [];
   }
 }

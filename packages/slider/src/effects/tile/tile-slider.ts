@@ -25,7 +25,7 @@ const defaults: TileSliderOptions = {
 }
 
 const TILE_CLASS = 'bs-tile';
-const SLIDE_STYLES = ['display'];
+const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border'];
 const BOX_STYLES = ['height', 'overflow', 'position'];
 
 export class TileSlider implements Effect {
@@ -57,6 +57,7 @@ export class TileSlider implements Effect {
     }
 
     this.tileWrapper = document.createElement('div');
+    this.tileWrapper.setAttribute("aria-hidden", "true");
     el.appendChild(this.tileWrapper);
 
     if ('fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1) {
@@ -74,7 +75,16 @@ export class TileSlider implements Effect {
       width: '100%',
       height: '100%'
     });
-    slides.forEach(s => applyCss(s, { display: 'none' }));
+    slides.forEach(s => applyCss(s, {
+      position: 'absolute',
+      overflow: 'hidden',
+      clip: 'rect(0 0 0 0)',
+      height: '1px',
+      width: '1px',
+      margin: '-1px',
+      padding: '0',
+      border: '0'
+    }));
 
     for (let i = 0; i < this.grid.rows; ++i) {
       const fromTop = i * this.grid.sideLength;
