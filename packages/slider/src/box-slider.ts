@@ -1,6 +1,6 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
 import { Effect } from './effects';
-import { StyleStore } from './style-store';
+import { StateStore } from './state-store';
 import { responder } from './responder';
 
 export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play';
@@ -17,7 +17,7 @@ export class BoxSlider {
   private eventListeners: { [ev: string]: ((payload: EventData) => void)[] };
   private isDestroyed: boolean;
   private slides: HTMLElement[];
-  private styleStore: StyleStore;
+  private stateStore: StateStore;
   private transitionPromise: Promise<BoxSlider>;
 
   constructor(el: Element | HTMLElement, options: BoxSliderOptions) {
@@ -31,7 +31,7 @@ export class BoxSlider {
     this.slides = Array.from(el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[];
     this.activeIndex = this.options.startIndex;
     this.eventListeners = {};
-    this.styleStore = new StyleStore();
+    this.stateStore = new StateStore();
     this.isDestroyed = false;
 
     if (this.slides.length < this.activeIndex) {
@@ -42,11 +42,11 @@ export class BoxSlider {
     this.applyEventListeners();
     responder.add(this);
 
-    this.styleStore.storeAttributes(this.slides, ['aria-roledescription']);
-    this.styleStore.storeAttributes(this.el, ['aria-live']);
+    this.stateStore.storeAttributes(this.slides, ['aria-roledescription']);
+    this.stateStore.storeAttributes(this.el, ['aria-live']);
     this.el.setAttribute('aria-live', 'polite');
     this.slides.forEach(slide => slide.setAttribute("aria-roledescription", "slide"));
-    this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options, effect: undefined });
+    this.effect.initialize(this.el, this.slides, this.stateStore, { ...this.options, effect: undefined });
 
     if (options.autoScroll) {
       this.setAutoScroll();
@@ -54,8 +54,8 @@ export class BoxSlider {
   }
 
   reset(): void {
-    this.styleStore.revert();
-    this.effect.initialize(this.el, this.slides, this.styleStore, {
+    this.stateStore.revert();
+    this.effect.initialize(this.el, this.slides, this.stateStore, {
       ...this.options,
       effect: undefined,
       startIndex: this.activeIndex
@@ -158,14 +158,14 @@ export class BoxSlider {
         this.effect.destroy(this.el);
       }
 
-      this.styleStore.revert();
+      this.stateStore.revert();
       responder.remove(this);
       this.emit('destroy');
       this.eventListeners = {};
 
       delete this.el;
       delete this.slides;
-      delete this.styleStore;
+      delete this.stateStore;
       delete this.effect;
     });
   }

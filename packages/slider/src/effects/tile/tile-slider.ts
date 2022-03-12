@@ -1,5 +1,5 @@
 import { Effect, TransitionSettings } from '../effect';
-import { StyleStore } from '../../style-store';
+import { StateStore } from '../../state-store';
 import { BoxSliderOptions } from '../../box-slider-options';
 import { applyCss, locateSlideImageSrc } from '../../utils';
 import { FadeTransition } from './fade-transition';
@@ -43,12 +43,12 @@ export class TileSlider implements Effect {
       : new FlipTransition();
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options?: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options?: BoxSliderOptions): void {
     const imgSrc = locateSlideImageSrc(slides[options.startIndex]);
     const fragment = document.createDocumentFragment();
 
-    styleStore.store(el, BOX_STYLES);
-    styleStore.store(slides, SLIDE_STYLES);
+    stateStore.storeStyles(el, BOX_STYLES);
+    stateStore.storeStyles(slides, SLIDE_STYLES);
 
     this.grid = this.calculateGrid(el, slides);
 

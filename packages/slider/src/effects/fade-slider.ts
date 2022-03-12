@@ -1,7 +1,7 @@
 import { Effect, TransitionSettings } from './effect';
 import { BoxSliderOptions } from '../box-slider-options';
 import { applyCss } from '../utils';
-import { StyleStore } from '../style-store';
+import { StateStore } from '../state-store';
 
 export interface FadeSliderOptions {
   timingFunction?: string;
@@ -22,9 +22,9 @@ export class FadeSlider implements Effect {
     this.options = { ...defaults, ...options };
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
-    styleStore.store(slides, SLIDE_STYLES);
-    styleStore.store(el, BOX_STYLES);
+  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StateStore, options: BoxSliderOptions): void {
+    styleStore.storeStyles(slides, SLIDE_STYLES);
+    styleStore.storeStyles(el, BOX_STYLES);
 
     if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative' });

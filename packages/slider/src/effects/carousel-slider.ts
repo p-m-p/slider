@@ -1,7 +1,7 @@
 import { BoxSliderOptions } from '../box-slider-options';
 import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
-import { StyleStore } from '../style-store';
+import { StateStore } from '../state-store';
 
 export interface CarouselSliderOptions {
   timingFunction?: string;
@@ -23,12 +23,12 @@ export class CarouselSlider implements Effect {
     this.options = { ...defaults, ...options };
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options: BoxSliderOptions): void {
     this.slideWidth = `${el.offsetWidth}px`;
     this.slideHeight = `${el.offsetHeight}px`;
 
-    styleStore.store(slides, SLIDE_STYLES);
-    styleStore.store(el, BOX_STYLES);
+    stateStore.storeStyles(slides, SLIDE_STYLES);
+    stateStore.storeStyles(el, BOX_STYLES);
 
     applyCss(el, { overflow: 'hidden' });
 
