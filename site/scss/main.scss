@@ -23,7 +23,7 @@ body {
   flex-grow: 1;
 
   .logo {
-    color: $purple;
+    color: $teal;
     display: inline-block;
     font-weight: 600;
     padding: $padding;
@@ -158,6 +158,13 @@ body {
   margin: 120px auto;
   max-width: $large-content-bounds;
   position: relative;
+
+  &-carousel {
+    height: $example-carousel-height;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .examples {
@@ -283,13 +290,6 @@ body {
       }
     }
   }
-
-  &-carousel {
-    height: $example-carousel-height;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  }
 }
 
 .example {
@@ -365,4 +365,14 @@ body {
   .feature {
     width: 100%;
   }
+}
+
+.sr-only:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
