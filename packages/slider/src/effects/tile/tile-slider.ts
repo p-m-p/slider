@@ -1,5 +1,5 @@
 import { Effect, TransitionSettings } from '../effect';
-import { StyleStore } from '../../style-store';
+import { StateStore } from '../../state-store';
 import { BoxSliderOptions } from '../../box-slider-options';
 import { applyCss, locateSlideImageSrc } from '../../utils';
 import { FadeTransition } from './fade-transition';
@@ -25,7 +25,7 @@ const defaults: TileSliderOptions = {
 }
 
 const TILE_CLASS = 'bs-tile';
-const SLIDE_STYLES = ['display'];
+const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border'];
 const BOX_STYLES = ['height', 'overflow', 'position'];
 
 export class TileSlider implements Effect {
@@ -43,12 +43,12 @@ export class TileSlider implements Effect {
       : new FlipTransition();
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options?: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options?: BoxSliderOptions): void {
     const imgSrc = locateSlideImageSrc(slides[options.startIndex]);
     const fragment = document.createDocumentFragment();
 
-    styleStore.store(el, BOX_STYLES);
-    styleStore.store(slides, SLIDE_STYLES);
+    stateStore.storeStyles(el, BOX_STYLES);
+    stateStore.storeStyles(slides, SLIDE_STYLES);
 
     this.grid = this.calculateGrid(el, slides);
 
@@ -57,6 +57,7 @@ export class TileSlider implements Effect {
     }
 
     this.tileWrapper = document.createElement('div');
+    this.tileWrapper.setAttribute("aria-hidden", "true");
     el.appendChild(this.tileWrapper);
 
     if ('fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1) {
@@ -74,7 +75,16 @@ export class TileSlider implements Effect {
       width: '100%',
       height: '100%'
     });
-    slides.forEach(s => applyCss(s, { display: 'none' }));
+    slides.forEach(s => applyCss(s, {
+      position: 'absolute',
+      overflow: 'hidden',
+      clip: 'rect(0 0 0 0)',
+      height: '1px',
+      width: '1px',
+      margin: '-1px',
+      padding: '0',
+      border: '0'
+    }));
 
     for (let i = 0; i < this.grid.rows; ++i) {
       const fromTop = i * this.grid.sideLength;

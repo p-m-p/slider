@@ -5,8 +5,8 @@ export interface BxlComponentProps {
   sliderOptions?: Partial<BoxSliderOptions>,
   viewportClassName?: string;
   slideIndex?: number;
-  onBefore?: (ev: EventData) => void;
-  onAfter?: (ev: EventData) => void;
+  onBefore?: (ev?: EventData) => void;
+  onAfter?: (ev?: EventData) => void;
   onDestroy?: () => void;
   onPlay?: () => void;
   onPause?: () => void;

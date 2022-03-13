@@ -47,9 +47,6 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  devServer: {
-    contentBase: './docs'
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({

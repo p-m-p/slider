@@ -58,7 +58,7 @@ if (slideImagesToLoad.length === 0) {
 }
 
 // Effect Examples slider
-const examplesSlider = new BoxSlider(document.querySelector('.examples-carousel'), {
+const examplesSlider = new BoxSlider(document.querySelector('#examples-carousel'), {
   effect: new CarouselSlider(),
   swipe: false
 });

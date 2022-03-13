@@ -1,7 +1,7 @@
 import { Effect, TransitionSettings } from './effect';
 import { applyCss } from '../utils';
 import { BoxSliderOptions } from '../box-slider-options';
-import { StyleStore } from '../style-store';
+import { StateStore } from '../state-store';
 
 export interface CubeSliderOptions {
   direction?: 'horizontal' | 'vertical';
@@ -26,7 +26,7 @@ export class CubeSlider implements Effect {
     this.options = { ...defaults, ...options };
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StyleStore, options: BoxSliderOptions): void {
+  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options: BoxSliderOptions): void {
     const width = el.offsetWidth;
     const height = el.offsetHeight;
     const perspective = `${this.options.perspective}px`;
@@ -34,9 +34,9 @@ export class CubeSlider implements Effect {
 
     this.translateZ = this.options.direction === 'vertical' ? height / 2 : width / 2;
 
-    styleStore.store(slides, SLIDE_STYLES);
-    styleStore.store(el, BOX_STYLES);
-    styleStore.store(viewport, VIEWPORT_STYLES);
+    stateStore.storeStyles(slides, SLIDE_STYLES);
+    stateStore.storeStyles(el, BOX_STYLES);
+    stateStore.storeStyles(viewport, VIEWPORT_STYLES);
 
     slides.forEach((slide: HTMLElement) => applyCss(slide, {
       left: '0',

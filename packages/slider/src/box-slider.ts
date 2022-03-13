@@ -1,10 +1,11 @@
 import { BoxSliderOptions, defaults } from './box-slider-options';
 import { Effect } from './effects';
-import { StyleStore } from './style-store';
+import { StateStore } from './state-store';
 import { responder } from './responder';
 
 export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play';
 export type EventData = { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type EventListenerCallback = (payload?: EventData) => void;
 
 export class BoxSlider {
   private readonly options: BoxSliderOptions;
@@ -16,7 +17,7 @@ export class BoxSlider {
   private eventListeners: { [ev: string]: ((payload: EventData) => void)[] };
   private isDestroyed: boolean;
   private slides: HTMLElement[];
-  private styleStore: StyleStore;
+  private stateStore: StateStore;
   private transitionPromise: Promise<BoxSlider>;
 
   constructor(el: Element | HTMLElement, options: BoxSliderOptions) {
@@ -27,27 +28,34 @@ export class BoxSlider {
     this.el = el as HTMLElement;
     this.effect = options.effect;
     this.options = { ...defaults, ...options };
-    this.slides = Array.from(el.children).filter((el: Node) => el instanceof HTMLElement) as HTMLElement[];
+    this.slides = Array.from(el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[];
     this.activeIndex = this.options.startIndex;
     this.eventListeners = {};
-    this.styleStore = new StyleStore();
+    this.stateStore = new StateStore();
     this.isDestroyed = false;
+
+    if (this.slides.length < this.activeIndex) {
+      this.destroy()
+      throw new Error(`Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`);
+    }
 
     this.applyEventListeners();
     responder.add(this);
 
-    if (this.slides.length > this.activeIndex) {
-      this.effect.initialize(this.el, this.slides, this.styleStore, { ...this.options, effect: undefined });
+    this.stateStore.storeAttributes(this.slides, ['aria-roledescription']);
+    this.stateStore.storeAttributes(this.el, ['aria-live']);
+    this.el.setAttribute('aria-live', 'polite');
+    this.slides.forEach(slide => slide.setAttribute("aria-roledescription", "slide"));
+    this.effect.initialize(this.el, this.slides, this.stateStore, { ...this.options, effect: undefined });
 
-      if (options.autoScroll) {
-        this.setAutoScroll();
-      }
+    if (options.autoScroll) {
+      this.setAutoScroll();
     }
   }
 
   reset(): void {
-    this.styleStore.revert();
-    this.effect.initialize(this.el, this.slides, this.styleStore, {
+    this.stateStore.revert();
+    this.effect.initialize(this.el, this.slides, this.stateStore, {
       ...this.options,
       effect: undefined,
       startIndex: this.activeIndex
@@ -126,14 +134,14 @@ export class BoxSlider {
     return this;
   }
 
-  addEventListener(ev: EventType, callback: (payload: EventData) => void): BoxSlider {
+  addEventListener(ev: EventType, callback: EventListenerCallback): BoxSlider {
     this.eventListeners[ev] = this.eventListeners[ev] || [];
     this.eventListeners[ev].push(callback);
 
     return this;
   }
 
-  removeEventListener(ev: EventType, callback: Function): BoxSlider {
+  removeEventListener(ev: EventType, callback: EventListenerCallback): BoxSlider {
     if (this.eventListeners[ev]) {
       this.eventListeners[ev] = this.eventListeners[ev].filter(cb => cb !== callback);
     }
@@ -150,14 +158,14 @@ export class BoxSlider {
         this.effect.destroy(this.el);
       }
 
-      this.styleStore.revert();
+      this.stateStore.revert();
       responder.remove(this);
       this.emit('destroy');
       this.eventListeners = {};
 
       delete this.el;
       delete this.slides;
-      delete this.styleStore;
+      delete this.stateStore;
       delete this.effect;
     });
   }
@@ -177,6 +185,7 @@ export class BoxSlider {
 
     this.autoScrollTimer = window.setTimeout(() =>
       this.next().then(() => this.setAutoScroll()), this.options.timeout);
+    this.el.setAttribute('aria-live', "off");
   }
 
   private applyEventListeners(): void {

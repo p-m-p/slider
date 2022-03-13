@@ -36,6 +36,8 @@
 
   <main role="main" class="main">
     <section id="features">
+      <h2 class="sr-only">Features</h2>
+
       <div class="feature">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="feature-icon">
           <path d="M0 0h24v24H0z" fill="none"/>
@@ -92,8 +94,8 @@
     </section>
 
     <section id="getting-started">
-      <article class="getting-started">
-        <h1>Installation and usage</h1>
+      <div class="getting-started">
+        <h2>Installation and usage</h2>
 
         <p>Install the BoxSlider package via NPM</p>
         <pre><code>npm install @boxslider/slider</code></pre>
@@ -102,7 +104,7 @@
         <pre><code>yarn add @boxslider/slider</code></pre>
 
         <p>Import the BoxSlider library with the desired effect and instantiate the slider. See the <a href="#examples">examples</a> for more details.</p>
-                <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">CubeSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
+        <pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">import</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">CubeSlider</span> <span style="color: #f8f8f2">}</span> <span style="color: #a6e22e">from</span> <span style="color: #e6db74">&#39;@boxslider/slider&#39;</span><span style="color: #f8f8f2">;</span>
 
 <span style="color: #66d9ef">const</span> <span style="color: #a6e22e">slider</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">BoxSlider</span><span style="color: #f8f8f2">(document.</span><span style="color: #a6e22e">getElementById</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;cube-slider&#39;</span><span style="color: #f8f8f2">),</span> <span style="color: #f8f8f2">{</span>
   <span style="color: #a6e22e">effect</span>: <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">CubeSlider</span><span style="color: #f8f8f2">({</span>
@@ -112,26 +114,26 @@
   <span style="color: #a6e22e">timeout</span>: <span style="color: #66d9ef">5000</span>
 <span style="color: #f8f8f2">});</span>
 </pre>
-      </article>
+      </div>
     </section>
 
     <section id="examples">
       <div class="examples">
-        <nav class="examples-navigation">
-          <button type="button" class="active">Cube</button>
-          <button type="button">Tile</button>
-          <button type="button">Carousel</button>
-          <button type="button">Fade</button>
+        <nav class="examples-navigation" aria-controls="examples-carousel">
+          <button class="active">Cube</button>
+          <button>Tile</button>
+          <button>Carousel</button>
+          <button>Fade</button>
         </nav>
 
         <div class="examples-wrapper">
           <nav class="examples-view-selection">
-            <button type="button" id="view-code" class="examples-view-selection-item">
+            <button type="button" id="view-code" class="examples-view-selection-item" aria-label="View example code">
               <svg viewBox="0 0 24 24">
                 <use href="#code-icon"></use>
               </svg>
             </button>
-            <button type="button" id="view-slider" class="examples-view-selection-item active">
+            <button type="button" id="view-slider" class="examples-view-selection-item active" aria-label="View active slide">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/>
@@ -139,38 +141,38 @@
             </button>
 
             <div class="examples-view-selection-code disabled">
-              <button type="button" id="view-typescript" class="examples-view-selection-code-item active">
+              <button type="button" id="view-typescript" class="examples-view-selection-code-item active" aria-label="View Typescrpt code">
                 TypeScript
               </button>
-              <button type="button" id="view-html" class="examples-view-selection-code-item">
+              <button type="button" id="view-html" class="examples-view-selection-code-item" aria-label="View HTML code">
                 HTML
               </button>
-              <button type="button" id="view-css" class="examples-view-selection-code-item">
+              <button type="button" id="view-css" class="examples-view-selection-code-item" aria-label="View CSS code">
                 CSS
               </button>
             </div>
           </nav>
 
           <div class="examples-controls">
-            <button type="button" class="examples-controls-btn prev">
+            <button type="button" class="examples-controls-btn prev" aria-label="Previous">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
               </svg>
             </button>
-            <button type="button" class="examples-controls-btn play disabled">
+            <button type="button" class="examples-controls-btn play disabled" aria-label="Pause">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M8 5v14l11-7z"/>
               </svg>
             </button>
-            <button type="button" class="examples-controls-btn pause">
+            <button type="button" class="examples-controls-btn pause" aria-label="Pause">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
               </svg>
             </button>
-            <button type="button" class="examples-controls-btn next">
+            <button type="button" class="examples-controls-btn next" aria-label="Next">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
@@ -178,31 +180,31 @@
             </button>
           </div>
 
-          <div class="examples-carousel">
-            <article class="example active">
+          <div id="examples-carousel" aria-roledescription="carousel">
+            <article class="example active" aria-roledescription="slide">
               <div class="example-slider">
                 <div class="example-slider-wrapper">
                   <div id="cube-slider" class="slider">
                     <div class="slide">
-                      <img src="img/slide-1.jpg">
+                      <img src="img/slide-1.jpg" alt="Image of Arctic ice dunes">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-2.jpg">
+                      <img src="img/slide-2.jpg" alt="Image of valley with forest, a lake and mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-3.jpg">
+                      <img src="img/slide-3.jpg" alt="Image of lake at sunset with mountains in the background">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-4.jpg">
+                      <img src="img/slide-4.jpg" alt="Image of Alpine mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-5.jpg">
+                      <img src="img/slide-5.jpg" alt="Image of grass covered mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-6.jpg">
+                      <img src="img/slide-6.jpg" alt="Image of tall peaked mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-7.jpg">
+                      <img src="img/slide-7.jpg" alt="Image of rocky mountains in the distance">
                     </div>
                   </div>
                 </div>
@@ -259,30 +261,30 @@
               </div>
             </article>
 
-            <article class="example active">
+            <article class="example active" aria-roledescription="slide">
               <div class="example-slider">
                 <div class="example-slider-wrapper">
                   <div id="tile-slider" class="slider">
                     <div class="slide">
-                      <img src="img/slide-1.jpg">
+                      <img src="img/slide-1.jpg" alt="Image of Arctic ice dunes">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-2.jpg">
+                      <img src="img/slide-2.jpg" alt="Image of valley with forest, a lake and mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-3.jpg">
+                      <img src="img/slide-3.jpg" alt="Image of lake at sunset with mountains in the background">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-4.jpg">
+                      <img src="img/slide-4.jpg" alt="Image of Alpine mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-5.jpg">
+                      <img src="img/slide-5.jpg" alt="Image of grass covered mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-6.jpg">
+                      <img src="img/slide-6.jpg" alt="Image of tall peaked mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-7.jpg">
+                      <img src="img/slide-7.jpg" alt="Image of rocky mountains in the distance">
                     </div>
                   </div>
                 </div>
@@ -338,30 +340,30 @@
               </div>
             </article>
 
-            <article class="example active">
+            <article class="example active" aria-roledescription="slide">
               <div class="example-slider">
                 <div class="example-slider-wrapper">
                   <div id="carousel-slider" class="slider">
                     <div class="slide">
-                      <img src="img/slide-1.jpg">
+                      <img src="img/slide-1.jpg" alt="Image of Alpine mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-2.jpg">
+                      <img src="img/slide-2.jpg" alt="Image of valley with forest, a lake and mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-3.jpg">
+                      <img src="img/slide-3.jpg" alt="Image of lake at sunset with mountains in the background">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-4.jpg">
+                      <img src="img/slide-4.jpg" alt="Image of Alpine mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-5.jpg">
+                      <img src="img/slide-5.jpg" alt="Image of grass covered mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-6.jpg">
+                      <img src="img/slide-6.jpg" alt="Image of tall peaked mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-7.jpg">
+                      <img src="img/slide-7.jpg" alt="Image of rocky mountains in the distance">
                     </div>
                   </div>
                 </div>
@@ -415,30 +417,30 @@
               </div>
             </article>
 
-            <article class="example active">
+            <article class="example active" aria-roledescription="slide">
               <div class="example-slider">
                 <div class="example-slider-wrapper">
                   <div id="fade-slider" class="slider">
                     <div class="slide">
-                      <img src="img/slide-1.jpg">
+                      <img src="img/slide-1.jpg" alt="Image of Alpine mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-2.jpg">
+                      <img src="img/slide-2.jpg" alt="Image of valley with forest, a lake and mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-3.jpg">
+                      <img src="img/slide-3.jpg" alt="Image of lake at sunset with mountains in the background">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-4.jpg">
+                      <img src="img/slide-4.jpg" alt="Image of Alpine mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-5.jpg">
+                      <img src="img/slide-5.jpg" alt="Image of grass covered mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-6.jpg">
+                      <img src="img/slide-6.jpg" alt="Image of tall peaked mountains">
                     </div>
                     <div class="slide">
-                      <img src="img/slide-7.jpg">
+                      <img src="img/slide-7.jpg" alt="Image of rocky mountains in the distance">
                     </div>
                   </div>
                 </div>
