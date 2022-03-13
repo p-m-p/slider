@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/boxslider/slider/compare/v1.1.6...v1.2.0) (2022-03-13)
+
+**Note:** Version bump only for package boxslider-angular
+
+
+
+
+
 ## [1.1.5](https://github.com/boxslider/slider/compare/v1.1.4...v1.1.5) (2021-12-07)
 
 **Note:** Version bump only for package boxslider-angular
