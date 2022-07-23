@@ -5,7 +5,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { resolve } = require('path');
 
 module.exports = {
-  // mode: 'development',
   entry: [
     resolve(__dirname, 'index.ts'),
     resolve(__dirname, 'scss/main.scss')
@@ -60,7 +59,7 @@ module.exports = {
     new EslintPlugin()
   ],
   output: {
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js',
     path: resolve(__dirname, '../docs'),
   },
 };

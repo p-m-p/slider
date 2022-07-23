@@ -28,6 +28,15 @@
             "tsConfig": "projects/boxslider/angular/tsconfig.spec.json",
             "karmaConfig": "projects/boxslider/angular/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/boxslider/angular/**/*.ts",
+              "projects/boxslider/angular/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -143,9 +152,11 @@
           }
         }
       }
-    }},
+    }
+  },
   "cli": {
-    "analytics": "6f216ab8-9961-482d-8f1f-ce26115759a6"
+    "analytics": "6f216ab8-9961-482d-8f1f-ce26115759a6",
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "defaultProject": "@boxslider/angular"
 }
