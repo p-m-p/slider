@@ -1,10 +1,10 @@
-import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { TileSlider } from '../src/effects/tile/tile-slider';
+import { createPage, setUpNavigation } from './story-helpers'
+import { BoxSlider } from '../src/box-slider'
+import { TileSlider } from '../src/effects/tile/tile-slider'
 
 export const TileFlip = (): HTMLElement => {
-  const box = document.createElement('div');
-  box.classList.add('viewport');
+  const box = document.createElement('div')
+  box.classList.add('viewport')
 
   box.innerHTML = `
     <div class="slider">
@@ -24,27 +24,27 @@ export const TileFlip = (): HTMLElement => {
         <img src="four.jpg">
       </figure>
     </div>
-  `;
+  `
 
-  const page = createPage(box);
+  const page = createPage(box)
 
   setTimeout(() => {
     const slider = new BoxSlider(box.querySelector('.slider'), {
       effect: new TileSlider(),
       timeout: 5000,
       speed: 1000,
-      autoScroll: false
-    });
+      autoScroll: false,
+    })
 
-    setUpNavigation(page, slider);
-  }, 500);
+    setUpNavigation(page, slider)
+  }, 500)
 
-  return page;
-};
+  return page
+}
 
 export const TileFade = (): HTMLElement => {
-  const box = document.createElement('div');
-  box.classList.add('viewport');
+  const box = document.createElement('div')
+  box.classList.add('viewport')
 
   box.innerHTML = `
     <div class="slider">
@@ -64,19 +64,19 @@ export const TileFade = (): HTMLElement => {
         <img src="four.jpg">
       </figure>
     </div>
-  `;
+  `
 
-  const page = createPage(box);
+  const page = createPage(box)
 
   setTimeout(() => {
     const slider = new BoxSlider(box.querySelector('.slider'), {
       effect: new TileSlider({ tileEffect: 'fade' }),
       speed: 1000,
-      autoScroll: false
-    });
+      autoScroll: false,
+    })
 
-    setUpNavigation(page, slider);
-  }, 500);
+    setUpNavigation(page, slider)
+  }, 500)
 
-  return page;
-};
+  return page
+}

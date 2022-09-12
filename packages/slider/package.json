@@ -12,25 +12,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint . --ext .ts",
-    "clean": "rimraf dist",
-    "build": "npm run clean && webpack --mode=production",
-    "prepare": "npm run build",
-    "build-storybook": "build-storybook",
-    "storybook": "start-storybook -p 6006 -s stories/static"
+    "clean": "rm -rf dist",
+    "build": "npm run clean && NODE_ENV=production babel src --config-file ../../babel.config.js --out-dir dist --extensions \".ts,.tsx\" && npm run types",
+    "types": "tsc --project tsconfig.dist.json --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/boxslider/slider/packages/slider"
   },
   "author": "Phil Parsons",
-  "license": "MIT",
-  "devDependencies": {
-    "@storybook/builder-webpack5": "^6.5.9",
-    "@storybook/html": "^6.5.9",
-    "@storybook/manager-webpack5": "^6.5.9",
-    "eslint-plugin-storybook": "^0.6.1",
-    "eslint-webpack-plugin": "^3.2.0",
-    "webpack-cli": "^4.10.0"
-  }
+  "license": "MIT"
 }

@@ -1,3 +1,3 @@
-export { BoxSlider, EventData, EventType } from './box-slider';
-export { BoxSliderOptions } from './box-slider-options';
-export * from './effects';
+export { BoxSlider, type EventData, type EventType } from './box-slider'
+export { type BoxSliderOptions } from './box-slider-options'
+export * from './effects'

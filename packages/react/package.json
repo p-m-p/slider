@@ -16,12 +16,9 @@
     "url": "https://github.com/boxslider/slider/packages/react"
   },
   "scripts": {
-    "start": "start-storybook -p 6006",
-    "build": "npm run clean && cross-env NODE_ENV=production babel src/components --out-dir dist --extensions \".ts,.tsx\" --ignore src/stories && npm run types",
-    "build-storybook": "build-storybook",
-    "clean": "rimraf dist",
-    "types": "tsc --project tsconfig.dist.json --emitDeclarationOnly --outDir dist",
-    "prepare": "npm run build"
+    "build": "npm run clean && NODE_ENV=production babel src --config-file ../../babel.config.js --out-dir dist --extensions \".ts,.tsx\" && npm run types",
+    "clean": "rm -rf dist",
+    "types": "tsc --project tsconfig.dist.json --emitDeclarationOnly"
   },
   "eslintConfig": {
     "extends": [
@@ -51,30 +48,10 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@babel/cli": "^7.18.9",
-    "@babel/preset-env": "^7.18.9",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "@boxslider/slider": "^1.2.0",
-    "@storybook/addon-actions": "^6.5.9",
-    "@storybook/addon-essentials": "^6.5.9",
-    "@storybook/addon-links": "^6.5.9",
-    "@storybook/node-logger": "^6.5.9",
-    "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.5.9",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/react": "^17.0.47",
-    "@types/react-dom": "^17.0.1w",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3"
+  "dependencies": {
+    "@boxslider/slider": "*"
   },
   "peerDependencies": {
-    "@boxslider/slider": ">=1.1.2",
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0"
   }

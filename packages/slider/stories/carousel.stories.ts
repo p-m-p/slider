@@ -1,11 +1,11 @@
-import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { CarouselSlider } from '../src/effects/carousel-slider';
-import { FadeSlider } from '../src/effects/fade-slider';
+import { createPage, setUpNavigation } from './story-helpers'
+import { BoxSlider } from '../src/box-slider'
+import { CarouselSlider } from '../src/effects/carousel-slider'
+import { FadeSlider } from '../src/effects/fade-slider'
 
 export const Carousel = (): HTMLElement => {
-  const box = document.createElement('div');
-  box.classList.add('viewport');
+  const box = document.createElement('div')
+  box.classList.add('viewport')
 
   box.innerHTML = `
     <div class="carousel">
@@ -35,28 +35,28 @@ export const Carousel = (): HTMLElement => {
         <div class="text">This is slide five</div>
       </div>
     </div>
-  `;
+  `
 
-  const page = createPage(box);
+  const page = createPage(box)
 
   setTimeout(() => {
     const slider = new BoxSlider(box.querySelector('.slider'), {
       effect: new CarouselSlider(),
       timeout: 5000,
       speed: 1000,
-      autoScroll: false
-    });
+      autoScroll: false,
+    })
 
-    setUpNavigation(page, slider);
+    setUpNavigation(page, slider)
 
     const textCaptionsSlider = new BoxSlider(page.querySelector('.text-captions'), {
       effect: new FadeSlider(),
       speed: 1000,
-    });
+    })
 
-    slider.addEventListener('before', settings => textCaptionsSlider.skipTo(settings.nextIndex));
-    slider.addEventListener('destroy', () => textCaptionsSlider.destroy());
-  }, 500);
+    slider.addEventListener('before', (settings) => textCaptionsSlider.skipTo(settings.nextIndex))
+    slider.addEventListener('destroy', () => textCaptionsSlider.destroy())
+  }, 500)
 
-  return page;
-};
+  return page
+}

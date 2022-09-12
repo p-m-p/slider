@@ -4,11 +4,11 @@ React components for the [BoxSlider](https://github.com/boxslider/slider) librar
 
 ## Installation
 
-`npm i --save @boxslider/slider @boxslider/react`
+`npm i --save @boxslider/react`
 
 ## Available Components
 
-Each slide effect has a matching React component. The documentation for the `effectOptions` prop can be found on the 
+Each slide effect has a matching React component. The documentation for the `effectOptions` prop can be found on the
 main plugin site. The documentation is linked for each option below.
 
 - `<BxlCarouselSlider />` [documentation](https://github.com/boxslider/slider#carouselslider)
@@ -25,43 +25,43 @@ event is available as props with the naming convention `on<Event>`.
 
 ```jsx
 // Example using the core slider library
-slider.addEventListener('pause', () => console.log('Slider paused'));
+slider.addEventListener('pause', () => console.log('Slider paused'))
 
 // Equivalent component prop
-<BxlFadeSlider onPause={() => console.log('Slider paused')} />
+;<BxlFadeSlider onPause={() => console.log('Slider paused')} />
 ```
 
-See the [events](https://github.com/boxslider/slider#events) section of the main library page for all available events. 
+See the [events](https://github.com/boxslider/slider#events) section of the main library page for all available events.
 
 ## Example usage
 
 ```jsx
 const options = {
   autoScroll: false,
-  speed: 300
-};
+  speed: 300,
+}
 
 const effectOptions = {
-  timingFunction: 'ease-in'
-};
+  timingFunction: 'ease-in',
+}
 
 function doSomethingBefore(ev) {
-  console.log(`About to show slide ${ev.nextIndex}`);
+  console.log(`About to show slide ${ev.nextIndex}`)
 }
 
 ReactDOM.render(
-  <BxlFadeSlider 
-      sliderOptions={options}
-      effectOptions={effectOptions}
-      slideIndex={3}
-      viewportClassName={'viewport'}
-      onBefore={doSomethingBefore}>
+  <BxlFadeSlider
+    sliderOptions={options}
+    effectOptions={effectOptions}
+    slideIndex={3}
+    viewportClassName={'viewport'}
+    onBefore={doSomethingBefore}>
     <div>Slide one</div>
     <div>Slide two</div>
     <div>Slide three</div>
     <div>Slide four</div>
     <div>Slide five</div>
   </BxlFadeSlider>,
-  document.getElementById('root')
-);
+  document.getElementById('root'),
+)
 ```

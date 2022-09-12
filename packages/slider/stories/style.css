@@ -52,7 +52,8 @@
 }
 
 @media screen and (max-width: 800px) {
-  .viewport, .slider {
+  .viewport,
+  .slider {
     height: 200px;
     width: 300px;
   }

@@ -1,11 +1,11 @@
-import { createPage, setUpNavigation } from './story-helpers';
-import { BoxSlider } from '../src/box-slider';
-import { CubeSlider } from '../src/effects/cube-slider';
+import { createPage, setUpNavigation } from './story-helpers'
+import { BoxSlider } from '../src/box-slider'
+import { CubeSlider } from '../src/effects/cube-slider'
 
 function createCubeStory(direction: 'horizontal' | 'vertical'): () => HTMLElement {
   return (): HTMLElement => {
-    const box = document.createElement('div');
-    box.classList.add('viewport');
+    const box = document.createElement('div')
+    box.classList.add('viewport')
 
     box.innerHTML = `
     <div class="slider">
@@ -25,24 +25,24 @@ function createCubeStory(direction: 'horizontal' | 'vertical'): () => HTMLElemen
         <span>FIVE</span>
       </figure>
     </div>
-  `;
+  `
 
-    const page = createPage(box);
+    const page = createPage(box)
 
     setTimeout(() => {
       const slider = new BoxSlider(box.querySelector('.slider'), {
         effect: new CubeSlider({ direction }),
         timeout: 5000,
         speed: 1000,
-        autoScroll: false
-      });
+        autoScroll: false,
+      })
 
-      setUpNavigation(page, slider);
-    }, 500);
+      setUpNavigation(page, slider)
+    }, 500)
 
-    return page;
+    return page
   }
 }
 
-export const HorizontalCube = createCubeStory('horizontal');
-export const VerticalCube = createCubeStory('vertical');
+export const HorizontalCube = createCubeStory('horizontal')
+export const VerticalCube = createCubeStory('vertical')

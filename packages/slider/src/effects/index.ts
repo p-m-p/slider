@@ -1,5 +1,5 @@
-export { CarouselSlider, CarouselSliderOptions } from './carousel-slider';
-export { CubeSlider, CubeSliderOptions } from './cube-slider';
-export { Effect } from './effect';
-export { FadeSlider, FadeSliderOptions } from './fade-slider';
-export { TileSlider, TileSliderOptions } from './tile/tile-slider';
+export { CarouselSlider, type CarouselSliderOptions } from './carousel-slider'
+export { CubeSlider, type CubeSliderOptions } from './cube-slider'
+export { type Effect } from './effect'
+export { FadeSlider, type FadeSliderOptions } from './fade-slider'
+export { TileSlider, type TileSliderOptions } from './tile/tile-slider'
