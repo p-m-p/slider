@@ -23,11 +23,19 @@ const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'widt
 const BOX_STYLES = ['height', 'overflow', 'position']
 
 export class TileSlider implements Effect {
+  private _tileWrapper: HTMLElement | undefined
   private tileTransition: FadeTransition | FlipTransition
   private options: TileSliderOptions
   private grid!: TileGrid
-  private tileWrapper!: HTMLElement
   private activeFace: 'front' | 'back'
+
+  get tileWrapper() {
+    if (this._tileWrapper === undefined) {
+      throw new Error('TileWrapper is undefined')
+    }
+
+    return this._tileWrapper
+  }
 
   constructor(options?: Partial<TileSliderOptions>) {
     this.options = {
@@ -54,12 +62,13 @@ export class TileSlider implements Effect {
     this.grid = this.calculateGrid(el, slides)
 
     if (this.tileWrapper) {
-      el.removeChild(this.tileWrapper)
+      this.destroy(el)
     }
 
-    this.tileWrapper = document.createElement('div')
-    this.tileWrapper.setAttribute('aria-hidden', 'true')
-    el.appendChild(this.tileWrapper)
+    const tileWrapper = document.createElement('div')
+    tileWrapper.setAttribute('aria-hidden', 'true')
+    el.appendChild(tileWrapper)
+    this._tileWrapper = tileWrapper
 
     if ('fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1) {
       applyCss(el, { position: 'relative' })
@@ -159,8 +168,7 @@ export class TileSlider implements Effect {
 
   destroy(el: HTMLElement): void {
     el.removeChild(this.tileWrapper)
-    // @ts-ignore
-    delete this.tileWrapper
+    delete this._tileWrapper
   }
 
   private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {

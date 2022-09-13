@@ -10,18 +10,46 @@ export type EventListenerCallback = (payload: EventData) => void
 export class BoxSlider {
   private readonly options: BoxSliderOptions
 
+  private _stateStore: StateStore | undefined
+  private _el: HTMLElement | undefined
+  private _effect: Effect | undefined
+
   private activeIndex: number
   private autoScrollTimer?: number
-  private el: HTMLElement
-  private effect: Effect
   private eventListeners: { [ev: string]: EventListenerCallback[] }
   private isDestroyed: boolean
   private slides: HTMLElement[]
-  private stateStore: StateStore
   private transitionPromise?: Promise<BoxSlider>
 
+  get el() {
+    if (this._el === undefined) {
+      throw new Error('Slider element is null')
+    }
+
+    return this._el
+  }
+
+  get stateStore() {
+    if (this._stateStore === undefined) {
+      throw new Error('State store is null, are you trying ot interact with a destroyed slider?')
+    }
+
+    return this._stateStore
+  }
+
+  get effect() {
+    if (this._effect === undefined) {
+      throw new Error('Slide effect is null, are you trying ot interact with a destroyed slider?')
+    }
+
+    return this._effect
+  }
+
   constructor(el: HTMLElement, options: Partial<BoxSliderOptions>) {
-    this.effect = options.effect || new FadeSlider()
+    this._effect = options.effect || new FadeSlider()
+    this._el = el
+    this._stateStore = new StateStore()
+
     this.options = {
       speed: options.speed || 800,
       responsive: options.responsive !== false,
@@ -32,11 +60,9 @@ export class BoxSlider {
       swipe: options.swipe !== false,
       swipeTolerance: options.swipeTolerance || 30,
     }
-    this.el = el
     this.slides = Array.from(el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[]
     this.activeIndex = this.options.startIndex
     this.eventListeners = {}
-    this.stateStore = new StateStore()
     this.isDestroyed = false
 
     if (this.slides.length < this.activeIndex) {
@@ -156,6 +182,7 @@ export class BoxSlider {
   destroy(): void {
     this.isDestroyed = true
     this.stopAutoPlay()
+
     ;(this.transitionPromise || Promise.resolve(null)).then(() => {
       if (this.effect.destroy) {
         this.effect.destroy(this.el)
@@ -166,23 +193,19 @@ export class BoxSlider {
       this.emit('destroy')
       this.eventListeners = {}
 
-      // @ts-ignore
-      delete this.el
-      // @ts-ignore
-      delete this.slides
-      // @ts-ignore
-      delete this.stateStore
-      // @ts-ignore
-      delete this.effect
+      delete this._el
+      delete this._stateStore
+      delete this._effect
+      this.slides.length = 0
     })
   }
 
-  private stopAutoPlay(): void {
+  private stopAutoPlay() {
     window.clearTimeout(this.autoScrollTimer)
   }
 
-  private emit(ev: EventType, payload: EventData = null): void {
-    ;(this.eventListeners[ev] || []).forEach((cb) => cb(payload))
+  private emit(ev: EventType, payload: EventData = null) {
+    (this.eventListeners[ev] || []).forEach((cb) => cb(payload))
   }
 
   private setAutoScroll(): void {
