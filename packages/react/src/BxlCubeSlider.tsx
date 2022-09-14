@@ -1,23 +1,19 @@
-import { Component } from 'react'
 import { CubeSlider, CubeSliderOptions } from '@boxslider/slider'
-
-import { BxlComponentProps, BxlSlider } from './BxlSlider'
+import { type BxlComponentProps, BxlSlider } from './BxlSlider'
 
 export interface CubeSliderProps extends BxlComponentProps {
-  effectOptions: CubeSliderOptions | undefined
+  effectOptions?: CubeSliderOptions
 }
 
-export class BxlCubeSlider extends Component<CubeSliderProps, {}> {
-  render() {
+export function BxlCubeSlider(props: CubeSliderProps) {
     return (
       <BxlSlider
-        {...this.props}
+        {...props}
         sliderOptions={{
-          ...this.props.sliderOptions,
-          effect: new CubeSlider(this.props.effectOptions),
+          ...props.sliderOptions,
+          effect: new CubeSlider(props.effectOptions),
         }}>
-        {this.props.children}
+        {props.children}
       </BxlSlider>
     )
-  }
 }

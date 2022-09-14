@@ -1,0 +1,14 @@
+.App {
+  padding: 100px
+}
+
+.slider {
+  height: 400px;
+  margin: 0 auto;
+  width: 800px;
+}
+
+.slide {
+  height: 100%;
+  width: 100%;
+}

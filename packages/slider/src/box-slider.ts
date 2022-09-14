@@ -13,13 +13,12 @@ export class BoxSlider {
   private _stateStore: StateStore | undefined
   private _el: HTMLElement | undefined
   private _effect: Effect | undefined
-
+  private readonly slides: HTMLElement[]
   private activeIndex: number
   private autoScrollTimer?: number
   private eventListeners: { [ev: string]: EventListenerCallback[] }
   private isDestroyed: boolean
-  private slides: HTMLElement[]
-  private transitionPromise?: Promise<BoxSlider>
+  private transitionPromise?: Promise<void>
 
   get el() {
     if (this._el === undefined) {
@@ -92,25 +91,21 @@ export class BoxSlider {
     })
   }
 
-  next(): Promise<BoxSlider> {
+  next(): Promise<void> {
     return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1, false)
   }
 
-  prev(): Promise<BoxSlider> {
+  prev(): Promise<void> {
     return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1, true)
   }
 
-  skipTo(nextIndex: number, backwards?: boolean): Promise<BoxSlider> {
-    if (this.isDestroyed) {
-      throw new Error('Invalid attempt made to move destroyed slider instance')
+  skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
+    if (this.isDestroyed || nextIndex === this.activeIndex) {
+      return Promise.resolve()
     }
 
     if (nextIndex < 0 || nextIndex >= this.slides.length) {
       throw new Error(`${nextIndex} is not a valid slide index`)
-    }
-
-    if (nextIndex === this.activeIndex) {
-      return Promise.resolve(this)
     }
 
     const settings = {
@@ -123,7 +118,7 @@ export class BoxSlider {
     }
     this.activeIndex = nextIndex
 
-    this.transitionPromise = (this.transitionPromise || Promise.resolve(this)).then(() => {
+    const deferred = (this.transitionPromise || Promise.resolve()).then(() => {
       if (this.options.autoScroll) {
         this.pause()
       }
@@ -140,12 +135,11 @@ export class BoxSlider {
         }
 
         this.emit('after', { activeIndex: settings.nextIndex })
-
-        return this
       })
     })
+    this.transitionPromise = deferred
 
-    return this.transitionPromise
+    return deferred
   }
 
   pause(): BoxSlider {

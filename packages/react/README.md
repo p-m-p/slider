@@ -54,7 +54,7 @@ ReactDOM.render(
     sliderOptions={options}
     effectOptions={effectOptions}
     slideIndex={3}
-    viewportClassName={'viewport'}
+    className={'slider'}
     onBefore={doSomethingBefore}>
     <div>Slide one</div>
     <div>Slide two</div>
