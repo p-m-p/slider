@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets/logo.png" width="480px" alt="BxlSlider logo" alt="Box Slider">
+    <img src="assets/logo.png" width="480px" alt="BoxSlider logo" alt="Box Slider">
 </p>
 <p align="center">
     A modern, light weight content slider 

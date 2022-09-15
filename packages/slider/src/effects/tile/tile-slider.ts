@@ -2,8 +2,8 @@ import { type Effect, type TransitionSettings } from '../effect'
 import { StateStore } from '../../state-store'
 import { type BoxSliderOptions } from '../../box-slider-options'
 import { applyCss, locateSlideImageSrc } from '../../utils'
-import { FadeTransition } from './fade-transition'
-import { FlipTransition } from './flip-transition'
+import FadeTransition from './fade-transition'
+import FlipTransition from './flip-transition'
 
 export interface TileSliderOptions {
   tileEffect: 'flip' | 'fade'
@@ -22,7 +22,7 @@ const TILE_CLASS = 'bs-tile'
 const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border']
 const BOX_STYLES = ['height', 'overflow', 'position']
 
-export class TileSlider implements Effect {
+class TileSlider implements Effect {
   private _tileWrapper: HTMLElement | undefined
   private tileTransition: FadeTransition | FlipTransition
   private options: TileSliderOptions
@@ -180,3 +180,5 @@ export class TileSlider implements Effect {
     return { cols, rows, sideLength, height }
   }
 }
+
+export default TileSlider

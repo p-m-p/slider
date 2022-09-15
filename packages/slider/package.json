@@ -9,11 +9,12 @@
     "cube",
     "3D"
   ],
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && NODE_ENV=production babel src --config-file ../../babel.config.js --out-dir dist --extensions \".ts,.tsx\" && npm run types",
+    "build": "npm run clean && esbuild `find src \\( -name '*.ts' \\)` --platform=node --outdir=dist && npm run types",
     "types": "tsc --project tsconfig.dist.json --emitDeclarationOnly"
   },
   "repository": {

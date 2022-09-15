@@ -1,7 +1,7 @@
 import { type TileSettings, type TileTransition } from './tile-transition'
 import { applyCss } from '../../utils'
 
-export class FlipTransition implements TileTransition {
+class FlipTransition implements TileTransition {
   createTile(tileSettings: TileSettings): HTMLElement {
     const tileHolder = document.createElement('div')
     const tile = document.createElement('div')
@@ -55,3 +55,5 @@ export class FlipTransition implements TileTransition {
     applyCss(tile, { transform: `rotate3d(0, 1, 0, ${nextFace === 'back' ? 180 : 0}deg)` })
   }
 }
+
+export default FlipTransition

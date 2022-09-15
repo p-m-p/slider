@@ -10,7 +10,7 @@ export interface FadeSliderOptions {
 const SLIDE_STYLES = ['display', 'height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index']
 const BOX_STYLES = ['height', 'overflow', 'position']
 
-export class FadeSlider implements Effect {
+class FadeSlider implements Effect {
   private readonly options: FadeSliderOptions
 
   constructor(options?: FadeSliderOptions) {
@@ -64,3 +64,5 @@ export class FadeSlider implements Effect {
     })
   }
 }
+
+export default FadeSlider

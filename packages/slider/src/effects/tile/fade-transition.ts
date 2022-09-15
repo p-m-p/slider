@@ -1,7 +1,7 @@
 import { type TileSettings, type TileTransition } from './tile-transition'
 import { applyCss } from '../../utils'
 
-export class FadeTransition implements TileTransition {
+class FadeTransition implements TileTransition {
   createTile(tileSettings: TileSettings): HTMLElement {
     const tile = document.createElement('div')
     const front = document.createElement('div')
@@ -49,3 +49,5 @@ export class FadeTransition implements TileTransition {
     applyCss(back, { opacity: nextFace === 'front' ? '0' : '1' })
   }
 }
+
+export default FadeTransition

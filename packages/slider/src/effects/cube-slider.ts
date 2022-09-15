@@ -23,7 +23,7 @@ const BOX_STYLES = [
 ]
 const VIEWPORT_STYLES = ['overflow', 'perspective', 'position']
 
-export class CubeSlider implements Effect {
+class CubeSlider implements Effect {
   private readonly options: CubeSliderOptions
   private translateZ!: number
 
@@ -137,3 +137,5 @@ export class CubeSlider implements Effect {
     return `rotate3d(${this.options.direction === 'vertical' ? '1, 0, 0' : '0, 1, 0'}, ${angle}deg)`
   }
 }
+
+export default CubeSlider

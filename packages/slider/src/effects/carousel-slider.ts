@@ -10,7 +10,7 @@ export interface CarouselSliderOptions {
 const SLIDE_STYLES = ['height', 'left', 'position', 'top', 'transition', 'width']
 const BOX_STYLES = ['overflow', 'position']
 
-export class CarouselSlider implements Effect {
+class CarouselSlider implements Effect {
   private readonly options: CarouselSliderOptions
   private slideWidth!: string
   private slideHeight!: string
@@ -83,3 +83,5 @@ export class CarouselSlider implements Effect {
     })
   }
 }
+
+export default CarouselSlider

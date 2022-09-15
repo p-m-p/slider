@@ -1,5 +1,5 @@
 import { type BoxSliderOptions } from './box-slider-options'
-import { type Effect, FadeSlider } from './effects'
+import { type Effect } from './effects'
 import { StateStore } from './state-store'
 import { responder } from './responder'
 
@@ -46,7 +46,11 @@ export class BoxSlider {
   }
 
   constructor(el: HTMLElement, options: Partial<BoxSliderOptions>) {
-    this._effect = options.effect || new FadeSlider()
+    if (!options.effect) {
+      throw new Error('Effect must be specified in slider options')
+    }
+
+    this._effect = options.effect
     this._el = el
     this._stateStore = new StateStore()
 
@@ -256,3 +260,5 @@ export class BoxSlider {
     })
   }
 }
+
+export default BoxSlider
