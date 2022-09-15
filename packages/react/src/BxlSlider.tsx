@@ -19,15 +19,16 @@ export interface BxlSliderProps extends BxlComponentProps {
 
 export function BxlSlider(props: BxlSliderProps) {
   const el = useRef(null)
-  const [boxSlider, setBoxSlider] = useState(undefined)
 
   useEffect(() => {
-    console.log(el.current)
-    if (el.current) {
-      const boxSlider = new BoxSlider(el.current, props.sliderOptions)
-      return () => boxSlider.destroy()
+    if (el.current !== null) {
+      const slider = new BoxSlider(el.current, props.sliderOptions)
+
+      // Event listeners
+
+      return () => slider.destroy()
     }
-  }, [el.current, boxSlider])
+  }, [props.sliderOptions])
 
   // componentDidMount() {
   //   if (this.el) {
