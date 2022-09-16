@@ -1,12 +1,13 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react'
-import { BoxSlider as BxSlider, type BoxSliderOptions, type EventData } from '@boxslider/slider'
+import { Component, ReactNode } from 'react'
+import { BoxSlider as BxSlider, BoxSliderOptions, EventData } from '@boxslider/slider'
 
 export interface BxlComponentProps {
   children: ReactNode
   sliderOptions?: Partial<BoxSliderOptions>
   className?: string
-  onBefore?: (ev: EventData) => void
-  onAfter?: (ev: EventData) => void
+  slideIndex?: number
+  onBefore?: (ev?: EventData) => void
+  onAfter?: (ev?: EventData) => void
   onDestroy?: () => void
   onPlay?: () => void
   onPause?: () => void
@@ -16,55 +17,48 @@ export interface BxlSliderProps extends BxlComponentProps {
   sliderOptions: Partial<BoxSliderOptions>
 }
 
-export function BoxSlider({
-  children,
-  className,
-  onAfter,
-  onBefore,
-  onDestroy,
-  onPause,
-  onPlay,
-  sliderOptions,
-}: BxlSliderProps) {
-  const [index, setIndex] = useState(sliderOptions.startIndex || 0)
-  const el = useRef(null)
+export class BoxSlider extends Component<BxlSliderProps> {
+  private el!: HTMLDivElement | null;
+  private boxSlider!: BxSlider;
 
-  useEffect(() => {
-    if (el.current !== null) {
-      const slider = new BxSlider(el.current, { ...sliderOptions, startIndex: index })
-
-      slider.addEventListener('after', (ev: EventData) => {
-        setIndex(ev!.activeIndex as number)
-
-        if (onAfter) {
-          onAfter(ev)
-        }
-      })
-
-      if (onBefore) {
-        slider.addEventListener('before', onBefore)
-      }
-      if (onDestroy) {
-        slider.addEventListener('destroy', onDestroy)
-      }
-      if (onPause) {
-        slider.addEventListener('pause', onPause)
-      }
-      if (onPlay) {
-        slider.addEventListener('play', onPlay)
-      }
-
-      return () => slider.destroy()
+  componentDidMount() {
+    if (this.el) {
+      this.boxSlider = new BxSlider(this.el, this.props.sliderOptions);
+      this.boxSlider.addEventListener('before', (ev: EventData) => {
+        if (this.props.onBefore) this.props.onBefore.call(undefined, ev);
+      });
+      this.boxSlider.addEventListener('after', (ev: EventData) => {
+        if (this.props.onAfter) this.props.onAfter.call(undefined, ev);
+      });
+      this.boxSlider.addEventListener('play', () => {
+        if (this.props.onPlay) this.props.onPlay.call(undefined);
+      });
+      this.boxSlider.addEventListener('pause', () => {
+        if (this.props.onPause) this.props.onPause.call(undefined);
+      });
+      this.boxSlider.addEventListener('destroy', () => {
+        if (this.props.onDestroy) this.props.onDestroy.call(undefined);
+      });
     }
-  }, [index, onAfter, onBefore, onDestroy, onPause, onPlay, sliderOptions])
+  }
 
-  return (
-    <div className={className}>
-      <div style={{ width: '100%', height: '100%' }} ref={el}>
-        {children}
-      </div>
-    </div>
-  )
+  componentWillUnmount() {
+    if (this.boxSlider) {
+      this.boxSlider.destroy();
+    }
+  }
+
+  componentDidUpdate(prevProps: Readonly<BxlSliderProps>) {
+    if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
+      this.boxSlider?.skipTo(this.props.slideIndex);
+    }
+  }
+
+  render() {
+    return <div className={this.props.className}>
+      <div style={{ width: '100%', height: '100%'}} ref={el => this.el = el}>{ this.props.children }</div>
+    </div>;
+  }
 }
 
 export default BoxSlider

@@ -114,6 +114,10 @@ export class BoxSlider {
       throw new Error(`${nextIndex} is not a valid slide index`)
     }
 
+    if (this.options.autoScroll) {
+      this.stopAutoScroll()
+    }
+
     const settings = {
       el: this.el,
       slides: this.slides,
@@ -125,10 +129,6 @@ export class BoxSlider {
     this.activeIndex = nextIndex
 
     this.transitionPromise = (this.transitionPromise || Promise.resolve()).then(() => {
-      if (this.options.autoScroll) {
-        this.stopAutoPlay()
-      }
-
       this.emit('before', {
         currentIndex: settings.currentIndex,
         nextIndex: settings.nextIndex,
@@ -149,7 +149,7 @@ export class BoxSlider {
 
   pause(): BoxSlider {
     if (this.autoScrollTimer) {
-      this.stopAutoPlay()
+      this.stopAutoScroll()
       this.emit('pause')
     }
 
@@ -180,7 +180,7 @@ export class BoxSlider {
 
   destroy(): void {
     this.isDestroyed = true
-    this.stopAutoPlay()
+    this.stopAutoScroll()
 
     if (this.effect.destroy) {
       this.effect.destroy(this.el)
@@ -201,7 +201,7 @@ export class BoxSlider {
     this.slides.length = 0
   }
 
-  private stopAutoPlay() {
+  private stopAutoScroll() {
     window.clearTimeout(this.autoScrollTimer)
   }
 
@@ -210,7 +210,7 @@ export class BoxSlider {
   }
 
   private setAutoScroll(): void {
-    this.stopAutoPlay()
+    this.stopAutoScroll()
     this.el.setAttribute('aria-live', 'off')
 
     this.autoScrollTimer = window.setTimeout(() => this.next().then(() => {
