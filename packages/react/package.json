@@ -2,8 +2,20 @@
   "name": "@boxslider/react",
   "version": "1.2.0",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/types/index.d.ts",
   "keywords": [
     "boxslider",
     "react",
@@ -17,9 +29,11 @@
     "url": "https://github.com/boxslider/slider/packages/react"
   },
   "scripts": {
-    "build": "npm run clean &&  esbuild `find src \\( -name '*.ts' -o -name '*.tsx' \\)` --platform=node --outdir=dist && npm run types",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run types",
+    "build:cjs": "esbuild `find src \\( -name '*.ts' -o -name '*.tsx' \\)` --platform=node --format=cjs --tsconfig=../../tsconfig.json --outdir=dist/cjs",
+    "build:esm": "esbuild `find src \\( -name '*.ts' -o -name '*.tsx' \\)` --platform=node --format=esm --tsconfig=../../tsconfig.json --outdir=dist/esm",
     "clean": "rm -rf dist",
-    "types": "tsc --project tsconfig.dist.json --emitDeclarationOnly"
+    "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   },
   "eslintConfig": {
     "extends": [

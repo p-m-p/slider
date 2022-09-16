@@ -1,4 +1,4 @@
-import BxFadeSlider, { type FadeSliderOptions } from '@boxslider/slider/dist/effects/fade-slider'
+import { FadeSlider as BxFadeSlider, type FadeSliderOptions } from '@boxslider/slider'
 import BoxSlider, { type BxlComponentProps } from './BoxSlider'
 
 export interface FadeSliderProps extends BxlComponentProps {

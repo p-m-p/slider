@@ -22,7 +22,7 @@ const TILE_CLASS = 'bs-tile'
 const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border']
 const BOX_STYLES = ['height', 'overflow', 'position']
 
-class TileSlider implements Effect {
+export class TileSlider implements Effect {
   private _tileWrapper: HTMLElement | undefined
   private tileTransition: FadeTransition | FlipTransition
   private options: TileSliderOptions

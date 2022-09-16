@@ -1,6 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react'
-import { type BoxSliderOptions } from '@boxslider/slider/dist/box-slider-options'
-import BxSlider, { type EventData } from '@boxslider/slider/dist/box-slider'
+import { BoxSlider as BxSlider, type BoxSliderOptions, type EventData } from '@boxslider/slider'
 
 export interface BxlComponentProps {
   children: ReactNode

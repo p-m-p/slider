@@ -1,4 +1,4 @@
-import BxTileSlider, { type TileSliderOptions } from '@boxslider/slider/dist/effects/tile/tile-slider'
+import { TileSlider as BxTileSlider, type TileSliderOptions } from '@boxslider/slider'
 import BoxSlider, { type BxlComponentProps } from './BoxSlider'
 
 export interface TileSliderProps extends BxlComponentProps {

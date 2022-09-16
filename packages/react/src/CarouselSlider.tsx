@@ -1,5 +1,5 @@
-import BxCarouselSlider, { type CarouselSliderOptions } from '@boxslider/slider/dist/effects/carousel-slider'
 import BoxSlider, { type BxlComponentProps } from './BoxSlider'
+import { CarouselSlider as BxCarouselSlider, type CarouselSliderOptions } from '@boxslider/slider'
 
 export interface CarouselSliderProps extends BxlComponentProps {
   effectOptions: CarouselSliderOptions

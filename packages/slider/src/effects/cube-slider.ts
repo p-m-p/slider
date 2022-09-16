@@ -23,7 +23,7 @@ const BOX_STYLES = [
 ]
 const VIEWPORT_STYLES = ['overflow', 'perspective', 'position']
 
-class CubeSlider implements Effect {
+export class CubeSlider implements Effect {
   private readonly options: CubeSliderOptions
   private translateZ!: number
 
