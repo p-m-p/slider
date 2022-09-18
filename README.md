@@ -11,15 +11,19 @@
 
 ### About
 
-BoxSlider is a light-weight, responsive content slider that provides a
-simple interface for developers to easily integrate a range of cool content
-transitions like 3D cubes and tiles or more traditional scrolling carousels.
+BoxSlider is a micro-library with zero dependencies providing light-weight, responsive content slider effects for 
+modern browsers. 
 
 ### Installation
 
 ```javascript
 npm install @boxslider/slider
 ```
+
+### React
+
+For React component implementations of each effect view the 
+[@boxslider/react](https://github.com/boxslider/slider/tree/master/packages/react) package.
 
 ### Usage
 

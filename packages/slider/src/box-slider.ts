@@ -3,9 +3,13 @@ import { type Effect } from './effects'
 import { StateStore } from './state-store'
 import { responder } from './responder'
 
-export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play'
-export type EventData = { [key: string]: 'string' | number } | null
-export type EventListenerCallback = (payload: EventData) => void
+export type SliderEventType = 'after' | 'before' | 'destroy' | 'pause' | 'play'
+export type SliderEventData = {
+  currentIndex: number
+  nextIndex?: number
+  speed: number
+}
+export type SliderEventHandler = (ev: SliderEventData) => void
 
 export class BoxSlider {
   private readonly options: BoxSliderOptions
@@ -16,7 +20,7 @@ export class BoxSlider {
   private readonly slides: HTMLElement[]
   private activeIndex: number
   private autoScrollTimer?: number
-  private eventListeners: { [ev: string]: EventListenerCallback[] }
+  private eventListeners: { [ev: string]: SliderEventHandler[] }
   private elListeners: { [ev: string]: EventListener[] }
   private isDestroyed: boolean
   private transitionPromise?: Promise<void>
@@ -126,9 +130,10 @@ export class BoxSlider {
       isPrevious: backwards === undefined ? nextIndex < this.activeIndex : backwards,
       nextIndex,
     }
-    this.activeIndex = nextIndex
 
     this.transitionPromise = (this.transitionPromise || Promise.resolve()).then(() => {
+      this.activeIndex = nextIndex
+
       this.emit('before', {
         currentIndex: settings.currentIndex,
         nextIndex: settings.nextIndex,
@@ -140,7 +145,7 @@ export class BoxSlider {
           this.setAutoScroll()
         }
 
-        this.emit('after', { activeIndex: settings.nextIndex })
+        this.emit('after')
       })
     })
 
@@ -163,17 +168,18 @@ export class BoxSlider {
     return this
   }
 
-  addEventListener(ev: EventType, callback: EventListenerCallback): BoxSlider {
-    this.eventListeners[ev] = this.eventListeners[ev] || []
-    this.eventListeners[ev].push(callback)
+  addEventListener(ev: SliderEventType, callback: (ev: SliderEventData) => void): BoxSlider {
+    if (!Array.isArray(this.eventListeners[ev])) {
+      this.eventListeners[ev] = []
+    }
+
+    this.eventListeners[ev]!.push(callback)
 
     return this
   }
 
-  removeEventListener(ev: EventType, callback: EventListenerCallback): BoxSlider {
-    if (this.eventListeners[ev]) {
-      this.eventListeners[ev] = this.eventListeners[ev].filter((cb) => cb !== callback)
-    }
+  removeEventListener(ev: SliderEventType, callback: (ev: SliderEventData) => void): BoxSlider {
+    this.eventListeners[ev] = this.eventListeners[ev]?.filter((cb) => cb !== callback)
 
     return this
   }
@@ -205,8 +211,12 @@ export class BoxSlider {
     window.clearTimeout(this.autoScrollTimer)
   }
 
-  private emit(ev: EventType, payload: EventData = null) {
-    (this.eventListeners[ev] || []).forEach((cb) => cb(payload))
+  private emit(ev: SliderEventType, payload?: Partial<SliderEventData>) {
+    this.eventListeners[ev]?.forEach((cb) => cb({
+      currentIndex: this.activeIndex,
+      speed: this.options.speed,
+      ...payload,
+    }))
   }
 
   private setAutoScroll(): void {

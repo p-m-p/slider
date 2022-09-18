@@ -1,10 +1,13 @@
 {
   "command": {
-    "bootstrap": {},
+    "bootstrap": {
+      "useWorkspaces": true
+    },
     "version": {
       "allowBranch": "main",
       "conventionalCommits": true,
-      "message": "chore(release): publish %s"
+      "message": "chore(release): publish %s",
+      "noPrivate": true
     }
   },
   "version": "1.2.0",

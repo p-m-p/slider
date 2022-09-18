@@ -1,7 +1,7 @@
 import { TileSlider as BxTileSlider, type TileSliderOptions } from '@boxslider/slider'
-import BoxSlider, { type BxlComponentProps } from './BoxSlider'
+import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 
-export interface TileSliderProps extends BxlComponentProps {
+export interface TileSliderProps extends BoxSliderComponentProps {
   effectOptions: TileSliderOptions | undefined
 }
 

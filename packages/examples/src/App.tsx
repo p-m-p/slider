@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import { CubeSlider } from '@boxslider/react'
-import { type EventData } from '@boxslider/slider'
+import { SliderEventData } from '@boxslider/slider'
 import './App.css'
 
 function App() {
   const [slideIndex, setSlideIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
   const colours = ['blue', 'red', 'green']
 
   return (
     <div className="App">
       <section className="slider-viewport" aria-roledescription="carousel">
-        <CubeSlider className="slider"
+        <CubeSlider id="cube-slider"
+                    className="slider"
+                    aria-label="Colour carousel"
+                    onAfter={(ev: SliderEventData) => setActiveIndex(ev.currentIndex)}
                     slideIndex={slideIndex}>
           {colours.map(colour => (
             <div key={colour} className="slide" style={{ background: colour }}>{colour}</div>
@@ -19,12 +23,16 @@ function App() {
       </section>
       <section className="slider-controls">
         {colours.map((colour, i) => (
-          <button key={colour} className="goto-btn" onClick={() => setSlideIndex(i)}>Show slide {i}</button>
+          <button key={colour}
+                  aria-controls="cube-slider"
+                  className="show-slide-btn"
+                  aria-label={`Show slide ${i}`}
+                  onClick={() => setSlideIndex(i)} />
         ))}
       </section>
 
       <div className="slider-status">
-        Slide index: {slideIndex}
+        Slide index: {activeIndex}
       </div>
     </div>
   )

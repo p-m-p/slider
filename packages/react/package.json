@@ -1,6 +1,20 @@
 {
   "name": "@boxslider/react",
   "version": "1.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxslider/slider/packages/react"
+  },
+  "author": "Phil Parsons",
+  "license": "MIT",
+  "keywords": [
+    "boxslider",
+    "react",
+    "slider",
+    "carousel",
+    "cube",
+    "3D"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -16,52 +30,13 @@
   },
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
-  "keywords": [
-    "boxslider",
-    "react",
-    "slider",
-    "carousel",
-    "cube",
-    "3D"
-  ],
-  "repository": {
-    "type": "Git",
-    "url": "https://github.com/boxslider/slider/packages/react"
-  },
   "scripts": {
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run types",
     "build:cjs": "esbuild `find src \\( -name '*.ts' -o -name '*.tsx' \\)` --platform=node --format=cjs --tsconfig=../../tsconfig.json --outdir=dist/cjs",
     "build:esm": "esbuild `find src \\( -name '*.ts' -o -name '*.tsx' \\)` --platform=node --format=esm --tsconfig=../../tsconfig.json --outdir=dist/esm",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -f LICENSE",
+    "prepack": "npm run build && cp ../../LICENSE ./",
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "dependencies": {
     "@boxslider/slider": "*"

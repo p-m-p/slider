@@ -1,7 +1,7 @@
 import { CubeSlider as BxCubeSlider, type CubeSliderOptions } from '@boxslider/slider'
-import BoxSlider, { type BxlComponentProps } from './BoxSlider'
+import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 
-export interface CubeSliderProps extends BxlComponentProps {
+export interface CubeSliderProps extends BoxSliderComponentProps {
   effectOptions?: CubeSliderOptions
 }
 

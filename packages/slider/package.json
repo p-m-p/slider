@@ -2,6 +2,12 @@
   "name": "@boxslider/slider",
   "version": "1.2.0",
   "description": "Flexible and light weight content slider",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxslider/slider/packages/slider"
+  },
+  "author": "Phil Parsons",
+  "license": "MIT",
   "keywords": [
     "boxslider",
     "slider",
@@ -25,16 +31,11 @@
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist",
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run types",
     "build:cjs": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --format=cjs --tsconfig=../../tsconfig.json --outdir=dist/cjs",
     "build:esm": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --format=esm --tsconfig=../../tsconfig.json --outdir=dist/esm",
+    "clean": "rm -rf dist && rm -f LICENSE",
+    "prepack": "npm run build && cp ../../LICENSE ./",
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/boxslider/slider/packages/slider"
-  },
-  "author": "Phil Parsons",
-  "license": "MIT"
+  }
 }

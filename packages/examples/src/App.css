@@ -12,3 +12,26 @@
   height: 100%;
   width: 100%;
 }
+
+.slider-controls {
+  display: flex;
+  margin: 24px 0 0;
+  align-content: center;
+}
+
+.show-slide-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: block;
+  padding: 4px;
+}
+
+.show-slide-btn:before {
+  border-radius: 6px;
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: red;
+}

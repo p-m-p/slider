@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces",
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna run clean",
     "dev": "npm run dev -w packages/examples",
