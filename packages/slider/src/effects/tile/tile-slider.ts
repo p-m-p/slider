@@ -5,10 +5,11 @@ import { applyCss, locateSlideImageSrc } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
 
+export type TileEffect = 'flip' | 'fade'
 export interface TileSliderOptions {
-  tileEffect: 'flip' | 'fade'
-  rows: number
-  rowOffset: number
+  tileEffect?: TileEffect
+  rows?: number
+  rowOffset?: number
 }
 
 interface TileGrid {
@@ -23,9 +24,11 @@ const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'widt
 const BOX_STYLES = ['height', 'overflow', 'position']
 
 export class TileSlider implements Effect {
+  private readonly rowCount: number
+  private readonly rowOffset: number
+  private readonly tileEffect: TileEffect
   private _tileWrapper: HTMLElement | undefined
   private tileTransition: FadeTransition | FlipTransition
-  private options: TileSliderOptions
   private grid!: TileGrid
   private activeFace: 'front' | 'back'
 
@@ -38,13 +41,11 @@ export class TileSlider implements Effect {
   }
 
   constructor(options?: Partial<TileSliderOptions>) {
-    this.options = {
-      tileEffect: options?.tileEffect || 'flip',
-      rows: options?.rows || 8,
-      rowOffset: options?.rowOffset || 100,
-    }
+    this.tileEffect = options?.tileEffect || 'flip'
+    this.rowCount = options?.rows || 8
+    this.rowOffset = options?.rowOffset || 50
     this.activeFace = 'front'
-    this.tileTransition = this.options.tileEffect === 'fade' ? new FadeTransition() : new FlipTransition()
+    this.tileTransition = this.tileEffect === 'fade' ? new FadeTransition() : new FlipTransition()
   }
 
   initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options: BoxSliderOptions): void {
@@ -61,7 +62,7 @@ export class TileSlider implements Effect {
 
     this.grid = this.calculateGrid(el, slides)
 
-    if (this.tileWrapper) {
+    if (this._tileWrapper) {
       this.destroy(el)
     }
 
@@ -125,7 +126,7 @@ export class TileSlider implements Effect {
   transition(settings: TransitionSettings): Promise<void> {
     return new Promise((resolve) => {
       const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`)
-      const rowInterval = this.options.rowOffset
+      const rowInterval = this.rowOffset
       const tileInterval = (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
       const imgSrc = locateSlideImageSrc(settings.slides[settings.nextIndex])
       const nextFace = this.activeFace === 'front' ? 'back' : 'front'
@@ -173,7 +174,7 @@ export class TileSlider implements Effect {
 
   private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {
     const height = slides[0].offsetHeight
-    const rows = this.options.rows
+    const rows = this.rowCount
     const sideLength = Math.ceil(height / rows)
     const cols = Math.ceil(el.offsetWidth / sideLength)
 

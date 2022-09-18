@@ -2,7 +2,7 @@ import { TileSlider as BxTileSlider, type TileSliderOptions } from '@boxslider/s
 import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 
 export interface TileSliderProps extends BoxSliderComponentProps {
-  effectOptions: TileSliderOptions | undefined
+  effectOptions?: TileSliderOptions
 }
 
 export function TileSlider(props: TileSliderProps) {

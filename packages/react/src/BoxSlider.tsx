@@ -16,6 +16,7 @@ export interface BoxSliderProps extends BoxSliderComponentProps {
 }
 
 const sliderPropNames = [
+  'effectOptions',
   'onAfter',
   'onBefore',
   'onDestroy',

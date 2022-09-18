@@ -4,8 +4,8 @@ import { StateStore } from '../state-store'
 import { applyCss } from '../utils'
 
 export interface CubeSliderOptions {
-  direction: 'horizontal' | 'vertical'
-  perspective: number
+  direction?: 'horizontal' | 'vertical'
+  perspective?: number
 }
 
 const SLIDE_STYLES = ['left', 'position', 'top', 'transform', 'z-index']

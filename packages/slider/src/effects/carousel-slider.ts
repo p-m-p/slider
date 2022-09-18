@@ -4,7 +4,7 @@ import { applyCss } from '../utils'
 import { StateStore } from '../state-store'
 
 export interface CarouselSliderOptions {
-  timingFunction: string
+  timingFunction?: string
 }
 
 const SLIDE_STYLES = ['height', 'left', 'position', 'top', 'transition', 'width']

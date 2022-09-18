@@ -1,11 +1,49 @@
 .App {
-  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  padding: 16px;
+}
+
+header h1 {
+  color: darkgrey;
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+footer {
+  padding: 16px;
+}
+
+footer p {
+  color: darkgrey;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.slider-viewport {
 }
 
 .slider {
-  height: 400px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+  height: 512px;
   margin: 0 auto;
-  width: 800px;
+  width: 896px;
 }
 
 .slide {
@@ -14,9 +52,9 @@
 }
 
 .slider-controls {
+  justify-content: center;
   display: flex;
   margin: 24px 0 0;
-  align-content: center;
 }
 
 .show-slide-btn {
@@ -28,10 +66,18 @@
 }
 
 .show-slide-btn:before {
+  background: slategray;
+  border: solid 1px #222;
   border-radius: 6px;
+  box-shadow: 0 0 5px #222;
   content: '';
   display: block;
-  width: 12px;
   height: 12px;
-  background: red;
+  transition: background-color 400ms;
+  width: 12px;
+}
+
+.show-slide-btn.active:before,
+.show-slide-btn:hover:before {
+  background: ghostwhite;
 }

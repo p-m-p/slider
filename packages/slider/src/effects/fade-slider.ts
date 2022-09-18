@@ -4,7 +4,7 @@ import { applyCss } from '../utils'
 import { StateStore } from '../state-store'
 
 export interface FadeSliderOptions {
-  timingFunction: string
+  timingFunction?: string
 }
 
 const SLIDE_STYLES = ['display', 'height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index']
