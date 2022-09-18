@@ -6,16 +6,16 @@ export interface CarouselSliderProps extends BoxSliderComponentProps {
 }
 
 export function CarouselSlider(props: CarouselSliderProps) {
-    return (
-      <BoxSlider
-        {...props}
-        sliderOptions={{
-          ...props.sliderOptions,
-          effect: new BxCarouselSlider(props.effectOptions),
-        }}>
-        {props.children}
-      </BoxSlider>
-    )
+  return (
+    <BoxSlider
+      {...props}
+      sliderOptions={{
+        ...props.sliderOptions,
+        effect: new BxCarouselSlider(props.effectOptions),
+      }}>
+      {props.children}
+    </BoxSlider>
+  )
 }
 
 export default CarouselSlider

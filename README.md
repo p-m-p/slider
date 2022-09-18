@@ -11,8 +11,8 @@
 
 ### About
 
-BoxSlider is a micro-library with zero dependencies providing light-weight, responsive content slider effects for 
-modern browsers. 
+BoxSlider is a micro-library with zero dependencies providing light-weight, responsive content slider effects for
+modern browsers.
 
 ### Installation
 
@@ -22,7 +22,7 @@ npm install @boxslider/slider
 
 ### React
 
-For React component implementations of each effect view the 
+For React component implementations of each effect view the
 [@boxslider/react](https://github.com/boxslider/slider/tree/master/packages/react) package.
 
 ### Usage

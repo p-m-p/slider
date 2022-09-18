@@ -173,7 +173,7 @@ export class BoxSlider {
       this.eventListeners[ev] = []
     }
 
-    this.eventListeners[ev]!.push(callback)
+    this.eventListeners[ev].push(callback)
 
     return this
   }
@@ -196,9 +196,9 @@ export class BoxSlider {
     responder.remove(this)
     this.emit('destroy')
     this.eventListeners = {}
-    Object.keys(this.elListeners)
-      .forEach(ev => this.elListeners[ev]
-        .forEach(listener => this.el.removeEventListener(ev, listener)))
+    Object.keys(this.elListeners).forEach((ev) =>
+      this.elListeners[ev].forEach((listener) => this.el.removeEventListener(ev, listener)),
+    )
     this.elListeners = {}
 
     delete this._el
@@ -212,22 +212,28 @@ export class BoxSlider {
   }
 
   private emit(ev: SliderEventType, payload?: Partial<SliderEventData>) {
-    this.eventListeners[ev]?.forEach((cb) => cb({
-      currentIndex: this.activeIndex,
-      speed: this.options.speed,
-      ...payload,
-    }))
+    this.eventListeners[ev]?.forEach((cb) =>
+      cb({
+        currentIndex: this.activeIndex,
+        speed: this.options.speed,
+        ...payload,
+      }),
+    )
   }
 
   private setAutoScroll(): void {
     this.stopAutoScroll()
     this.el.setAttribute('aria-live', 'off')
 
-    this.autoScrollTimer = window.setTimeout(() => this.next().then(() => {
-      if (!this.isDestroyed) {
-        this.setAutoScroll()
-      }
-    }), this.options.timeout)
+    this.autoScrollTimer = window.setTimeout(
+      () =>
+        this.next().then(() => {
+          if (!this.isDestroyed) {
+            this.setAutoScroll()
+          }
+        }),
+      this.options.timeout,
+    )
   }
 
   private addElListener(ev: keyof HTMLElementEventMap, handler: EventListener) {

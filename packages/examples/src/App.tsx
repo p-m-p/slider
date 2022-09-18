@@ -11,29 +11,32 @@ function App() {
   return (
     <div className="App">
       <section className="slider-viewport" aria-roledescription="carousel">
-        <CubeSlider id="cube-slider"
-                    className="slider"
-                    aria-label="Colour carousel"
-                    onAfter={(ev: SliderEventData) => setActiveIndex(ev.currentIndex)}
-                    slideIndex={slideIndex}>
-          {colours.map(colour => (
-            <div key={colour} className="slide" style={{ background: colour }}>{colour}</div>
+        <CubeSlider
+          id="cube-slider"
+          className="slider"
+          aria-label="Colour carousel"
+          onAfter={(ev: SliderEventData) => setActiveIndex(ev.currentIndex)}
+          slideIndex={slideIndex}>
+          {colours.map((colour) => (
+            <div key={colour} className="slide" style={{ background: colour }}>
+              {colour}
+            </div>
           ))}
         </CubeSlider>
       </section>
       <section className="slider-controls">
         {colours.map((colour, i) => (
-          <button key={colour}
-                  aria-controls="cube-slider"
-                  className="show-slide-btn"
-                  aria-label={`Show slide ${i}`}
-                  onClick={() => setSlideIndex(i)} />
+          <button
+            key={colour}
+            aria-controls="cube-slider"
+            className="show-slide-btn"
+            aria-label={`Show slide ${i}`}
+            onClick={() => setSlideIndex(i)}
+          />
         ))}
       </section>
 
-      <div className="slider-status">
-        Slide index: {activeIndex}
-      </div>
+      <div className="slider-status">Slide index: {activeIndex}</div>
     </div>
   )
 }

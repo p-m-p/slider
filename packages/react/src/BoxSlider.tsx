@@ -1,7 +1,7 @@
 import { Component, ComponentPropsWithoutRef } from 'react'
 import { BoxSlider as BxSlider, BoxSliderOptions, SliderEventData, SliderEventHandler } from '@boxslider/slider'
 
-export interface BoxSliderComponentProps extends ComponentPropsWithoutRef<'div'>{
+export interface BoxSliderComponentProps extends ComponentPropsWithoutRef<'div'> {
   onAfter?: SliderEventHandler
   onBefore?: SliderEventHandler
   onDestroy?: SliderEventHandler
@@ -26,57 +26,64 @@ const sliderPropNames = [
 ]
 
 function filterProps(props: BoxSliderProps): ComponentPropsWithoutRef<'div'> {
-  const includeKeys = Object.keys(props).filter(key => !sliderPropNames.includes(key))
+  const includeKeys = Object.keys(props).filter((key) => !sliderPropNames.includes(key))
 
-  return  includeKeys.reduce((includedProps, key) => ({
-    ...includedProps,
-    [key]: props[key as keyof BoxSliderProps]
-  }), {})
+  return includeKeys.reduce(
+    (includedProps, key) => ({
+      ...includedProps,
+      [key]: props[key as keyof BoxSliderProps],
+    }),
+    {},
+  )
 }
 
 export class BoxSlider extends Component<BoxSliderProps> {
-  private el!: HTMLDivElement | null;
-  private boxSlider!: BxSlider;
+  private el!: HTMLDivElement | null
+  private boxSlider!: BxSlider
 
   componentDidMount() {
     if (this.el) {
-      this.boxSlider = new BxSlider(this.el, this.props.sliderOptions);
+      this.boxSlider = new BxSlider(this.el, this.props.sliderOptions)
       this.boxSlider.addEventListener('before', (ev: SliderEventData) => {
-        if (this.props.onBefore) this.props.onBefore.call(undefined, ev);
-      });
+        if (this.props.onBefore) this.props.onBefore.call(undefined, ev)
+      })
       this.boxSlider.addEventListener('after', (ev: SliderEventData) => {
-        if (this.props.onAfter) this.props.onAfter.call(undefined, ev);
-      });
+        if (this.props.onAfter) this.props.onAfter.call(undefined, ev)
+      })
       this.boxSlider.addEventListener('play', (ev: SliderEventData) => {
-        if (this.props.onStartAutoScroll) this.props.onStartAutoScroll.call(undefined, ev);
-      });
+        if (this.props.onStartAutoScroll) this.props.onStartAutoScroll.call(undefined, ev)
+      })
       this.boxSlider.addEventListener('pause', (ev: SliderEventData) => {
-        if (this.props.onStopAutoScroll) this.props.onStopAutoScroll.call(undefined, ev);
-      });
+        if (this.props.onStopAutoScroll) this.props.onStopAutoScroll.call(undefined, ev)
+      })
       this.boxSlider.addEventListener('destroy', (ev: SliderEventData) => {
-        if (this.props.onDestroy) this.props.onDestroy.call(undefined, ev);
-      });
+        if (this.props.onDestroy) this.props.onDestroy.call(undefined, ev)
+      })
     }
   }
 
   componentWillUnmount() {
     if (this.boxSlider) {
-      this.boxSlider.destroy();
+      this.boxSlider.destroy()
     }
   }
 
   componentDidUpdate(prevProps: Readonly<BoxSliderProps>) {
     if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
-      this.boxSlider?.skipTo(this.props.slideIndex);
+      this.boxSlider?.skipTo(this.props.slideIndex)
     }
   }
 
   render() {
     const { children, ...props } = this.props
 
-    return <div {...filterProps(props)}>
-      <div style={{ width: '100%', height: '100%'}} ref={el => this.el = el}>{children}</div>
-    </div>;
+    return (
+      <div {...filterProps(props)}>
+        <div style={{ width: '100%', height: '100%' }} ref={(el) => (this.el = el)}>
+          {children}
+        </div>
+      </div>
+    )
   }
 }
 

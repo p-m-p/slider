@@ -6,16 +6,16 @@ export interface CubeSliderProps extends BoxSliderComponentProps {
 }
 
 export function CubeSlider(props: CubeSliderProps) {
-    return (
-      <BoxSlider
-        {...props}
-        sliderOptions={{
-          ...props.sliderOptions,
-          effect: new BxCubeSlider(props.effectOptions),
-        }}>
-        {props.children}
-      </BoxSlider>
-    )
+  return (
+    <BoxSlider
+      {...props}
+      sliderOptions={{
+        ...props.sliderOptions,
+        effect: new BxCubeSlider(props.effectOptions),
+      }}>
+      {props.children}
+    </BoxSlider>
+  )
 }
 
 export default CubeSlider

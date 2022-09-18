@@ -9,4 +9,5 @@ npm i -P @boxslider/slider
 ```
 
 ## Usage
+
 Usage instructions can be found in the [main readme file](https://github.com/boxslider/slider)
