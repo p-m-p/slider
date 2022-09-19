@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@boxslider/react": "*"
+    "@boxslider/react": "*",
+    "react-github-btn": "^1.4.0"
   }
 }

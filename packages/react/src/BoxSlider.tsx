@@ -70,6 +70,8 @@ export class BoxSlider extends Component<BoxSliderProps> {
   }
 
   componentDidUpdate(prevProps: Readonly<BoxSliderProps>) {
+    this.boxSlider.reset()
+
     if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
       this.boxSlider?.skipTo(this.props.slideIndex)
     }

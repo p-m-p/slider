@@ -17,7 +17,7 @@ export class BoxSlider {
   private _stateStore: StateStore | undefined
   private _el: HTMLElement | undefined
   private _effect: Effect | undefined
-  private readonly slides: HTMLElement[]
+  private slides: HTMLElement[]
   private activeIndex: number
   private autoScrollTimer?: number
   private eventListeners: { [ev: string]: SliderEventHandler[] }
@@ -25,7 +25,7 @@ export class BoxSlider {
   private isDestroyed: boolean
   private transitionPromise?: Promise<void>
 
-  get el() {
+  private get el() {
     if (this._el === undefined) {
       throw new Error('Slider element is null')
     }
@@ -33,7 +33,7 @@ export class BoxSlider {
     return this._el
   }
 
-  get stateStore() {
+  private get stateStore() {
     if (this._stateStore === undefined) {
       throw new Error('State store is null, are you trying ot interact with a destroyed slider?')
     }
@@ -41,7 +41,7 @@ export class BoxSlider {
     return this._stateStore
   }
 
-  get effect() {
+  private get effect() {
     if (this._effect === undefined) {
       throw new Error('Slide effect is null, are you trying ot interact with a destroyed slider?')
     }
@@ -63,29 +63,26 @@ export class BoxSlider {
       responsive: options.responsive !== false,
       timeout: options.timeout || 5000,
       autoScroll: options.autoScroll !== false,
-      pauseOnHover: options.pauseOnHover !== false,
+      pauseOnHover: options.pauseOnHover === true,
       startIndex: options.startIndex || 0,
       swipe: options.swipe !== false,
       swipeTolerance: options.swipeTolerance || 30,
     }
-    this.slides = Array.from(el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[]
     this.activeIndex = this.options.startIndex
     this.eventListeners = {}
     this.elListeners = {}
     this.isDestroyed = false
+    this.slides = this.getSlides()
 
     if (this.slides.length < this.activeIndex) {
       this.destroy()
       throw new Error(`Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`)
     }
 
+    this.addAriaAttributes()
     this.applyEventListeners()
     responder.add(this)
 
-    this.stateStore.storeAttributes(this.slides, ['aria-roledescription'])
-    this.stateStore.storeAttributes(this.el, ['aria-live'])
-    this.el.setAttribute('aria-live', 'polite')
-    this.slides.forEach((slide) => slide.setAttribute('aria-roledescription', 'slide'))
     this.effect.initialize(this.el, this.slides, this.stateStore, { ...this.options })
 
     if (this.options.autoScroll) {
@@ -93,8 +90,10 @@ export class BoxSlider {
     }
   }
 
-  reset(): void {
+  reset() {
     this.stateStore.revert()
+    this.slides = this.getSlides()
+    this.addAriaAttributes()
     this.effect.initialize(this.el, this.slides, this.stateStore, {
       ...this.options,
       startIndex: this.activeIndex,
@@ -207,6 +206,17 @@ export class BoxSlider {
     this.slides.length = 0
   }
 
+  private addAriaAttributes() {
+    this.stateStore.storeAttributes(this.el, ['aria-live'])
+    this.el.setAttribute('aria-live', 'polite')
+    this.stateStore.storeAttributes(this.slides, ['aria-roledescription'])
+    this.slides.forEach((slide) => slide.setAttribute('aria-roledescription', 'slide'))
+  }
+
+  private getSlides(): HTMLElement[] {
+    return Array.from(this.el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[]
+  }
+
   private stopAutoScroll() {
     window.clearTimeout(this.autoScrollTimer)
   }
@@ -221,7 +231,7 @@ export class BoxSlider {
     )
   }
 
-  private setAutoScroll(): void {
+  private setAutoScroll() {
     this.stopAutoScroll()
     this.el.setAttribute('aria-live', 'off')
 

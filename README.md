@@ -92,7 +92,7 @@ slider.next().then(() => {
   the slides
 - `timeout: number (default: 5000)` The time interval between slide transitions. For use
   with autoScroll
-- `pauseOnHover: boolean (default: false)` Pause an auto-scrolling slider when the users
+- `pauseOnHover: boolean (default: true)` Pause an auto-scrolling slider when the users
   mouse hovers over it. For use with autoScroll or a slider in play mode.
 - `swipe: boolean (default: true)` Enable swiping the box to navigate to the next or
   previous slide.
