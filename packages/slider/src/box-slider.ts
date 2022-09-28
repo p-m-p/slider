@@ -54,50 +54,46 @@ export class BoxSlider {
       throw new Error('Effect must be specified in slider options')
     }
 
-    this._effect = options.effect
     this._el = el
     this._stateStore = new StateStore()
 
     this.options = {
-      speed: options.speed || 800,
-      responsive: options.responsive !== false,
-      timeout: options.timeout || 5000,
-      autoScroll: options.autoScroll !== false,
-      pauseOnHover: options.pauseOnHover === true,
-      startIndex: options.startIndex || 0,
-      swipe: options.swipe !== false,
-      swipeTolerance: options.swipeTolerance || 30,
+      speed: 800,
+      timeout: 5000,
+      autoScroll: true,
+      pauseOnHover: false,
+      startIndex: 0,
+      swipe: true,
+      swipeTolerance: 30,
+      ...options,
     }
+    this.slides = []
     this.activeIndex = this.options.startIndex
     this.eventListeners = {}
     this.elListeners = {}
     this.isDestroyed = false
-    this.slides = this.getSlides()
+
+    this.init(this.options)
 
     if (this.slides.length < this.activeIndex) {
       this.destroy()
       throw new Error(`Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`)
     }
 
-    this.addAriaAttributes()
     this.applyEventListeners()
     responder.add(this)
-
-    this.effect.initialize(this.el, this.slides, this.stateStore, { ...this.options })
-
-    if (this.options.autoScroll) {
-      this.setAutoScroll()
-    }
   }
 
-  reset() {
-    this.stateStore.revert()
-    this.slides = this.getSlides()
-    this.addAriaAttributes()
-    this.effect.initialize(this.el, this.slides, this.stateStore, {
+  reset(resetOptions: Partial<BoxSliderOptions> = {}) {
+    this.stopAutoScroll()
+    const options = {
       ...this.options,
+      ...resetOptions,
       startIndex: this.activeIndex,
-    })
+    }
+    this.effect.destroy && this.effect.destroy(this.el)
+    this.stateStore.revert()
+    this.init(options)
   }
 
   next(): Promise<void> {
@@ -204,6 +200,17 @@ export class BoxSlider {
     delete this._stateStore
     delete this._effect
     this.slides.length = 0
+  }
+
+  private init(options: BoxSliderOptions) {
+    this._effect = options.effect
+    this.slides = this.getSlides()
+    this.effect.initialize(this.el, this.slides, this.stateStore, options)
+    this.addAriaAttributes()
+
+    if (this.options.autoScroll) {
+      this.setAutoScroll()
+    }
   }
 
   private addAriaAttributes() {

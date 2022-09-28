@@ -2,7 +2,7 @@ import { FadeSlider as BxFadeSlider, type FadeSliderOptions } from '@boxslider/s
 import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 
 export interface FadeSliderProps extends BoxSliderComponentProps {
-  effectOptions: FadeSliderOptions | undefined
+  effectOptions?: FadeSliderOptions
 }
 
 export function FadeSlider(props: FadeSliderProps) {

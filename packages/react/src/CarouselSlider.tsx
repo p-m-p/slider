@@ -2,7 +2,7 @@ import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 import { CarouselSlider as BxCarouselSlider, type CarouselSliderOptions } from '@boxslider/slider'
 
 export interface CarouselSliderProps extends BoxSliderComponentProps {
-  effectOptions: CarouselSliderOptions
+  effectOptions?: CarouselSliderOptions
 }
 
 export function CarouselSlider(props: CarouselSliderProps) {

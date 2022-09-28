@@ -20,6 +20,6 @@ jobs:
       - name: Verify 🚦
         run: |
           npm ci
-          npm run bootstrap
+          npm run build
         env:
           CI: true

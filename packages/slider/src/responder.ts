@@ -5,7 +5,7 @@ let resizeDebounceTimer: number
 
 window.addEventListener('resize', () => {
   window.clearTimeout(resizeDebounceTimer)
-  resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach((b) => b.reset()), 500)
+  resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach((b) => b.reset()), 200)
 })
 
 export const responder = {

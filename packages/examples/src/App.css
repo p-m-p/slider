@@ -54,12 +54,17 @@ footer p {
 }
 
 .slider-controls {
-  justify-content: center;
+  justify-content: space-between;
   display: flex;
-  margin: 24px 0 0;
+  margin: 24px auto 0;
+  width: 896px;
 }
 
-.show-slide-btn {
+.skip-buttons {
+  display: flex;
+}
+
+.skip-button {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -67,7 +72,7 @@ footer p {
   padding: 4px;
 }
 
-.show-slide-btn:before {
+.skip-button:before {
   background: slategray;
   border: solid 1px #222;
   border-radius: 6px;
@@ -79,7 +84,7 @@ footer p {
   width: 12px;
 }
 
-.show-slide-btn.active:before,
-.show-slide-btn:hover:before {
+.skip-button.active:before,
+.skip-button:hover:before {
   background: ghostwhite;
 }

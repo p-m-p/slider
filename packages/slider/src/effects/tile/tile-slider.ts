@@ -167,7 +167,7 @@ export class TileSlider implements Effect {
     })
   }
 
-  destroy(el: HTMLElement): void {
+  destroy(el: HTMLElement) {
     el.removeChild(this.tileWrapper)
     delete this._tileWrapper
   }

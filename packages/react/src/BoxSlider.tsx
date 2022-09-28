@@ -44,7 +44,7 @@ export class BoxSlider extends Component<BoxSliderProps> {
 
   componentDidMount() {
     if (this.el) {
-      this.boxSlider = new BxSlider(this.el, this.props.sliderOptions)
+      this.boxSlider = new BxSlider(this.el, { ...this.props.sliderOptions })
       this.boxSlider.addEventListener('before', (ev: SliderEventData) => {
         if (this.props.onBefore) this.props.onBefore.call(undefined, ev)
       })
@@ -70,7 +70,7 @@ export class BoxSlider extends Component<BoxSliderProps> {
   }
 
   componentDidUpdate(prevProps: Readonly<BoxSliderProps>) {
-    this.boxSlider.reset()
+    this.boxSlider.reset({ ...this.props.sliderOptions })
 
     if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
       this.boxSlider?.skipTo(this.props.slideIndex)

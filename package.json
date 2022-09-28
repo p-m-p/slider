@@ -10,8 +10,9 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "dev": "npm run dev -w packages/examples",
-    "lint": "eslint --fix .",
-    "prettier": "prettier --write .",
+    "lint": "eslint",
+    "postinstall": "npm run bootstrap",
+    "prebuild": "npm run lint",
     "prepare": "husky install"
   },
   "dependencies": {
