@@ -1,22 +1,18 @@
-import { BoxSlider } from './box-slider';
+import { BoxSlider } from './box-slider'
 
-let boxSliders: BoxSlider[] = [];
-let resizeDebounceTimer: number;
+let boxSliders: BoxSlider[] = []
+let resizeDebounceTimer: number
 
 window.addEventListener('resize', () => {
-  window.clearTimeout(resizeDebounceTimer);
-
-  resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach(b => b.reset()), 500);
-});
+  window.clearTimeout(resizeDebounceTimer)
+  resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach((b) => b.reset()), 200)
+})
 
 export const responder = {
-
   add(boxSlider: BoxSlider): void {
-    boxSliders.push(boxSlider);
+    boxSliders.push(boxSlider)
   },
-
   remove(boxSlider: BoxSlider): void {
-    boxSliders = boxSliders.filter(b => b !== boxSlider);
-  }
-
-};
+    boxSliders = boxSliders.filter((b) => b !== boxSlider)
+  },
+}

@@ -1,86 +1,120 @@
-import { BoxSliderOptions, defaults } from './box-slider-options';
-import { Effect } from './effects';
-import { StateStore } from './state-store';
-import { responder } from './responder';
+import { type BoxSliderOptions } from './box-slider-options'
+import { type Effect } from './effects'
+import { StateStore } from './state-store'
+import { responder } from './responder'
 
-export type EventType = 'after' | 'before' | 'destroy' | 'pause' | 'play';
-export type EventData = { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
-export type EventListenerCallback = (payload?: EventData) => void;
+export type SliderEventType = 'after' | 'before' | 'destroy' | 'pause' | 'play'
+export type SliderEventData = {
+  currentIndex: number
+  nextIndex?: number
+  speed: number
+}
+export type SliderEventHandler = (ev: SliderEventData) => void
 
 export class BoxSlider {
-  private readonly options: BoxSliderOptions;
+  private readonly options: BoxSliderOptions
 
-  private activeIndex: number;
-  private autoScrollTimer: number;
-  private el: HTMLElement;
-  private effect: Effect;
-  private eventListeners: { [ev: string]: ((payload: EventData) => void)[] };
-  private isDestroyed: boolean;
-  private slides: HTMLElement[];
-  private stateStore: StateStore;
-  private transitionPromise: Promise<BoxSlider>;
+  private _stateStore: StateStore | undefined
+  private _el: HTMLElement | undefined
+  private _effect: Effect | undefined
+  private slides: HTMLElement[]
+  private activeIndex: number
+  private autoScrollTimer?: number
+  private eventListeners: { [ev: string]: SliderEventHandler[] }
+  private elListeners: { [ev: string]: EventListener[] }
+  private isDestroyed: boolean
+  private transitionPromise?: Promise<void>
 
-  constructor(el: Element | HTMLElement, options: BoxSliderOptions) {
-    if (!options.effect) {
-      throw new Error('No slide effect defined in box options');
+  private get el() {
+    if (this._el === undefined) {
+      throw new Error('Slider element is null')
     }
 
-    this.el = el as HTMLElement;
-    this.effect = options.effect;
-    this.options = { ...defaults, ...options };
-    this.slides = Array.from(el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[];
-    this.activeIndex = this.options.startIndex;
-    this.eventListeners = {};
-    this.stateStore = new StateStore();
-    this.isDestroyed = false;
+    return this._el
+  }
+
+  private get stateStore() {
+    if (this._stateStore === undefined) {
+      throw new Error('State store is null, are you trying ot interact with a destroyed slider?')
+    }
+
+    return this._stateStore
+  }
+
+  private get effect() {
+    if (this._effect === undefined) {
+      throw new Error('Slide effect is null, are you trying ot interact with a destroyed slider?')
+    }
+
+    return this._effect
+  }
+
+  constructor(el: HTMLElement, options: Partial<BoxSliderOptions>) {
+    if (!options.effect) {
+      throw new Error('Effect must be specified in slider options')
+    }
+
+    this._el = el
+    this._stateStore = new StateStore()
+
+    this.options = {
+      speed: 800,
+      timeout: 5000,
+      autoScroll: true,
+      pauseOnHover: false,
+      startIndex: 0,
+      swipe: true,
+      swipeTolerance: 30,
+      ...options,
+    }
+    this.slides = []
+    this.activeIndex = this.options.startIndex
+    this.eventListeners = {}
+    this.elListeners = {}
+    this.isDestroyed = false
+
+    this.init(this.options)
 
     if (this.slides.length < this.activeIndex) {
       this.destroy()
-      throw new Error(`Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`);
+      throw new Error(`Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`)
     }
 
-    this.applyEventListeners();
-    responder.add(this);
-
-    this.stateStore.storeAttributes(this.slides, ['aria-roledescription']);
-    this.stateStore.storeAttributes(this.el, ['aria-live']);
-    this.el.setAttribute('aria-live', 'polite');
-    this.slides.forEach(slide => slide.setAttribute("aria-roledescription", "slide"));
-    this.effect.initialize(this.el, this.slides, this.stateStore, { ...this.options, effect: undefined });
-
-    if (options.autoScroll) {
-      this.setAutoScroll();
-    }
+    this.applyEventListeners()
+    responder.add(this)
   }
 
-  reset(): void {
-    this.stateStore.revert();
-    this.effect.initialize(this.el, this.slides, this.stateStore, {
+  reset(resetOptions: Partial<BoxSliderOptions> = {}) {
+    this.stopAutoScroll()
+    const options = {
       ...this.options,
-      effect: undefined,
-      startIndex: this.activeIndex
-    });
+      ...resetOptions,
+      startIndex: this.activeIndex,
+    }
+    this.effect.destroy && this.effect.destroy(this.el)
+    this.stateStore.revert()
+    this.init(options)
   }
 
-  next(): Promise<BoxSlider> {
-    return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1, false);
+  next(): Promise<void> {
+    return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1, false)
   }
 
-  prev(): Promise<BoxSlider> {
-    return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1, true);
+  prev(): Promise<void> {
+    return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1, true)
   }
 
-  skipTo(nextIndex: number, backwards?: boolean): Promise<BoxSlider> {
-    if(this.isDestroyed) {
-      throw new Error('Invalid attempt made to move destroyed slider instance');
+  skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
+    if (this.isDestroyed || nextIndex === this.activeIndex) {
+      return Promise.resolve()
     }
 
     if (nextIndex < 0 || nextIndex >= this.slides.length) {
-      throw new Error(`${nextIndex} is not a valid slide index`);
+      throw new Error(`${nextIndex} is not a valid slide index`)
     }
 
-    if (nextIndex === this.activeIndex) {
-      return Promise.resolve(this);
+    if (this.options.autoScroll) {
+      this.stopAutoScroll()
     }
 
     const settings = {
@@ -90,135 +124,174 @@ export class BoxSlider {
       currentIndex: this.activeIndex,
       isPrevious: backwards === undefined ? nextIndex < this.activeIndex : backwards,
       nextIndex,
-    };
-    this.activeIndex = nextIndex;
+    }
 
-    this.transitionPromise = (this.transitionPromise || Promise.resolve(this)).then(() => {
-      if (this.options.autoScroll) {
-        this.pause();
-      }
+    this.transitionPromise = (this.transitionPromise || Promise.resolve()).then(() => {
+      this.activeIndex = nextIndex
 
       this.emit('before', {
         currentIndex: settings.currentIndex,
         nextIndex: settings.nextIndex,
-        speed: settings.speed
-      });
+        speed: settings.speed,
+      })
 
       return this.effect.transition(settings).then(() => {
         if (this.options.autoScroll) {
-          this.play();
+          this.setAutoScroll()
         }
 
-        this.emit('after', { activeIndex: settings.nextIndex });
+        this.emit('after')
+      })
+    })
 
-        return this;
-      });
-    });
-
-    return this.transitionPromise;
+    return this.transitionPromise
   }
 
   pause(): BoxSlider {
     if (this.autoScrollTimer) {
-      this.stopAutoPlay();
-      this.emit('pause');
+      this.stopAutoScroll()
+      this.emit('pause')
     }
 
-    return this;
+    return this
   }
 
   play(): BoxSlider {
-    this.setAutoScroll();
-    this.emit('play');
+    this.setAutoScroll()
+    this.emit('play')
 
-    return this;
+    return this
   }
 
-  addEventListener(ev: EventType, callback: EventListenerCallback): BoxSlider {
-    this.eventListeners[ev] = this.eventListeners[ev] || [];
-    this.eventListeners[ev].push(callback);
-
-    return this;
-  }
-
-  removeEventListener(ev: EventType, callback: EventListenerCallback): BoxSlider {
-    if (this.eventListeners[ev]) {
-      this.eventListeners[ev] = this.eventListeners[ev].filter(cb => cb !== callback);
+  addEventListener(ev: SliderEventType, callback: (ev: SliderEventData) => void): BoxSlider {
+    if (!Array.isArray(this.eventListeners[ev])) {
+      this.eventListeners[ev] = []
     }
 
-    return this;
+    this.eventListeners[ev].push(callback)
+
+    return this
+  }
+
+  removeEventListener(ev: SliderEventType, callback: (ev: SliderEventData) => void): BoxSlider {
+    this.eventListeners[ev] = this.eventListeners[ev]?.filter((cb) => cb !== callback)
+
+    return this
   }
 
   destroy(): void {
-    this.isDestroyed = true;
-    this.stopAutoPlay();
+    this.isDestroyed = true
+    this.stopAutoScroll()
 
-    (this.transitionPromise || Promise.resolve(null)).then(() => {
-      if (this.effect.destroy) {
-        this.effect.destroy(this.el);
-      }
-
-      this.stateStore.revert();
-      responder.remove(this);
-      this.emit('destroy');
-      this.eventListeners = {};
-
-      delete this.el;
-      delete this.slides;
-      delete this.stateStore;
-      delete this.effect;
-    });
-  }
-
-  private stopAutoPlay(): void {
-    window.clearTimeout(this.autoScrollTimer);
-  }
-
-  private emit(ev: EventType, payload?: EventData): void {
-    (this.eventListeners[ev] || []).forEach(cb => cb(payload));
-  }
-
-  private setAutoScroll(): void {
-    if (this.autoScrollTimer) {
-      this.pause();
+    if (this.effect.destroy) {
+      this.effect.destroy(this.el)
     }
 
-    this.autoScrollTimer = window.setTimeout(() =>
-      this.next().then(() => this.setAutoScroll()), this.options.timeout);
-    this.el.setAttribute('aria-live', "off");
+    this.stateStore.revert()
+    responder.remove(this)
+    this.emit('destroy')
+    this.eventListeners = {}
+    Object.keys(this.elListeners).forEach((ev) =>
+      this.elListeners[ev].forEach((listener) => this.el.removeEventListener(ev, listener)),
+    )
+    this.elListeners = {}
+
+    delete this._el
+    delete this._stateStore
+    delete this._effect
+    this.slides.length = 0
   }
 
-  private applyEventListeners(): void {
-    if (this.options.pauseOnHover) { // XXX Need to properly check if it's actually set to play/pause in options
-      this.el.addEventListener('mouseenter', () => this.pause());
-      this.el.addEventListener('mouseleave', () => this.play());
+  private init(options: BoxSliderOptions) {
+    this._effect = options.effect
+    this.slides = this.getSlides()
+    this.effect.initialize(this.el, this.slides, this.stateStore, options)
+    this.addAriaAttributes()
+
+    if (this.options.autoScroll) {
+      this.setAutoScroll()
+    }
+  }
+
+  private addAriaAttributes() {
+    this.stateStore.storeAttributes(this.el, ['aria-live'])
+    this.el.setAttribute('aria-live', 'polite')
+    this.stateStore.storeAttributes(this.slides, ['aria-roledescription'])
+    this.slides.forEach((slide) => slide.setAttribute('aria-roledescription', 'slide'))
+  }
+
+  private getSlides(): HTMLElement[] {
+    return Array.from(this.el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[]
+  }
+
+  private stopAutoScroll() {
+    window.clearTimeout(this.autoScrollTimer)
+  }
+
+  private emit(ev: SliderEventType, payload?: Partial<SliderEventData>) {
+    this.eventListeners[ev]?.forEach((cb) =>
+      cb({
+        currentIndex: this.activeIndex,
+        speed: this.options.speed,
+        ...payload,
+      }),
+    )
+  }
+
+  private setAutoScroll() {
+    this.stopAutoScroll()
+    this.el.setAttribute('aria-live', 'off')
+
+    this.autoScrollTimer = window.setTimeout(
+      () =>
+        this.next().then(() => {
+          if (!this.isDestroyed) {
+            this.setAutoScroll()
+          }
+        }),
+      this.options.timeout,
+    )
+  }
+
+  private addElListener(ev: keyof HTMLElementEventMap, handler: EventListener) {
+    this.el.addEventListener(ev, handler)
+    this.elListeners[ev] = this.elListeners[ev] || []
+    this.elListeners[ev].push(handler)
+  }
+
+  private applyEventListeners() {
+    if (this.options.autoScroll && this.options.pauseOnHover) {
+      this.addElListener('pointerenter', () => this.pause())
+      this.addElListener('pointerleave', () => this.play())
     }
 
     if (this.options.swipe) {
-      this.addSwipeNavigation();
+      this.addSwipeNavigation()
     }
   }
 
-  private addSwipeNavigation(): void {
-    let pointerTraceX = 0;
+  private addSwipeNavigation() {
+    let pointerTraceX = 0
 
-    this.el.addEventListener('pointerdown', ev => {
-      pointerTraceX = ev.clientX;
-    });
+    this.addElListener('pointerdown', (ev) => {
+      pointerTraceX = (ev as PointerEvent).clientX
+    })
 
-    this.el.addEventListener('pointerup', ev => {
-      const distanceX = ev.clientX - pointerTraceX;
+    this.addElListener('pointerup', (ev) => {
+      const distanceX = (ev as PointerEvent).clientX - pointerTraceX
 
       // XXX Need to be able to determine if effect scrolling is vertical
       if (Math.abs(distanceX) >= this.options.swipeTolerance) {
         if (distanceX > 0) {
-          this.prev();
+          this.prev()
         } else {
-          this.next();
+          this.next()
         }
 
-        ev.stopPropagation();
+        ev.stopPropagation()
       }
-    });
+    })
   }
 }
+
+export default BoxSlider

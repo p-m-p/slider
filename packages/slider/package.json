@@ -2,6 +2,12 @@
   "name": "@boxslider/slider",
   "version": "1.2.0",
   "description": "Flexible and light weight content slider",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxslider/slider/packages/slider"
+  },
+  "author": "Phil Parsons",
+  "license": "MIT",
   "keywords": [
     "boxslider",
     "slider",
@@ -9,28 +15,27 @@
     "cube",
     "3D"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
-    "lint": "eslint . --ext .ts",
-    "clean": "rimraf dist",
-    "build": "npm run clean && webpack --mode=production",
-    "prepare": "npm run build",
-    "build-storybook": "build-storybook",
-    "storybook": "start-storybook -p 6006 -s stories/static"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/boxslider/slider/packages/slider"
-  },
-  "author": "Phil Parsons",
-  "license": "MIT",
-  "devDependencies": {
-    "@storybook/builder-webpack5": "^6.5.9",
-    "@storybook/html": "^6.5.9",
-    "@storybook/manager-webpack5": "^6.5.9",
-    "eslint-plugin-storybook": "^0.6.1",
-    "eslint-webpack-plugin": "^3.2.0",
-    "webpack-cli": "^4.10.0"
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run types",
+    "build:cjs": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --format=cjs --tsconfig=../../tsconfig.json --outdir=dist/cjs",
+    "build:esm": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --format=esm --tsconfig=../../tsconfig.json --outdir=dist/esm",
+    "clean": "rm -rf dist && rm -f LICENSE",
+    "prepack": "npm run build && cp ../../LICENSE ./",
+    "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   }
 }

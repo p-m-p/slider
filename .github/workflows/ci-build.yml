@@ -1,17 +1,15 @@
 name: Verify
-
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request:
-    branches: [ master ]
-
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.x, 18.x]
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
@@ -22,6 +20,6 @@ jobs:
       - name: Verify 🚦
         run: |
           npm ci
-          npm run bootstrap
+          npm run build
         env:
           CI: true

@@ -1,15 +1,16 @@
 {
-  "packages": [
-    "packages/*"
-  ],
   "command": {
-    "bootstrap": {},
-    "version": {
-      "allowBranch": "master",
-      "conventionalCommits": true,
-      "message": "chore(release): publish %s"
+    "bootstrap": {
+      "useWorkspaces": true
     },
-    "publish": {}
+    "version": {
+      "allowBranch": "main",
+      "conventionalCommits": true,
+      "message": "chore(release): publish %s",
+      "noPrivate": true
+    }
   },
-  "version": "1.2.0"
+  "version": "1.2.0",
+  "useNx": true,
+  "useWorkspaces": true
 }
