@@ -10,7 +10,9 @@ import {
 import { CarouselSlider, CubeSlider, FadeSlider, TileSlider } from '@boxslider/react'
 import './App.css'
 
-const images = Array.from({ length: 6 }).map((n, i) => `/Futuristic_city_scape_on_a_distant_alien_planet_${i + 1}.png`)
+const images = Array.from({ length: 6 }).map(
+  (n, i) => `/slider/Futuristic_city_scape_on_a_distant_alien_planet_${i + 1}.png`,
+)
 const diffusionText = 'Futuristic city scape on a distant alien planet'
 const effects: {
   name: string
