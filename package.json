@@ -14,7 +14,8 @@
     "lint": "eslint",
     "postinstall": "npm run bootstrap",
     "prebuild": "npm run lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "lerna publish --yes"
   },
   "dependencies": {
     "react": "^18.2.0",
