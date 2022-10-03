@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.3 (2022-10-03)
+
+### Bug Fixes
+
+- **react:** add slider lib to external ([4a9255d](https://github.com/boxslider/slider/packages/react/commit/4a9255da504d03f8ac646533d6976f0bb9b8b84d))
+
 ## [2.0.2](https://github.com/boxslider/slider/packages/react/compare/v2.0.1...v2.0.2) (2022-10-03)
 
 ### Bug Fixes
