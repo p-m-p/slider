@@ -31,10 +31,9 @@
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run types",
-    "build:cjs": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --format=cjs --tsconfig=../../tsconfig.json --outdir=dist/cjs",
-    "build:esm": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --format=esm --tsconfig=../../tsconfig.json --outdir=dist/esm",
+    "build": "npm run clean && npm run esbuild && npm run types",
     "clean": "rm -rf dist && rm -f LICENSE",
+    "esbuild": "../../build.js",
     "prepack": "npm run build && cp ../../LICENSE ./",
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   }
