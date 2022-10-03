@@ -11,10 +11,10 @@ React components for the [BoxSlider](https://github.com/boxslider/slider) librar
 Each slide effect has a matching React component. The documentation for the `effectOptions` prop can be found on the
 main plugin site. The documentation is linked for each option below.
 
-- `<BxlCarouselSlider />` [documentation](https://github.com/boxslider/slider#carouselslider)
-- `<BxlCubeSlider />` [documentation](https://github.com/boxslider/slider#cubeslider)
-- `<BxlFadeSlider />` [documentation](https://github.com/boxslider/slider#fadeslider)
-- `<BxlTileSlider />` [documentation](https://github.com/boxslider/slider#tileslider)
+- `<CarouselSlider />` [documentation](https://github.com/boxslider/slider#carouselslider)
+- `<CubeSlider />` [documentation](https://github.com/boxslider/slider#cubeslider)
+- `<FadeSlider />` [documentation](https://github.com/boxslider/slider#fadeslider)
+- `<TileSlider />` [documentation](https://github.com/boxslider/slider#tileslider)
 
 ## Component props
 
@@ -50,7 +50,7 @@ function doSomethingBefore(ev) {
 }
 
 ReactDOM.render(
-  <BxlFadeSlider
+  <FadeSlider
     sliderOptions={options}
     effectOptions={effectOptions}
     slideIndex={3}
@@ -61,7 +61,7 @@ ReactDOM.render(
     <div>Slide three</div>
     <div>Slide four</div>
     <div>Slide five</div>
-  </BxlFadeSlider>,
+  </FadeSlider>,
   document.getElementById('root'),
 )
 ```
