@@ -8,8 +8,8 @@ const distDir = join(process.cwd(), 'dist')
 
 const options = {
   entryPoints: [join(srcDir, 'index.ts')],
+  external: ['react', 'react-dom'],
   bundle: true,
-  minify: true,
   platform: 'node',
   target: 'esnext',
   tsconfig: '../../tsconfig.json',

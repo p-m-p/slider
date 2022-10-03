@@ -3,10 +3,12 @@ import { BoxSlider } from './box-slider'
 let boxSliders: BoxSlider[] = []
 let resizeDebounceTimer: number
 
-window.addEventListener('resize', () => {
-  window.clearTimeout(resizeDebounceTimer)
-  resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach((b) => b.reset()), 200)
-})
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => {
+    window.clearTimeout(resizeDebounceTimer)
+    resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach((b) => b.reset()), 200)
+  })
+}
 
 export const responder = {
   add(boxSlider: BoxSlider): void {
