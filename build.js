@@ -5,10 +5,13 @@ import { join } from 'path'
 
 const srcDir = join(process.cwd(), 'src')
 const distDir = join(process.cwd(), 'dist')
+const external = process.argv[2] ? process.argv[2].split(',') : []
+
+console.log(external)
 
 const options = {
   entryPoints: [join(srcDir, 'index.ts')],
-  external: ['react', 'react-dom'],
+  external,
   bundle: true,
   platform: 'node',
   target: 'esnext',

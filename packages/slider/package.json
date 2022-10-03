@@ -34,7 +34,7 @@
     "build": "npm run clean && npm run esbuild && npm run types",
     "clean": "rm -rf dist && rm -f LICENSE",
     "esbuild": "../../build.js",
-    "prepack": "npm run build && cp ../../LICENSE ./",
+    "prepack": "cp ../../LICENSE ./",
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   }
 }
