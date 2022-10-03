@@ -1,6 +1,6 @@
 # BoxSlider React
 
-React components for the [BoxSlider](https://github.com/boxslider/slider) library effects.
+React components for the [BoxSlider](https://github.com/p-m-p/slider) library effects.
 
 ## Installation
 
@@ -11,10 +11,10 @@ React components for the [BoxSlider](https://github.com/boxslider/slider) librar
 Each slide effect has a matching React component. The documentation for the `effectOptions` prop can be found on the
 main plugin site. The documentation is linked for each option below.
 
-- `<CarouselSlider />` [documentation](https://github.com/boxslider/slider#carouselslider)
-- `<CubeSlider />` [documentation](https://github.com/boxslider/slider#cubeslider)
-- `<FadeSlider />` [documentation](https://github.com/boxslider/slider#fadeslider)
-- `<TileSlider />` [documentation](https://github.com/boxslider/slider#tileslider)
+- `<CarouselSlider />` [documentation](https://github.com/p-m-p/slider#carouselslider)
+- `<CubeSlider />` [documentation](https://github.com/p-m-p/slider#cubeslider)
+- `<FadeSlider />` [documentation](https://github.com/p-m-p/slider#fadeslider)
+- `<TileSlider />` [documentation](https://github.com/p-m-p/slider#tileslider)
 
 ## Component props
 
@@ -31,7 +31,7 @@ slider.addEventListener('pause', () => console.log('Slider paused'))
 ;<BxlFadeSlider onPause={() => console.log('Slider paused')} />
 ```
 
-See the [events](https://github.com/boxslider/slider#events) section of the main library page for all available events.
+See the [events](https://github.com/p-m-p/slider#events) section of the main library page for all available events.
 
 ## Example usage
 
