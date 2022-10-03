@@ -2,6 +2,7 @@
   "author": "Phil Parsons",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
