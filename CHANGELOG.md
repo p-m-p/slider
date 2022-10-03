@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/boxslider/slider/compare/v2.0.0...v2.0.1) (2022-10-03)
+
+### Bug Fixes
+
+- add build script with bundling ([#147](https://github.com/boxslider/slider/issues/147)) ([dd4dcba](https://github.com/boxslider/slider/commit/dd4dcbaf2d4828574902731ad011863683553952))
+
 # [2.0.0](https://github.com/boxslider/slider/compare/v1.2.0...v2.0.0) (2022-09-28)
 
 ### Bug Fixes
