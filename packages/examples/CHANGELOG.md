@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.4 (2022-10-04)
+
+### Bug Fixes
+
+- **examples:** add media query to size for small screens ([#148](https://github.com/p-m-p/slider/issues/148)) ([acbd446](https://github.com/p-m-p/slider/commit/acbd446404fdc1f4a71fba75c2bdc3f1850f561e))
+
 ## 2.0.3 (2022-10-03)
 
 **Note:** Version bump only for package @boxslider/examples
