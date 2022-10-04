@@ -1,6 +1,8 @@
 .App {
+  align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-height: 100vh;
 }
 
@@ -22,9 +24,9 @@ header h1 {
 
 main {
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: center;
+  padding: 24px 0;
 }
 
 footer {
@@ -38,17 +40,13 @@ footer p {
   text-align: center;
 }
 
-.slider-viewport {
-}
-
 .slider {
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
   height: 512px;
-  margin: 0 auto;
   width: 896px;
 }
 
-.slide {
+.slide, .slide img {
   height: 100%;
   width: 100%;
 }
@@ -56,7 +54,7 @@ footer p {
 .slider-controls {
   justify-content: space-between;
   display: flex;
-  margin: 24px auto 0;
+  margin: 24px 0 0;
   width: 896px;
 }
 
@@ -87,4 +85,26 @@ footer p {
 .skip-button.active:before,
 .skip-button:hover:before {
   background: ghostwhite;
+}
+
+@media (max-width: 780px) {
+  .slider {
+    height: 365px;
+    width: 640px;
+  }
+
+  .slider-controls {
+    width: 380px;
+  }
+}
+
+@media (max-width: 540px) {
+  .slider {
+    height: 199px;
+    width: 350px;
+  }
+
+  .slider-controls {
+    width: 350px;
+  }
 }
