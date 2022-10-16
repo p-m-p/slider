@@ -137,33 +137,31 @@ export class TileSlider implements Effect {
           applyCss(tile as HTMLElement, { 'background-image': `url(${imgSrc})` }),
         )
 
-      requestAnimationFrame(() => {
-        for (let i = 0; i < this.grid.rows; ++i) {
-          let j = i * this.grid.cols
-          let timerIndex = 0
+      for (let i = 0; i < this.grid.rows; ++i) {
+        let j = i * this.grid.cols
+        let timerIndex = 0
 
-          const rowEnd = j + this.grid.cols
-          const rowTimeout = i * rowInterval
+        const rowEnd = j + this.grid.cols
+        const rowTimeout = i * rowInterval
 
-          setTimeout(() => {
-            for (; j < rowEnd; ++j) {
-              const tileTimeout = timerIndex * tileInterval
-              const tile = tiles[j] as HTMLElement
+        setTimeout(() => {
+          for (; j < rowEnd; ++j) {
+            const tileTimeout = timerIndex * tileInterval
+            const tile = tiles[j] as HTMLElement
 
-              setTimeout(() => {
-                this.tileTransition.transition(tile, nextFace)
+            setTimeout(() => {
+              this.tileTransition.transition(tile, nextFace)
 
-                if (tile === tiles[tiles.length - 1]) {
-                  this.activeFace = nextFace
-                  resolve()
-                }
-              }, tileTimeout)
+              if (tile === tiles[tiles.length - 1]) {
+                this.activeFace = nextFace
+                resolve()
+              }
+            }, tileTimeout)
 
-              timerIndex += 1
-            }
-          }, rowTimeout)
-        }
-      })
+            timerIndex += 1
+          }
+        }, rowTimeout)
+      }
     })
   }
 

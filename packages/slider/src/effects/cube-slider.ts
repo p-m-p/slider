@@ -99,37 +99,35 @@ export class CubeSlider implements Effect {
     return new Promise((resolve) => {
       const angle = settings.isPrevious ? 90 : -90
 
-      requestAnimationFrame(() => {
-        applyCss(settings.slides[settings.nextIndex], {
-          transform: `${this.rotation(-angle)} translate3d(0, 0, ${this.translateZ}px)`,
-          'z-index': '2',
+      applyCss(settings.slides[settings.nextIndex], {
+        transform: `${this.rotation(-angle)} translate3d(0, 0, ${this.translateZ}px)`,
+        'z-index': '2',
+      })
+
+      applyCss(settings.el, {
+        transition: `transform ${settings.speed}ms`,
+        transform: `translate3d(0, 0, -${this.translateZ}px) ${this.rotation(angle)}`,
+      })
+
+      setTimeout(() => {
+        settings.slides.forEach((s, index) => {
+          if (index !== settings.nextIndex) {
+            applyCss(s, { transform: 'initial' })
+          }
         })
 
         applyCss(settings.el, {
-          transition: `transform ${settings.speed}ms`,
-          transform: `translate3d(0, 0, -${this.translateZ}px) ${this.rotation(angle)}`,
+          transition: 'initial',
+          transform: `translate3d(0, 0, -${this.translateZ}px) ${this.rotation(0)}`,
         })
 
-        setTimeout(() => {
-          settings.slides.forEach((s, index) => {
-            if (index !== settings.nextIndex) {
-              applyCss(s, { transform: 'initial' })
-            }
-          })
+        applyCss(settings.slides[settings.nextIndex], {
+          transform: `${this.rotation(0)} translate3d(0, 0, ${this.translateZ}px)`,
+          'z-index': '1',
+        })
 
-          applyCss(settings.el, {
-            transition: 'initial',
-            transform: `translate3d(0, 0, -${this.translateZ}px) ${this.rotation(0)}`,
-          })
-
-          applyCss(settings.slides[settings.nextIndex], {
-            transform: `${this.rotation(0)} translate3d(0, 0, ${this.translateZ}px)`,
-            'z-index': '1',
-          })
-
-          resolve()
-        }, settings.speed)
-      })
+        resolve()
+      }, settings.speed)
     })
   }
 

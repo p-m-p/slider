@@ -105,46 +105,49 @@ export class BoxSlider {
   }
 
   skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
-    if (this.isDestroyed || nextIndex === this.activeIndex) {
-      return Promise.resolve()
-    }
+    return new Promise((resolve, reject) => {
+      if (this.isDestroyed || nextIndex === this.activeIndex) {
+        return resolve()
+      }
 
-    if (nextIndex < 0 || nextIndex >= this.slides.length) {
-      throw new Error(`${nextIndex} is not a valid slide index`)
-    }
+      if (nextIndex < 0 || nextIndex >= this.slides.length) {
+        reject(new Error(`${nextIndex} is not a valid slide index`))
+      }
 
-    if (this.options.autoScroll) {
-      this.stopAutoScroll()
-    }
+      if (this.options.autoScroll) {
+        this.stopAutoScroll()
+      }
 
-    const settings = {
-      el: this.el,
-      slides: this.slides,
-      speed: this.options.speed,
-      currentIndex: this.activeIndex,
-      isPrevious: backwards === undefined ? nextIndex < this.activeIndex : backwards,
-      nextIndex,
-    }
+      const settings = {
+        el: this.el,
+        slides: this.slides,
+        speed: this.options.speed,
+        currentIndex: this.activeIndex,
+        isPrevious: backwards === undefined ? nextIndex < this.activeIndex : backwards,
+        nextIndex,
+      }
 
-    this.transitionPromise = (this.transitionPromise || Promise.resolve()).then(() => {
-      this.activeIndex = nextIndex
+      this.transitionPromise = (this.transitionPromise || Promise.resolve()).then(() => {
+        requestAnimationFrame(() => {
+          this.activeIndex = nextIndex
 
-      this.emit('before', {
-        currentIndex: settings.currentIndex,
-        nextIndex: settings.nextIndex,
-        speed: settings.speed,
-      })
+          this.emit('before', {
+            currentIndex: settings.currentIndex,
+            nextIndex: settings.nextIndex,
+            speed: settings.speed,
+          })
 
-      return this.effect.transition(settings).then(() => {
-        if (this.options.autoScroll) {
-          this.setAutoScroll()
-        }
+          return this.effect.transition(settings).then(() => {
+            if (this.options.autoScroll) {
+              this.setAutoScroll()
+            }
 
-        this.emit('after')
+            this.emit('after')
+            resolve()
+          })
+        })
       })
     })
-
-    return this.transitionPromise
   }
 
   pause(): BoxSlider {

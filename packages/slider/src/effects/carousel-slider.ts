@@ -58,28 +58,26 @@ export class CarouselSlider implements Effect {
         left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth,
       })
 
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          applyCss(nextSlide, {
-            left: '0',
-            transition: `left ${settings.speed}ms ${this.options.timingFunction}`,
-          })
+      setTimeout(() => {
+        applyCss(nextSlide, {
+          left: '0',
+          transition: `left ${settings.speed}ms ${this.options.timingFunction}`,
+        })
 
+        applyCss(currentSlide, {
+          left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
+          transition: `left ${settings.speed}ms ${this.options.timingFunction}`,
+        })
+
+        window.setTimeout(() => {
           applyCss(currentSlide, {
-            left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
-            transition: `left ${settings.speed}ms ${this.options.timingFunction}`,
+            left: this.slideWidth,
+            transition: 'initial',
           })
 
-          window.setTimeout(() => {
-            applyCss(currentSlide, {
-              left: this.slideWidth,
-              transition: 'initial',
-            })
-
-            resolve()
-          }, settings.speed + 10)
-        }, 10)
-      })
+          resolve()
+        }, settings.speed + 10)
+      }, 10)
     })
   }
 }
