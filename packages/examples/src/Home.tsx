@@ -8,7 +8,7 @@ import {
   TileSliderOptions,
 } from '@boxslider/slider'
 import { CarouselSlider, CubeSlider, FadeSlider, TileSlider } from '@boxslider/react'
-import './App.css'
+import './Home.css'
 
 const images = Array.from({ length: 6 }).map(
   (n, i) => `/slider/Futuristic_city_scape_on_a_distant_alien_planet_${i + 1}.png`,
