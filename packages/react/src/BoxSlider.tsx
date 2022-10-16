@@ -39,8 +39,8 @@ function filterProps(props: BoxSliderProps): ComponentPropsWithoutRef<'div'> {
 }
 
 export class BoxSlider extends Component<BoxSliderProps> {
-  private el!: HTMLDivElement | null
-  private boxSlider!: BxSlider
+  private el?: HTMLDivElement | null
+  private boxSlider?: BxSlider
 
   componentDidMount() {
     if (this.el) {
@@ -64,18 +64,14 @@ export class BoxSlider extends Component<BoxSliderProps> {
   }
 
   componentWillUnmount() {
-    if (this.boxSlider) {
-      this.boxSlider.destroy()
-    }
+    this.boxSlider?.destroy()
   }
 
   componentDidUpdate(prevProps: Readonly<BoxSliderProps>) {
-    if (this.boxSlider) {
-      this.boxSlider.reset({ ...this.props.sliderOptions })
+    this.boxSlider?.reset({ ...this.props.sliderOptions })
 
-      if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
-        this.boxSlider?.skipTo(this.props.slideIndex)
-      }
+    if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
+      this.boxSlider?.skipTo(this.props.slideIndex)
     }
   }
 
