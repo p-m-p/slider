@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.7 (2022-10-16)
+
+### Bug Fixes
+
+- **examples:** rename app to home ([4277a0c](https://github.com/p-m-p/slider/commit/4277a0c909b439884c9ef10e7652e46112d27cc6))
+
 ## 2.0.6 (2022-10-11)
 
 **Note:** Version bump only for package @boxslider/examples
