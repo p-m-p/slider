@@ -1,5 +1,10 @@
 import { Component, type ComponentPropsWithoutRef, type MutableRefObject } from 'react'
-import { BoxSlider as BxSlider, BoxSliderOptions, SliderEventData, SliderEventHandler } from '@boxslider/slider'
+import {
+  BoxSlider as BxSlider,
+  type BoxSliderOptions,
+  type SliderEventData,
+  type SliderEventHandler,
+} from '@boxslider/slider'
 
 export interface BoxSliderComponentProps extends ComponentPropsWithoutRef<'div'> {
   onAfter?: SliderEventHandler

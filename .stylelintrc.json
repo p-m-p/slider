@@ -1,0 +1,6 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "rules": {
+    "selector-class-pattern": "[A-Z]{1,}[a-z]*(-[a-z]+)*"
+  }
+}

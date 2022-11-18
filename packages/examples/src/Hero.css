@@ -1,0 +1,53 @@
+.Hero {
+  position: relative;
+}
+
+.Hero-slides {
+  position: relative;
+}
+
+.Hero-slide {
+  left: 0;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+}
+
+.Hero-slide:first-child {
+  visibility: visible;
+  position: static !important;
+}
+
+.Hero-slide img {
+  width: 100%;
+  height: auto;
+}
+
+.Hero-captions {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.Hero-caption {
+  background-color: lightslategrey;
+  padding: 16px 56px 16px 0;
+  margin-top: 1px;
+  transform: translateX(40px);
+  transition: transform 300ms;
+}
+
+.Hero-caption::before {
+  background-color: inherit;
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.Hero-caption--active {
+  transform: translateX(0);
+}

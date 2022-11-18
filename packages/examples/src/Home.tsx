@@ -56,7 +56,7 @@ const effects: {
   },
 ]
 
-function App() {
+function Home() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [effect, setEffect] = useState(effects[0])
   const slides = images.map((image, i) => (
@@ -132,4 +132,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
