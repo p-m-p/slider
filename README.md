@@ -2,8 +2,8 @@
     <img src="assets/logo.png" width="480px" alt="BoxSlider logo" alt="Box Slider">
 </p>
 <p align="center">
-    A modern, light weight content slider 
-</p> 
+    A modern, light weight content slider
+</p>
 <p align="center">
     <a href="https://www.npmjs.com/package/@boxslider/slider"><img alt="NPM Status" src="https://img.shields.io/npm/v/@boxslider/slider.svg?style=flat"></a>
     <img alt="Build Status" src="https://img.shields.io/github/workflow/status/boxslider/slider/Verify/master?style=flat">
@@ -218,8 +218,8 @@ event data as well as the transition speed.
 ```javascript
 slider.addEventListener('before', (data) => {
   // data === {
-  //   currentIndex: number,
-  //   nextIndex: number,
+  //   currentIndex: number
+  //   nextIndex: number
   //   speed: number
   // }
 })
@@ -234,6 +234,7 @@ data
 slider.addEventListener('after', (data) => {
   // data === {
   //   activeIndex: number
+  //   speed: number
   // }
 })
 ```
