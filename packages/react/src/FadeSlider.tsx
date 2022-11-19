@@ -5,13 +5,13 @@ export interface FadeSliderProps extends BoxSliderComponentProps {
   effectOptions?: FadeSliderOptions
 }
 
-export function FadeSlider(props: FadeSliderProps) {
+export function FadeSlider({ effectOptions, sliderOptions, ...props }: FadeSliderProps) {
   return (
     <BoxSlider
       {...props}
       sliderOptions={{
-        ...props.sliderOptions,
-        effect: new BxFadeSlider(props.effectOptions),
+        ...sliderOptions,
+        effect: new BxFadeSlider(effectOptions),
       }}>
       {props.children}
     </BoxSlider>

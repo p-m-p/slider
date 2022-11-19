@@ -28,7 +28,7 @@ event is available as props with the naming convention `on<Event>`.
 slider.addEventListener('pause', () => console.log('Slider paused'))
 
 // Equivalent component prop
-;<BxlFadeSlider onPause={() => console.log('Slider paused')} />
+;<FadeSlider onPause={() => console.log('Slider paused')}>...</FadeSlider>
 ```
 
 See the [events](https://github.com/p-m-p/slider#events) section of the main library page for all available events.

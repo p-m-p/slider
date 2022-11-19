@@ -5,13 +5,13 @@ export interface TileSliderProps extends BoxSliderComponentProps {
   effectOptions?: TileSliderOptions
 }
 
-export function TileSlider(props: TileSliderProps) {
+export function TileSlider({ effectOptions, sliderOptions, ...props }: TileSliderProps) {
   return (
     <BoxSlider
       {...props}
       sliderOptions={{
-        ...props.sliderOptions,
-        effect: new BxTileSlider(props.effectOptions),
+        ...sliderOptions,
+        effect: new BxTileSlider(effectOptions),
       }}>
       {props.children}
     </BoxSlider>
