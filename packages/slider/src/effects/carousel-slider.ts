@@ -4,10 +4,11 @@ import { applyCss } from '../utils'
 import { StateStore } from '../state-store'
 
 export interface CarouselSliderOptions {
+  cover?: boolean
   timingFunction?: string
 }
 
-const SLIDE_STYLES = ['height', 'left', 'position', 'top', 'transition', 'width']
+const SLIDE_STYLES = ['height', 'left', 'position', 'top', 'tranform', 'transition', 'width', 'visibility', 'z-index']
 const BOX_STYLES = ['overflow', 'position']
 
 export class CarouselSlider implements Effect {
@@ -17,6 +18,7 @@ export class CarouselSlider implements Effect {
 
   constructor(options?: CarouselSliderOptions) {
     this.options = {
+      cover: options?.cover === true,
       timingFunction: options?.timingFunction || 'ease-in-out',
     }
   }
@@ -37,14 +39,22 @@ export class CarouselSlider implements Effect {
     slides.forEach((slide, index) => {
       applyCss(slide, {
         height: this.slideHeight,
-        left: this.slideWidth,
+        left: '0',
         position: 'absolute',
         top: '0',
+        transform: `translateX(${this.slideWidth})`,
+        transition: 'initial',
+        visibility: 'hidden',
         width: this.slideWidth,
+        'z-index': '1',
       })
 
       if (index === options.startIndex) {
-        applyCss(slide, { left: '0' })
+        applyCss(slide, {
+          transform: 'translateX(0px)',
+          visibility: 'visible',
+          'z-index': '2',
+        })
       }
     })
   }
@@ -55,29 +65,36 @@ export class CarouselSlider implements Effect {
 
     return new Promise((resolve) => {
       applyCss(nextSlide, {
-        left: settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth,
+        transform: `translateX(${settings.isPrevious ? `-${this.slideWidth}` : this.slideWidth})`,
       })
 
       setTimeout(() => {
         applyCss(nextSlide, {
-          left: '0',
-          transition: `left ${settings.speed}ms ${this.options.timingFunction}`,
+          transform: 'translateX(0px)',
+          transition: `transform ${settings.speed}ms ${this.options.timingFunction}`,
+          visibility: 'visible',
+          'z-index': '2',
         })
 
         applyCss(currentSlide, {
-          left: settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`,
-          transition: `left ${settings.speed}ms ${this.options.timingFunction}`,
+          transform: this.options.cover
+            ? 'translateX(0px)'
+            : `translateX(${settings.isPrevious ? this.slideWidth : `-${this.slideWidth}`})`,
+          transition: this.options.cover ? 'initial' : `transform ${settings.speed}ms ${this.options.timingFunction}`,
+          visibility: 'visible',
+          'z-index': '1',
         })
 
         window.setTimeout(() => {
           applyCss(currentSlide, {
-            left: this.slideWidth,
+            transform: `translateX(${this.slideWidth})`,
             transition: 'initial',
+            visibility: 'hidden',
           })
 
           resolve()
-        }, settings.speed + 10)
-      }, 10)
+        }, settings.speed)
+      }, 0)
     })
   }
 }
