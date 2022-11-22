@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.1.0 (2022-11-22)
+
+### Features
+
+- **slider:** add cover effect for carousel ([84e5235](https://github.com/boxslider/slider/packages/slider/commit/84e523555ff9c03e591f71417115b837a9147c57))
+
 ## 2.0.10 (2022-11-19)
 
 **Note:** Version bump only for package @boxslider/slider

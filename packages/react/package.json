@@ -1,6 +1,6 @@
 {
   "name": "@boxslider/react",
-  "version": "2.0.10",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/boxslider/slider/packages/react"
@@ -38,7 +38,7 @@
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   },
   "dependencies": {
-    "@boxslider/slider": "^2.0.10"
+    "@boxslider/slider": "^2.1.0"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
