@@ -6,7 +6,7 @@
 </p>
 <p align="center">
     <a href="https://www.npmjs.com/package/@boxslider/slider"><img alt="NPM Status" src="https://img.shields.io/npm/v/@boxslider/slider.svg?style=flat"></a>
-    <img alt="Build Status" src="https://img.shields.io/github/workflow/status/boxslider/slider/Verify/master?style=flat">
+    <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/p-m-p/slider/ci-build.yml?branch=main">
 </p>
 
 ### About
