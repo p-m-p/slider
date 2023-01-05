@@ -3,17 +3,12 @@
   "license": "MIT",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna run clean",
-    "dev": "npm run dev -w packages/examples",
-    "lint": "eslint",
-    "postinstall": "npm run bootstrap",
-    "prebuild": "npm run lint",
+    "dev": "pnpm run --filter @boxslider/examples dev",
+    "format": "prettier --write .",
+    "lint": "prettier --check . && eslint",
     "prepare": "husky install",
     "release": "lerna publish --yes"
   },

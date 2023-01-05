@@ -46,7 +46,8 @@ footer p {
   width: 896px;
 }
 
-.slide, .slide img {
+.slide,
+.slide img {
   height: 100%;
   width: 100%;
 }
