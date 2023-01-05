@@ -38,7 +38,7 @@
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   },
   "dependencies": {
-    "@boxslider/slider": "^2.1.7"
+    "@boxslider/slider": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
