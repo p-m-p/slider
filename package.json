@@ -7,7 +7,8 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "dev": "pnpm run --filter @boxslider/examples dev",
-    "lint": "eslint",
+    "format": "prettier --write .",
+    "lint": "prettier --check . && eslint",
     "prepare": "husky install",
     "release": "lerna publish --yes"
   },
