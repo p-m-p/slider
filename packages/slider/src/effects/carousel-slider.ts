@@ -9,7 +9,7 @@ export interface CarouselSliderOptions {
 }
 
 const SLIDE_STYLES = ['height', 'left', 'position', 'top', 'tranform', 'transition', 'width', 'visibility', 'z-index']
-const BOX_STYLES = ['overflow', 'position']
+const BOX_STYLES = ['height', 'overflow', 'position', 'width']
 
 export class CarouselSlider implements Effect {
   private readonly options: CarouselSliderOptions
@@ -30,7 +30,11 @@ export class CarouselSlider implements Effect {
     stateStore.storeStyles(slides, SLIDE_STYLES)
     stateStore.storeStyles(el, BOX_STYLES)
 
-    applyCss(el, { overflow: 'hidden' })
+    applyCss(el, {
+      height: this.slideHeight,
+      overflow: 'hidden',
+      width: this.slideWidth,
+    })
 
     if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative' })
