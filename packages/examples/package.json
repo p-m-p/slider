@@ -11,6 +11,7 @@
   "dependencies": {
     "@boxslider/react": "workspace:*",
     "@boxslider/slider": "workspace:*",
-    "react-github-btn": "^1.4.0"
+    "react-github-btn": "^1.4.0",
+    "react-router-dom": "^6.6.1"
   }
 }

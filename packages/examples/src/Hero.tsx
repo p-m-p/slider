@@ -1,60 +1,38 @@
 import { CarouselSlider } from '@boxslider/react'
 import { SliderEventData } from '@boxslider/slider'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import useImgLoader from './useImgLoader'
 import './Hero.css'
 
 const slides = [
   {
-    background: '/slider/hero-slides/product-design.webp',
+    background: '/slider/hero-slides/ropes-large.webp',
     caption: 'Product design',
   },
   {
-    background: '/slider/hero-slides/product-design.webp',
+    background: '/slider/hero-slides/squat-large.webp',
     caption: 'Caption Two',
   },
   {
-    background: '/slider/hero-slides/product-design.webp',
+    background: '/slider/hero-slides/deadlift-large.webp',
     caption: 'Caption Three',
   },
   {
-    background: '/slider/hero-slides/product-design.webp',
+    background: '/slider/hero-slides/squat-bw-large.webp',
     caption: 'Caption Four',
-  },
-  {
-    background: '/slider/hero-slides/product-design.webp',
-    caption: 'Caption Five',
   },
 ]
 
-function useImgLoader(srcList: string[]): boolean {
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    console.log(srcList)
-    Promise.all(
-      srcList.map(
-        (src) =>
-          new Promise((resolve, reject) => {
-            const img = document.createElement('img')
-            img.src = src
-            img.onload = resolve
-            img.onerror = reject
-          }),
-      ),
-    ).then(() => setLoaded(true))
-  }, [srcList])
-
-  return loaded
-}
-
 function Slider() {
+  const [sliderOptions] = useState({ autoScroll: true })
+  const [effectOptions] = useState({ cover: true })
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
     <>
       <CarouselSlider
-        sliderOptions={{ autoScroll: true }}
-        effectOptions={{ cover: true }}
+        sliderOptions={sliderOptions}
+        effectOptions={effectOptions}
         className="Hero-slides"
         onBefore={({ nextIndex }: SliderEventData) => {
           if (nextIndex !== undefined) {
@@ -84,13 +62,15 @@ export default function Hero() {
   const isLoaded = useImgLoader(slides.map((s) => s.background))
 
   return (
-    <div>
+    <div className="Hero">
       {isLoaded ? (
-        <div className="Hero">
-          <Slider />
-        </div>
+        <Slider />
       ) : (
-        <div>loading...</div>
+        <div className="Hero-placeholder">
+          <picture>
+            <img src={slides[0].background} />
+          </picture>
+        </div>
       )}
     </div>
   )

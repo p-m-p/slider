@@ -6,19 +6,15 @@
   position: relative;
 }
 
-.Hero-slide {
+.Hero-slide:not(:first-child) {
   left: 0;
   position: absolute;
   top: 0;
   visibility: hidden;
 }
 
-.Hero-slide:first-child {
-  visibility: visible;
-  position: static !important;
-}
-
-.Hero-slide img {
+.Hero-slide img,
+.Hero-placeholder img {
   width: 100%;
   height: auto;
 }
