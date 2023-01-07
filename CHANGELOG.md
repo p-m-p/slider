@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.10 (2023-01-07)
+
+### Bug Fixes
+
+- **slider:** ensure carousel maintains slide dimensions ([f317fd0](https://github.com/p-m-p/slider/commit/f317fd0ec9b0530ff0f4b77e4df444359bd8f219))
+
 ## 2.1.9 (2023-01-06)
 
 **Note:** Version bump only for package slider

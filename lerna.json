@@ -9,7 +9,7 @@
     }
   },
   "npmClient": "pnpm",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "useNx": true,
   "useWorkspaces": true
 }
