@@ -1,4 +1,4 @@
-import { Component, ComponentPropsWithoutRef } from 'react'
+import { Component, type ComponentPropsWithoutRef, type MutableRefObject } from 'react'
 import { BoxSlider as BxSlider, BoxSliderOptions, SliderEventData, SliderEventHandler } from '@boxslider/slider'
 
 export interface BoxSliderComponentProps extends ComponentPropsWithoutRef<'div'> {
@@ -9,6 +9,7 @@ export interface BoxSliderComponentProps extends ComponentPropsWithoutRef<'div'>
   onStopAutoScroll?: SliderEventHandler
   sliderOptions?: Partial<BoxSliderOptions>
   slideIndex?: number
+  sliderRef?: MutableRefObject<BxSlider | null>
 }
 
 export interface BoxSliderProps extends BoxSliderComponentProps {
@@ -24,6 +25,7 @@ const sliderPropNames = [
   'onStopAutoScroll',
   'sliderOptions',
   'slideIndex',
+  'sliderRef',
 ]
 
 function filterProps(props: BoxSliderProps): ComponentPropsWithoutRef<'div'> {
@@ -60,6 +62,10 @@ export class BoxSlider extends Component<BoxSliderProps> {
       this.boxSlider.addEventListener('destroy', (ev: SliderEventData) => {
         if (this.props.onDestroy) this.props.onDestroy.call(undefined, ev)
       })
+    }
+
+    if (this.boxSlider && this.props.sliderRef) {
+      this.props.sliderRef.current = this.boxSlider
     }
   }
 
