@@ -1,49 +1,78 @@
+.Page {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1800px;
+}
+
+.AppBar {
+  align-items: center;
+  background: rgb(0 0 0 / 40%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.AppBar-title {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.AppBar-nav {
+  display: flex;
+  gap: 4;
+}
+
+.AppBar-nav a {
+  display: block;
+  padding: 16px;
+}
+
 .Hero {
   position: relative;
+  z-index: 1;
 }
 
-.Hero-slides {
+.HeroSlider {
   position: relative;
 }
 
-.Hero-slide:not(:first-child) {
+.HeroSlider-slide:not(:first-child) {
   left: 0;
   position: absolute;
   top: 0;
   visibility: hidden;
 }
 
-.Hero-slide img,
-.Hero-placeholder img {
+.HeroSlider-slide figure {
+  display: block;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.HeroSlider-slide figcaption {
+  background: orange;
+  display: block;
+  font-size: 2rem;
+  line-height: 2rem;
+  left: 40px;
+  max-width: 320px;
+  padding: 16px;
+  position: absolute;
+  top: 200px;
+}
+
+.HeroSlider-slide img,
+.HeroPlaceholder img {
   width: 100%;
   height: auto;
 }
 
-.Hero-captions {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-}
-
-.Hero-caption {
-  background-color: lightslategrey;
-  padding: 16px 56px 16px 0;
-  margin-top: 1px;
-  transform: translateX(40px);
-  transition: transform 300ms;
-}
-
-.Hero-caption::before {
-  background-color: inherit;
-  content: ' ';
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: -1;
-}
-
-.Hero-caption--active {
-  transform: translateX(0);
+.HeroControls {
+  display: flex;
 }

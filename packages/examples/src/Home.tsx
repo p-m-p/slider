@@ -67,7 +67,7 @@ function Home() {
 
   return (
     <div className="App">
-      <header>
+      <header className="App-header">
         <h1>Box Slider</h1>
         <GitHubButton
           href="https://github.com/boxslider/slider"
@@ -80,7 +80,7 @@ function Home() {
         </GitHubButton>
       </header>
 
-      <main>
+      <main className="App-main">
         <section className="slider-viewport" aria-roledescription="carousel">
           {effect.component({
             'aria-label': 'Image carousel',
@@ -125,7 +125,7 @@ function Home() {
         </section>
       </main>
 
-      <footer>
+      <footer className="App-footer">
         <p>Images of “{diffusionText}” created with Stable Diffusion</p>
       </footer>
     </div>

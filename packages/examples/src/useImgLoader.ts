@@ -4,17 +4,29 @@ export default function useImgLoader(srcList: string[]): boolean {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    Promise.all(
-      srcList.map(
-        (src) =>
-          new Promise((resolve, reject) => {
-            const img = document.createElement('img')
-            img.src = src
-            img.onload = resolve
-            img.onerror = reject
-          }),
-      ),
-    ).then(() => setLoaded(true))
+    let toLoad = [...srcList]
+    const listeners: { img: HTMLImageElement; listener: () => void }[] = []
+    const timer = setTimeout(() => {
+      srcList.map((src) => {
+        const img = document.createElement('img')
+        const listener = () => {
+          toLoad = toLoad.filter((s) => s !== src)
+
+          if (toLoad.length === 0) {
+            setLoaded(true)
+          }
+        }
+        img.addEventListener('load', listener, false)
+        img.src = src
+        listeners.push({ img, listener })
+      })
+    }, 100)
+
+    return () => {
+      clearTimeout(timer)
+      listeners.forEach(({ img, listener }) => img.removeEventListener('load', listener))
+      listeners.length = 0
+    }
   }, [srcList])
 
   return loaded

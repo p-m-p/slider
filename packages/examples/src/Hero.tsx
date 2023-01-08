@@ -1,77 +1,72 @@
-import { CarouselSlider } from '@boxslider/react'
-import { SliderEventData } from '@boxslider/slider'
-import { useState } from 'react'
+import HeroSlider from './HeroSlider'
 import useImgLoader from './useImgLoader'
 import './Hero.css'
 
 const slides = [
-  {
-    background: '/slider/hero-slides/ropes-large.webp',
-    caption: 'Product design',
-  },
-  {
-    background: '/slider/hero-slides/squat-large.webp',
-    caption: 'Caption Two',
-  },
-  {
-    background: '/slider/hero-slides/deadlift-large.webp',
-    caption: 'Caption Three',
-  },
-  {
-    background: '/slider/hero-slides/squat-bw-large.webp',
-    caption: 'Caption Four',
-  },
+  '/slider/hero-slides/ropes-large.webp',
+  '/slider/hero-slides/squat-large.webp',
+  '/slider/hero-slides/deadlift-large.webp',
+  '/slider/hero-slides/squat-bw-large.webp',
 ]
 
-function Slider() {
-  const [sliderOptions] = useState({ autoScroll: true })
-  const [effectOptions] = useState({ cover: true })
-  const [activeIndex, setActiveIndex] = useState(0)
-
-  return (
+export default function Hero() {
+  const isLoaded = useImgLoader(slides)
+  const heroSlides = (
     <>
-      <CarouselSlider
-        sliderOptions={sliderOptions}
-        effectOptions={effectOptions}
-        className="Hero-slides"
-        onBefore={({ nextIndex }: SliderEventData) => {
-          if (nextIndex !== undefined) {
-            setActiveIndex(nextIndex)
-          }
-        }}>
-        {slides.map((slide) => (
-          <div key={slide.caption} className="Hero-slide">
-            <picture>
-              <img src={slide.background} />
-            </picture>
-          </div>
-        ))}
-      </CarouselSlider>
-      <section className="Hero-captions">
-        {slides.map((slide, index) => (
-          <div key={slide.caption} className={`Hero-caption ${activeIndex === index ? 'Hero-caption--active' : ''}`}>
-            <span>{slide.caption}</span>
-          </div>
-        ))}
-      </section>
+      <div className="HeroSlider-slide">
+        <figure>
+          <img src="/slider/hero-slides/ropes-large.webp" />
+          <figcaption>
+            To make the slider responsive we use a placeholder with the first slide image to initially render the page.
+            This also helps with SSR and preventing any flash of unstyled content
+          </figcaption>
+        </figure>
+      </div>
+      <div className="HeroSlider-slide">
+        <figure>
+          <img src="/slider/hero-slides/squat-large.webp" />
+          <figcaption>
+            To make the slider responsive we use a placeholder with the first slide image to initially render the page.
+            This also helps with SSR and preventing any flash of unstyled content
+          </figcaption>
+        </figure>
+      </div>
+      <div className="HeroSlider-slide">
+        <figure>
+          <img src="/slider/hero-slides/deadlift-large.webp" />
+          <figcaption>
+            To make the slider responsive we use a placeholder with the first slide image to initially render the page.
+            This also helps with SSR and preventing any flash of unstyled content
+          </figcaption>
+        </figure>
+      </div>
+      <div className="HeroSlider-slide">
+        <figure>
+          <img src="/slider/hero-slides/squat-bw-large.webp" />
+          <figcaption>
+            To make the slider responsive we use a placeholder with the first slide image to initially render the page.
+            This also helps with SSR and preventing any flash of unstyled content
+          </figcaption>
+        </figure>
+      </div>
     </>
   )
-}
-
-export default function Hero() {
-  const isLoaded = useImgLoader(slides.map((s) => s.background))
 
   return (
-    <div className="Hero">
-      {isLoaded ? (
-        <Slider />
-      ) : (
-        <div className="Hero-placeholder">
-          <picture>
-            <img src={slides[0].background} />
-          </picture>
+    <div className="Page">
+      <header>
+        <div className="AppBar">
+          <h1 className="AppBar-title">Responsive Hero Slider</h1>
+          <nav className="AppBar-nav">
+            <a href="#">Setup</a>
+            <a href="#">Source code</a>
+          </nav>
         </div>
-      )}
+
+        <div className="Hero">
+          <div className="HeroSlider">{isLoaded ? <HeroSlider>{heroSlides}</HeroSlider> : <>{heroSlides}</>}</div>
+        </div>
+      </header>
     </div>
   )
 }
