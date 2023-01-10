@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.2.0 (2023-01-10)
+
+### Features
+
+- **react:** add sliderRef prop ([a66e8a9](https://github.com/p-m-p/slider/commit/a66e8a96ab0386fe4b3a35db665443492858d6ea))
+
 ## 2.1.10 (2023-01-07)
 
 ### Bug Fixes
