@@ -1,4 +1,4 @@
-import { type TileSettings, type TileTransition } from './tile-transition'
+import type { TileSettings, TileTransition } from './tile-transition'
 import { applyCss } from '../../utils'
 
 class FadeTransition implements TileTransition {
@@ -6,6 +6,7 @@ class FadeTransition implements TileTransition {
     const tile = document.createElement('div')
     const front = document.createElement('div')
     const back = document.createElement('div')
+    const faces = [front, back]
 
     tile.classList.add(tileSettings.tileClass)
 
@@ -16,8 +17,9 @@ class FadeTransition implements TileTransition {
       top: `${tileSettings.fromTop}px`,
       width: `${tileSettings.width}px`,
     })
-    ;[front, back].forEach((t) =>
-      applyCss(t, {
+
+    faces.forEach((face) =>
+      applyCss(face, {
         'background-position': `-${tileSettings.fromLeft}px -${tileSettings.fromTop}px`,
         'background-size': `${tileSettings.boxWidth}px ${tileSettings.boxHeight}px`,
         height: `${tileSettings.height}px`,

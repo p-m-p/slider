@@ -1,5 +1,5 @@
-import { type BoxSliderOptions } from '../box-slider-options'
-import { type StateStore } from '../state-store'
+import type { BoxSliderOptions } from '../box-slider-options'
+import type { StateStore } from '../state-store'
 
 export interface TransitionSettings {
   el: HTMLElement

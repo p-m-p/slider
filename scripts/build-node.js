@@ -16,20 +16,18 @@ const options = {
   tsconfig: '../../tsconfig.json',
 }
 
-build({
-  ...options,
-  outdir: join(distDir, 'esm'),
-  format: 'esm',
-}).catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
-
-build({
-  ...options,
-  outdir: join(distDir, 'cjs'),
-  format: 'cjs',
-}).catch((err) => {
+Promise.all([
+  build({
+    ...options,
+    outdir: join(distDir, 'esm'),
+    format: 'esm',
+  }),
+  build({
+    ...options,
+    outdir: join(distDir, 'cjs'),
+    format: 'cjs',
+  }),
+]).catch((err) => {
   console.error(err)
   process.exit(1)
 })

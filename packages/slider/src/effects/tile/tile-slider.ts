@@ -1,6 +1,6 @@
-import { type Effect, type TransitionSettings } from '../effect'
+import type { Effect, TransitionSettings } from '../effect'
+import type { BoxSliderOptions } from '../../box-slider-options'
 import { StateStore } from '../../state-store'
-import { type BoxSliderOptions } from '../../box-slider-options'
 import { applyCss, locateSlideImageSrc } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "lerna run build",
+    "build:force": "lerna run build --skip-nx-cache",
     "clean": "lerna run clean",
     "dev": "pnpm run --filter @boxslider/examples dev",
     "format": "prettier --write .",
