@@ -11,8 +11,8 @@
 
 ### About
 
-BoxSlider is a micro-library with zero dependencies providing light-weight, responsive content slider effects for
-modern browsers.
+BoxSlider is a small library with zero dependencies that provides a light-weight, responsive content slider with
+various slide transition effects for modern browsers.
 
 ### Installation
 
@@ -23,7 +23,17 @@ npm install @boxslider/slider
 ### React
 
 For React component implementations of each effect view the
-[@boxslider/react](https://github.com/boxslider/slider/tree/master/packages/react) package.
+[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react) package.
+
+### Including the package
+
+The library is built for ECMAScript and CommonJS modules so can be imported into an existing project as module exports.
+It is also built for browsers in the file './node_modules/@boxslider/slider/dist/boxslider.min.js' where all exports
+are available on the `$bs` global variable.
+
+```javascript
+const boxslider = new $bx.BoxSlider(document.querySelector('#slider'), { effect: new $bs.FadeSlider() })
+```
 
 ### Usage
 
@@ -61,7 +71,7 @@ the desired effect for detailed instructions.
 </section>
 ```
 
-To initialize the slider from JavaScript select the box and create a new `BoxSlider` with
+To initialize the slider from JavaScript select the box and create a new `BoxSlider` instance with
 the desired settings and effect.
 
 ```javascript
@@ -88,11 +98,11 @@ slider.next().then(() => {
 - `effect: Effect` **Required** option for the slide effect.
 - `speed: number (default: 800)` The time interval in milliseconds within which the
   slide animation will complete
-- `autoScroll: boolean (default: false)` Set true to automatically transition through
+- `autoScroll: boolean (default: true)` Set true to automatically transition through
   the slides
 - `timeout: number (default: 5000)` The time interval between slide transitions. For use
   with autoScroll
-- `pauseOnHover: boolean (default: true)` Pause an auto-scrolling slider when the users
+- `pauseOnHover: boolean (default: false)` Pause an auto-scrolling slider when the users
   mouse hovers over it. For use with autoScroll or a slider in play mode.
 - `swipe: boolean (default: true)` Enable swiping the box to navigate to the next or
   previous slide.
@@ -119,13 +129,14 @@ slider.next().then(() => {
   slide transitions.
 - `rows: number (default: 8)` The number of tile rows into which the slide should
   be split
-- `rowOffset: number (default: 100)` The time offset for starting to animate the tiles
+- `rowOffset: number (default: 50)` The time offset for starting to animate the tiles
   in a row
 
 #### CarouselSlider
 
 - `timingFunction: string (default: ease-in-out)` The CSS transition timing function to use
   when animating slides into position.
+- `cover: boolean (default: false)` If true sets the slide effect to cover over the previous slide.
 
 ### Methods
 
@@ -143,7 +154,7 @@ slider.skipTo(3).then(() => {
 
 #### `play`
 
-Start `autoScroll`'ing a slider
+Start auto scrolling the slides
 
 ```javascript
 slider.play()
@@ -151,7 +162,7 @@ slider.play()
 
 #### `pause`
 
-Pause an already `autoScroll`'ing a slider
+Pause an already auto scrolling slider
 
 ```javascript
 slider.pause()
@@ -233,7 +244,7 @@ data
 ```javascript
 slider.addEventListener('after', (data) => {
   // data === {
-  //   activeIndex: number
+  //   currentIndex: number
   //   speed: number
   // }
 })
@@ -244,8 +255,11 @@ slider.addEventListener('after', (data) => {
 Fires when the slider is put into play mode.
 
 ```javascript
-slider.addEventListener('play', () => {
-  /* no event data */
+slider.addEventListener('play', (data) => {
+  // data === {
+  //   currentIndex: number
+  //   speed: number
+  // }
 })
 ```
 
@@ -254,8 +268,11 @@ slider.addEventListener('play', () => {
 Fires when an `autoScroll`'ing slider is paused.
 
 ```javascript
-slider.addEventListener('pause', () => {
-  /* no event data */
+slider.addEventListener('pause', (data) => {
+  // data === {
+  //   currentIndex: number
+  //   speed: number
+  // }
 })
 ```
 
@@ -264,8 +281,11 @@ slider.addEventListener('pause', () => {
 Fires when a slider is destroyed.
 
 ```javascript
-slider.addEventListener('destroy', () => {
-  /* no event data */
+slider.addEventListener('destroy', (data) => {
+  // data === {
+  //   currentIndex: number
+  //   speed: number
+  // }
 })
 ```
 
@@ -301,7 +321,10 @@ example implementation is shown below.
 </section>
 
 <script>
-  const slider = new BoxSlider(document.querySelector('#demo-slider'), { autoScroll: false })
+  const slider = new BoxSlider(document.querySelector('#demo-slider'), {
+    effect: new CarouselSlider(),
+    autoScroll: false,
+  })
   document.querySelector('#prev-slide').addEventListener('click', () => slider.prev())
   // ... other button controls
 </script>
