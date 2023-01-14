@@ -1,5 +1,5 @@
-import { type BoxSliderOptions } from '../box-slider-options'
-import { type Effect, type TransitionSettings } from './effect'
+import type { BoxSliderOptions } from '../box-slider-options'
+import type { Effect, TransitionSettings } from './effect'
 import { applyCss } from '../utils'
 import { StateStore } from '../state-store'
 

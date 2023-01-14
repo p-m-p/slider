@@ -1,5 +1,5 @@
-import { type BoxSliderOptions } from './box-slider-options'
-import { type Effect } from './effects'
+import type { BoxSliderOptions } from './box-slider-options'
+import type { Effect } from './effects'
 import { StateStore } from './state-store'
 import { responder } from './responder'
 
