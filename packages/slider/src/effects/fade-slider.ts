@@ -7,7 +7,7 @@ export interface FadeSliderOptions {
   timingFunction?: string
 }
 
-const SLIDE_STYLES = ['display', 'height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index']
+const SLIDE_STYLES = ['height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index']
 const BOX_STYLES = ['height', 'overflow', 'position']
 
 export class FadeSlider implements Effect {
@@ -38,12 +38,11 @@ export class FadeSlider implements Effect {
         left: '0',
         position: 'absolute',
         top: '0',
-        transition: `opacity ${options.speed}ms ${this.options.timingFunction}`,
         width: '100%',
       })
 
       if (index !== options.startIndex) {
-        applyCss(slide, { display: 'none' })
+        applyCss(slide, { opacity: '0' })
       }
     })
   }
@@ -53,11 +52,20 @@ export class FadeSlider implements Effect {
       const currentSlide = settings.slides[settings.currentIndex]
       const nextSlide = settings.slides[settings.nextIndex]
 
-      applyCss(currentSlide, { 'z-index': '2', opacity: '0' })
-      applyCss(nextSlide, { 'z-index': '1', display: 'block' })
+      applyCss(currentSlide, {
+        'z-index': '1',
+      })
+      applyCss(nextSlide, {
+        opacity: '1',
+        transition: `opacity ${settings.speed}ms ${this.options.timingFunction}`,
+        'z-index': '2',
+      })
 
       setTimeout(() => {
-        applyCss(currentSlide, { display: 'none', opacity: '1' })
+        applyCss(currentSlide, {
+          transition: 'none',
+          opacity: '0',
+        })
 
         resolve()
       }, settings.speed)

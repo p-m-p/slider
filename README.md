@@ -28,8 +28,18 @@ For React component implementations of each effect view the
 ### Including the package
 
 The library is built for ECMAScript and CommonJS modules so can be imported into an existing project as module exports.
-It is also built for browsers in the file './node_modules/@boxslider/slider/dist/boxslider.min.js' where all exports
-are available on the `$bs` global variable.
+It is also built for browsers in the './node_modules/@boxslider/slider/dist/browser' directory where all exports
+are available on the `$bs` global variable. `index.min.js` conains the box slider library and all effects or
+`box-slider.msn.js` can be used in conjunction with any of the individual effects.
+
+```html
+<!-- import index wth all effects -->
+<script src="./node_modules/@boxslider/slider/dist/browser/index.min.js"></script>
+
+<!-- import lib wth just fade effect -->
+<script src="./node_modules/@boxslider/slider/dist/browser/box-slider.min.js"></script>
+<script src="./node_modules/@boxslider/slider/dist/browser/effects/fade-slider.min.js"></script>
+```
 
 ```javascript
 const boxslider = new $bx.BoxSlider(document.querySelector('#slider'), { effect: new $bs.FadeSlider() })
