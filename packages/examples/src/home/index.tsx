@@ -8,7 +8,7 @@ import initExamples from './initExamples'
 function Home() {
   return (
     <article>
-      <header className="container mx-auto px-4 pt-20 pb-4 md:pt-32 text-center min-h-screen flex flex-col justify-center">
+      <header className="container mx-auto px-4 pt-24 pb-4 md:pt-32 text-center min-h-screen flex flex-col justify-center">
         <h1 className="text-4xl md:text-6xl font-extrabold max-w-4xl mx-auto mb-8">
           A{' '}
           <span className="bg-clip-text bg-gradient-to-tr from-orange-700 to-orange-400 text-transparent">
@@ -21,7 +21,7 @@ function Home() {
           No third party dependencies and just 3-4kb download size (compressed) for a single effect
         </p>
 
-        <p className="flex justify-center gap-4">
+        <p className="flex justify-center gap-4 mb-16">
           <a
             className="px-4 py-2 block border border-orange-500 bg-orange-900 rounded-lg text-lg"
             href="#getting-started">
