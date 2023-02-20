@@ -8,22 +8,28 @@ import initExamples from './initExamples'
 function Home() {
   return (
     <article>
-      <header className="container mx-auto px-4 py-12 md:py-20 text-center min-h-screen flex flex-col justify-center gap-12">
-        <h1 className="text-4xl md:text-6xl font-bold max-w-4xl mx-auto">
-          A <span className="text-orange-500">super small*</span> content slider for modern web projects
+      <header className="container mx-auto px-4 pt-20 pb-4 md:pt-32 text-center min-h-screen flex flex-col justify-center">
+        <h1 className="text-4xl md:text-6xl font-extrabold max-w-4xl mx-auto mb-8">
+          A{' '}
+          <span className="bg-clip-text bg-gradient-to-tr from-orange-700 to-orange-400 text-transparent">
+            super small
+          </span>{' '}
+          content slider for modern web projects
         </h1>
 
-        <p className="flex justify-center gap-4">
-          <a className="px-4 py-2 block border border-orange-500 bg-orange-900 rounded text-lg" href="#getting-started">
-            Get started
-          </a>
-          <a className="px-4 py-2 block border border-neutral-500 bg-neutral-800 rounded text-lg" href="">
-            Github
-          </a>
+        <p className="text-neutral-300 font-light text-sm sm:text-lg mb-16">
+          No third party dependencies and just 3-4kb download size (compressed) for a single effect
         </p>
 
-        <p className="text-neutral-400 text-sm">
-          *no third party dependencies and just 3-4kb download size (compressed) for a single effect
+        <p className="flex justify-center gap-4">
+          <a
+            className="px-4 py-2 block border border-orange-500 bg-orange-900 rounded-lg text-lg"
+            href="#getting-started">
+            Get started
+          </a>
+          <a className="px-4 py-2 block border border-neutral-500 bg-neutral-800 rounded-lg text-lg" href="">
+            Github
+          </a>
         </p>
 
         <section className="flex flex-col md:flex-row gap-4 grow items-stretch md:items-center">
@@ -44,7 +50,9 @@ function Home() {
           <CodeExample ts={initExamples.ts} react={initExamples.react} html={initExamples.html} />
         </ContentSection>
 
-        <ContentSection title="Examples"></ContentSection>
+        <ContentSection title="Examples">
+          <Link to="/slider/hero-carousel">Hero carousel</Link>
+        </ContentSection>
       </div>
     </article>
   )
