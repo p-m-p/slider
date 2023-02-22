@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import CodeExample from '../layout/CodeExample'
+import ContentSection from '../layout/ContentSection'
 import Paragraph from '../layout/Paragraph'
-import ContentSection from './ContentSection'
 import FeatureTile from './FeatureTile'
 import initExamples from './initExamples'
 

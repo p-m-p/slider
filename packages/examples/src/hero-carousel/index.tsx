@@ -2,6 +2,9 @@ import { useRef } from 'react'
 import type { BoxSlider } from '@boxslider/slider'
 import { CarouselSlider } from '@boxslider/react'
 import Button from './Button'
+import CodeExample from '../layout/CodeExample'
+import * as examples from './examples'
+import ContentSection from '../layout/ContentSection'
 
 export default function Index() {
   const sliderRef = useRef<BoxSlider>(null)
@@ -9,8 +12,9 @@ export default function Index() {
 
   return (
     <div>
-      <div className="h-screen container mx-auto relative">
+      <div aria-roledescription="carousel" className="h-screen container mx-auto relative">
         <CarouselSlider
+          id="hero-carousel"
           className="h-full w-full z-10"
           sliderOptions={{ autoScroll: false, speed: 500 }}
           sliderRef={sliderRef}
@@ -23,18 +27,18 @@ export default function Index() {
         </CarouselSlider>
 
         <div className="absolute bottom-0 left-0 z-20 flex w-full justify-between p-8">
-          <Button onClick={() => sliderRef.current?.prev()}>
+          <Button aria-controls="hero-carousel" onClick={() => sliderRef.current?.prev()}>
             <span className="">Previous page</span>
           </Button>
-          <Button onClick={() => sliderRef.current?.next()}>
+          <Button aria-controls="hero-carousel" onClick={() => sliderRef.current?.next()}>
             <span className="">Next page</span>
           </Button>
         </div>
       </div>
       <div className="bg-neutral-800 p-8">
-        <section className="bg-neutral-900 p-4 container mx-auto">
-          <h2>Full page carousel</h2>
-        </section>
+        <ContentSection title="Hero carousel" titleComponent="h1">
+          <CodeExample {...examples} />
+        </ContentSection>
       </div>
     </div>
   )
