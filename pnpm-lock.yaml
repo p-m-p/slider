@@ -60,7 +60,9 @@ importers:
       '@boxslider/slider': workspace:*
       '@emotion/styled': ^11.10.5
       '@mdx-js/rollup': ^2.2.1
+      '@types/react-syntax-highlighter': ^15.5.6
       autoprefixer: ^10.4.13
+      lucide-react: ^0.115.0
       postcss: ^8.4.21
       react-router-dom: ^6.6.1
       react-syntax-highlighter: ^15.5.0
@@ -71,10 +73,13 @@ importers:
       '@emotion/styled': 11.10.5
       '@mdx-js/rollup': 2.2.1
       autoprefixer: 10.4.13_postcss@8.4.21
+      lucide-react: 0.115.0
       postcss: 8.4.21
       react-router-dom: 6.6.1
       react-syntax-highlighter: 15.5.0
       tailwindcss: 3.2.4_postcss@8.4.21
+    devDependencies:
+      '@types/react-syntax-highlighter': 15.5.6
 
   packages/react:
     specifiers:
@@ -3421,6 +3426,12 @@ packages:
 
   /@types/react-dom/18.0.10:
     resolution: {integrity: sha512-E42GW/JA4Qv15wQdqJq8DL4JhNpB3prJgjgapN3qJT9K2zO5IIAQh4VXvCEDupoqAwnz0cY4RlXeC/ajX5SFHg==}
+    dependencies:
+      '@types/react': 18.0.26
+    dev: true
+
+  /@types/react-syntax-highlighter/15.5.6:
+    resolution: {integrity: sha512-i7wFuLbIAFlabTeD2I1cLjEOrG/xdMa/rpx2zwzAoGHuXJDhSqp9BSfDlMHSh9JSuNfxHk9eEmMX6D55GiyjGg==}
     dependencies:
       '@types/react': 18.0.26
     dev: true
@@ -7044,6 +7055,12 @@ packages:
     resolution: {integrity: sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==}
     engines: {node: '>=12'}
     dev: true
+
+  /lucide-react/0.115.0:
+    resolution: {integrity: sha512-VGL7jBKN6pEXi6peXoyn9t9O7olvinaAonnoe+iFi/F2q7/yQzAFM5KR1OY15u9PlrB3scI9HvcTFoOrIjUaVQ==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dev: false
 
   /magic-string/0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
