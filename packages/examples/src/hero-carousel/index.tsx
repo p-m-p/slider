@@ -23,22 +23,23 @@ export default function Index() {
             sliderOptions={{ autoScroll: false, speed: 500 }}
             sliderRef={sliderRef}
             effectOptions={{ timingFunction: 'ease-out' }}>
-            <Slide>The Carousel slider effect uses CSS transitions for buttery smooth slide animation</Slide>
-            <Slide>
-              The Slider adapts to changes in screen size and orientation to support responsive design layouts
-            </Slide>
-            <Slide>
-              There&apos;s no CSS to install! Slider effects work with your styles to support all design needs
-            </Slide>
+            <Slide>Slider effects use CSS transitions for buttery smooth slide animations</Slide>
+            <Slide>Adapts to change in screen size and orientation for responsive design layouts</Slide>
+            <Slide>No CSS to install! Slider effects work with your styles to support varied design requirements</Slide>
           </CarouselSlider>
 
-          <div className="absolute lg:top-1/2 top-0 left-0 z-20 flex w-full justify-between px-8">
-            <Button aria-controls="hero-carousel" aria-label="Previous page" onClick={() => sliderRef.current?.prev()}>
-              <ChevronLeft size={48} />
-            </Button>
-            <Button aria-controls="hero-carousel" aria-label="Next page" onClick={() => sliderRef.current?.next()}>
-              <ChevronRight size={48} />
-            </Button>
+          <div className="absolute lg:top-1/2 bottom-0 left-0 z-20 w-full px-4">
+            <div className="relative -top-6 flex justify-between">
+              <Button
+                aria-controls="hero-carousel"
+                aria-label="Previous page"
+                onClick={() => sliderRef.current?.prev()}>
+                <ChevronLeft size={48} />
+              </Button>
+              <Button aria-controls="hero-carousel" aria-label="Next page" onClick={() => sliderRef.current?.next()}>
+                <ChevronRight size={48} />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
