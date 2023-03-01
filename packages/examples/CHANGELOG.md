@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.3 (2023-03-01)
+
+### Bug Fixes
+
+- module exports ([ebc845b](https://github.com/p-m-p/slider/commit/ebc845be9cf81f4cbe44b2492027fa4731e1e91f))
+
 ## 2.2.2 (2023-01-14)
 
 **Note:** Version bump only for package @boxslider/examples
