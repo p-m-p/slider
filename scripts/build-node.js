@@ -24,7 +24,7 @@ Promise.all([
   }),
   build({
     ...options,
-    outdir: join(distDir, 'cjs'),
+    outfile: join(distDir, 'cjs', 'index.cjs'),
     format: 'cjs',
   }),
 ]).catch((err) => {
