@@ -1,5 +1,8 @@
 <p align="center">
-    <img src="assets/logo.png" width="480px" alt="BoxSlider logo" alt="Box Slider">
+  <picture>
+    <source srcset="assets/logo-medium-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="assets/logo-medium.webp" width="480" alt="Box Slider">
+  </picture>
 </p>
 <p align="center">
     A modern, light weight content slider
