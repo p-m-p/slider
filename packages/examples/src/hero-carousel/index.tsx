@@ -1,13 +1,14 @@
 import { useRef } from 'react'
 import type { BoxSlider } from '@boxslider/slider'
 import { CarouselSlider } from '@boxslider/react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from './Button'
 import CodeExample from '../layout/CodeExample'
 import * as examples from './examples'
 import ContentSection from '../layout/ContentSection'
 import Slide from './Slide'
 import Header from '../layout/Header'
+import CallToAction from '../components/CallToAction'
 
 export default function Index() {
   const sliderRef = useRef<BoxSlider>(null)
@@ -41,11 +42,17 @@ export default function Index() {
               </Button>
             </div>
           </div>
+
+          <div className="absolute bottom-4 right-4 z-30 motion-safe:animate-bounce">
+            <CallToAction href="#code-samples" variant="secondary">
+              <ArrowDown /> View code samples
+            </CallToAction>
+          </div>
         </div>
       </div>
 
       <main className="bg-neutral-800 p-8">
-        <ContentSection title="Hero carousel" titleComponent="h1">
+        <ContentSection title="Hero carousel" titleComponent="h1" id="code-samples">
           <CodeExample {...examples} />
         </ContentSection>
       </main>

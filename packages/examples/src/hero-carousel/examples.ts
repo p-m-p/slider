@@ -25,8 +25,7 @@ export default function HeroSlider() {
 }
 `
 
-export const html = `
-<!doctype html>
+export const html = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
