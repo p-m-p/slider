@@ -40,7 +40,7 @@ function filterProps(props: BoxSliderProps): ComponentPropsWithoutRef<'div'> {
   )
 }
 
-export class BoxSlider extends Component<BoxSliderProps> {
+class BoxSlider extends Component<BoxSliderProps> {
   private el?: HTMLDivElement | null
   private boxSlider?: BxSlider
 

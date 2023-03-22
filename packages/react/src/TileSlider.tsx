@@ -1,16 +1,14 @@
+import { useMemo } from 'react'
 import { TileSlider as BxTileSlider, type TileSliderOptions } from '@boxslider/slider'
-import { useMemo, useState } from 'react'
 import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 
 export interface TileSliderProps extends BoxSliderComponentProps {
   effectOptions?: TileSliderOptions
 }
 
-export function TileSlider({ effectOptions, sliderOptions, ...props }: TileSliderProps) {
-  const [options, setOptions] = useState({})
-
-  useMemo(
-    () => setOptions({ ...sliderOptions, effect: new BxTileSlider(effectOptions) }),
+export default function TileSlider({ effectOptions, sliderOptions, ...props }: TileSliderProps) {
+  const options = useMemo(
+    () => ({ ...sliderOptions, effect: new BxTileSlider(effectOptions) }),
     [effectOptions, sliderOptions],
   )
 
@@ -20,5 +18,3 @@ export function TileSlider({ effectOptions, sliderOptions, ...props }: TileSlide
     </BoxSlider>
   )
 }
-
-export default TileSlider

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { FadeSlider as BxFadeSlider, type FadeSliderOptions } from '@boxslider/slider'
 import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
 
@@ -7,10 +7,8 @@ export interface FadeSliderProps extends BoxSliderComponentProps {
 }
 
 export function FadeSlider({ effectOptions, sliderOptions, ...props }: FadeSliderProps) {
-  const [options, setOptions] = useState({})
-
-  useMemo(
-    () => setOptions({ ...sliderOptions, effect: new BxFadeSlider(effectOptions) }),
+  const options = useMemo(
+    () => ({ ...sliderOptions, effect: new BxFadeSlider(effectOptions) }),
     [effectOptions, sliderOptions],
   )
 
