@@ -72,9 +72,9 @@ If needed, you can gain access to the slider instance via the `sliderRef` prop. 
 
 ```tsx
 function Slider() {
-  // Put the slider options into state so that it does not change between
-  // calls and cause the carousel slider to be reset
-  const [options] = useState({ autoScroll: false, speed: 300 })
+  // You can wrap the slider options with useMemo or useState so that it does
+  // not change between render calls and cause the carousel slider to be reset
+  const options = useMemo(() => ({ autoScroll: false, speed: 300 }), [])
   const sliderRef = useRef(null)
 
   return (
