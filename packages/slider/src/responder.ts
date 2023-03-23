@@ -1,4 +1,4 @@
-import type { BoxSlider } from './box-slider'
+import type BoxSlider from './box-slider'
 
 let boxSliders: BoxSlider[] = []
 let resizeDebounceTimer: number

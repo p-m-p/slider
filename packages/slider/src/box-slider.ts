@@ -1,5 +1,5 @@
 import type { BoxSliderOptions } from './box-slider-options'
-import type { Effect } from './effects'
+import type { Effect } from './effects/effect'
 import { StateStore } from './state-store'
 import { responder } from './responder'
 
@@ -11,12 +11,12 @@ export type SliderEventData = {
 }
 export type SliderEventHandler = (ev: SliderEventData) => void
 
-export class BoxSlider {
+class BoxSlider {
   private readonly options: BoxSliderOptions
 
-  private _stateStore: StateStore | undefined
-  private _el: HTMLElement | undefined
-  private _effect: Effect | undefined
+  private _stateStore?: StateStore
+  private _el?: HTMLElement
+  private _effect?: Effect
   private slides: HTMLElement[]
   private activeIndex: number
   private autoScrollTimer?: number

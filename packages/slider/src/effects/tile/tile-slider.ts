@@ -23,7 +23,7 @@ const TILE_CLASS = 'bs-tile'
 const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border']
 const BOX_STYLES = ['height', 'overflow', 'position']
 
-export class TileSlider implements Effect {
+class TileSlider implements Effect {
   private readonly rowCount: number
   private readonly rowOffset: number
   private readonly tileEffect: TileEffect
