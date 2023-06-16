@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { Github, Play } from 'lucide-react'
 import CodeExample from '../layout/CodeExample'
 import ContentSection from '../layout/ContentSection'
@@ -22,11 +21,11 @@ function Home() {
             content slider for modern web projects
           </h1>
 
-          <p className="text-neutral-300 font-light text-sm sm:text-lg xl:text-xl mb-12">
+          <p className="text-neutral-300 font-light text-sm sm:text-lg xl:text-xl">
             No third party dependencies and just 3-4kb download size (compressed) for a single effect
           </p>
 
-          <p className="inline-flex flex-col sm:flex-row justify-center gap-4 mb-16">
+          <p className="inline-flex flex-col sm:flex-row justify-center gap-4 my-20">
             <CallToAction href="#getting-started">
               <Play /> Get started
             </CallToAction>
@@ -49,16 +48,22 @@ function Home() {
         </div>
       </div>
 
-      <main className="">
-        <ContentSection title="Examples">
-          <Link to="/slider/hero-carousel">Hero carousel</Link>
-        </ContentSection>
-
+      <main>
         <ContentSection id="getting-started" title="Getting started">
           <Paragraph>Install the required package for your project.</Paragraph>
           <CodeExample shell="npm install --save @boxslider/slider" reactShell="npm install --save @boxslider/react" />
           <Paragraph>Import the module or add the browser build to your HTML to initialise a slider.</Paragraph>
           <CodeExample ts={initExamples.ts} react={initExamples.react} html={initExamples.html} />
+          <Paragraph>
+            Check the <a href="https://github.com/p-m-p/slider#usage">project on Github</a> for full instructions on how
+            to use the Slider and see some of the examples below
+          </Paragraph>
+        </ContentSection>
+
+        <ContentSection title="Examples">
+          <a href="https://codepen.io/p-m-p/pen/mdQVxKZ" target="_blank" rel="noreferrer">
+            Simple carousel
+          </a>
         </ContentSection>
       </main>
     </article>
