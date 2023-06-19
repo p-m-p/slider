@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.8 (2023-06-19)
+
+### Bug Fixes
+
+- **slider:** remove use of display property ([1448d1c](https://github.com/p-m-p/slider/commit/1448d1c5bc5dc0abae1f15d0b487e8ec655c58de))
+
 ## 2.2.7 (2023-06-12)
 
 **Note:** Version bump only for package @boxslider/examples
