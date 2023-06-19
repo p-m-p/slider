@@ -20,7 +20,7 @@ interface TileGrid {
 }
 
 const TILE_CLASS = 'bs-tile'
-const SLIDE_STYLES = ['display', 'position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border']
+const SLIDE_STYLES = ['position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border']
 const BOX_STYLES = ['height', 'overflow', 'position']
 
 class TileSlider implements Effect {
