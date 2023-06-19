@@ -28,7 +28,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react": "^7.31.11",
     "husky": "^8.0.3",
-    "lerna": "^6.3.0",
+    "lerna": "^7.0.0",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "react": "^18.2.0",
