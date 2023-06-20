@@ -82,9 +82,14 @@ export default function CodeExample({ css, html, react, reactShell, shell, ts }:
           ))}
         </div>
       )}
-      <SyntaxHighlighter language={selectedPane.language} style={style} customStyle={{ margin: 0 }}>
-        {selectedPane.codeString}
-      </SyntaxHighlighter>
+      <div className="bg-neutral-800">
+        <SyntaxHighlighter
+          language={selectedPane.language}
+          style={style}
+          customStyle={{ margin: 0, backgroundColor: 'transparent' }}>
+          {selectedPane.codeString}
+        </SyntaxHighlighter>
+      </div>
     </div>
   )
 }

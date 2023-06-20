@@ -1,4 +1,4 @@
-import { Github, Play } from 'lucide-react'
+import { Github, Play, Eye } from 'lucide-react'
 import CodeExample from '../layout/CodeExample'
 import ContentSection from '../layout/ContentSection'
 import Paragraph from '../layout/Paragraph'
@@ -34,7 +34,7 @@ function Home() {
             </CallToAction>
           </p>
 
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:items-center">
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:items-center max-w-7xl mx-auto">
             <FeatureTile title="Mulitiple effects">
               Carousel, fade, tile and 3D slide transitions to suit mulitiple different project requirements
             </FeatureTile>
@@ -48,7 +48,7 @@ function Home() {
         </div>
       </div>
 
-      <main>
+      <main className="max-w-6xl mx-auto mt-16">
         <ContentSection id="getting-started" title="Getting started">
           <Paragraph>Install the required package for your project.</Paragraph>
           <CodeExample shell="npm install --save @boxslider/slider" reactShell="npm install --save @boxslider/react" />
@@ -61,9 +61,32 @@ function Home() {
         </ContentSection>
 
         <ContentSection title="Examples">
-          <a href="https://codepen.io/p-m-p/pen/mdQVxKZ" target="_blank" rel="noreferrer">
-            Simple carousel
-          </a>
+          <article className="rounded bg-neutral-800">
+            <div>
+              <div className="h-2 bg-neutral-700">
+                <div className="w-1/6 h-full bg-orange-700"></div>
+              </div>
+              <label className="uppercase text-neutral-700 text-sm font-bold mx-2">Easy</label>
+            </div>
+
+            <div className="p-4 pt-2">
+              <h3 className="text-xl mb-2">Basic carousel</h3>
+              <p className="text-neutral-300">
+                Everything you need to get started with creating a basic content carousel.
+              </p>
+
+              <div className="mt-4">
+                <a
+                  href="https://codepen.io/p-m-p/pen/mdQVxKZ"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-orange-600 transition-colors flex flex-row gap-2">
+                  <Eye />
+                  View on Codepen
+                </a>
+              </div>
+            </div>
+          </article>
         </ContentSection>
       </main>
     </article>

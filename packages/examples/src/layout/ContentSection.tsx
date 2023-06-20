@@ -13,7 +13,7 @@ export default function ContentSection({ children, title, titleComponent = 'h2',
   )
 
   return (
-    <section className="container mx-auto bg-neutral-900 p-4 md:p-8 pb-0 rounded mb-8" {...props}>
+    <section className="container mx-auto bg-neutral-900 p-4 rounded mb-4" {...props}>
       {titleEl}
       {children}
     </section>
