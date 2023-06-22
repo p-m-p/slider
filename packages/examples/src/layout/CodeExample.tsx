@@ -71,11 +71,11 @@ export default function CodeExample({ css, html, react, reactShell, shell, ts }:
   return (
     <div className="mb-8">
       {panes.length > 1 && (
-        <div className="flex border-b border-orange-800">
+        <div className="flex border-b-4 border-neutral-700">
           {panes.map((pane) => (
             <button
               key={pane.label}
-              className={`block px-2 py-0.5 text-sm ${pane.label === selectedPane.label ? 'bg-orange-800' : ''}`}
+              className={`block px-2 py-0.5 text-sm ${pane.label === selectedPane.label ? 'bg-neutral-700' : ''}`}
               onClick={() => setSelectedPane(pane)}>
               {pane.label}
             </button>

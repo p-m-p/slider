@@ -1,4 +1,4 @@
-import { Github, Play, Eye } from 'lucide-react'
+import { Code, Github, Play, Sparkles, SearchCheck } from 'lucide-react'
 import CodeExample from '../layout/CodeExample'
 import ContentSection from '../layout/ContentSection'
 import Paragraph from '../layout/Paragraph'
@@ -6,6 +6,7 @@ import CallToAction from '../components/CallToAction'
 import FeatureTile from './FeatureTile'
 import initExamples from './initExamples'
 import Header from '../layout/Header'
+import ExampleCard from './ExampleCard'
 
 function Home() {
   return (
@@ -35,14 +36,14 @@ function Home() {
           </p>
 
           <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:items-center max-w-7xl mx-auto">
-            <FeatureTile title="Mulitiple effects">
+            <FeatureTile title="Mulitiple effects" icon={<Sparkles />}>
               Carousel, fade, tile and 3D slide transitions to suit mulitiple different project requirements
             </FeatureTile>
-            <FeatureTile title="Easy to use">
+            <FeatureTile title="Easy to use" icon={<Code />}>
               User your own styles! There&apos;s no complicated setup or style sheets to include
             </FeatureTile>
-            <FeatureTile title="SEO and Accessibility">
-              SSR compatible with correct aria attributes and easy to implement controls
+            <FeatureTile title="SEO and Accessibility" icon={<SearchCheck />}>
+              SSR compatible, ARIA attributes and easy to implement accessible controls
             </FeatureTile>
           </section>
         </div>
@@ -61,32 +62,24 @@ function Home() {
         </ContentSection>
 
         <ContentSection title="Examples">
-          <article className="rounded bg-neutral-800">
-            <div>
-              <div className="h-2 bg-neutral-700">
-                <div className="w-1/6 h-full bg-orange-700"></div>
-              </div>
-              <label className="uppercase text-neutral-700 text-sm font-bold mx-2">Easy</label>
-            </div>
-
-            <div className="p-4 pt-2">
-              <h3 className="text-xl mb-2">Basic carousel</h3>
-              <p className="text-neutral-300">
-                Everything you need to get started with creating a basic content carousel.
-              </p>
-
-              <div className="mt-4">
-                <a
-                  href="https://codepen.io/p-m-p/pen/mdQVxKZ"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-orange-600 transition-colors flex flex-row gap-2">
-                  <Eye />
-                  View on Codepen
-                </a>
-              </div>
-            </div>
-          </article>
+          <ul className="grid grid-cols-2 gap-8">
+            <li className="rounded bg-neutral-800">
+              <ExampleCard
+                title="Basic carousel"
+                description="Minimal example of what is needed to get started with creating a content carousel."
+                level="easy"
+                url="https://codepen.io/p-m-p/pen/mdQVxKZ"
+              />
+            </li>
+            <li className="rounded bg-neutral-800">
+              <ExampleCard
+                title="Full page fade effect with controls"
+                description="Responsive hero style carousel that fills the page height and has controls for slide navigation"
+                level="intermediate"
+                url="https://codepen.io/p-m-p/pen/vYQGOrW"
+              />
+            </li>
+          </ul>
         </ContentSection>
       </main>
     </article>

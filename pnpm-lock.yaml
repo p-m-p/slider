@@ -80,8 +80,8 @@ importers:
   packages/examples:
     dependencies:
       lucide-react:
-        specifier: ^0.115.0
-        version: 0.115.0(react@18.2.0)
+        specifier: ^0.248.0
+        version: 0.248.0(react@18.2.0)
       react-syntax-highlighter:
         specifier: ^15.5.0
         version: 15.5.0(react@18.2.0)
@@ -6787,8 +6787,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /lucide-react@0.115.0(react@18.2.0):
-    resolution: {integrity: sha512-VGL7jBKN6pEXi6peXoyn9t9O7olvinaAonnoe+iFi/F2q7/yQzAFM5KR1OY15u9PlrB3scI9HvcTFoOrIjUaVQ==}
+  /lucide-react@0.248.0(react@18.2.0):
+    resolution: {integrity: sha512-zMqVvwsvhLV6ooekfM8HEngR/lLGkIgOwZ4X140K+CDdAPwfp9LARnmJhMF32wlDganAIVEgN7saIv3pcCLUVw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
