@@ -10,7 +10,7 @@ import ExampleCard from './ExampleCard'
 
 function Home() {
   return (
-    <article>
+    <article className="bg-gradient-to-tl from-neutral-800 to-neutral-900">
       <div className="flex flex-col">
         <Header />
         <div className="container mx-auto px-4 pt-16 pb-4 text-center">
@@ -35,7 +35,7 @@ function Home() {
             </CallToAction>
           </p>
 
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:items-center max-w-7xl mx-auto">
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 md:items-center max-w-7xl mx-auto">
             <FeatureTile title="Mulitiple effects" icon={<Sparkles />}>
               Carousel, fade, tile and 3D slide transitions to suit mulitiple different project requirements
             </FeatureTile>

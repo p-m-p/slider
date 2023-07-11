@@ -75,7 +75,7 @@ export default function CodeExample({ css, html, react, reactShell, shell, ts }:
           {panes.map((pane) => (
             <button
               key={pane.label}
-              className={`block px-2 py-0.5 text-sm ${pane.label === selectedPane.label ? 'bg-neutral-700' : ''}`}
+              className={`block px-2 py-0.5 text-sm ${pane.label === selectedPane.label ? 'bg-neutral-800' : ''}`}
               onClick={() => setSelectedPane(pane)}>
               {pane.label}
             </button>
