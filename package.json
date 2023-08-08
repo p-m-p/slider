@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^6.1.0",
     "@vitejs/plugin-react": "^4.0.3",
     "cz-conventional-changelog": "^3.3.0",
-    "esbuild": "^0.18.15",
+    "esbuild": "^0.19.0",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-react-app": "^7.0.1",
