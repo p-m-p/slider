@@ -1,20 +1,23 @@
-import type BoxSlider from './box-slider'
+import BoxSlider from './box-slider'
 
 let boxSliders: BoxSlider[] = []
-let resizeDebounceTimer: number
+let resizeObserver: ResizeObserver
 
-if (typeof window !== 'undefined') {
-  window.addEventListener('resize', () => {
-    window.clearTimeout(resizeDebounceTimer)
-    resizeDebounceTimer = window.setTimeout(() => boxSliders.forEach((b) => b.reset()), 200)
+if (typeof ResizeObserver !== 'undefined') {
+  resizeObserver = new ResizeObserver((sliderElements) => {
+    sliderElements.forEach((sliderEl) => boxSliders.find((bs) => bs.el === sliderEl.target)?.reset())
   })
 }
 
 export const responder = {
   add(boxSlider: BoxSlider): void {
     boxSliders.push(boxSlider)
+    resizeObserver?.observe(boxSlider.el)
   },
   remove(boxSlider: BoxSlider): void {
+    resizeObserver?.unobserve(boxSlider.el)
     boxSliders = boxSliders.filter((b) => b !== boxSlider)
   },
 }
+
+export default responder

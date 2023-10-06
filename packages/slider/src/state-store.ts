@@ -12,9 +12,10 @@ export class StateStore {
   }
 
   storeStyles(elements: HTMLElement[] | HTMLElement, styles: string[]) {
-    this.applyToElements(elements, (el, elementStore) =>
-      styles.forEach((p: string) => (elementStore.styles[p] = el.style.getPropertyValue(p))),
-    )
+    this.applyToElements(elements, (el, elementStore) => {
+      const computedStyles = getComputedStyle(el)
+      styles.forEach((p: string) => (elementStore.styles[p] = computedStyles.getPropertyValue(p)))
+    })
   }
 
   storeAttributes(elements: HTMLElement[] | HTMLElement, attributes: string[]) {

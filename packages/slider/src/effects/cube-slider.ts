@@ -9,18 +9,7 @@ export interface CubeSliderOptions {
 }
 
 const SLIDE_STYLES = ['left', 'position', 'top', 'transform', 'z-index']
-const BOX_STYLES = [
-  'height',
-  'left',
-  'overflow',
-  'position',
-  'top',
-  'transform',
-  'transform-style',
-  'transition',
-  'width',
-  'z-index',
-]
+const BOX_STYLES = ['left', 'overflow', 'position', 'top', 'transform', 'transform-style', 'transition', 'z-index']
 const VIEWPORT_STYLES = ['overflow', 'perspective', 'position']
 
 class CubeSlider implements Effect {
@@ -59,12 +48,10 @@ class CubeSlider implements Effect {
     )
 
     applyCss(el, {
-      height: `${height}px`,
       left: '0',
       overflow: 'visible',
       position: 'absolute',
       top: '0',
-      width: `${width}px`,
     })
 
     // ensure parent is positioned to hold the box

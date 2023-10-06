@@ -25,7 +25,7 @@ class BoxSlider {
   private isDestroyed: boolean
   private transitionPromise?: Promise<void>
 
-  private get el() {
+  get el() {
     if (this._el === undefined) {
       throw new Error('Slider element is null')
     }
@@ -35,7 +35,7 @@ class BoxSlider {
 
   private get stateStore() {
     if (this._stateStore === undefined) {
-      throw new Error('State store is null, are you trying ot interact with a destroyed slider?')
+      throw new Error('State store is null, are you trying to interact with a destroyed slider?')
     }
 
     return this._stateStore
@@ -43,7 +43,7 @@ class BoxSlider {
 
   private get effect() {
     if (this._effect === undefined) {
-      throw new Error('Slide effect is null, are you trying ot interact with a destroyed slider?')
+      throw new Error('Slide effect is null, are you trying to interact with a destroyed slider?')
     }
 
     return this._effect
