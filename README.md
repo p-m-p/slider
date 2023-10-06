@@ -35,7 +35,7 @@ It is also built for browsers in the file './node_modules/@boxslider/slider/dist
 are available on the `$bs` global variable.
 
 ```javascript
-const boxslider = new $bx.BoxSlider(document.querySelector('#slider'), { effect: new $bs.FadeSlider() })
+const boxslider = new $bs.BoxSlider(document.querySelector('#slider'), { effect: new $bs.FadeSlider() })
 ```
 
 ### Usage
