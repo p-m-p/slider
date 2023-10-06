@@ -9,6 +9,6 @@
     }
   },
   "npmClient": "pnpm",
-  "version": "2.2.12",
+  "version": "2.3.0",
   "useNx": true
 }
