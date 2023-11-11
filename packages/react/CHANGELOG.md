@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.6 (2023-11-11)
+
+**Note:** Version bump only for package @boxslider/react
+
 ## 2.3.5 (2023-10-24)
 
 **Note:** Version bump only for package @boxslider/react
