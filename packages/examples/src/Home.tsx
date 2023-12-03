@@ -7,17 +7,31 @@ import {
   SliderEventData,
   TileSliderOptions,
 } from '@boxslider/slider'
-import { CarouselSlider, CubeSlider, FadeSlider, TileSlider } from '@boxslider/react'
+import {
+  CarouselSlider,
+  CubeSlider,
+  FadeSlider,
+  TileSlider,
+} from '@boxslider/react'
 import './Home.css'
 
 const images = Array.from({ length: 6 }).map(
-  (_, i) => `/slider/Futuristic_city_scape_on_a_distant_alien_planet_${i + 1}.png`,
+  (_, i) =>
+    `/slider/Futuristic_city_scape_on_a_distant_alien_planet_${i + 1}.png`,
 )
 const diffusionText = 'Futuristic city scape on a distant alien planet'
 const effects: {
   name: string
-  options: CarouselSliderOptions | CubeSliderOptions | FadeSliderOptions | TileSliderOptions
-  component: typeof CarouselSlider | typeof CubeSlider | typeof FadeSlider | typeof TileSlider
+  options:
+    | CarouselSliderOptions
+    | CubeSliderOptions
+    | FadeSliderOptions
+    | TileSliderOptions
+  component:
+    | typeof CarouselSlider
+    | typeof CubeSlider
+    | typeof FadeSlider
+    | typeof TileSlider
 }[] = [
   {
     name: 'Horizontal Cube',
@@ -61,7 +75,10 @@ function App() {
   const [effect, setEffect] = useState(effects[0])
   const slides = images.map((image, i) => (
     <div key={image} className="slide">
-      <img src={image} alt={`Image ${i + 1} of ${images.length} depicting “${diffusionText}”`} />
+      <img
+        src={image}
+        alt={`Image ${i + 1} of ${images.length} depicting “${diffusionText}”`}
+      />
     </div>
   ))
 

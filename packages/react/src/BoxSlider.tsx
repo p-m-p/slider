@@ -1,19 +1,26 @@
-import { Component, type ComponentPropsWithoutRef, type MutableRefObject } from 'react'
-import { BoxSlider as BxSlider, BoxSliderOptions, SliderEventData, SliderEventHandler } from '@boxslider/slider'
+import {
+  Component,
+  type ComponentPropsWithoutRef,
+  type MutableRefObject,
+} from 'react'
+import {
+  BoxSlider as BxSlider,
+  type BoxSliderOptions,
+  type SliderEventData,
+  type SliderEventListenerMap,
+  type Effect,
+} from '@boxslider/slider'
 
-export interface BoxSliderComponentProps extends ComponentPropsWithoutRef<'div'> {
-  onAfter?: SliderEventHandler
-  onBefore?: SliderEventHandler
-  onDestroy?: SliderEventHandler
-  onStartAutoScroll?: SliderEventHandler
-  onStopAutoScroll?: SliderEventHandler
+export interface BoxSliderProps extends ComponentPropsWithoutRef<'div'> {
+  onAfter?: SliderEventListenerMap['after']
+  onBefore?: SliderEventListenerMap['before']
+  onDestroy?: SliderEventListenerMap['destroy']
+  onStartAutoScroll?: SliderEventListenerMap['play']
+  onStopAutoScroll?: SliderEventListenerMap['pause']
+  effect: Effect
   sliderOptions?: Partial<BoxSliderOptions>
   slideIndex?: number
   sliderRef?: MutableRefObject<BxSlider | null>
-}
-
-export interface BoxSliderProps extends BoxSliderComponentProps {
-  sliderOptions: Partial<BoxSliderOptions>
 }
 
 const sliderPropNames = [
@@ -29,7 +36,9 @@ const sliderPropNames = [
 ]
 
 function filterProps(props: BoxSliderProps): ComponentPropsWithoutRef<'div'> {
-  const includeKeys = Object.keys(props).filter((key) => !sliderPropNames.includes(key))
+  const includeKeys = Object.keys(props).filter(
+    (key) => !sliderPropNames.includes(key),
+  )
 
   return includeKeys.reduce(
     (includedProps, key) => ({
@@ -46,7 +55,9 @@ class BoxSlider extends Component<BoxSliderProps> {
 
   componentDidMount() {
     if (this.el) {
-      this.boxSlider = new BxSlider(this.el, { ...this.props.sliderOptions })
+      this.boxSlider = new BxSlider(this.el, this.props.effect, {
+        ...this.props.sliderOptions,
+      })
       this.boxSlider.addEventListener('before', (ev: SliderEventData) => {
         if (this.props.onBefore) this.props.onBefore.call(undefined, ev)
       })
@@ -54,13 +65,15 @@ class BoxSlider extends Component<BoxSliderProps> {
         if (this.props.onAfter) this.props.onAfter.call(undefined, ev)
       })
       this.boxSlider.addEventListener('play', (ev: SliderEventData) => {
-        if (this.props.onStartAutoScroll) this.props.onStartAutoScroll.call(undefined, ev)
+        if (this.props.onStartAutoScroll)
+          this.props.onStartAutoScroll.call(undefined, ev)
       })
       this.boxSlider.addEventListener('pause', (ev: SliderEventData) => {
-        if (this.props.onStopAutoScroll) this.props.onStopAutoScroll.call(undefined, ev)
+        if (this.props.onStopAutoScroll)
+          this.props.onStopAutoScroll.call(undefined, ev)
       })
-      this.boxSlider.addEventListener('destroy', (ev: SliderEventData) => {
-        if (this.props.onDestroy) this.props.onDestroy.call(undefined, ev)
+      this.boxSlider.addEventListener('destroy', () => {
+        if (this.props.onDestroy) this.props.onDestroy.call(undefined)
       })
     }
 
@@ -74,11 +87,17 @@ class BoxSlider extends Component<BoxSliderProps> {
   }
 
   componentDidUpdate(prevProps: Readonly<BoxSliderProps>) {
-    if (this.props.sliderOptions !== prevProps.sliderOptions) {
-      this.boxSlider?.reset({ ...this.props.sliderOptions })
+    if (
+      this.props.sliderOptions !== prevProps.sliderOptions ||
+      this.props.effect !== prevProps.effect
+    ) {
+      this.boxSlider?.reset({ ...this.props.sliderOptions }, this.props.effect)
     }
 
-    if (this.props.slideIndex !== undefined && this.props.slideIndex !== prevProps.slideIndex) {
+    if (
+      this.props.slideIndex !== undefined &&
+      this.props.slideIndex !== prevProps.slideIndex
+    ) {
       this.boxSlider?.skipTo(this.props.slideIndex)
     }
   }
@@ -88,7 +107,9 @@ class BoxSlider extends Component<BoxSliderProps> {
 
     return (
       <div {...filterProps(props)}>
-        <div style={{ width: '100%', height: '100%' }} ref={(el) => (this.el = el)}>
+        <div
+          style={{ width: '100%', height: '100%' }}
+          ref={(el) => (this.el = el)}>
           {children}
         </div>
       </div>

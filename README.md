@@ -35,7 +35,10 @@ It is also built for browsers in the file './node_modules/@boxslider/slider/dist
 are available on the `$bs` global variable.
 
 ```javascript
-const boxslider = new $bs.BoxSlider(document.querySelector('#slider'), { effect: new $bs.FadeSlider() })
+const boxslider = new $bs.BoxSlider(
+  document.querySelector('#slider'),
+  new $bs.FadeSlider(),
+)
 ```
 
 ### Usage
@@ -81,14 +84,13 @@ the desired settings and effect.
 import { BoxSlider, FadeSlider } from '@boxslider/slider'
 
 const options = {
-  effect: new FadeSlider(),
   autoScroll: true,
   timeout: 5000,
 }
 const box = document.querySelector('#content-box')
 
 // Create a fading slide transition that moves to the next slide every 5 seconds (5000ms)
-const slider = new BoxSlider(box, options)
+const slider = new BoxSlider(box, new FadeSlider(), options)
 
 // Call API methods on the slider to manipulate it see documentation for available actions
 slider.next().then(() => {
@@ -98,7 +100,6 @@ slider.next().then(() => {
 
 ### Options
 
-- `effect: Effect` **Required** option for the slide effect.
 - `speed: number (default: 800)` The time interval in milliseconds within which the
   slide animation will complete
 - `autoScroll: boolean (default: true)` Set true to automatically transition through
@@ -199,6 +200,15 @@ transition is complete.
 slider.prev().then(() => {
   // transition complete
 })
+```
+
+#### `reset`
+
+Re-initialises the slider with updated options. An updated effect may also be
+passed as the second parameter.
+
+```javascript
+slider.reset(options, effect)
 ```
 
 #### `addEventListener`
@@ -328,7 +338,9 @@ example implementation is shown below.
     effect: new CarouselSlider(),
     autoScroll: false,
   })
-  document.querySelector('#prev-slide').addEventListener('click', () => slider.prev())
+  document
+    .querySelector('#prev-slide')
+    .addEventListener('click', () => slider.prev())
   // ... other button controls
 </script>
 ```

@@ -1,19 +1,22 @@
 import { useMemo } from 'react'
-import { TileSlider as BxTileSlider, type TileSliderOptions } from '@boxslider/slider'
-import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
+import {
+  TileSlider as BxTileSlider,
+  type TileSliderOptions,
+} from '@boxslider/slider'
+import BoxSlider, { type BoxSliderProps } from './BoxSlider'
 
-export interface TileSliderProps extends BoxSliderComponentProps {
+export interface TileSliderProps extends Omit<BoxSliderProps, 'effect'> {
   effectOptions?: TileSliderOptions
 }
 
-export default function TileSlider({ effectOptions, sliderOptions, ...props }: TileSliderProps) {
-  const options = useMemo(
-    () => ({ ...sliderOptions, effect: new BxTileSlider(effectOptions) }),
-    [effectOptions, sliderOptions],
-  )
+export default function TileSlider({
+  effectOptions,
+  ...props
+}: TileSliderProps) {
+  const effect = useMemo(() => new BxTileSlider(effectOptions), [effectOptions])
 
   return (
-    <BoxSlider {...props} sliderOptions={options}>
+    <BoxSlider {...props} effect={effect}>
       {props.children}
     </BoxSlider>
   )

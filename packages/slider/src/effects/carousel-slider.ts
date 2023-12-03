@@ -8,7 +8,15 @@ export interface CarouselSliderOptions {
   timingFunction?: string
 }
 
-const SLIDE_STYLES = ['left', 'position', 'top', 'transform', 'transition', 'visibility', 'z-index']
+const SLIDE_STYLES = [
+  'left',
+  'position',
+  'top',
+  'transform',
+  'transition',
+  'visibility',
+  'z-index',
+]
 const BOX_STYLES = ['overflow', 'position']
 
 export class CarouselSlider implements Effect {
@@ -21,7 +29,12 @@ export class CarouselSlider implements Effect {
     }
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options: BoxSliderOptions): void {
+  initialize(
+    el: HTMLElement,
+    slides: HTMLElement[],
+    stateStore: StateStore,
+    options: BoxSliderOptions,
+  ): void {
     stateStore.storeStyles(slides, SLIDE_STYLES)
     stateStore.storeStyles(el, BOX_STYLES)
 
@@ -62,7 +75,9 @@ export class CarouselSlider implements Effect {
       const nextSlideWidth = `${nextSlide.offsetWidth}px`
 
       applyCss(nextSlide, {
-        transform: `translateX(${settings.isPrevious ? '-' + nextSlideWidth : nextSlideWidth})`,
+        transform: `translateX(${
+          settings.isPrevious ? '-' + nextSlideWidth : nextSlideWidth
+        })`,
       })
 
       setTimeout(() => {
@@ -76,8 +91,14 @@ export class CarouselSlider implements Effect {
         applyCss(currentSlide, {
           transform: this.options.cover
             ? 'translateX(0px)'
-            : `translateX(${settings.isPrevious ? currentSlideWidth : '-' + currentSlideWidth})`,
-          transition: this.options.cover ? 'initial' : `transform ${settings.speed}ms ${this.options.timingFunction}`,
+            : `translateX(${
+                settings.isPrevious
+                  ? currentSlideWidth
+                  : '-' + currentSlideWidth
+              })`,
+          transition: this.options.cover
+            ? 'initial'
+            : `transform ${settings.speed}ms ${this.options.timingFunction}`,
           visibility: 'visible',
           'z-index': '1',
         })

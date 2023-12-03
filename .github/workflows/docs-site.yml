@@ -5,21 +5,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/checkout@v4
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
       - name: Build Docs Site 📦
         run: |
           corepack enable pnpm
           pnpm install --frozen-lockfile
-          pnpm run build
+          pnpm run --filter @boxslider/examples build
       - name: Deploy GH Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:

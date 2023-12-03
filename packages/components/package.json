@@ -1,0 +1,26 @@
+{
+  "name": "@boxslider/components",
+  "version": "2.3.7",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "pnpm run clean && pnpm run esbuild && pnpm run types",
+    "dev": "vite",
+    "preview": "vite preview",
+    "clean": "rm -rf dist && rm -f LICENSE",
+    "esbuild": "../../scripts/build-node.js && ../../scripts/build-browser.js",
+    "prepack": "cp ../../LICENSE ./",
+    "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
+  },
+  "dependencies": {
+    "@boxslider/slider": "workspace:*"
+  }
+}

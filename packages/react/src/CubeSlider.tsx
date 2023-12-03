@@ -1,19 +1,19 @@
 import { useMemo } from 'react'
-import { CubeSlider as BxCubeSlider, type CubeSliderOptions } from '@boxslider/slider'
-import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
+import {
+  CubeSlider as BxCubeSlider,
+  type CubeSliderOptions,
+} from '@boxslider/slider'
+import BoxSlider, { type BoxSliderProps } from './BoxSlider'
 
-export interface CubeSliderProps extends BoxSliderComponentProps {
+export interface CubeSliderProps extends Omit<BoxSliderProps, 'effect'> {
   effectOptions?: CubeSliderOptions
 }
 
-export function CubeSlider({ effectOptions, sliderOptions, ...props }: CubeSliderProps) {
-  const options = useMemo(
-    () => ({ ...sliderOptions, effect: new BxCubeSlider(effectOptions) }),
-    [effectOptions, sliderOptions],
-  )
+export function CubeSlider({ effectOptions, ...props }: CubeSliderProps) {
+  const effect = useMemo(() => new BxCubeSlider(effectOptions), [effectOptions])
 
   return (
-    <BoxSlider {...props} sliderOptions={options}>
+    <BoxSlider {...props} effect={effect}>
       {props.children}
     </BoxSlider>
   )

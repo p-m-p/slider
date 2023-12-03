@@ -14,20 +14,29 @@ export class StateStore {
   storeStyles(elements: HTMLElement[] | HTMLElement, styles: string[]) {
     this.applyToElements(elements, (el, elementStore) => {
       const computedStyles = getComputedStyle(el)
-      styles.forEach((p: string) => (elementStore.styles[p] = computedStyles.getPropertyValue(p)))
+      styles.forEach(
+        (p: string) =>
+          (elementStore.styles[p] = computedStyles.getPropertyValue(p)),
+      )
     })
   }
 
   storeAttributes(elements: HTMLElement[] | HTMLElement, attributes: string[]) {
     this.applyToElements(elements, (el, elementStore) => {
-      attributes.forEach((attribute: string) => (elementStore.attributes[attribute] = el.getAttribute(attribute)))
+      attributes.forEach(
+        (attribute: string) =>
+          (elementStore.attributes[attribute] = el.getAttribute(attribute)),
+      )
     })
   }
 
   revert() {
     this.elementStore.forEach((elementStore) => {
       Object.keys(elementStore.styles).forEach((property) =>
-        elementStore.el.style.setProperty(property, elementStore.styles[property]),
+        elementStore.el.style.setProperty(
+          property,
+          elementStore.styles[property],
+        ),
       )
 
       Object.keys(elementStore.attributes).forEach((attribute) => {
@@ -43,7 +52,10 @@ export class StateStore {
     this.elementStore = []
   }
 
-  private applyToElements(elements: HTMLElement[] | HTMLElement, fn: (element: HTMLElement, store: StoreItem) => void) {
+  private applyToElements(
+    elements: HTMLElement[] | HTMLElement,
+    fn: (element: HTMLElement, store: StoreItem) => void,
+  ) {
     ;(Array.isArray(elements) ? elements : [elements]).forEach((el) => {
       let elementStore = this.elementStore.find((s) => s.el === el)
 

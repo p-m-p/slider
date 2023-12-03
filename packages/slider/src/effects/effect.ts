@@ -12,6 +12,11 @@ export interface TransitionSettings {
 
 export interface Effect {
   destroy?: (el: HTMLElement) => void
-  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options?: BoxSliderOptions): void
+  initialize(
+    el: HTMLElement,
+    slides: HTMLElement[],
+    stateStore: StateStore,
+    options?: BoxSliderOptions,
+  ): void
   transition(settings: TransitionSettings): Promise<void>
 }

@@ -1,16 +1,14 @@
 name: Verify
-on:
-  pull_request:
-    branches: [main]
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [18, 20]
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -21,5 +19,4 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build
           pnpm run lint
-        env:
-          CI: true
+          pnpm run test:coverage

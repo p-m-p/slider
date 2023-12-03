@@ -12,6 +12,12 @@ export interface TileSliderOptions {
   rowOffset?: number
 }
 
+export const defaultOptions = {
+  tileEffect: 'flip',
+  rows: 8,
+  rowOffset: 50,
+}
+
 interface TileGrid {
   cols: number
   rows: number
@@ -20,7 +26,16 @@ interface TileGrid {
 }
 
 const TILE_CLASS = 'bs-tile'
-const SLIDE_STYLES = ['position', 'overflow', 'clip', 'height', 'width', 'margin', 'padding', 'border']
+const SLIDE_STYLES = [
+  'position',
+  'overflow',
+  'clip',
+  'height',
+  'width',
+  'margin',
+  'padding',
+  'border',
+]
 const BOX_STYLES = ['height', 'overflow', 'position']
 
 class TileSlider implements Effect {
@@ -41,14 +56,21 @@ class TileSlider implements Effect {
   }
 
   constructor(options?: Partial<TileSliderOptions>) {
-    this.tileEffect = options?.tileEffect || 'flip'
-    this.rowCount = options?.rows || 8
-    this.rowOffset = options?.rowOffset || 50
+    this.tileEffect =
+      options?.tileEffect || (defaultOptions.tileEffect as TileEffect)
+    this.rowCount = options?.rows || defaultOptions.rows
+    this.rowOffset = options?.rowOffset || defaultOptions.rowOffset
     this.activeFace = 'front'
-    this.tileTransition = this.tileEffect === 'fade' ? new FadeTransition() : new FlipTransition()
+    this.tileTransition =
+      this.tileEffect === 'fade' ? new FadeTransition() : new FlipTransition()
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], stateStore: StateStore, options: BoxSliderOptions): void {
+  initialize(
+    el: HTMLElement,
+    slides: HTMLElement[],
+    stateStore: StateStore,
+    options: BoxSliderOptions,
+  ): void {
     const imgSrc = locateSlideImageSrc(slides[options.startIndex || 0])
 
     if (imgSrc == null) {
@@ -71,7 +93,9 @@ class TileSlider implements Effect {
     el.appendChild(tileWrapper)
     this._tileWrapper = tileWrapper
 
-    if ('fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1) {
+    if (
+      'fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1
+    ) {
       applyCss(el, { position: 'relative' })
     }
 
@@ -127,14 +151,17 @@ class TileSlider implements Effect {
     return new Promise((resolve) => {
       const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`)
       const rowInterval = this.rowOffset
-      const tileInterval = (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
+      const tileInterval =
+        (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
       const imgSrc = locateSlideImageSrc(settings.slides[settings.nextIndex])
       const nextFace = this.activeFace === 'front' ? 'back' : 'front'
 
       this.tileWrapper
         .querySelectorAll(`.${nextFace}`)
         .forEach((tile: HTMLElement | Element) =>
-          applyCss(tile as HTMLElement, { 'background-image': `url(${imgSrc})` }),
+          applyCss(tile as HTMLElement, {
+            'background-image': `url(${imgSrc})`,
+          }),
         )
 
       for (let i = 0; i < this.grid.rows; ++i) {

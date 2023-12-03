@@ -1,19 +1,25 @@
 import { useMemo } from 'react'
-import { CarouselSlider as BxCarouselSlider, type CarouselSliderOptions } from '@boxslider/slider'
-import BoxSlider, { type BoxSliderComponentProps } from './BoxSlider'
+import {
+  CarouselSlider as BxCarouselSlider,
+  type CarouselSliderOptions,
+} from '@boxslider/slider'
+import BoxSlider, { type BoxSliderProps } from './BoxSlider'
 
-export interface CarouselSliderProps extends BoxSliderComponentProps {
+export interface CarouselSliderProps extends Omit<BoxSliderProps, 'effect'> {
   effectOptions?: CarouselSliderOptions
 }
 
-export function CarouselSlider({ effectOptions, sliderOptions, ...props }: CarouselSliderProps) {
-  const options = useMemo(
-    () => ({ ...sliderOptions, effect: new BxCarouselSlider(effectOptions) }),
-    [effectOptions, sliderOptions],
+export function CarouselSlider({
+  effectOptions,
+  ...props
+}: CarouselSliderProps) {
+  const effect = useMemo(
+    () => new BxCarouselSlider(effectOptions),
+    [effectOptions],
   )
 
   return (
-    <BoxSlider {...props} sliderOptions={options}>
+    <BoxSlider {...props} effect={effect}>
       {props.children}
     </BoxSlider>
   )

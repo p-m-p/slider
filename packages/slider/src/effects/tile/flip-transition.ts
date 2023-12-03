@@ -54,7 +54,9 @@ class FlipTransition implements TileTransition {
   }
 
   transition(tile: HTMLElement, nextFace: 'front' | 'back'): void {
-    applyCss(tile, { transform: `rotate3d(0, 1, 0, ${nextFace === 'back' ? 180 : 0}deg)` })
+    applyCss(tile, {
+      transform: `rotate3d(0, 1, 0, ${nextFace === 'back' ? 180 : 0}deg)`,
+    })
   }
 }
 

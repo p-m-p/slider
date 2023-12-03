@@ -7,7 +7,17 @@ export interface FadeSliderOptions {
   timingFunction?: string
 }
 
-const SLIDE_STYLES = ['display', 'height', 'left', 'opacity', 'position', 'top', 'transition', 'width', 'z-index']
+const SLIDE_STYLES = [
+  'display',
+  'height',
+  'left',
+  'opacity',
+  'position',
+  'top',
+  'transition',
+  'width',
+  'z-index',
+]
 const BOX_STYLES = ['height', 'overflow', 'position']
 
 export default class FadeSlider implements Effect {
@@ -19,7 +29,12 @@ export default class FadeSlider implements Effect {
     }
   }
 
-  initialize(el: HTMLElement, slides: HTMLElement[], styleStore: StateStore, options: BoxSliderOptions): void {
+  initialize(
+    el: HTMLElement,
+    slides: HTMLElement[],
+    styleStore: StateStore,
+    options: BoxSliderOptions,
+  ): void {
     styleStore.storeStyles(slides, SLIDE_STYLES)
     styleStore.storeStyles(el, BOX_STYLES)
 

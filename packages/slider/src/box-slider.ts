@@ -3,13 +3,25 @@ import type { Effect } from './effects/effect'
 import { StateStore } from './state-store'
 import { responder } from './responder'
 
-export type SliderEventType = 'after' | 'before' | 'destroy' | 'pause' | 'play'
 export type SliderEventData = {
   currentIndex: number
   nextIndex?: number
   speed: number
 }
-export type SliderEventHandler = (ev: SliderEventData) => void
+
+export interface SliderEventListenerMap {
+  after: (data: SliderEventData) => void
+  before: (data: SliderEventData) => void
+  destroy: () => void
+  pause: (data: SliderEventData) => void
+  play: (data: SliderEventData) => void
+}
+
+export type SliderEventType = keyof SliderEventListenerMap
+
+type EventListenerMap = {
+  [Property in SliderEventType]?: SliderEventListenerMap[Property][]
+}
 
 class BoxSlider {
   private readonly options: BoxSliderOptions
@@ -20,7 +32,7 @@ class BoxSlider {
   private slides: HTMLElement[]
   private activeIndex: number
   private autoScrollTimer?: number
-  private eventListeners: { [ev: string]: SliderEventHandler[] }
+  private eventListeners: EventListenerMap
   private elListeners: { [ev: string]: EventListener[] }
   private isDestroyed: boolean
   private transitionPromise?: Promise<void>
@@ -35,7 +47,9 @@ class BoxSlider {
 
   private get stateStore() {
     if (this._stateStore === undefined) {
-      throw new Error('State store is null, are you trying to interact with a destroyed slider?')
+      throw new Error(
+        'State store is null, are you trying to interact with a destroyed slider?',
+      )
     }
 
     return this._stateStore
@@ -43,24 +57,26 @@ class BoxSlider {
 
   private get effect() {
     if (this._effect === undefined) {
-      throw new Error('Slide effect is null, are you trying to interact with a destroyed slider?')
+      throw new Error(
+        'Slide effect is null, are you trying to interact with a destroyed slider?',
+      )
     }
 
     return this._effect
   }
 
-  constructor(el: HTMLElement, options: Partial<BoxSliderOptions>) {
-    if (!options.effect) {
-      throw new Error('Effect must be specified in slider options')
-    }
-
+  constructor(
+    el: HTMLElement,
+    effect: Effect,
+    options: Partial<BoxSliderOptions>,
+  ) {
     this._el = el
     this._stateStore = new StateStore()
 
     this.options = {
+      autoScroll: true,
       speed: 800,
       timeout: 5000,
-      autoScroll: true,
       pauseOnHover: false,
       startIndex: 0,
       swipe: true,
@@ -68,40 +84,47 @@ class BoxSlider {
       ...options,
     }
     this.slides = []
-    this.activeIndex = this.options.startIndex
+    this.activeIndex = this.options.startIndex || 0
     this.eventListeners = {}
     this.elListeners = {}
     this.isDestroyed = false
 
-    this.init(this.options)
+    this.init(effect, this.options)
 
     if (this.slides.length < this.activeIndex) {
       this.destroy()
-      throw new Error(`Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`)
+      throw new Error(
+        `Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`,
+      )
     }
 
     this.applyEventListeners()
     responder.add(this)
   }
 
-  reset(resetOptions: Partial<BoxSliderOptions> = {}) {
+  reset(options?: Partial<BoxSliderOptions>, effect?: Effect) {
     this.stopAutoScroll()
-    const options = {
-      ...this.options,
-      ...resetOptions,
-      startIndex: this.activeIndex,
-    }
     this.effect.destroy && this.effect.destroy(this.el)
     this.stateStore.revert()
-    this.init(options)
+    this.init(effect || this.effect, {
+      ...this.options,
+      ...options,
+      startIndex: this.activeIndex,
+    })
   }
 
   next(): Promise<void> {
-    return this.skipTo(this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1, false)
+    return this.skipTo(
+      this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1,
+      false,
+    )
   }
 
   prev(): Promise<void> {
-    return this.skipTo(this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1, true)
+    return this.skipTo(
+      this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1,
+      true,
+    )
   }
 
   skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
@@ -123,12 +146,15 @@ class BoxSlider {
         slides: this.slides,
         speed: this.options.speed,
         currentIndex: this.activeIndex,
-        isPrevious: backwards === undefined ? nextIndex < this.activeIndex : backwards,
+        isPrevious:
+          backwards === undefined ? nextIndex < this.activeIndex : backwards,
         nextIndex,
       }
 
-      this.transitionPromise = (this.transitionPromise || Promise.resolve()).then(() => {
-        requestAnimationFrame(() => {
+      this.transitionPromise = (
+        this.transitionPromise || Promise.resolve()
+      ).then(() => {
+        requestAnimationFrame(async () => {
           this.activeIndex = nextIndex
 
           this.emit('before', {
@@ -137,7 +163,7 @@ class BoxSlider {
             speed: settings.speed,
           })
 
-          return this.effect.transition(settings).then(() => {
+          await this.effect.transition(settings).then(() => {
             if (this.options.autoScroll) {
               this.setAutoScroll()
             }
@@ -166,18 +192,28 @@ class BoxSlider {
     return this
   }
 
-  addEventListener(ev: SliderEventType, callback: (ev: SliderEventData) => void): BoxSlider {
+  addEventListener<T extends SliderEventType>(
+    ev: T,
+    callback: SliderEventListenerMap[T],
+  ): BoxSlider {
     if (!Array.isArray(this.eventListeners[ev])) {
       this.eventListeners[ev] = []
     }
 
-    this.eventListeners[ev].push(callback)
+    this.eventListeners[ev]!.push(callback)
 
     return this
   }
 
-  removeEventListener(ev: SliderEventType, callback: (ev: SliderEventData) => void): BoxSlider {
-    this.eventListeners[ev] = this.eventListeners[ev]?.filter((cb) => cb !== callback)
+  removeEventListener<T extends SliderEventType>(
+    ev: T,
+    callback: SliderEventListenerMap[T],
+  ): BoxSlider {
+    const listeners = this.eventListeners[ev]?.filter(
+      (cb) => cb !== callback,
+    ) as EventListenerMap[T]
+
+    this.eventListeners[ev] = listeners
 
     return this
   }
@@ -195,7 +231,9 @@ class BoxSlider {
     this.emit('destroy')
     this.eventListeners = {}
     Object.keys(this.elListeners).forEach((ev) =>
-      this.elListeners[ev].forEach((listener) => this.el.removeEventListener(ev, listener)),
+      this.elListeners[ev].forEach((listener) =>
+        this.el.removeEventListener(ev, listener),
+      ),
     )
     this.elListeners = {}
 
@@ -205,8 +243,8 @@ class BoxSlider {
     this.slides.length = 0
   }
 
-  private init(options: BoxSliderOptions) {
-    this._effect = options.effect
+  private init(effect: Effect, options: BoxSliderOptions) {
+    this._effect = effect
     this.slides = this.getSlides()
     this.effect.initialize(this.el, this.slides, this.stateStore, options)
     this.addAriaAttributes()
@@ -220,25 +258,36 @@ class BoxSlider {
     this.stateStore.storeAttributes(this.el, ['aria-live'])
     this.el.setAttribute('aria-live', 'polite')
     this.stateStore.storeAttributes(this.slides, ['aria-roledescription'])
-    this.slides.forEach((slide) => slide.setAttribute('aria-roledescription', 'slide'))
+    this.slides.forEach((slide) =>
+      slide.setAttribute('aria-roledescription', 'slide'),
+    )
   }
 
   private getSlides(): HTMLElement[] {
-    return Array.from(this.el.children).filter((child: Node) => child instanceof HTMLElement) as HTMLElement[]
+    return Array.from(this.el.children).filter(
+      (child: Node) => child instanceof HTMLElement,
+    ) as HTMLElement[]
   }
 
   private stopAutoScroll() {
     window.clearTimeout(this.autoScrollTimer)
   }
 
-  private emit(ev: SliderEventType, payload?: Partial<SliderEventData>) {
-    this.eventListeners[ev]?.forEach((cb) =>
-      cb({
-        currentIndex: this.activeIndex,
-        speed: this.options.speed,
-        ...payload,
-      }),
-    )
+  private emit<T extends SliderEventType>(ev: T, payload?: SliderEventData) {
+    const handlers: EventListenerMap[T] = this.eventListeners[ev]
+
+    if (ev === 'destroy') {
+      const destroyHandlers = handlers as EventListenerMap['destroy']
+      destroyHandlers?.forEach((cb) => cb())
+    } else {
+      handlers?.forEach((cb) =>
+        cb({
+          currentIndex: this.activeIndex,
+          speed: this.options.speed,
+          ...payload,
+        }),
+      )
+    }
   }
 
   private setAutoScroll() {

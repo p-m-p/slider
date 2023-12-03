@@ -1,0 +1,55 @@
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  font-family: 'Inter';
+}
+
+.sliders {
+  width: 800px;
+  margin: 50px auto;
+}
+
+.slider,
+.viewport {
+  display: block;
+  width: 600px;
+  height: 400px;
+}
+
+.slider,
+.viewport {
+  margin: 0 0 100px;
+}
+
+.slide {
+  align-items: center;
+  background: blue;
+  color: white;
+  display: flex;
+  font-size: 2rem;
+  height: 100%;
+  justify-content: center;
+  text-transform: uppercase;
+  width: 100%;
+
+  &:nth-child(even) {
+    background: red;
+  }
+}
+
+.full {
+  display: block;
+  margin: 0 0 100px;
+
+  &::part(controls) {
+    margin: 1rem 0 0;
+  }
+}
+
+.full-carousel {
+  display: block;
+  width: 600px;
+  height: 400px;
+}
