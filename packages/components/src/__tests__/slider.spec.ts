@@ -57,7 +57,7 @@ test('attribute values and props', () => {
   const resetSpy = vi.spyOn(slider, 'reset')
 
   el.setAttribute('auto-scroll', '')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[0][0]).toEqual({
     autoScroll: true,
     pauseOnHover,
     speed,
@@ -68,7 +68,7 @@ test('attribute values and props', () => {
   })
 
   el.setAttribute('pause-on-hover', 'true')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[1][0]).toEqual({
     autoScroll: true,
     pauseOnHover: true,
     speed,
@@ -79,7 +79,7 @@ test('attribute values and props', () => {
   })
 
   el.setAttribute('speed', '2000')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[2][0]).toEqual({
     autoScroll: true,
     pauseOnHover: true,
     speed: 2000,
@@ -90,7 +90,7 @@ test('attribute values and props', () => {
   })
 
   el.setAttribute('start-index', '2')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[3][0]).toEqual({
     autoScroll: true,
     pauseOnHover: true,
     speed: 2000,
@@ -101,7 +101,7 @@ test('attribute values and props', () => {
   })
 
   el.setAttribute('swipe', '')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[4][0]).toEqual({
     autoScroll: true,
     pauseOnHover: true,
     speed: 2000,
@@ -112,7 +112,7 @@ test('attribute values and props', () => {
   })
 
   el.setAttribute('swipe-tolerance', '50')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[5][0]).toEqual({
     autoScroll: true,
     pauseOnHover: true,
     speed: 2000,
@@ -123,7 +123,7 @@ test('attribute values and props', () => {
   })
 
   el.setAttribute('timeout', '850')
-  expect(resetSpy).toHaveBeenCalledWith({
+  expect(resetSpy.mock.calls[6][0]).toEqual({
     autoScroll: true,
     pauseOnHover: true,
     speed: 2000,
