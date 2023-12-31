@@ -46,6 +46,10 @@ html {
   &::part(controls) {
     margin: 1rem 0 0;
   }
+
+  &::part(index-btn) {
+    background: red;
+  }
 }
 
 .full-carousel {

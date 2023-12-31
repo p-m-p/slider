@@ -1,22 +1,19 @@
 import { BoxSlider } from '@boxslider/slider'
-import Slider from './Slider'
+import type { SliderElement } from './Slider'
 
 const template = document.createElement('template')
 template.innerHTML = `
-  <div class="bs-slider">
+  <div part="slider">
     <slot name="slider"></slot>
+  </div>
 
-    <div class="bs-slider-controls" part="controls">
-      <slot name="prev-btn">
-        <button type="button">Previous</button>
-      </slot>
-      <slot name="next-btn">
-        <button type="button">Next</button>
-      </slot>
-    </div>
-
-    <slot name="slide-index" part="index">
-      <div class="bs-slide-index"></div>
+  <div part="controls">
+    <slot name="prev-btn">
+      <button part="next-btn" type="button">Previous</button>
+    </slot>
+    <slot name="slide-index" part="index"></slot>
+    <slot name="next-btn">
+      <button part="prev-btn" type="button">Next</button>
     </slot>
   </div>
 `
@@ -40,8 +37,40 @@ export default class BoxSliderComponent extends HTMLElement {
       'slot[name="slider"]',
     )
     sliderSlot?.addEventListener('slotchange', () => {
-      const sliderComponent = sliderSlot.assignedElements()[0] as Slider
+      const sliderComponent = sliderSlot.assignedElements()[0] as SliderElement
       this.#slider = sliderComponent?.slider
+
+      const indexSlot = shadow.querySelector<HTMLSlotElement>(
+        'slot[name="slide-index"]',
+      )
+      const slides = Array.from(this.slider?.el.children || []).filter(
+        (el) => el instanceof HTMLElement,
+      )
+
+      if (slides.length > 1) {
+        const frag = document.createDocumentFragment()
+
+        for (let i = 0; i < slides.length; i++) {
+          const btn = document.createElement('button')
+          btn.textContent = `${i + 1}`
+          btn.setAttribute('part', 'index-btn')
+          btn.setAttribute('type', 'button')
+          btn.addEventListener('click', () => this.slider?.skipTo(i))
+          frag.appendChild(btn)
+        }
+
+        indexSlot?.appendChild(frag)
+      }
+
+      indexSlot?.addEventListener('slotchange', () => {
+        const index = indexSlot.assignedElements()[0]
+
+        if (index.hasChildNodes()) {
+          index.childNodes.forEach((node, index) => {
+            node.addEventListener('click', () => this.slider?.skipTo(index))
+          })
+        }
+      })
     })
 
     const prevBtnSlot = tree.querySelector<HTMLSlotElement>(
@@ -50,7 +79,7 @@ export default class BoxSliderComponent extends HTMLElement {
     prevBtnSlot?.addEventListener('slotchange', () => {
       const button = prevBtnSlot.assignedElements()[0]
       button?.addEventListener('click', () => {
-        this.#slider?.prev()
+        this.slider?.prev()
       })
     })
 
@@ -60,7 +89,7 @@ export default class BoxSliderComponent extends HTMLElement {
     nextBtnSlot?.addEventListener('slotchange', () => {
       const button = nextBtnSlot.assignedElements()[0]
       button?.addEventListener('click', () => {
-        this.#slider?.next()
+        this.slider?.next()
       })
     })
 

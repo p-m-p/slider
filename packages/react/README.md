@@ -4,7 +4,9 @@ React components for the [BoxSlider](https://github.com/p-m-p/slider) library ef
 
 ## Installation
 
-`npm i --save @boxslider/react`
+```sh
+npm i --save @boxslider/react`
+```
 
 ## Available Components
 

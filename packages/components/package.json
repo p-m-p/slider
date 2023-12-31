@@ -1,6 +1,21 @@
 {
   "name": "@boxslider/components",
   "version": "2.3.9",
+  "description": "Box slider Web components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxslider/slider/packages/components"
+  },
+  "author": "Phil Parsons",
+  "license": "MIT",
+  "keywords": [
+    "boxslider",
+    "slider",
+    "carousel",
+    "cube",
+    "3D",
+    "webcomponents"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -14,7 +29,6 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run esbuild && pnpm run types",
     "dev": "vite",
-    "preview": "vite preview",
     "clean": "rm -rf dist && rm -f LICENSE",
     "esbuild": "../../scripts/build-node.js && ../../scripts/build-browser.js",
     "prepack": "cp ../../LICENSE ./",
