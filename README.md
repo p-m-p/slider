@@ -241,7 +241,7 @@ event data as well as the transition speed.
 
 ```javascript
 slider.addEventListener('before', (data) => {
-  // data === {
+  // data: {
   //   currentIndex: number
   //   nextIndex: number
   //   speed: number
@@ -256,7 +256,7 @@ data
 
 ```javascript
 slider.addEventListener('after', (data) => {
-  // data === {
+  // data: {
   //   currentIndex: number
   //   speed: number
   // }
@@ -269,7 +269,7 @@ Fires when the slider is put into play mode.
 
 ```javascript
 slider.addEventListener('play', (data) => {
-  // data === {
+  // data: {
   //   currentIndex: number
   //   speed: number
   // }
@@ -282,7 +282,7 @@ Fires when an `autoScroll`'ing slider is paused.
 
 ```javascript
 slider.addEventListener('pause', (data) => {
-  // data === {
+  // data: {
   //   currentIndex: number
   //   speed: number
   // }
@@ -294,11 +294,8 @@ slider.addEventListener('pause', (data) => {
 Fires when a slider is destroyed.
 
 ```javascript
-slider.addEventListener('destroy', (data) => {
-  // data === {
-  //   currentIndex: number
-  //   speed: number
-  // }
+slider.addEventListener('destroy', () => {
+  // No event data
 })
 ```
 
