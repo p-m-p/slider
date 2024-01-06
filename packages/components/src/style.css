@@ -14,7 +14,7 @@ html {
 .slider,
 .viewport {
   display: block;
-  width: 600px;
+  width: 800px;
   height: 400px;
 }
 
@@ -39,21 +39,109 @@ html {
   }
 }
 
-.full {
+:root {
+  --bs-index-btn-active-color: red;
+  --bs-index-btn-color: #444;
+  --bs-index-btn-size: 1rem;
+}
+
+bs-slider {
   display: block;
-  margin: 0 0 100px;
+
+  &::part(container) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  &::part(slider) {
+    z-index: 1;
+  }
 
   &::part(controls) {
-    margin: 1rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    z-index: 2;
+  }
+
+  &::part(btn) {
+    background: rgb(255 255 255 / 25%);
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    height: 3rem;
+    overflow: hidden;
+    padding: 0.5rem;
+    position: relative;
+    width: 3rem;
+  }
+
+  &::part(btn):before {
+    border: solid 1rem transparent;
+    border-left-color: white;
+    border-left-width: 2rem;
+    content: '';
+    left: 0.5rem;
+    position: absolute;
+    top: 0.5rem;
+  }
+
+  &::part(prev-btn):before {
+    left: -0.5rem;
+    transform: rotateY(180deg);
+  }
+
+  &::part(index) {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 1rem 0;
   }
 
   &::part(index-btn) {
-    background: red;
+    background: transparent;
+    border: solid 1px var(--bs-index-btn-color);
+    border-radius: 99999px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: var(--bs-index-btn-size);
+    position: relative;
+    transition: border-color 300ms;
+    width: var(--bs-index-btn-size);
+  }
+
+  &::part(index-btn):before {
+    background-color: var(--bs-index-btn-color);
+    border-radius: 99999px;
+    content: ' ';
+    display: block;
+    height: 60%;
+    left: 20%;
+    position: absolute;
+    top: 20%;
+    transition: background-color 300ms;
+    width: 60%;
+  }
+
+  &::part(index-btn active) {
+    border-color: var(--bs-index-btn-active-color);
+  }
+
+  &::part(index-btn active):before {
+    background-color: var(--bs-index-btn-active-color);
   }
 }
 
 .full-carousel {
   display: block;
-  width: 600px;
   height: 400px;
+  width: 800px;
 }

@@ -3,17 +3,14 @@ import '.'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="sliders">
-  <bs-slider class="full">
-    <bs-carousel slot="slider" auto-scroll="false" timeout="5000" cover class="full-carousel">
+  <bs-slider>
+    <bs-carousel auto-scroll="false" timeout="5000" cover class="full-carousel">
       <div class="slide">Slide One</div>
       <div class="slide">Slide Two</div>
       <div class="slide">Slide Three</div>
       <div class="slide">Slide Four</div>
       <div class="slide">Slide Five</div>
     </bs-carousel>
-
-    <button slot="prev-btn">Previous</button>
-    <button slot="next-btn">Next</button>
   </bs-slider>
 
   <div class="viewport">

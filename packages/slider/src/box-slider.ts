@@ -26,16 +26,21 @@ type EventListenerMap = {
 class BoxSlider {
   private readonly options: BoxSliderOptions
 
-  private _stateStore?: StateStore
+  private _activeIndex: number
   private _el?: HTMLElement
   private _effect?: Effect
+  private _stateStore?: StateStore
+
   private slides: HTMLElement[]
-  private activeIndex: number
   private autoScrollTimer?: number
   private eventListeners: EventListenerMap
   private elListeners: { [ev: string]: EventListener[] }
   private isDestroyed: boolean
   private transitionPromise?: Promise<void>
+
+  get activeIndex() {
+    return this._activeIndex
+  }
 
   get el() {
     if (this._el === undefined) {
@@ -84,7 +89,7 @@ class BoxSlider {
       ...options,
     }
     this.slides = []
-    this.activeIndex = this.options.startIndex || 0
+    this._activeIndex = this.options.startIndex || 0
     this.eventListeners = {}
     this.elListeners = {}
     this.isDestroyed = false
@@ -155,7 +160,7 @@ class BoxSlider {
         this.transitionPromise || Promise.resolve()
       ).then(() => {
         requestAnimationFrame(async () => {
-          this.activeIndex = nextIndex
+          this._activeIndex = nextIndex
 
           this.emit('before', {
             currentIndex: settings.currentIndex,
