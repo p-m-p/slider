@@ -1,4 +1,4 @@
-import BoxSlider from './BoxSlider'
+import SliderControls from './SliderControls'
 import Carousel from './Carousel'
 import Cube from './Cube'
 import Fade from './Fade'
@@ -15,5 +15,5 @@ if (typeof customElements !== 'undefined') {
   customElements.define('bs-cube', Cube)
   customElements.define('bs-fade', Fade)
   customElements.define('bs-tile', Tile)
-  customElements.define('bs-slider', BoxSlider)
+  customElements.define('bs-slider-controls', SliderControls)
 }

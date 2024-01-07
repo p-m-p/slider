@@ -43,9 +43,15 @@ html {
   --bs-index-btn-active-color: red;
   --bs-index-btn-color: #444;
   --bs-index-btn-size: 1rem;
+
+  --bs-nav-btn-bg: rgb(255 255 255 / 25%);
+  --bs-nav-btn-color: white;
+  --bs-nav-btn-height: 2.5rem;
+  --bs-nav-btn-padding: 0.5rem;
+  --bs-nav-btn-width: 3rem;
 }
 
-bs-slider {
+bs-slider-controls {
   display: block;
 
   &::part(container) {
@@ -70,31 +76,48 @@ bs-slider {
     z-index: 2;
   }
 
-  &::part(btn) {
-    background: rgb(255 255 255 / 25%);
+  &::part(nav-btn) {
+    background: var(--bs-nav-btn-bg);
     box-sizing: border-box;
     border: none;
     cursor: pointer;
-    height: 3rem;
+    height: var(--bs-nav-btn-height);
     overflow: hidden;
-    padding: 0.5rem;
+    padding: var(--bs-nav-btn-padding);
     position: relative;
-    width: 3rem;
+    width: var(--bs-nav-btn-width);
   }
 
-  &::part(btn):before {
-    border: solid 1rem transparent;
-    border-left-color: white;
-    border-left-width: 2rem;
+  &::part(nav-btn):before {
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-width: calc(
+      calc(var(--bs-nav-btn-height) / 2) - var(--bs-nav-btn-padding)
+    );
+    border-left-width: calc(
+      var(--bs-nav-btn-width) - calc(var(--bs-nav-btn-padding) * 2)
+    );
+    border-right-width: calc(
+      var(--bs-nav-btn-width) - calc(var(--bs-nav-btn-padding) * 2)
+    );
+    border-top-width: calc(
+      calc(var(--bs-nav-btn-height) / 2) - var(--bs-nav-btn-padding)
+    );
     content: '';
-    left: 0.5rem;
+    left: var(--bs-nav-btn-padding);
     position: absolute;
-    top: 0.5rem;
+    top: var(--bs-nav-btn-padding);
   }
 
   &::part(prev-btn):before {
-    left: -0.5rem;
-    transform: rotateY(180deg);
+    left: calc(
+      calc(var(--bs-nav-btn-width) - calc(var(--bs-nav-btn-padding) * 3)) * -1
+    );
+    border-right-color: var(--bs-nav-btn-color);
+  }
+
+  &::part(next-btn):before {
+    border-left-color: var(--bs-nav-btn-color);
   }
 
   &::part(index) {

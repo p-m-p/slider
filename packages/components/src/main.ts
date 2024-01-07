@@ -3,7 +3,7 @@ import '.'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="sliders">
-  <bs-slider>
+  <bs-slider-controls>
     <bs-carousel auto-scroll="false" timeout="5000" cover class="full-carousel">
       <div class="slide">Slide One</div>
       <div class="slide">Slide Two</div>
@@ -11,7 +11,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="slide">Slide Four</div>
       <div class="slide">Slide Five</div>
     </bs-carousel>
-  </bs-slider>
+  </bs-slider-controls>
 
   <div class="viewport">
     <bs-cube auto-scroll="true" timeout="5000" class="slider" direction="vertical">

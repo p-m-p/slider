@@ -10,10 +10,10 @@ template.innerHTML = `
 
   <div part="controls">
     <slot name="prev-btn">
-      <button part="prev-btn btn" type="button" aria-label="Previous"></button>
+      <button part="prev-btn nav-btn" type="button" aria-label="Previous"></button>
     </slot>
     <slot name="next-btn">
-      <button part="next-btn btn" type="button" aria-label="Next"></button>
+      <button part="next-btn nav-btn" type="button" aria-label="Next"></button>
     </slot>
   </div>
 
@@ -23,7 +23,7 @@ template.innerHTML = `
 
 let incrementingId = 1
 
-export default class BoxSliderComponent extends HTMLElement {
+export default class SliderControlsComponent extends HTMLElement {
   #slider?: BoxSlider
 
   connectedCallback() {
