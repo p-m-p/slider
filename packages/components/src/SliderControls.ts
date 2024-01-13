@@ -1,4 +1,4 @@
-import { BoxSlider } from '@boxslider/slider'
+import type { BoxSlider } from '@boxslider/slider'
 import type { SliderElement } from './Slider'
 
 const template = document.createElement('template')
@@ -17,7 +17,7 @@ template.innerHTML = `
     </slot>
   </div>
 
-  <slot name="slide-index" part="index"></slot>
+  <slot name="index" part="index"></slot>
 </div>
 `
 
@@ -49,9 +49,8 @@ export default class SliderControlsComponent extends HTMLElement {
         })
       })
 
-      const indexSlot = shadow.querySelector<HTMLSlotElement>(
-        'slot[name="slide-index"]',
-      )
+      const indexSlot =
+        shadow.querySelector<HTMLSlotElement>('slot[name="index"]')
       const slides = Array.from(this.#slider?.el.children || []).filter(
         (el) => el instanceof HTMLElement,
       )
@@ -61,6 +60,7 @@ export default class SliderControlsComponent extends HTMLElement {
 
         for (let i = 0; i < slides.length; i++) {
           const btn = document.createElement('button')
+
           btn.setAttribute('aria-label', `View slide ${i + 1}`)
           btn.setAttribute(
             'part',
@@ -71,6 +71,7 @@ export default class SliderControlsComponent extends HTMLElement {
           btn.addEventListener('click', () => {
             this.#slider?.skipTo(i).then()
           })
+
           frag.appendChild(btn)
         }
 

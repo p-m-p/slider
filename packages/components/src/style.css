@@ -1,6 +1,9 @@
 :root {
   color-scheme: light dark;
+
   --bs-index-justify: flex-start;
+  --bs-index-btn-color: #555;
+  --bs-index-btn-active-color: #ddd;
 }
 
 html {

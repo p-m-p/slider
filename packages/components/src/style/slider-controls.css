@@ -1,12 +1,14 @@
 bs-slider-controls {
   --index-justify: var(--bs-index-justify, center);
 
-  --index-btn-active-color: var(--bs-index-btn-active-color, red);
-  --index-btn-color: var(--bs-index-btn-color, #444);
+  --index-btn-active-color: var(--bs-index-btn-active-color, black);
+  --index-btn-color: var(--bs-index-btn-color, rgb(0 0 0 / 40%));
   --index-btn-size: var(--bs-index-btn-size, 1rem);
 
-  --nav-btn-bg: var(--bs-nav-btn-bg, rgb(255 255 255 / 25%));
-  --nav-btn-color: var(--bs-nav-btn-color, white);
+  --nav-btn-bg: var(--bs-nav-btn-bg, rgb(0 0 0 / 5%));
+  --nav-btn-hover-bg: var(--bs-nav-btn-hover-bg, rgb(255 255 255 / 25%));
+  --nav-btn-color: var(--bs-nav-btn-color, rgb(0 0 0 / 40%));
+  --nav-btn-hover-color: var(--bs-nav-btn-hover-color, rgb(0 0 0 / black));
   --nav-btn-height: var(--bs-nav-btn-height, 2.5rem);
   --nav-btn-padding: var(--bs-nav-btn-padding, 0.5rem);
   --nav-btn-width: var(--bs-nav-btn-width, 3rem);
@@ -34,7 +36,7 @@ bs-slider-controls {
   }
 
   &::part(nav-btn) {
-    background: var(--nav-btn-bg);
+    background-color: var(--nav-btn-bg);
     box-sizing: border-box;
     border: none;
     cursor: pointer;
@@ -42,7 +44,12 @@ bs-slider-controls {
     overflow: hidden;
     padding: var(--nav-btn-padding);
     position: relative;
+    transition: background-color 200ms;
     width: var(--nav-btn-width);
+  }
+
+  &::part(nav-btn):hover {
+    background-color: var(--nav-btn-hover-bg);
   }
 
   &::part(nav-btn):before {
@@ -64,6 +71,7 @@ bs-slider-controls {
     left: var(--nav-btn-padding);
     position: absolute;
     top: var(--nav-btn-padding);
+    transition: border-color 200ms;
   }
 
   &::part(prev-btn):before {
@@ -73,8 +81,18 @@ bs-slider-controls {
     border-right-color: var(--nav-btn-color);
   }
 
+  &::part(prev-btn):focus:before,
+  &::part(prev-btn):hover:before {
+    border-right-color: var(--nav-btn-hover-color);
+  }
+
   &::part(next-btn):before {
     border-left-color: var(--nav-btn-color);
+  }
+
+  &::part(next-btn):focus:before,
+  &::part(next-btn):hover:before {
+    border-left-color: var(--nav-btn-hover-color);
   }
 
   &::part(index) {
@@ -104,12 +122,12 @@ bs-slider-controls {
     border-radius: 99999px;
     content: ' ';
     display: block;
-    height: 60%;
-    left: 20%;
+    height: 80%;
+    left: 10%;
     position: absolute;
-    top: 20%;
-    transition: background-color 300ms;
-    width: 60%;
+    top: 10%;
+    transition: background-color 200ms;
+    width: 80%;
   }
 
   &::part(index-btn active) {
