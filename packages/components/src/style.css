@@ -1,5 +1,6 @@
 :root {
   color-scheme: light dark;
+  --bs-index-justify: flex-start;
 }
 
 html {
@@ -36,130 +37,6 @@ html {
 
   &:nth-child(even) {
     background: red;
-  }
-}
-
-:root {
-  --bs-index-btn-active-color: red;
-  --bs-index-btn-color: #444;
-  --bs-index-btn-size: 1rem;
-
-  --bs-nav-btn-bg: rgb(255 255 255 / 25%);
-  --bs-nav-btn-color: white;
-  --bs-nav-btn-height: 2.5rem;
-  --bs-nav-btn-padding: 0.5rem;
-  --bs-nav-btn-width: 3rem;
-}
-
-bs-slider-controls {
-  display: block;
-
-  &::part(container) {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-  }
-
-  &::part(slider) {
-    z-index: 1;
-  }
-
-  &::part(controls) {
-    display: flex;
-    justify-content: space-between;
-    left: 0;
-    position: absolute;
-    top: 40%;
-    width: 100%;
-    z-index: 2;
-  }
-
-  &::part(nav-btn) {
-    background: var(--bs-nav-btn-bg);
-    box-sizing: border-box;
-    border: none;
-    cursor: pointer;
-    height: var(--bs-nav-btn-height);
-    overflow: hidden;
-    padding: var(--bs-nav-btn-padding);
-    position: relative;
-    width: var(--bs-nav-btn-width);
-  }
-
-  &::part(nav-btn):before {
-    border-style: solid;
-    border-color: transparent;
-    border-bottom-width: calc(
-      calc(var(--bs-nav-btn-height) / 2) - var(--bs-nav-btn-padding)
-    );
-    border-left-width: calc(
-      var(--bs-nav-btn-width) - calc(var(--bs-nav-btn-padding) * 2)
-    );
-    border-right-width: calc(
-      var(--bs-nav-btn-width) - calc(var(--bs-nav-btn-padding) * 2)
-    );
-    border-top-width: calc(
-      calc(var(--bs-nav-btn-height) / 2) - var(--bs-nav-btn-padding)
-    );
-    content: '';
-    left: var(--bs-nav-btn-padding);
-    position: absolute;
-    top: var(--bs-nav-btn-padding);
-  }
-
-  &::part(prev-btn):before {
-    left: calc(
-      calc(var(--bs-nav-btn-width) - calc(var(--bs-nav-btn-padding) * 3)) * -1
-    );
-    border-right-color: var(--bs-nav-btn-color);
-  }
-
-  &::part(next-btn):before {
-    border-left-color: var(--bs-nav-btn-color);
-  }
-
-  &::part(index) {
-    align-items: center;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    padding: 1rem 0;
-  }
-
-  &::part(index-btn) {
-    background: transparent;
-    border: solid 1px var(--bs-index-btn-color);
-    border-radius: 99999px;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: block;
-    height: var(--bs-index-btn-size);
-    position: relative;
-    transition: border-color 300ms;
-    width: var(--bs-index-btn-size);
-  }
-
-  &::part(index-btn):before {
-    background-color: var(--bs-index-btn-color);
-    border-radius: 99999px;
-    content: ' ';
-    display: block;
-    height: 60%;
-    left: 20%;
-    position: absolute;
-    top: 20%;
-    transition: background-color 300ms;
-    width: 60%;
-  }
-
-  &::part(index-btn active) {
-    border-color: var(--bs-index-btn-active-color);
-  }
-
-  &::part(index-btn active):before {
-    background-color: var(--bs-index-btn-active-color);
   }
 }
 

@@ -1,4 +1,5 @@
 import './style.css'
+import './style/slider-controls.css'
 import '.'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

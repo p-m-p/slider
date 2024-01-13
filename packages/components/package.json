@@ -22,7 +22,8 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.cjs",
       "types": "./dist/types/index.d.ts"
-    }
+    },
+    "./style/": "./src/style/"
   },
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/types/index.d.ts",
