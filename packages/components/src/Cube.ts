@@ -51,3 +51,7 @@ export default class Cube extends Slider implements CubeSliderElement {
     )
   }
 }
+
+if (typeof customElements !== 'undefined') {
+  customElements.define('bs-cube', Cube)
+}

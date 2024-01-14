@@ -45,3 +45,7 @@ export default class Carousel extends Slider implements CarouselSliderElement {
     }
   }
 }
+
+if (typeof customElements !== 'undefined') {
+  customElements.define('bs-carousel', Carousel)
+}

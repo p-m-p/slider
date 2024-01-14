@@ -23,7 +23,9 @@ template.innerHTML = `
 
 let incrementingId = 1
 
-export default class SliderControlsComponent extends HTMLElement {
+export interface SliderControlsElement extends HTMLElement {}
+
+export default class SliderControls extends HTMLElement {
   #slider?: BoxSlider
 
   connectedCallback() {
@@ -121,4 +123,8 @@ export default class SliderControlsComponent extends HTMLElement {
   disconnectedCallback() {
     this.#slider = undefined
   }
+}
+
+if (typeof customElements !== 'undefined') {
+  customElements.define('bs-slider-controls', SliderControls)
 }

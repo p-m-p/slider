@@ -52,3 +52,7 @@ export default class Tile extends Slider implements TileSliderElement {
     )
   }
 }
+
+if (typeof customElements !== 'undefined') {
+  customElements.define('bs-tile', Tile)
+}

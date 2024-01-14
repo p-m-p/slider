@@ -34,3 +34,7 @@ export default class Fade extends Slider implements FadeSliderElement {
     )
   }
 }
+
+if (typeof customElements !== 'undefined') {
+  customElements.define('bs-fade', Fade)
+}
