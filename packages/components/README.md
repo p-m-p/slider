@@ -93,8 +93,8 @@ these will be activated with click handlers to control the slider for you.
 ```
 
 To style the provided navigation and index buttons either import the default
-stylesheet from `@boxslider/components/style/default.css` and provide custom
-properties or target the provided parts for fully custom styles.
+stylesheet from `@boxslider/components/style/slider-controls.css` and provide
+custom properties or target the provided parts for fully custom styles.
 
 ```css
 :root {
