@@ -43,15 +43,15 @@ const component = document.querySelector('bs-fade')
 
 component?.slider?.next() // Control the slider programmatically
 
-// Access the slider component read only props
+// Access the slider component readonly props
 console.log(component.autoScroll) // => true
 console.log(component.timeout) // => 2000
 console.log(component.timingFunction) // => 'ease-in'
 ```
 
-## Slider controls (🧰 Beta)
+## 🧰 Beta component - Slider controls
 
-The `<bs-slider-controls>` web component wraps a slider component and provides navigation buttons
+The `<bs-slider-controls>` component wraps a slider to provide navigation
 and slide index buttons.
 
 ```html
@@ -66,8 +66,8 @@ and slide index buttons.
 </bs-slider-controls>
 ```
 
-The slider controls component has slots for the controls if you want to provide your own and
-will activate the click handlers to control the slider for you.
+Slots for the controls are available if you want to provide your own and
+these will be activated with click handlers to control the slider for you.
 
 ```html
 <bs-slider-controls>
@@ -92,11 +92,32 @@ will activate the click handlers to control the slider for you.
 </bs-slider-controls>
 ```
 
-To style the provided navigation and index buttons you can import the default
-stylesheet and provide the custom properties to controls the colors and sizes or
-target the parts for custom styling.
+To style the provided navigation and index buttons either import the default
+stylesheet from `@boxslider/components/style/default.css` and provide custom
+properties or target the provided parts for fully custom styles.
 
-Below is the template for the slider controls.
+```css
+:root {
+  /* Positioning of the index buttons under the slider */
+  --bs-index-justify: center;
+
+  /* Index button colors and size */
+  --bs-index-btn-active-color: black;
+  --bs-index-btn-color: rgb(0 0 0 / 40%);
+  --bs-index-btn-size: 1rem;
+
+  /* Navigation button colors and size */
+  --bs-nav-btn-bg: rgb(0 0 0 / 5%);
+  --bs-nav-btn-hover-bg: rgb(255 255 255 / 25%);
+  --bs-nav-btn-color: rgb(0 0 0 / 40%);
+  --bs-nav-btn-hover-color: rgb(0 0 0 / black);
+  --bs-nav-btn-height: 2.5rem;
+  --bs-nav-btn-padding: 0.5rem;
+  --bs-nav-btn-width: 3rem;
+}
+```
+
+Below is the template for the slider controls showing the available parts.
 
 ```html
 <div part="container">
@@ -120,7 +141,8 @@ Below is the template for the slider controls.
 </div>
 ```
 
-For example, to style the navigation buttons you would target the `nav-btn` part.
+As an example, to style the navigation buttons create a selector to target
+the `nav-btn` part.
 
 ```css
 bs-slider-controls::part(nav-btn) {
