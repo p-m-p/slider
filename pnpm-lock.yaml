@@ -128,8 +128,8 @@ importers:
   packages/website:
     dependencies:
       lucide-react:
-        specifier: ^0.248.0
-        version: 0.248.0(react@18.2.0)
+        specifier: ^0.309.0
+        version: 0.309.0(react@18.2.0)
       react-syntax-highlighter:
         specifier: ^15.5.0
         version: 15.5.0(react@18.2.0)
@@ -2857,6 +2857,7 @@ packages:
 
   /@types/node@18.19.3:
     resolution: {integrity: sha512-k5fggr14DwAytoA/t8rPrIz++lXK7/DqckthCmoZOKNsEbJkId4Z//BqgApXBUGrGddrigYa1oqheo/7YmW4rg==}
+    requiresBuild: true
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -4291,6 +4292,7 @@ packages:
   /cosmiconfig-typescript-loader@5.0.0(@types/node@18.19.3)(cosmiconfig@8.3.6)(typescript@5.3.3):
     resolution: {integrity: sha512-+8cK7jRAReYkMwMiG+bxhcNKiHJDM6bR9FD/nGBXOWdMLuYawjF5cGrtLilJ+LGd3ZjCXnJjR5DkfWPoIVlqJA==}
     engines: {node: '>=v16'}
+    requiresBuild: true
     peerDependencies:
       '@types/node': '*'
       cosmiconfig: '>=8.2'
@@ -7045,8 +7047,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /lucide-react@0.248.0(react@18.2.0):
-    resolution: {integrity: sha512-zMqVvwsvhLV6ooekfM8HEngR/lLGkIgOwZ4X140K+CDdAPwfp9LARnmJhMF32wlDganAIVEgN7saIv3pcCLUVw==}
+  /lucide-react@0.309.0(react@18.2.0):
+    resolution: {integrity: sha512-zNVPczuwFrCfksZH3zbd1UDE6/WYhYAdbe2k7CImVyPAkXLgIwbs6eXQ4loigqDnUFjyFYCI5jZ1y10Kqal0dg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -9646,6 +9648,7 @@ packages:
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+    requiresBuild: true
     dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.0:
