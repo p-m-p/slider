@@ -1,5 +1,5 @@
 {
-  "name": "@boxslider/examples",
+  "name": "examples",
   "private": true,
   "version": "2.3.10",
   "type": "module",
