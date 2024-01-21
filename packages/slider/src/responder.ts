@@ -5,8 +5,8 @@ let resizeObserver: ResizeObserver
 
 if (typeof ResizeObserver !== 'undefined') {
   resizeObserver = new ResizeObserver((sliderElements) => {
-    sliderElements.forEach(
-      (sliderEl) => boxSliders.find((bs) => bs.el === sliderEl.target)?.reset(),
+    sliderElements.forEach((sliderEl) =>
+      boxSliders.find((bs) => bs.el === sliderEl.target)?.reset(),
     )
   })
 }
