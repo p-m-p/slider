@@ -2,18 +2,49 @@ import type { BoxSliderOptions } from './box-slider-options'
 import type { Effect } from './effects/effect'
 import { StateStore } from './state-store'
 import { responder } from './responder'
+import { type TransitionQueue, createQueue } from './transition-queue'
 
 export type SliderEventData = {
+  /**
+   * The currently active slide index
+   */
   currentIndex: number
+
+  /**
+   * The index of the slide to be active next
+   */
   nextIndex?: number
+
+  /**
+   * The transition speed of the slide animation
+   */
   speed: number
 }
 
 export interface SliderEventListenerMap {
+  /**
+   * Event triggered after slide transition completes
+   */
   after: (data: SliderEventData) => void
+
+  /**
+   * Event triggered before slide transition begins
+   */
   before: (data: SliderEventData) => void
+
+  /**
+   * Event triggered when slider is destroyed
+   */
   destroy: () => void
+
+  /**
+   * Event triggered when slider auto scrolling is stopped
+   */
   pause: (data: SliderEventData) => void
+
+  /**
+   * Event triggered when slider auto scrolling is started
+   */
   play: (data: SliderEventData) => void
 }
 
@@ -36,7 +67,7 @@ class BoxSlider {
   private eventListeners: EventListenerMap
   private elListeners: { [ev: string]: EventListener[] }
   private isDestroyed: boolean
-  private transitionPromise?: Promise<void>
+  private transitionQueue: TransitionQueue
 
   get activeIndex() {
     return this._activeIndex
@@ -73,10 +104,11 @@ class BoxSlider {
   constructor(
     el: HTMLElement,
     effect: Effect,
-    options: Partial<BoxSliderOptions>,
+    options?: Partial<BoxSliderOptions>,
   ) {
     this._el = el
     this._stateStore = new StateStore()
+    this.transitionQueue = createQueue()
 
     this.options = {
       autoScroll: true,
@@ -119,64 +151,37 @@ class BoxSlider {
   }
 
   next(): Promise<void> {
-    return this.skipTo(
-      this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1,
-      false,
-    )
+    return new Promise((resolve) => {
+      this.transitionQueue.push(async () => {
+        const nextIndex =
+          this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1
+
+        await this.transitionTo(nextIndex, false)
+        resolve()
+      })
+    })
   }
 
   prev(): Promise<void> {
-    return this.skipTo(
-      this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1,
-      true,
-    )
+    return new Promise((resolve) => {
+      this.transitionQueue.push(async () => {
+        const prevIndex =
+          this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1
+
+        await this.transitionTo(prevIndex, true)
+        resolve()
+      })
+    })
   }
 
   skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (this.isDestroyed || nextIndex === this.activeIndex) {
-        return resolve()
-      }
-
-      if (nextIndex < 0 || nextIndex >= this.slides.length) {
-        reject(new Error(`${nextIndex} is not a valid slide index`))
-      }
-
-      if (this.options.autoScroll) {
-        this.stopAutoScroll()
-      }
-
-      const settings = {
-        el: this.el,
-        slides: this.slides,
-        speed: this.options.speed,
-        currentIndex: this.activeIndex,
-        isPrevious:
+    return new Promise((resolve) => {
+      this.transitionQueue.push(async () => {
+        await this.transitionTo(
+          nextIndex,
           backwards === undefined ? nextIndex < this.activeIndex : backwards,
-        nextIndex,
-      }
-
-      this.transitionPromise = (
-        this.transitionPromise || Promise.resolve()
-      ).then(() => {
-        requestAnimationFrame(async () => {
-          this._activeIndex = nextIndex
-
-          this.emit('before', {
-            currentIndex: settings.currentIndex,
-            nextIndex: settings.nextIndex,
-            speed: settings.speed,
-          })
-
-          await this.effect.transition(settings).then(() => {
-            if (this.options.autoScroll) {
-              this.setAutoScroll()
-            }
-
-            this.emit('after')
-            resolve()
-          })
-        })
+        )
+        resolve()
       })
     })
   }
@@ -232,6 +237,7 @@ class BoxSlider {
     }
 
     this.stateStore.revert()
+    this.transitionQueue.clear()
     responder.remove(this)
     this.emit('destroy')
     this.eventListeners = {}
@@ -274,6 +280,48 @@ class BoxSlider {
     ) as HTMLElement[]
   }
 
+  private transitionTo(nextIndex: number, backwards: boolean): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.isDestroyed || nextIndex === this.activeIndex) {
+        return resolve()
+      }
+
+      if (nextIndex < 0 || nextIndex >= this.slides.length) {
+        return reject(new Error(`${nextIndex} is not a valid slide index`))
+      }
+
+      if (this.options.autoScroll) {
+        this.stopAutoScroll()
+      }
+
+      const settings = {
+        el: this.el,
+        slides: this.slides,
+        speed: this.options.speed,
+        currentIndex: this.activeIndex,
+        isPrevious: backwards,
+        nextIndex,
+      }
+
+      this._activeIndex = nextIndex
+
+      this.emit('before', {
+        currentIndex: settings.currentIndex,
+        nextIndex: settings.nextIndex,
+        speed: settings.speed,
+      })
+
+      this.effect.transition(settings).then(() => {
+        if (this.options.autoScroll) {
+          this.setAutoScroll()
+        }
+
+        this.emit('after')
+        resolve()
+      })
+    })
+  }
+
   private stopAutoScroll() {
     window.clearTimeout(this.autoScrollTimer)
   }
@@ -297,17 +345,21 @@ class BoxSlider {
 
   private setAutoScroll() {
     this.stopAutoScroll()
-    this.el.setAttribute('aria-live', 'off')
 
-    this.autoScrollTimer = window.setTimeout(
-      () =>
-        this.next().then(() => {
-          if (!this.isDestroyed) {
-            this.setAutoScroll()
-          }
-        }),
-      this.options.timeout,
-    )
+    // Use RAF to prevent continually running when the tab is in background
+    window.requestAnimationFrame(() => {
+      this.el.setAttribute('aria-live', 'off')
+
+      this.autoScrollTimer = window.setTimeout(
+        () =>
+          this.next().then(() => {
+            if (!this.isDestroyed) {
+              this.setAutoScroll()
+            }
+          }),
+        this.options.timeout,
+      )
+    })
   }
 
   private addElListener(ev: keyof HTMLElementEventMap, handler: EventListener) {

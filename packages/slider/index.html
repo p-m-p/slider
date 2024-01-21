@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BoxSlider</title>
+    <style>
+      #slider {
+        height: 400px;
+        margin: 100px auto 40px;
+        width: 600px;
+      }
+
+      .slide {
+        align-items: center;
+        background: darkgray;
+        color: white;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+      }
+
+      #controls {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="slider">
+      <div class="slide">Slide one</div>
+      <div class="slide">Slide two</div>
+      <div class="slide">Slide three</div>
+      <div class="slide">Slide four</div>
+      <div class="slide">Slide five</div>
+      <div class="slide">Slide six</div>
+      <div class="slide">Slide seven</div>
+      <div class="slide">Slide eight</div>
+      <div class="slide">Slide nine</div>
+      <div class="slide">Slide ten</div>
+    </div>
+    <div id="controls">
+      <button type="button" id="prev">Previous</button>
+      <button type="button" id="next">Next</button>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
