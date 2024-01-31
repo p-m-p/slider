@@ -6,6 +6,13 @@
   min-height: 100vh;
 }
 
+bs-carousel,
+bs-cube,
+bs-fade,
+bs-tile {
+  display: block;
+}
+
 header {
   align-items: center;
   display: flex;
@@ -40,10 +47,15 @@ footer p {
   text-align: center;
 }
 
-.slider {
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+.slider-viewport {
   height: 512px;
   width: 896px;
+}
+
+.slider {
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
 }
 
 .slide,

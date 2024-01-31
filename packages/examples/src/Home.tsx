@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import GitHubButton from 'react-github-btn'
 import {
+  BoxSlider,
   CarouselSliderOptions,
   CubeSliderOptions,
   FadeSliderOptions,
@@ -72,6 +73,7 @@ const effects: {
 
 function App() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const sliderRef = useRef<BoxSlider>(null)
   const [effect, setEffect] = useState(effects[0])
   const slides = images.map((image, i) => (
     <div key={image} className="slide">
@@ -103,10 +105,11 @@ function App() {
             'aria-label': 'Image carousel',
             className: 'slider',
             id: 'slider',
-            effectOptions: effect.options,
             onAfter: (ev: SliderEventData) => setActiveIndex(ev.currentIndex),
-            slideIndex: activeIndex,
+            startIndex: activeIndex,
             children: slides,
+            sliderRef,
+            ...effect.options,
           })}
         </section>
 
@@ -135,7 +138,9 @@ function App() {
                 aria-controls="slider"
                 className={`skip-button${i === activeIndex ? ' active' : ''}`}
                 aria-label={`Show slide ${i}`}
-                onClick={() => setActiveIndex(i)}
+                onClick={() => {
+                  sliderRef.current?.skipTo(i)
+                }}
               />
             ))}
           </div>
