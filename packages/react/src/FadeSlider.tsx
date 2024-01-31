@@ -1,21 +1,34 @@
-import { useMemo } from 'react'
 import {
-  FadeSlider as BxFadeSlider,
-  type FadeSliderOptions,
-} from '@boxslider/slider'
-import BoxSlider, { type BoxSliderProps } from './BoxSlider'
+  extractSliderAttributes,
+  type BaseComponentProps,
+  sliderRefCallback,
+} from './BoxSlider'
 
-export interface FadeSliderProps extends Omit<BoxSliderProps, 'effect'> {
-  effectOptions?: FadeSliderOptions
+export interface FadeSliderProps extends BaseComponentProps<'bs-fade'> {
+  timingFunction?: string
 }
 
-export function FadeSlider({ effectOptions, ...props }: FadeSliderProps) {
-  const effect = useMemo(() => new BxFadeSlider(effectOptions), [effectOptions])
+export function FadeSlider({
+  children,
+  className,
+  sliderRef,
+  timingFunction,
+  ...props
+}: FadeSliderProps) {
+  const { attributes, extraProps } = extractSliderAttributes(props)
+  const htmlAttributes = { ...attributes }
+
+  if (timingFunction) {
+    htmlAttributes['timing-function'] = timingFunction
+  }
 
   return (
-    <BoxSlider {...props} effect={effect}>
-      {props.children}
-    </BoxSlider>
+    <bs-fade
+      {...htmlAttributes}
+      ref={sliderRefCallback(extraProps, sliderRef)}
+      class={className}>
+      {children}
+    </bs-fade>
   )
 }
 

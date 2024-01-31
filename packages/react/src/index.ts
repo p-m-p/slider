@@ -1,3 +1,5 @@
+import '@boxslider/components'
+
 export {
   default as CarouselSlider,
   type CarouselSliderProps,

@@ -33,6 +33,7 @@
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   },
   "dependencies": {
+    "@boxslider/components": "workspace:*",
     "@boxslider/slider": "workspace:*"
   },
   "peerDependencies": {

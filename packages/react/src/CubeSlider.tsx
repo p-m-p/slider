@@ -1,22 +1,41 @@
-import { useMemo } from 'react'
 import {
-  CubeSlider as BxCubeSlider,
-  type CubeSliderOptions,
-} from '@boxslider/slider'
-import BoxSlider, { type BoxSliderProps } from './BoxSlider'
+  extractSliderAttributes,
+  type BaseComponentProps,
+  sliderRefCallback,
+} from './BoxSlider'
 
-export interface CubeSliderProps extends Omit<BoxSliderProps, 'effect'> {
-  effectOptions?: CubeSliderOptions
+export interface CubeSliderProps extends BaseComponentProps<'bs-cube'> {
+  direction?: 'horizontal' | 'vertical'
+  perspective?: number
 }
 
-export function CubeSlider({ effectOptions, ...props }: CubeSliderProps) {
-  const effect = useMemo(() => new BxCubeSlider(effectOptions), [effectOptions])
+export function Cube({
+  children,
+  className,
+  direction,
+  perspective,
+  sliderRef,
+  ...props
+}: CubeSliderProps) {
+  const { attributes, extraProps } = extractSliderAttributes(props)
+  const htmlAttributes = { ...attributes }
+
+  if (direction !== undefined) {
+    htmlAttributes.direction = direction
+  }
+
+  if (perspective !== undefined) {
+    htmlAttributes.perspective = `${perspective}`
+  }
 
   return (
-    <BoxSlider {...props} effect={effect}>
-      {props.children}
-    </BoxSlider>
+    <bs-cube
+      {...htmlAttributes}
+      ref={sliderRefCallback(extraProps, sliderRef)}
+      class={className}>
+      {children}
+    </bs-cube>
   )
 }
 
-export default CubeSlider
+export default Cube

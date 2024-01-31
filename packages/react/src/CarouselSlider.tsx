@@ -1,27 +1,40 @@
-import { useMemo } from 'react'
 import {
-  CarouselSlider as BxCarouselSlider,
-  type CarouselSliderOptions,
-} from '@boxslider/slider'
-import BoxSlider, { type BoxSliderProps } from './BoxSlider'
+  extractSliderAttributes,
+  type BaseComponentProps,
+  sliderRefCallback,
+} from './BoxSlider'
 
-export interface CarouselSliderProps extends Omit<BoxSliderProps, 'effect'> {
-  effectOptions?: CarouselSliderOptions
+export interface CarouselSliderProps extends BaseComponentProps<'bs-carousel'> {
+  timingFunction?: string
+  cover?: boolean
 }
 
 export function CarouselSlider({
-  effectOptions,
+  children,
+  className,
+  cover,
+  sliderRef,
+  timingFunction,
   ...props
 }: CarouselSliderProps) {
-  const effect = useMemo(
-    () => new BxCarouselSlider(effectOptions),
-    [effectOptions],
-  )
+  const { attributes, extraProps } = extractSliderAttributes(props)
+  const htmlAttributes = { ...attributes }
+
+  if (timingFunction) {
+    htmlAttributes['timing-function'] = timingFunction
+  }
+
+  if (cover !== undefined) {
+    htmlAttributes.cover = `${cover}`
+  }
 
   return (
-    <BoxSlider {...props} effect={effect}>
-      {props.children}
-    </BoxSlider>
+    <bs-carousel
+      {...htmlAttributes}
+      ref={sliderRefCallback(extraProps, sliderRef)}
+      class={className}>
+      {children}
+    </bs-carousel>
   )
 }
 

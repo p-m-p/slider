@@ -1,120 +1,121 @@
-import {
-  Component,
-  type ComponentPropsWithoutRef,
-  type MutableRefObject,
+import type {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  MutableRefObject,
+  RefCallback,
 } from 'react'
-import {
-  BoxSlider as BxSlider,
-  type BoxSliderOptions,
-  type SliderEventData,
-  type SliderEventListenerMap,
-  type Effect,
-} from '@boxslider/slider'
+import type { BoxSlider, SliderEventListenerMap } from '@boxslider/slider'
+import type {
+  CarouselSliderElement,
+  CubeSliderElement,
+  FadeSliderElement,
+  TileSliderElement,
+  SliderElement,
+} from '@boxslider/components'
+import type { BoxSliderOptions } from '@boxslider/slider'
+import type { ComponentPropsWithoutRef } from 'react'
 
-export interface BoxSliderProps extends ComponentPropsWithoutRef<'div'> {
+interface JSXSliderElement<T> extends DetailedHTMLProps<HTMLAttributes<T>, T> {
+  class?: string
+  'start-index'?: number
+}
+
+declare global {
+  /* eslint-disable-next-line @typescript-eslint/no-namespace */
+  namespace JSX {
+    interface IntrinsicElements {
+      'bs-carousel': JSXSliderElement<CarouselSliderElement>
+      'bs-cube': JSXSliderElement<CubeSliderElement>
+      'bs-fade': JSXSliderElement<FadeSliderElement>
+      'bs-tile': JSXSliderElement<TileSliderElement>
+    }
+  }
+}
+
+type ElementName = 'bs-carousel' | 'bs-cube' | 'bs-fade' | 'bs-tile'
+
+export type BaseComponentProps<T extends ElementName> = BoxSliderProps &
+  Omit<
+    ComponentPropsWithoutRef<T>,
+    | 'auto-scroll'
+    | 'pause-on-hover'
+    | 'start-index'
+    | 'swipe-tolerance'
+    | 'timing-function'
+  >
+
+export interface BoxSliderProps extends Partial<BoxSliderOptions> {
   onAfter?: SliderEventListenerMap['after']
   onBefore?: SliderEventListenerMap['before']
   onDestroy?: SliderEventListenerMap['destroy']
   onStartAutoScroll?: SliderEventListenerMap['play']
   onStopAutoScroll?: SliderEventListenerMap['pause']
-  effect: Effect
-  sliderOptions?: Partial<BoxSliderOptions>
-  slideIndex?: number
-  sliderRef?: MutableRefObject<BxSlider | null>
+  sliderRef?: MutableRefObject<BoxSlider | null>
 }
 
-const sliderPropNames = [
-  'effectOptions',
-  'onAfter',
-  'onBefore',
-  'onDestroy',
-  'onStartAutoScroll',
-  'onStopAutoScroll',
-  'sliderOptions',
-  'slideIndex',
-  'sliderRef',
-]
+export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
+  const {
+    autoScroll,
+    pauseOnHover,
+    startIndex,
+    swipeTolerance,
+    ...extraProps
+  } = props
+  const attributes: Record<string, string> = {}
 
-function filterProps(props: BoxSliderProps): ComponentPropsWithoutRef<'div'> {
-  const includeKeys = Object.keys(props).filter(
-    (key) => !sliderPropNames.includes(key),
-  )
+  if (autoScroll !== undefined) {
+    attributes['auto-scroll'] = `${autoScroll}`
+  }
 
-  return includeKeys.reduce(
-    (includedProps, key) => ({
-      ...includedProps,
-      [key]: props[key as keyof BoxSliderProps],
-    }),
-    {},
-  )
+  if (pauseOnHover !== undefined) {
+    attributes['pause-on-hover'] = `${pauseOnHover}`
+  }
+
+  if (startIndex !== undefined) {
+    attributes['start-index'] = `${startIndex}`
+  }
+
+  if (swipeTolerance !== undefined) {
+    attributes['swipe-tolerance'] = `${swipeTolerance}`
+  }
+
+  return { attributes, extraProps }
 }
 
-class BoxSlider extends Component<BoxSliderProps> {
-  private el?: HTMLDivElement | null
-  private boxSlider?: BxSlider
+export function sliderRefCallback<T extends BoxSliderProps>(
+  props: T,
+  sliderRef?: MutableRefObject<BoxSlider | null>,
+): RefCallback<SliderElement> {
+  const { onAfter, onBefore, onDestroy, onStartAutoScroll, onStopAutoScroll } =
+    props
 
-  componentDidMount() {
-    if (this.el) {
-      this.boxSlider = new BxSlider(this.el, this.props.effect, {
-        ...this.props.sliderOptions,
-      })
-      this.boxSlider.addEventListener('before', (ev: SliderEventData) => {
-        if (this.props.onBefore) this.props.onBefore.call(undefined, ev)
-      })
-      this.boxSlider.addEventListener('after', (ev: SliderEventData) => {
-        if (this.props.onAfter) this.props.onAfter.call(undefined, ev)
-      })
-      this.boxSlider.addEventListener('play', (ev: SliderEventData) => {
-        if (this.props.onStartAutoScroll)
-          this.props.onStartAutoScroll.call(undefined, ev)
-      })
-      this.boxSlider.addEventListener('pause', (ev: SliderEventData) => {
-        if (this.props.onStopAutoScroll)
-          this.props.onStopAutoScroll.call(undefined, ev)
-      })
-      this.boxSlider.addEventListener('destroy', () => {
-        if (this.props.onDestroy) this.props.onDestroy.call(undefined)
-      })
+  return (el: SliderElement) => {
+    const slider = el?.slider
+
+    if (slider) {
+      if (onAfter) {
+        slider.addEventListener('after', onAfter)
+      }
+
+      if (onBefore) {
+        slider.addEventListener('before', onBefore)
+      }
+
+      if (onDestroy) {
+        slider.addEventListener('destroy', onDestroy)
+      }
+
+      if (onStartAutoScroll) {
+        slider.addEventListener('play', onStartAutoScroll)
+      }
+
+      if (onStopAutoScroll) {
+        slider.addEventListener('pause', onStopAutoScroll)
+      }
+
+      if (sliderRef) {
+        sliderRef.current = slider
+      }
     }
-
-    if (this.boxSlider && this.props.sliderRef) {
-      this.props.sliderRef.current = this.boxSlider
-    }
-  }
-
-  componentWillUnmount() {
-    this.boxSlider?.destroy()
-  }
-
-  componentDidUpdate(prevProps: Readonly<BoxSliderProps>) {
-    if (
-      this.props.sliderOptions !== prevProps.sliderOptions ||
-      this.props.effect !== prevProps.effect
-    ) {
-      this.boxSlider?.reset({ ...this.props.sliderOptions }, this.props.effect)
-    }
-
-    if (
-      this.props.slideIndex !== undefined &&
-      this.props.slideIndex !== prevProps.slideIndex
-    ) {
-      this.boxSlider?.skipTo(this.props.slideIndex)
-    }
-  }
-
-  render() {
-    const { children, ...props } = this.props
-
-    return (
-      <div {...filterProps(props)}>
-        <div
-          style={{ width: '100%', height: '100%' }}
-          ref={(el) => (this.el = el)}>
-          {children}
-        </div>
-      </div>
-    )
   }
 }
-
-export default BoxSlider

@@ -1,23 +1,48 @@
-import { useMemo } from 'react'
+import { TileEffect } from '@boxslider/slider'
 import {
-  TileSlider as BxTileSlider,
-  type TileSliderOptions,
-} from '@boxslider/slider'
-import BoxSlider, { type BoxSliderProps } from './BoxSlider'
+  extractSliderAttributes,
+  type BaseComponentProps,
+  sliderRefCallback,
+} from './BoxSlider'
 
-export interface TileSliderProps extends Omit<BoxSliderProps, 'effect'> {
-  effectOptions?: TileSliderOptions
+export interface TileSliderProps extends BaseComponentProps<'bs-tile'> {
+  tileEffect?: TileEffect
+  rows?: number
+  rowOffset?: number
 }
 
-export default function TileSlider({
-  effectOptions,
+export function TileSlider({
+  children,
+  className,
+  sliderRef,
+  rows,
+  rowOffset,
+  tileEffect,
   ...props
 }: TileSliderProps) {
-  const effect = useMemo(() => new BxTileSlider(effectOptions), [effectOptions])
+  const { attributes, extraProps } = extractSliderAttributes(props)
+  const htmlAttributes = { ...attributes }
+
+  if (rows !== undefined) {
+    htmlAttributes.rows = `${rows}`
+  }
+
+  if (rowOffset !== undefined) {
+    htmlAttributes['row-offset'] = `${rowOffset}`
+  }
+
+  if (tileEffect !== undefined) {
+    htmlAttributes['tile-effect'] = tileEffect
+  }
 
   return (
-    <BoxSlider {...props} effect={effect}>
-      {props.children}
-    </BoxSlider>
+    <bs-tile
+      {...htmlAttributes}
+      ref={sliderRefCallback(extraProps, sliderRef)}
+      class={className}>
+      {children}
+    </bs-tile>
   )
 }
+
+export default TileSlider
