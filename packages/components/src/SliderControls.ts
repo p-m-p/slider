@@ -112,6 +112,7 @@ export default class SliderControls extends HTMLElement {
       ?.addEventListener('click', () => this.#slider?.next())
     nextBtnSlot?.addEventListener('slotchange', () => {
       const button = nextBtnSlot.assignedElements()[0]
+
       button?.addEventListener('click', () => {
         this.#slider?.next()
       })

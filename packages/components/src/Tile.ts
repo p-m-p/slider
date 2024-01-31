@@ -2,6 +2,7 @@ import { TileEffect, TileSlider } from '@boxslider/slider'
 import Slider, {
   SLIDER_ATTRIBUTES,
   SliderElement,
+  camelize,
   getNumericAttribute,
 } from './Slider'
 
@@ -30,7 +31,10 @@ export default class Tile extends Slider implements TileSliderElement {
 
   attributeChangedCallback(name: string) {
     if (TILE_ATTRIBUTES.includes(name)) {
+      const propName = camelize(name) as keyof TileSliderElement
+
       this.reset(
+        { [propName]: this[propName] },
         new TileSlider({
           rows: this.rows,
           rowOffset: this.rowOffset,

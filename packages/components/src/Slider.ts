@@ -16,6 +16,10 @@ declare global {
   }
 }
 
+export function camelize(str: string) {
+  return str.replace(/-./g, (m) => m[1].toUpperCase())
+}
+
 export function getNumericAttribute(
   el: HTMLElement,
   attribute: string,
@@ -60,6 +64,7 @@ export interface SliderElement extends HTMLElement {
   speed: number
   swipe: boolean
   swipeTolerance: number
+  startIndex: number
   timeout: number
 }
 
@@ -140,13 +145,14 @@ export default abstract class Slider
     this.#slider = slider
   }
 
-  protected reset(effect?: Effect) {
-    this.slider?.reset(this.options, effect)
+  protected reset(options: Partial<BoxSliderOptions>, effect?: Effect) {
+    this.slider?.reset(options, effect)
   }
 
   attributeChangedCallback(name: string) {
     if (SLIDER_ATTRIBUTES.includes(name)) {
-      this.reset()
+      const propName = camelize(name) as keyof SliderElement
+      this.reset({ [propName]: this[propName] })
     }
   }
 

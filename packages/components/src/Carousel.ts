@@ -3,6 +3,7 @@ import Slider, {
   SLIDER_ATTRIBUTES,
   getBbooleanAttribute,
   type SliderElement,
+  camelize,
 } from './Slider'
 
 export interface CarouselSliderElement extends SliderElement {
@@ -34,7 +35,9 @@ export default class Carousel extends Slider implements CarouselSliderElement {
 
   attributeChangedCallback(name: string) {
     if (CAROUSEL_ATTRIBUTES.includes(name)) {
+      const propName = camelize(name) as keyof CarouselSliderElement
       this.reset(
+        { [propName]: this[propName] },
         new CarouselSlider({
           cover: this.cover,
           timingFunction: this.timingFunction,

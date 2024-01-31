@@ -57,81 +57,25 @@ test('attribute values and props', () => {
   const resetSpy = vi.spyOn(slider, 'reset')
 
   el.setAttribute('auto-scroll', '')
-  expect(resetSpy.mock.calls[0][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover,
-    speed,
-    startIndex,
-    swipe,
-    swipeTolerance,
-    timeout,
-  })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ autoScroll: true })
 
   el.setAttribute('pause-on-hover', 'true')
-  expect(resetSpy.mock.calls[1][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover: true,
-    speed,
-    startIndex,
-    swipe,
-    swipeTolerance,
-    timeout,
-  })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ pauseOnHover: true })
 
   el.setAttribute('speed', '2000')
-  expect(resetSpy.mock.calls[2][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover: true,
-    speed: 2000,
-    startIndex,
-    swipe,
-    swipeTolerance,
-    timeout,
-  })
+  expect(resetSpy.mock.calls[2][0]).toEqual({ speed: 2000 })
 
   el.setAttribute('start-index', '2')
-  expect(resetSpy.mock.calls[3][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover: true,
-    speed: 2000,
-    startIndex: 2,
-    swipe,
-    swipeTolerance,
-    timeout,
-  })
+  expect(resetSpy.mock.calls[3][0]).toEqual({ startIndex: 2 })
 
   el.setAttribute('swipe', '')
-  expect(resetSpy.mock.calls[4][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover: true,
-    speed: 2000,
-    startIndex: 2,
-    swipe: true,
-    swipeTolerance,
-    timeout,
-  })
+  expect(resetSpy.mock.calls[4][0]).toEqual({ swipe: true })
 
   el.setAttribute('swipe-tolerance', '50')
-  expect(resetSpy.mock.calls[5][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover: true,
-    speed: 2000,
-    startIndex: 2,
-    swipe: true,
-    swipeTolerance: 50,
-    timeout,
-  })
+  expect(resetSpy.mock.calls[5][0]).toEqual({ swipeTolerance: 50 })
 
   el.setAttribute('timeout', '850')
-  expect(resetSpy.mock.calls[6][0]).toEqual({
-    autoScroll: true,
-    pauseOnHover: true,
-    speed: 2000,
-    startIndex: 2,
-    swipe: true,
-    swipeTolerance: 50,
-    timeout: 850,
-  })
+  expect(resetSpy.mock.calls[6][0]).toEqual({ timeout: 850 })
 })
 
 test('Slide transition', async () => {

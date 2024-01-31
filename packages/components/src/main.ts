@@ -15,7 +15,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </bs-slider-controls>
 
   <div class="viewport">
-    <bs-cube auto-scroll="true" timeout="5000" class="slider" direction="vertical">
+    <bs-cube auto-scroll timeout="5000" class="slider" direction="vertical">
       <div class="slide">Slide One</div>
       <div class="slide">Slide Two</div>
       <div class="slide">Slide Three</div>
@@ -24,7 +24,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </bs-cube>
   </div>
 
-  <bs-fade auto-scroll="true" timeout="2000" class="slider" timing-function="ease-in">
+  <bs-fade auto-scroll timeout="2000" class="slider" timing-function="ease-in">
     <div class="slide">Slide One</div>
     <div class="slide">Slide Two</div>
     <div class="slide">Slide Three</div>
@@ -32,7 +32,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="slide">Slide Five</div>
   </bs-fade>
 
-  <bs-tile auto-scroll="true" timeout="7000" class="slider" tile-effect="fade">
+  <bs-tile auto-scroll timeout="7000" class="slider" tile-effect="fade">
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_1.png" /></div>
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_2.png" /></div>
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_3.png" /></div>
@@ -41,8 +41,3 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </bs-tile>
 </div>
 `
-
-const carousel = document.querySelector('bs-carousel')
-carousel?.addEventListener('before', (ev) => {
-  console.log(ev.detail)
-})

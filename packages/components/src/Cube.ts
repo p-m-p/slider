@@ -3,6 +3,7 @@ import Slider, {
   SLIDER_ATTRIBUTES,
   type SliderElement,
   getNumericAttribute,
+  camelize,
 } from './Slider'
 
 export interface CubeSliderElement extends SliderElement {
@@ -31,7 +32,10 @@ export default class Cube extends Slider implements CubeSliderElement {
 
   attributeChangedCallback(name: string) {
     if (CUBE_ATTRIBUTES.includes(name)) {
+      const propName = camelize(name) as keyof CubeSliderElement
+
       this.reset(
+        { [propName]: this[propName] },
         new CubeSlider({
           direction: this.direction,
           perspective: this.perspective,
