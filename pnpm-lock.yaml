@@ -101,6 +101,9 @@ importers:
 
   packages/examples:
     dependencies:
+      '@boxslider/components':
+        specifier: workspace:*
+        version: link:../components
       '@boxslider/react':
         specifier: workspace:*
         version: link:../react
@@ -113,6 +116,9 @@ importers:
 
   packages/react:
     dependencies:
+      '@boxslider/components':
+        specifier: workspace:*
+        version: link:../components
       '@boxslider/slider':
         specifier: workspace:*
         version: link:../slider

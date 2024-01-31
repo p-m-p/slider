@@ -55,13 +55,12 @@ type EventListenerMap = {
 }
 
 class BoxSlider {
-  private readonly options: BoxSliderOptions
-
   private _activeIndex: number
   private _el?: HTMLElement
   private _effect?: Effect
   private _stateStore?: StateStore
 
+  private options: BoxSliderOptions
   private slides: HTMLElement[]
   private autoScrollTimer?: number
   private eventListeners: EventListenerMap
@@ -108,7 +107,12 @@ class BoxSlider {
   ) {
     this._el = el
     this._stateStore = new StateStore()
+
     this.transitionQueue = createQueue()
+    this.slides = []
+    this.eventListeners = {}
+    this.elListeners = {}
+    this.isDestroyed = false
 
     this.options = {
       autoScroll: true,
@@ -120,13 +124,8 @@ class BoxSlider {
       swipeTolerance: 30,
       ...options,
     }
-    this.slides = []
-    this._activeIndex = this.options.startIndex || 0
-    this.eventListeners = {}
-    this.elListeners = {}
-    this.isDestroyed = false
-
-    this.init(effect, this.options)
+    this._activeIndex = this.options.startIndex
+    this.init(effect)
 
     if (this.slides.length < this.activeIndex) {
       this.destroy()
@@ -143,11 +142,16 @@ class BoxSlider {
     this.stopAutoScroll()
     this.effect.destroy && this.effect.destroy(this.el)
     this.stateStore.revert()
-    this.init(effect || this.effect, {
+    this.options = {
       ...this.options,
       ...options,
-      startIndex: this.activeIndex,
-    })
+    }
+
+    if (options?.startIndex !== undefined && !isNaN(options.startIndex)) {
+      this._activeIndex = options.startIndex
+    }
+
+    this.init(effect || this.effect)
   }
 
   next(): Promise<void> {
@@ -254,10 +258,13 @@ class BoxSlider {
     this.slides.length = 0
   }
 
-  private init(effect: Effect, options: BoxSliderOptions) {
+  private init(effect: Effect) {
     this._effect = effect
     this.slides = this.getSlides()
-    this.effect.initialize(this.el, this.slides, this.stateStore, options)
+    this.effect.initialize(this.el, this.slides, this.stateStore, {
+      ...this.options,
+      startIndex: this.activeIndex,
+    })
     this.addAriaAttributes()
 
     if (this.options.autoScroll) {
@@ -290,9 +297,7 @@ class BoxSlider {
         return reject(new Error(`${nextIndex} is not a valid slide index`))
       }
 
-      if (this.options.autoScroll) {
-        this.stopAutoScroll()
-      }
+      this.stopAutoScroll()
 
       const settings = {
         el: this.el,
@@ -351,12 +356,7 @@ class BoxSlider {
       this.el.setAttribute('aria-live', 'off')
 
       this.autoScrollTimer = window.setTimeout(
-        () =>
-          this.next().then(() => {
-            if (!this.isDestroyed) {
-              this.setAutoScroll()
-            }
-          }),
+        () => this.next(),
         this.options.timeout,
       )
     })
