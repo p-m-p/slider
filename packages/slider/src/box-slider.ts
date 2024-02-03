@@ -369,10 +369,16 @@ class BoxSlider {
   }
 
   private applyEventListeners() {
-    if (this.options.autoScroll && this.options.pauseOnHover) {
-      this.addElListener('pointerenter', () => this.pause())
-      this.addElListener('pointerleave', () => this.play())
-    }
+    this.addElListener('pointerenter', () => {
+      if (this.options.autoScroll && this.options.pauseOnHover) {
+        this.pause()
+      }
+    })
+    this.addElListener('pointerleave', () => {
+      if (this.options.autoScroll && this.options.pauseOnHover) {
+        this.play()
+      }
+    })
 
     if (this.options.swipe) {
       this.addSwipeNavigation()
