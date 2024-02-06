@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import GitHubButton from 'react-github-btn'
 import {
   BoxSlider,
@@ -75,6 +75,7 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(0)
   const sliderRef = useRef<BoxSlider>(null)
   const [effect, setEffect] = useState(effects[0])
+  const startIndex = useMemo(() => activeIndex, [effect])
   const slides = images.map((image, i) => (
     <div key={image} className="slide">
       <img
@@ -106,7 +107,7 @@ function App() {
             className: 'slider',
             id: 'slider',
             onAfter: (ev: SliderEventData) => setActiveIndex(ev.currentIndex),
-            startIndex: activeIndex,
+            startIndex,
             children: slides,
             sliderRef,
             ...effect.options,
