@@ -23,10 +23,16 @@ various slide transition effects for modern browsers.
 npm install @boxslider/slider
 ```
 
+### Web Components
+
+For Web Component implementations of each effect view the
+[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/components) package.
+
 ### React
 
 For React component implementations of each effect view the
-[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react) package.
+[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react) package. Each React
+component is now a thin wrapper around the Web Component for that effect.
 
 ### Including the package
 
