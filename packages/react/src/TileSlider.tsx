@@ -1,4 +1,4 @@
-import { TileEffect } from '@boxslider/slider'
+import type { TileEffect } from '@boxslider/slider'
 import {
   extractSliderAttributes,
   type BaseComponentProps,

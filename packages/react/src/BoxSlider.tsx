@@ -34,6 +34,15 @@ declare global {
 
 type ElementName = 'bs-carousel' | 'bs-cube' | 'bs-fade' | 'bs-tile'
 
+export interface BoxSliderProps extends Partial<BoxSliderOptions> {
+  onAfter?: SliderEventListenerMap['after']
+  onBefore?: SliderEventListenerMap['before']
+  onDestroy?: SliderEventListenerMap['destroy']
+  onPause?: SliderEventListenerMap['pause']
+  onPlay?: SliderEventListenerMap['play']
+  sliderRef?: MutableRefObject<BoxSlider | null>
+}
+
 export type BaseComponentProps<T extends ElementName> = BoxSliderProps &
   Omit<
     ComponentPropsWithoutRef<T>,
@@ -43,15 +52,6 @@ export type BaseComponentProps<T extends ElementName> = BoxSliderProps &
     | 'swipe-tolerance'
     | 'timing-function'
   >
-
-export interface BoxSliderProps extends Partial<BoxSliderOptions> {
-  onAfter?: SliderEventListenerMap['after']
-  onBefore?: SliderEventListenerMap['before']
-  onDestroy?: SliderEventListenerMap['destroy']
-  onStartAutoScroll?: SliderEventListenerMap['play']
-  onStopAutoScroll?: SliderEventListenerMap['pause']
-  sliderRef?: MutableRefObject<BoxSlider | null>
-}
 
 export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
   const {
@@ -86,8 +86,7 @@ export function sliderRefCallback<T extends BoxSliderProps>(
   props: T,
   sliderRef?: MutableRefObject<BoxSlider | null>,
 ): RefCallback<SliderElement> {
-  const { onAfter, onBefore, onDestroy, onStartAutoScroll, onStopAutoScroll } =
-    props
+  const { onAfter, onBefore, onDestroy, onPause, onPlay } = props
 
   return (el: SliderElement) => {
     const slider = el?.slider
@@ -105,12 +104,12 @@ export function sliderRefCallback<T extends BoxSliderProps>(
         slider.addEventListener('destroy', onDestroy)
       }
 
-      if (onStartAutoScroll) {
-        slider.addEventListener('play', onStartAutoScroll)
+      if (onPause) {
+        slider.addEventListener('pause', onPause)
       }
 
-      if (onStopAutoScroll) {
-        slider.addEventListener('pause', onStopAutoScroll)
+      if (onPlay) {
+        slider.addEventListener('play', onPlay)
       }
 
       if (sliderRef) {
