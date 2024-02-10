@@ -26,12 +26,12 @@ npm install @boxslider/slider
 ### Web Components
 
 For Web Component implementations of each effect view the
-[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/components) package.
+[@boxslider/components](https://github.com/p-m-p/slider/tree/main/packages/components/README.md) package.
 
 ### React
 
 For React component implementations of each effect view the
-[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react) package. Each React
+[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react/README.md) package. Each React
 component is now a thin wrapper around the Web Component for that effect.
 
 ### Including the package
