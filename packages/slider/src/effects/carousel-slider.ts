@@ -1,7 +1,6 @@
-import type { BoxSliderOptions } from '../box-slider-options'
-import type { Effect, TransitionSettings } from './effect'
+import type { StateStore } from '../state-store'
+import type { BoxSliderOptions, Effect, TransitionSettings } from '../types'
 import { applyCss } from '../utils'
-import { StateStore } from '../state-store'
 
 export interface CarouselSliderOptions {
   cover?: boolean
@@ -19,7 +18,7 @@ const SLIDE_STYLES = [
 ]
 const BOX_STYLES = ['overflow', 'position']
 
-export class CarouselSlider implements Effect {
+export default class CarouselSlider implements Effect {
   private readonly options: CarouselSliderOptions
 
   constructor(options?: CarouselSliderOptions) {
@@ -116,5 +115,3 @@ export class CarouselSlider implements Effect {
     })
   }
 }
-
-export default CarouselSlider

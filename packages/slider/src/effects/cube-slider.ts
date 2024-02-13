@@ -1,6 +1,5 @@
-import type { Effect, TransitionSettings } from './effect'
-import type { BoxSliderOptions } from '../box-slider-options'
-import { StateStore } from '../state-store'
+import type { StateStore } from '../state-store'
+import type { BoxSliderOptions, Effect, TransitionSettings } from '../types'
 import { applyCss } from '../utils'
 
 export interface CubeSliderOptions {
@@ -21,7 +20,7 @@ const BOX_STYLES = [
 ]
 const VIEWPORT_STYLES = ['overflow', 'perspective', 'position']
 
-class CubeSlider implements Effect {
+export default class CubeSlider implements Effect {
   private readonly options: CubeSliderOptions
   private translateZ!: number
 
@@ -151,5 +150,3 @@ class CubeSlider implements Effect {
     }, ${angle}deg)`
   }
 }
-
-export default CubeSlider

@@ -1,4 +1,4 @@
-import { CarouselSlider } from '@boxslider/slider'
+import CarouselSlider from '@boxslider/slider/effects/Carousel'
 import Slider, {
   SLIDER_ATTRIBUTES,
   getBbooleanAttribute,

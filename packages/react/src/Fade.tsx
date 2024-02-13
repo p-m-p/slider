@@ -2,7 +2,9 @@ import {
   extractSliderAttributes,
   type BaseComponentProps,
   sliderRefCallback,
-} from './BoxSlider'
+} from './core'
+
+import '@boxslider/components/Fade'
 
 export interface FadeSliderProps extends BaseComponentProps<'bs-fade'> {
   timingFunction?: string

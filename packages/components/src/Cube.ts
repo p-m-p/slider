@@ -1,4 +1,4 @@
-import { CubeSlider } from '@boxslider/slider'
+import CubeSlider from '@boxslider/slider/effects/Cube'
 import Slider, {
   SLIDER_ATTRIBUTES,
   type SliderElement,

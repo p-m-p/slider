@@ -1,60 +1,26 @@
-import type { BoxSliderOptions } from './box-slider-options'
-import type { Effect } from './effects/effect'
 import { StateStore } from './state-store'
 import { responder } from './responder'
 import { type TransitionQueue, createQueue } from './transition-queue'
+import type {
+  BoxSliderOptions,
+  Effect,
+  EventListenerMap,
+  SliderEventData,
+  SliderEventListenerMap,
+  SliderEventType,
+} from './types'
 
-export type SliderEventData = {
-  /**
-   * The currently active slide index
-   */
-  currentIndex: number
+export const defaultOptions: BoxSliderOptions = Object.freeze({
+  autoScroll: true,
+  pauseOnHover: false,
+  speed: 800,
+  startIndex: 0,
+  swipe: true,
+  swipeTolerance: 30,
+  timeout: 5000,
+})
 
-  /**
-   * The index of the slide to be active next
-   */
-  nextIndex?: number
-
-  /**
-   * The transition speed of the slide animation
-   */
-  speed: number
-}
-
-export interface SliderEventListenerMap {
-  /**
-   * Event triggered after slide transition completes
-   */
-  after: (data: SliderEventData) => void
-
-  /**
-   * Event triggered before slide transition begins
-   */
-  before: (data: SliderEventData) => void
-
-  /**
-   * Event triggered when slider is destroyed
-   */
-  destroy: () => void
-
-  /**
-   * Event triggered when slider auto scrolling is stopped
-   */
-  pause: (data: SliderEventData) => void
-
-  /**
-   * Event triggered when slider auto scrolling is started
-   */
-  play: (data: SliderEventData) => void
-}
-
-export type SliderEventType = keyof SliderEventListenerMap
-
-type EventListenerMap = {
-  [Property in SliderEventType]?: SliderEventListenerMap[Property][]
-}
-
-class BoxSlider {
+export default class BoxSlider {
   private _activeIndex: number
   private _el?: HTMLElement
   private _effect?: Effect
@@ -408,5 +374,3 @@ class BoxSlider {
     })
   }
 }
-
-export default BoxSlider

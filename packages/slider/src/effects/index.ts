@@ -9,4 +9,3 @@ export {
   type TileEffect,
   type TileSliderOptions,
 } from './tile/tile-slider'
-export * from './effect'

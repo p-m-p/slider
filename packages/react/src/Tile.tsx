@@ -3,7 +3,9 @@ import {
   extractSliderAttributes,
   type BaseComponentProps,
   sliderRefCallback,
-} from './BoxSlider'
+} from './core'
+
+import '@boxslider/components/Tile'
 
 export interface TileSliderProps extends BaseComponentProps<'bs-tile'> {
   tileEffect?: TileEffect

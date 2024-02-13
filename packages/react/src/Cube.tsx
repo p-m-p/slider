@@ -2,7 +2,9 @@ import {
   extractSliderAttributes,
   type BaseComponentProps,
   sliderRefCallback,
-} from './BoxSlider'
+} from './core'
+
+import '@boxslider/components/Cube'
 
 export interface CubeSliderProps extends BaseComponentProps<'bs-cube'> {
   direction?: 'horizontal' | 'vertical'

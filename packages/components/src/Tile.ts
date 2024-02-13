@@ -1,4 +1,4 @@
-import { TileEffect, TileSlider } from '@boxslider/slider'
+import TileSlider, { type TileEffect } from '@boxslider/slider/effects/Tile'
 import Slider, {
   SLIDER_ATTRIBUTES,
   SliderElement,

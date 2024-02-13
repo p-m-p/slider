@@ -1,4 +1,4 @@
-import { FadeSlider } from '@boxslider/slider'
+import FadeSlider from '@boxslider/slider/effects/Fade'
 import Slider, { SLIDER_ATTRIBUTES, SliderElement, camelize } from './Slider'
 
 export interface FadeSliderElement extends SliderElement {

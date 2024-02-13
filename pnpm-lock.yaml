@@ -119,15 +119,16 @@ importers:
       '@boxslider/components':
         specifier: workspace:*
         version: link:../components
-      '@boxslider/slider':
-        specifier: workspace:*
-        version: link:../slider
       react:
         specifier: '>=16.0.0'
         version: 18.2.0
       react-dom:
         specifier: '>=16.0.0'
         version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@boxslider/slider':
+        specifier: workspace:*
+        version: link:../slider
 
   packages/slider: {}
 

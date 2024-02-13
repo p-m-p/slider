@@ -1,7 +1,6 @@
-import type { BoxSliderOptions } from '../box-slider-options'
-import type { Effect, TransitionSettings } from './effect'
+import type { StateStore } from '../state-store'
+import type { BoxSliderOptions, Effect, TransitionSettings } from '../types'
 import { applyCss } from '../utils'
-import { StateStore } from '../state-store'
 
 export interface FadeSliderOptions {
   timingFunction?: string

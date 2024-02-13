@@ -2,7 +2,9 @@ import {
   extractSliderAttributes,
   type BaseComponentProps,
   sliderRefCallback,
-} from './BoxSlider'
+} from './core'
+
+import '@boxslider/components/Carousel'
 
 export interface CarouselSliderProps extends BaseComponentProps<'bs-carousel'> {
   timingFunction?: string

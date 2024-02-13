@@ -1,8 +1,3 @@
-export { default as BoxSlider } from './box-slider'
-export type {
-  SliderEventData,
-  SliderEventListenerMap,
-  SliderEventType,
-} from './box-slider'
-export { type BoxSliderOptions, defaultOptions } from './box-slider-options'
+export { default as BoxSlider, defaultOptions } from './box-slider'
+export * from './types'
 export * from './effects'

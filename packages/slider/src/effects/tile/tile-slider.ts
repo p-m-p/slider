@@ -1,6 +1,5 @@
-import type { Effect, TransitionSettings } from '../effect'
-import type { BoxSliderOptions } from '../../box-slider-options'
-import { StateStore } from '../../state-store'
+import type { StateStore } from '../../state-store'
+import type { BoxSliderOptions, Effect, TransitionSettings } from '../../types'
 import { applyCss, locateSlideImageSrc } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
@@ -38,7 +37,7 @@ const SLIDE_STYLES = [
 ]
 const BOX_STYLES = ['height', 'overflow', 'position']
 
-class TileSlider implements Effect {
+export default class TileSlider implements Effect {
   private readonly rowCount: number
   private readonly rowOffset: number
   private readonly tileEffect: TileEffect
@@ -206,5 +205,3 @@ class TileSlider implements Effect {
     return { cols, rows, sideLength, height }
   }
 }
-
-export default TileSlider

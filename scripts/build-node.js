@@ -5,29 +5,36 @@ import { join } from 'path'
 
 const srcDir = join(process.cwd(), 'src')
 const distDir = join(process.cwd(), 'dist')
-const external = process.argv[2] ? process.argv[2].split(',') : []
 
-const options = {
-  entryPoints: [join(srcDir, 'index.ts')],
-  external,
-  bundle: true,
-  platform: 'node',
-  target: 'esnext',
-  tsconfig: '../../tsconfig.json',
-}
+import(join(process.cwd(), 'manifest.js'))
+  .then(({ entries }) => {
+    const builds = ['index.ts', ...entries].map((entry) => {
+      const options = {
+        entryPoints: [join(srcDir, entry)],
+        packages: 'external',
+        bundle: true,
+        platform: 'node',
+        target: 'esnext',
+        tsconfig: '../../tsconfig.json',
+      }
 
-Promise.all([
-  build({
-    ...options,
-    outdir: join(distDir, 'esm'),
-    format: 'esm',
-  }),
-  build({
-    ...options,
-    outfile: join(distDir, 'cjs', 'index.cjs'),
-    format: 'cjs',
-  }),
-]).catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+      return Promise.all([
+        build({
+          ...options,
+          outfile: join(distDir, 'esm', entry.replace(/\.tsx?$/, '.js')),
+          format: 'esm',
+        }),
+        build({
+          ...options,
+          outfile: join(distDir, 'cjs', entry.replace(/\.tsx?$/, '.cjs')),
+          format: 'cjs',
+        }),
+      ])
+    })
+
+    return Promise.all(builds)
+  })
+  .catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })

@@ -1,4 +1,4 @@
-import { BoxSlider, defaultOptions } from '@boxslider/slider'
+import BoxSlider, { defaultOptions } from '@boxslider/slider/BoxSlider'
 import type {
   BoxSliderOptions,
   Effect,

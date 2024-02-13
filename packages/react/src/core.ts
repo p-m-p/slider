@@ -4,7 +4,11 @@ import type {
   MutableRefObject,
   RefCallback,
 } from 'react'
-import type { BoxSlider, SliderEventListenerMap } from '@boxslider/slider'
+import type {
+  BoxSlider,
+  BoxSliderOptions,
+  SliderEventListenerMap,
+} from '@boxslider/slider'
 import type {
   CarouselSliderElement,
   CubeSliderElement,
@@ -12,7 +16,6 @@ import type {
   TileSliderElement,
   SliderElement,
 } from '@boxslider/components'
-import type { BoxSliderOptions } from '@boxslider/slider'
 import type { ComponentPropsWithoutRef } from 'react'
 
 interface JSXSliderElement<T> extends DetailedHTMLProps<HTMLAttributes<T>, T> {
