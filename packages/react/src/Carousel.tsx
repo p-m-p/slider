@@ -19,7 +19,7 @@ export function CarouselSlider({
   timingFunction,
   ...props
 }: CarouselSliderProps) {
-  const { attributes, extraProps } = extractSliderAttributes(props)
+  const { attributes, eventHandlers } = extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (timingFunction) {
@@ -33,7 +33,7 @@ export function CarouselSlider({
   return (
     <bs-carousel
       {...htmlAttributes}
-      ref={sliderRefCallback(extraProps, sliderRef)}
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
       class={className}>
       {children}
     </bs-carousel>

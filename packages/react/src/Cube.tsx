@@ -19,7 +19,7 @@ export function Cube({
   sliderRef,
   ...props
 }: CubeSliderProps) {
-  const { attributes, extraProps } = extractSliderAttributes(props)
+  const { attributes, eventHandlers } = extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (direction !== undefined) {
@@ -33,7 +33,7 @@ export function Cube({
   return (
     <bs-cube
       {...htmlAttributes}
-      ref={sliderRefCallback(extraProps, sliderRef)}
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
       class={className}>
       {children}
     </bs-cube>

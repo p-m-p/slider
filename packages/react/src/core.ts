@@ -59,11 +59,25 @@ export type BaseComponentProps<T extends ElementName> = BoxSliderProps &
 export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
   const {
     autoScroll,
+    onAfter,
+    onBefore,
+    onDestroy,
+    onPause,
+    onPlay,
     pauseOnHover,
     startIndex,
+    speed,
+    swipe,
     swipeTolerance,
-    ...extraProps
+    timeout,
   } = props
+  const eventHandlers = {
+    onAfter,
+    onBefore,
+    onDestroy,
+    onPause,
+    onPlay,
+  }
   const attributes: Record<string, string> = {}
 
   if (autoScroll !== undefined) {
@@ -74,23 +88,33 @@ export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
     attributes['pause-on-hover'] = `${pauseOnHover}`
   }
 
+  if (speed !== undefined) {
+    attributes.speed = `${speed}`
+  }
+
   if (startIndex !== undefined) {
     attributes['start-index'] = `${startIndex}`
+  }
+
+  if (swipe !== undefined) {
+    attributes.swipe = `${swipe}`
   }
 
   if (swipeTolerance !== undefined) {
     attributes['swipe-tolerance'] = `${swipeTolerance}`
   }
 
-  return { attributes, extraProps }
+  if (timeout !== undefined) {
+    attributes.timeout = `${timeout}`
+  }
+
+  return { attributes, eventHandlers }
 }
 
 export function sliderRefCallback<T extends BoxSliderProps>(
-  props: T,
+  { onAfter, onBefore, onDestroy, onPause, onPlay }: T,
   sliderRef?: MutableRefObject<BoxSlider | null>,
 ): RefCallback<SliderElement> {
-  const { onAfter, onBefore, onDestroy, onPause, onPlay } = props
-
   return (el: SliderElement) => {
     const slider = el?.slider
 

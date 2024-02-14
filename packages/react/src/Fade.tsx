@@ -17,7 +17,7 @@ export function FadeSlider({
   timingFunction,
   ...props
 }: FadeSliderProps) {
-  const { attributes, extraProps } = extractSliderAttributes(props)
+  const { attributes, eventHandlers } = extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (timingFunction) {
@@ -27,7 +27,7 @@ export function FadeSlider({
   return (
     <bs-fade
       {...htmlAttributes}
-      ref={sliderRefCallback(extraProps, sliderRef)}
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
       class={className}>
       {children}
     </bs-fade>

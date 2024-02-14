@@ -22,7 +22,7 @@ export function TileSlider({
   tileEffect,
   ...props
 }: TileSliderProps) {
-  const { attributes, extraProps } = extractSliderAttributes(props)
+  const { attributes, eventHandlers } = extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (rows !== undefined) {
@@ -40,7 +40,7 @@ export function TileSlider({
   return (
     <bs-tile
       {...htmlAttributes}
-      ref={sliderRefCallback(extraProps, sliderRef)}
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
       class={className}>
       {children}
     </bs-tile>
