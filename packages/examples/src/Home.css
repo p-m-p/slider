@@ -101,7 +101,7 @@ footer p {
 }
 
 @media (max-width: 780px) {
-  .slider {
+  .slider-viewport {
     height: 365px;
     width: 640px;
   }
@@ -112,7 +112,7 @@ footer p {
 }
 
 @media (max-width: 540px) {
-  .slider {
+  .slider-viewport {
     height: 199px;
     width: 350px;
   }
