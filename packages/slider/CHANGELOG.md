@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.13 (2024-02-17)
+
+### Bug Fixes
+
+- **examples:** viewport dimensions ([31b59b1](https://github.com/boxslider/slider/packages/slider/commit/31b59b1a1760d66577c5a454fff58c0403a5d51f))
+
 ## 2.3.12 (2024-02-14)
 
 ### Bug Fixes
