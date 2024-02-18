@@ -12,41 +12,64 @@
     <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/p-m-p/slider/ci-build.yml?branch=main">
 </p>
 
-### About
+## About
 
 BoxSlider is a small library with zero dependencies that provides a light-weight, responsive content slider with
 various slide transition effects for modern browsers.
 
-### Installation
+The library can be used standalone or by using the Web and React components.
+
+## Installation
+
+Tnstall the module from NPM or a CDN.
 
 ```sh
-npm install @boxslider/slider
+npm install --save @boxslider/slider
+```
+
+```html
+<script type="module">
+  import {
+    BoxSlider,
+    FadeSlider,
+  } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+
+  const slider = new BoxSlider(
+    document.getElementById('slider'),
+    new FadeSlider(),
+  )
+</script>
 ```
 
 ### Web Components
 
 ```sh
-npm install @boxslider/components
+npm install --save @boxslider/components
 ```
 
-For Web Component implementations of each effect view the
-[@boxslider/components](https://github.com/p-m-p/slider/tree/main/packages/components/README.md) package.
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
+```
+
+iew the [@boxslider/components](https://github.com/p-m-p/slider/tree/main/packages/components/README.md)
+package for full details.
 
 ### React
 
 ```sh
-npm install @boxslider/react
+npm install --save @boxslider/react
 ```
 
-For React component implementations of each effect view the
-[@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react/README.md) package. Each React
-component is now a thin wrapper around the Web Component for that effect.
+View the [@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react/README.md)
+package for full details. Eact React component is a thin wrapper around the Web Component for that effect.
 
-### Including the package
+### Browser global
 
-The library is built for ECMAScript and CommonJS modules so can be imported into an existing project as module exports.
-It is also built for browsers in the file './node_modules/@boxslider/slider/dist/boxslider.min.js' where all exports
-are available on the `$bs` global variable.
+The core library can also be imported as a minified script from '@boxslider/slider/dist/boxslider.min.js'
+(`https://cdn.jsdelivr.net/npm/@boxslider/slider/dist/boxslider.min.js`) where all exports are available on
+the `$bs` global.
 
 ```javascript
 const boxslider = new $bs.BoxSlider(
@@ -55,7 +78,7 @@ const boxslider = new $bs.BoxSlider(
 )
 ```
 
-### Usage
+## Usage
 
 Create the HTML structure for your content. Some effects require each slide to only
 contain an image but others support any form of content. See the documentation for
@@ -313,7 +336,7 @@ slider.addEventListener('destroy', () => {
 })
 ```
 
-### Accessibility
+## Accessibility
 
 The slider will be applied with the `aria-live="off"` attribute when it is the autoScroll state and `aria-live="polite"`
 when slide transitions are being controlled externally. Each slide is given the `aria-roledescription="slide"` attribute
@@ -345,12 +368,16 @@ example implementation is shown below.
 </section>
 
 <script>
-  const slider = new BoxSlider(document.querySelector('#demo-slider'), {
-    effect: new CarouselSlider(),
-    autoScroll: false,
-  })
+  const slider = new BoxSlider(
+    document.getElementById('demo-slider'),
+    new CarouselSlider(),
+    {
+      autoScroll: false,
+    },
+  )
+
   document
-    .querySelector('#prev-slide')
+    .getElementById('prev-slide')
     .addEventListener('click', () => slider.prev())
   // ... other button controls
 </script>
