@@ -21,7 +21,7 @@ The library can be used standalone or by using the Web and React components.
 
 ## Installation
 
-Tnstall the module from NPM or a CDN.
+Install the module from NPM or a CDN.
 
 ```sh
 npm install --save @boxslider/slider
