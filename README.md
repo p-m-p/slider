@@ -21,11 +21,13 @@ The library can be used standalone or by using the Web and React components.
 
 ## Installation
 
-Install the module from NPM or a CDN.
+Install from NPM
 
 ```sh
 npm install --save @boxslider/slider
 ```
+
+Or use from CDN
 
 ```html
 <script type="module">
@@ -43,20 +45,30 @@ npm install --save @boxslider/slider
 
 ### Web Components
 
+Install via NPM
+
 ```sh
 npm install --save @boxslider/components
 ```
+
+Or use from CDN
 
 ```html
 <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
+
+<bs-carousel>
+  <!-- Slides -->
+</bs-carousel>
 ```
 
-iew the [@boxslider/components](https://github.com/p-m-p/slider/tree/main/packages/components/README.md)
+View the [@boxslider/components](https://github.com/p-m-p/slider/tree/main/packages/components/README.md)
 package for full details.
 
 ### React
+
+Install via NPM
 
 ```sh
 npm install --save @boxslider/react
