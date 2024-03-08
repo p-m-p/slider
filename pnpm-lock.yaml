@@ -135,8 +135,8 @@ importers:
   packages/website:
     dependencies:
       lucide-react:
-        specifier: ^0.350.0
-        version: 0.350.0(react@18.2.0)
+        specifier: ^0.352.0
+        version: 0.352.0(react@18.2.0)
       react-syntax-highlighter:
         specifier: ^15.5.0
         version: 15.5.0(react@18.2.0)
@@ -7415,8 +7415,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /lucide-react@0.350.0(react@18.2.0):
-    resolution: {integrity: sha512-5IZVKsxxG8Nn81gpsz4XLNgCAXkppCh0Y0P0GLO39h5iVD2WEaB9of6cPkLtzys1GuSfxJxmwsDh487y7LAf/g==}
+  /lucide-react@0.352.0(react@18.2.0):
+    resolution: {integrity: sha512-GKzcxx6H6PT9onMPN9zxyD4KNqgHDoVaY+ad14vhTzBdXFm3FQZhH5XeP8sHJRhLk9imHHta/8DZe55kd/KerQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
