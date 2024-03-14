@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lucide-react": "^0.354.0",
+    "lucide-react": "^0.358.0",
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
