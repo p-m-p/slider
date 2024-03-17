@@ -13,13 +13,13 @@ export default function ContentSection({
 }: ContentSectionProps) {
   const titleEl = createElement(
     titleComponent,
-    { className: 'text-2xl md:text-4xl text-neutral-200 mb-8 font-bold' },
+    { className: 'text-2xl md:text-4xl text-neutral-100 mb-8 font-bold' },
     title,
   )
 
   return (
     <section
-      className="container mx-auto bg-neutral-900 p-8 rounded mb-4"
+      className="container mx-auto bg-neutral-900 p-16 rounded-lg mb-4 ring ring-neutral-800"
       {...props}>
       {titleEl}
       {children}

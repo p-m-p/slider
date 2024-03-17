@@ -13,21 +13,14 @@ export default function ExampleCard({
   title,
   url,
 }: ExampleCardProps) {
-  let levelBarWidth = 'w-1/6'
-
-  if (level === 'intermediate') {
-    levelBarWidth = 'w-1/2'
-  } else if (level === 'advanced') {
-    levelBarWidth = 'w-5/6'
-  }
-
   return (
     <div>
       <div className="text-right">
-        <div className="h-1 bg-neutral-700">
-          <div className={`${levelBarWidth} h-full bg-orange-700`}></div>
+        <div className="h-0.5 bg-neutral-700">
+          <div
+            className={`h-full bg-gradient-to-r from-neutral-800 to-neutral-600`}></div>
         </div>
-        <span className="uppercase text-neutral-600 text-sm font-bold mx-2">
+        <span className="uppercase text-neutral-500 text-sm font-bold mx-2 bg-clip-text bg-gradient-to-tr from-green-800 to-green-500 text-transparent">
           {level}
         </span>
       </div>
@@ -36,13 +29,13 @@ export default function ExampleCard({
         <h3 className="text-xl mb-2">{title}</h3>
         <p className="text-neutral-300">{description}</p>
 
-        <div className="mt-4">
+        <div className="mt-4 flex flex-row gap-2">
           <a
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-orange-600 transition-colors flex flex-row gap-2">
-            <Codepen />
+            className="flex gap-2 hover:text-blue-600 transition-colors">
+            <Codepen className="text-white" />
             View on Codepen
           </a>
         </div>

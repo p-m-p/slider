@@ -134,6 +134,9 @@ importers:
 
   packages/website:
     dependencies:
+      '@boxslider/components':
+        specifier: workspace:*
+        version: link:../components
       lucide-react:
         specifier: ^0.331.0
         version: 0.331.0(react@18.2.0)
