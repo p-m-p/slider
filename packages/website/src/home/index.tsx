@@ -2,7 +2,7 @@ import { Code, Github, Play, Sparkles, SearchCheck } from 'lucide-react'
 import CodeExample from '../layout/CodeExample'
 import ContentSection from '../layout/ContentSection'
 import Paragraph from '../layout/Paragraph'
-import CallToAction from '../components/CallToAction'
+import CallToAction from '../layout/CallToAction'
 import FeatureTile from './FeatureTile'
 import initExamples from './initExamples'
 import Header from '../layout/Header'
@@ -14,12 +14,12 @@ function Home() {
       <div className="flex flex-col">
         <Header />
         <div className="container mx-auto px-4 pt-16 pb-4 text-center">
-          <h1 className="text-4xl md:text-6xl xl:text-7xl font-extrabold max-w-4xl xl:max-w-6xl mx-auto mb-8 xl:mb-12">
+          <h1 className="text-4xl md:text-6xl xl:text-7xl font-extrabold max-w-4xl mx-auto mb-8 xl:mb-12">
             A{' '}
-            <span className="bg-clip-text bg-gradient-to-tr from-orange-700 to-orange-400 text-transparent">
+            <span className="bg-clip-text bg-gradient-to-tr from-yellow-600 to-yellow-200 text-transparent">
               super small
             </span>{' '}
-            content slider for modern web projects
+            carousel for modern web projects
           </h1>
 
           <p className="text-neutral-300 font-light text-sm sm:text-lg xl:text-xl">
@@ -39,17 +39,17 @@ function Home() {
           </p>
 
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6 md:items-center max-w-7xl mx-auto">
-            <FeatureTile title="Mulitiple effects" icon={<Sparkles />}>
-              Carousel, fade, tile and 3D slide transitions to suit mulitiple
+            <FeatureTile title="Multiple effects" icon={<Sparkles />}>
+              Carousel, fade, tile and 3D slide transitions to suit multiple
               different project requirements
             </FeatureTile>
             <FeatureTile title="Easy to use" icon={<Code />}>
-              User your own styles! There&apos;s no complicated setup or style
+              Bring your own styles! There&apos;s no complicated setup or style
               sheets to include
             </FeatureTile>
             <FeatureTile title="SEO and Accessibility" icon={<SearchCheck />}>
-              SSR compatible, ARIA attributes and easy to implement accessible
-              controls
+              SSR compatible, ARIA attributes and easy to integrate with
+              accessible controls
             </FeatureTile>
           </section>
         </div>
@@ -57,13 +57,18 @@ function Home() {
 
       <main className="max-w-6xl mx-auto mt-16">
         <ContentSection id="getting-started" title="Getting started">
-          <Paragraph>Install the required package for your project.</Paragraph>
+          <Paragraph>
+            The BoxSlider library can be installed as a JavaScript/TypeScript
+            module or used as web and React components. Select the required
+            option below to see how to install the library into your project.
+          </Paragraph>
           <CodeExample
             shell="npm install --save @boxslider/slider"
             reactShell="npm install --save @boxslider/react"
+            htmlShell="npm install --save @boxslider/components"
           />
           <Paragraph>
-            Import the module or add the browser build to your HTML to
+            Once installed, import the module or add the import to your HTML to
             initialise a slider.
           </Paragraph>
           <CodeExample
@@ -96,6 +101,14 @@ function Home() {
                 title="Full page fade effect with controls"
                 description="Responsive hero style carousel that fills the page height and has controls for slide navigation"
                 level="intermediate"
+                url="https://codepen.io/p-m-p/pen/vYQGOrW"
+              />
+            </li>
+            <li className="rounded bg-neutral-800">
+              <ExampleCard
+                title="Full page fade effect with controls"
+                description="Responsive hero style carousel that fills the page height and has controls for slide navigation"
+                level="advanced"
                 url="https://codepen.io/p-m-p/pen/vYQGOrW"
               />
             </li>

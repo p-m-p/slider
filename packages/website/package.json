@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@boxslider/components": "workspace:*",
     "lucide-react": "^0.368.0",
     "react-syntax-highlighter": "^15.5.0"
   },

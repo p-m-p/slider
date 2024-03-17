@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash'
-import css from 'react-syntax-highlighter/dist/esm/languages/prism/css'
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup'
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx'
 import style from 'react-syntax-highlighter/dist/esm/styles/prism/tomorrow'
 
 SyntaxHighlighter.registerLanguage('bash', bash)
-SyntaxHighlighter.registerLanguage('css', css)
 SyntaxHighlighter.registerLanguage('markup', markup)
 SyntaxHighlighter.registerLanguage('tsx', tsx)
 
@@ -15,14 +13,14 @@ type CodeExampleProps = {
   ts?: string
   react?: string
   html?: string
-  css?: string
   shell?: string
   reactShell?: string
+  htmlShell?: string
 }
 
 export default function CodeExample({
-  css,
   html,
+  htmlShell,
   react,
   reactShell,
   shell,
@@ -33,7 +31,14 @@ export default function CodeExample({
   if (shell) {
     panes.push({
       codeString: shell,
-      label: 'TypeScript',
+      label: 'JS/TS',
+      language: 'bash',
+    })
+  }
+  if (htmlShell) {
+    panes.push({
+      codeString: htmlShell,
+      label: 'HTML',
       language: 'bash',
     })
   }
@@ -47,22 +52,8 @@ export default function CodeExample({
   if (ts) {
     panes.push({
       codeString: ts,
-      label: 'TypeScript',
+      label: 'JS/TS',
       language: 'tsx',
-    })
-  }
-  if (react) {
-    panes.push({
-      codeString: react,
-      label: 'React',
-      language: 'tsx',
-    })
-  }
-  if (css) {
-    panes.push({
-      codeString: css,
-      label: 'CSS',
-      language: 'css',
     })
   }
   if (html) {
@@ -70,6 +61,13 @@ export default function CodeExample({
       codeString: html,
       label: 'HTML',
       language: 'markup',
+    })
+  }
+  if (react) {
+    panes.push({
+      codeString: react,
+      label: 'React',
+      language: 'tsx',
     })
   }
 
