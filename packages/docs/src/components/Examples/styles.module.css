@@ -1,0 +1,43 @@
+@import '@boxslider/components/src/style/slider-controls.css';
+
+.viewport {
+  width: 100%;
+  height: 480px;
+}
+
+.slider {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.slideImage {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-flow: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .viewport {
+    height: 405px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .viewport {
+    height: 540px;
+  }
+}

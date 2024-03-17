@@ -1,0 +1,53 @@
+.primary {
+  --bs-cta-bg: var(--bs-color-blue-darker);
+  --bs-cta-hover-bg: var(--bs-color-blue-darkest);
+  --bs-cta-border: var(--bs-color-blue-darkest);
+  --bs-cta-color: white;
+  --bs-cta-hover-color: white;
+
+  align-items: center;
+  background-color: var(--bs-cta-bg);
+  border: solid 1px var(--bs-cta-border);
+  border-radius: 9999px;
+  color: var(--bs-cta-color);
+  display: inline-flex;
+  font-weight: 600;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  transition:
+    background-color 200ms,
+    color 200ms;
+
+  &:hover {
+    color: var(--bs-cta-hover-color);
+    text-decoration: none;
+    background-color: var(--bs-cta-hover-bg);
+  }
+}
+
+.secondary {
+  composes: primary;
+  --bs-cta-bg: transparent;
+  --bs-cta-hover-bg: var(--ifm-color-gray-200);
+  --bs-cta-border: var(--ifm-color-gray-800);
+  --bs-cta-color: var(--ifm-color-gray-800);
+  --bs-cta-hover-color: var(--ifm-color-gray-800);
+}
+
+[data-theme='dark'] {
+  .primary {
+    --bs-cta-bg: var(--bs-color-blue-darkest);
+    --bs-cta-hover-bg: var(--bs-color-blue-darker);
+    --bs-cta-border: var(--bs-color-blue-darker);
+  }
+
+  .secondary {
+    --bs-cta-bg: transparent;
+    --bs-cta-border: var(--ifm-color-gray-700);
+    --bs-cta-color: white;
+    --bs-cta-hover-color: white;
+    --bs-cta-hover-bg: var(--ifm-color-gray-800);
+  }
+}

@@ -1,0 +1,41 @@
+.root {
+  align-items: center;
+  border: solid 1px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  transition: background 200ms;
+
+  > svg {
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
+.primary {
+  background: var(--bs-color-blue-darker);
+  border-color: var(--bs-color-blue-darker);
+  color: white;
+
+  &:hover {
+    background: var(--bs-color-blue-darkest);
+  }
+}
+
+.secondary {
+  background: transparent;
+  border-color: light-dark(
+    var(--ifm-color-gray-800),
+    var(--ifm-color-gray-700)
+  );
+
+  &:hover {
+    background: light-dark(
+      var(--ifm-color-gray-200),
+      var(--ifm-color-gray-800)
+    );
+  }
+}

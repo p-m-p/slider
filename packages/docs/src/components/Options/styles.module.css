@@ -1,0 +1,114 @@
+.container {
+  margin: 2rem 0;
+}
+
+.fields {
+  display: flex;
+  flex-flow: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.field {
+  background: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 10%));
+  border-radius: 9999px;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+
+  fieldset {
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  legend {
+    float: left;
+    margin: 0 1rem 0 0;
+    padding: 0;
+  }
+
+  label {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.25rem;
+    line-height: 1;
+  }
+
+  input {
+    margin: 0;
+  }
+
+  input[type='text'],
+  input[type='number'] {
+    width: 10rem;
+    border-radius: 9999px;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    font-size: inherit;
+  }
+
+  input[type='number'] {
+    width: 4rem;
+  }
+
+  input[type='checkbox'] {
+    appearance: none;
+    background: light-dark(
+      var(--ifm-color-gray-400),
+      var(--ifm-color-gray-800)
+    );
+    border-radius: 999px;
+    width: 2.5rem;
+    height: 1.5rem;
+    position: relative;
+    transition: background-color 200ms;
+  }
+
+  input[type='checkbox']:checked {
+    background: var(--ifm-color-primary-dark);
+  }
+
+  input[type='checkbox']::after {
+    content: ' ';
+    background: white;
+    border-radius: 999px;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    transition: transform 200ms;
+  }
+
+  input[type='checkbox']:checked::after {
+    transform: translateX(1rem);
+  }
+
+  input[type='radio'] {
+    appearance: none;
+    border: solid 1px var(--ifm-font-color-base);
+    border-radius: 50%;
+    height: 1rem;
+    position: relative;
+    width: 1rem;
+
+    &::after {
+      background: transparent;
+      border-radius: 50%;
+      content: ' ';
+      inset: 0.125rem;
+      position: absolute;
+      transition: background-color 200ms;
+    }
+
+    &:checked::after {
+      background: var(--ifm-color-primary);
+    }
+  }
+}
