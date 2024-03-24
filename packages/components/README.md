@@ -14,6 +14,34 @@ Include the package in your bundle.
 import '@boxslider/components'
 ```
 
+Use from CDN
+
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
+
+<bs-carousel>
+  <!-- Slides -->
+</bs-carousel>
+```
+
+To import a single component use the individual exports.
+
+```ts
+import '@boxslider/components/Carousel'
+```
+
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@boxslider/components/Carousel/+esm"></script>
+
+<bs-carousel>
+  <!-- Slides -->
+</bs-carousel>
+```
+
 ## Available Slider Components
 
 Each slide effect has a matching web component. Each component element has both the `BoxSlider`

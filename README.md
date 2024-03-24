@@ -27,7 +27,7 @@ Install from NPM
 npm install --save @boxslider/slider
 ```
 
-Or use from CDN
+Use from CDN
 
 ```html
 <script type="module">
@@ -51,7 +51,7 @@ Install via NPM
 npm install --save @boxslider/components
 ```
 
-Or use from CDN
+Use from CDN
 
 ```html
 <script
@@ -76,19 +76,6 @@ npm install --save @boxslider/react
 
 View the [@boxslider/react](https://github.com/p-m-p/slider/tree/main/packages/react/README.md)
 package for full details. Eact React component is a thin wrapper around the Web Component for that effect.
-
-### Browser global
-
-The core library can also be imported as a minified script from '@boxslider/slider/dist/boxslider.min.js'
-(`https://cdn.jsdelivr.net/npm/@boxslider/slider/dist/boxslider.min.js`) where all exports are available on
-the `$bs` global.
-
-```javascript
-const boxslider = new $bs.BoxSlider(
-  document.querySelector('#slider'),
-  new $bs.FadeSlider(),
-)
-```
 
 ## Usage
 
