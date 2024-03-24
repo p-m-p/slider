@@ -7,15 +7,15 @@ const srcDir = join(process.cwd(), 'src')
 const distDir = join(process.cwd(), 'dist')
 
 import(join(process.cwd(), 'manifest.js'))
-  .then(({ entries }) => {
+  .then(({ entries, options: packageOptions }) => {
     const builds = ['index.ts', ...entries].map((entry) => {
       const options = {
         entryPoints: [join(srcDir, entry)],
-        packages: 'external',
         bundle: true,
         platform: 'node',
         target: 'esnext',
         tsconfig: '../../tsconfig.json',
+        ...packageOptions,
       }
 
       return Promise.all([

@@ -46,11 +46,12 @@
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "pnpm run clean && pnpm run esbuild && pnpm run types",
-    "clean": "rm -rf dist && rm -f LICENSE",
-    "esbuild": "../../scripts/build-node.js",
-    "prepack": "cp ../../LICENSE ./",
-    "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
+    "build": "pnpm run clean && pnpm run build:lib && pnpm run build:types",
+    "build:lib": "../../scripts/build.js",
+    "build:types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types",
+    "clean": "echo 'Cleaning' && rm -rf dist && rm -f LICENSE",
+    "postbuild": "pnpm run types",
+    "prepack": "cp ../../LICENSE ./"
   },
   "dependencies": {
     "@boxslider/components": "workspace:*"
