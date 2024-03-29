@@ -17,8 +17,8 @@ jobs:
           version: 8
       - run: pnpm install
       - run: pnpm run lint
-      - run: pnpm run test:coverage
       - run: pnpm run build
+      - run: pnpm run test:coverage
       - uses: changesets/action@v1
         with:
           publish: pnpm run release
