@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.4.0
+
+### Minor Changes
+
+- bfe8ef7: Fix package exports and build scripts
+
+### Patch Changes
+
+- Updated dependencies [bfe8ef7]
+  - @boxslider/components@2.4.0
+  - @boxslider/slider@2.4.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
