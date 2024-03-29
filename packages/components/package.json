@@ -20,41 +20,21 @@
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.cjs",
+      "require": "./dist/cjs/index.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./Carousel": {
-      "import": "./dist/esm/Carousel.js",
-      "require": "./dist/cjs/Carousel.cjs",
-      "types": "./dist/types/Carousel.d.ts"
+    "./*": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js",
+      "types": "./dist/types/*.d.ts"
     },
-    "./Cube": {
-      "import": "./dist/esm/Cube.js",
-      "require": "./dist/cjs/Cube.cjs",
-      "types": "./dist/types/Cube.d.ts"
-    },
-    "./Fade": {
-      "import": "./dist/esm/Fade.js",
-      "require": "./dist/cjs/Fade.cjs",
-      "types": "./dist/types/Fade.d.ts"
-    },
-    "./Tile": {
-      "import": "./dist/esm/Tile.js",
-      "require": "./dist/cjs/Tile.cjs",
-      "types": "./dist/types/Tile.d.ts"
-    },
-    "./SliderControls": {
-      "import": "./dist/esm/SliderControls.js",
-      "require": "./dist/cjs/SliderControls.cjs",
-      "types": "./dist/types/SliderControls.d.ts"
-    },
-    "./style/": "./src/style/"
+    "./style/*": "./src/style/*.css"
   },
-  "main": "./dist/cjs/index.cjs",
+  "main": "./dist/cjs/index.cs",
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "pnpm run clean && pnpm run build:lib && pnpm run build:types",
-    "build:lib": "../../scripts/build.js",
+    "build:lib": "node build.js",
     "build:types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types",
     "clean": "rm -rf dist && rm -f LICENSE",
     "dev": "vite",

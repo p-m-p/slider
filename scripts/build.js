@@ -1,40 +1,26 @@
-#!/usr/bin/env node
-
 import { build } from 'esbuild'
 import { join } from 'path'
 
-const srcDir = join(process.cwd(), 'src')
-const distDir = join(process.cwd(), 'dist')
+export default async function (entryPoints, outdir, options = {}) {
+  const buildOptions = {
+    entryPoints,
+    bundle: true,
+    platform: 'node',
+    target: 'esnext',
+    tsconfig: join(import.meta.dirname, '../tsconfig.json'),
+    ...options,
+  }
 
-import(join(process.cwd(), 'manifest.js'))
-  .then(({ entries, options: packageOptions }) => {
-    const builds = ['index.ts', ...entries].map((entry) => {
-      const options = {
-        entryPoints: [join(srcDir, entry)],
-        bundle: true,
-        platform: 'node',
-        target: 'esnext',
-        tsconfig: '../../tsconfig.json',
-        ...packageOptions,
-      }
-
-      return Promise.all([
-        build({
-          ...options,
-          outfile: join(distDir, 'esm', entry.replace(/\.tsx?$/, '.js')),
-          format: 'esm',
-        }),
-        build({
-          ...options,
-          outfile: join(distDir, 'cjs', entry.replace(/\.tsx?$/, '.cjs')),
-          format: 'cjs',
-        }),
-      ])
-    })
-
-    return Promise.all(builds)
-  })
-  .catch((err) => {
-    console.error(err)
-    process.exit(1)
-  })
+  await Promise.all([
+    build({
+      ...buildOptions,
+      outdir: join(outdir, 'esm'),
+      format: 'esm',
+    }),
+    build({
+      ...buildOptions,
+      outdir: join(outdir, 'cjs'),
+      format: 'cjs',
+    }),
+  ])
+}

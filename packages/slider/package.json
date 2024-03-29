@@ -54,7 +54,7 @@
     "build": "pnpm run clean && pnpm run esbuild && pnpm run types",
     "clean": "rm -rf dist && rm -f LICENSE",
     "dev": "vite",
-    "esbuild": "../../scripts/build.js",
+    "esbuild": "node build.js",
     "prepack": "cp ../../LICENSE ./",
     "types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types"
   }
