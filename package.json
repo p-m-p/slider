@@ -21,6 +21,7 @@
     "@commitlint/config-conventional": "^19.1.0",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.23",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
@@ -42,8 +43,7 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.4.3",
     "vite": "^5.2.6",
-    "vitest": "^1.4.0",
-    "vitest-dom": "^0.1.1"
+    "vitest": "^1.4.0"
   },
   "config": {
     "commitizen": {

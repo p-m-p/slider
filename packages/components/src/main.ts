@@ -14,6 +14,25 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </bs-carousel>
   </bs-slider-controls>
 
+  <bs-slider-controls>
+    <bs-carousel auto-scroll="false" timeout="5000" cover class="full-carousel">
+      <div class="slide">Slide One</div>
+      <div class="slide">Slide Two</div>
+      <div class="slide">Slide Three</div>
+      <div class="slide">Slide Four</div>
+      <div class="slide">Slide Five</div>
+    </bs-carousel>
+
+    <button slot="prev-btn">Prev</button>
+    <button slot="next-btn">Next</button>
+
+    <div slot="index">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+    </div>
+  </bs-slider-controls>
+
   <div class="viewport">
     <bs-cube auto-scroll timeout="5000" class="slider" direction="vertical">
       <div class="slide">Slide One</div>

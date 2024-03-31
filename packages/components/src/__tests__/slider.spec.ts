@@ -1,12 +1,12 @@
 import { getByText, waitFor } from '@testing-library/dom'
-import Slider from '../Slider'
+import type { SliderElement } from '../Slider'
 import '..'
 
-function createSliderElement(
+export function createSliderElement(
   tagName: string,
   attributes: Record<string, string>,
 ) {
-  const el = document.createElement(tagName) as Slider
+  const el = document.createElement(tagName) as SliderElement
   const viewport = document.createElement('div')
 
   Object.entries(attributes).forEach(([key, value]) => {
@@ -78,7 +78,7 @@ test('attribute values and props', () => {
   expect(resetSpy.mock.calls[6][0]).toEqual({ timeout: 850 })
 })
 
-test('Slide transition', async () => {
+test('slide transition', async () => {
   const nextIndex = 2
   const speed = 10
   const el = createSliderElement('bs-carousel', {

@@ -83,10 +83,12 @@ export default class SliderControls extends HTMLElement {
       indexSlot?.addEventListener('slotchange', () => {
         const index = indexSlot.assignedElements()[0]
 
-        if (index.hasChildNodes()) {
-          index.childNodes.forEach((node, index) => {
-            node.addEventListener('click', () => this.#slider?.skipTo(index))
-          })
+        if (index?.hasChildNodes()) {
+          Array.from(index.childNodes)
+            .filter((node) => node instanceof HTMLElement)
+            .forEach((node, index) => {
+              node.addEventListener('click', () => this.#slider?.skipTo(index))
+            })
         }
       })
     })
