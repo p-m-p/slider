@@ -1,5 +1,5 @@
 ---
-'@boxslider/components': minor
+'@boxslider/components': patch
 ---
 
-Fix custom index event listeners
+Fix application of custom index button event listeners
