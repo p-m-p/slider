@@ -77,7 +77,7 @@ console.log(component.timeout) // => 2000
 console.log(component.timingFunction) // => 'ease-in'
 ```
 
-## 🧰 Beta component - Slider controls
+## Slider controls
 
 The `<bs-slider-controls>` component wraps a slider to provide navigation
 and slide index buttons.
@@ -94,8 +94,20 @@ and slide index buttons.
 </bs-slider-controls>
 ```
 
+Button labels for the default controls can be set via attributes. The
+`index-btn-label` attribute may include a `%d` placeholder for the slide number.
+
+```html
+<bs-slider-controls
+  prev-btn-label="Show previous slide"
+  next-btn-label="Show next slide"
+  index-btn-label="Go to slide %d">
+  <!-- slider content --->
+</bs-slider-controls>
+```
+
 Slots for the controls are available if you want to provide your own and
-these will be activated with click handlers to control the slider for you.
+these will be activated with event listeners to control the slider for you.
 
 ```html
 <bs-slider-controls>

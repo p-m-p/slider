@@ -46,6 +46,10 @@ export default class BoxSlider {
     return this._el
   }
 
+  get length() {
+    return this.slides.length
+  }
+
   private get stateStore() {
     if (this._stateStore === undefined) {
       throw new Error(
