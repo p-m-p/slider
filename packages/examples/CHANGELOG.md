@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.3.15
+
+### Patch Changes
+
+- Updated dependencies [511f36c]
+  - @boxslider/components@2.5.0
+  - @boxslider/react@2.4.1
+
 ## 2.3.14
 
 ### Patch Changes
