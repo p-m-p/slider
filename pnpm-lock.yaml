@@ -83,10 +83,10 @@ importers:
         version: 3.2.5
       react:
         specifier: ^18.2.0
-        version: 18.2.0
+        version: 18.3.0
       react-dom:
         specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        version: 18.3.0(react@18.3.0)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -116,7 +116,7 @@ importers:
         version: link:../slider
       react-github-btn:
         specifier: ^1.4.0
-        version: 1.4.0(react@18.2.0)
+        version: 1.4.0(react@18.3.0)
 
   packages/react:
     dependencies:
@@ -139,10 +139,10 @@ importers:
     dependencies:
       lucide-react:
         specifier: ^0.373.0
-        version: 0.373.0(react@18.2.0)
+        version: 0.373.0(react@18.3.0)
       react-syntax-highlighter:
         specifier: ^15.5.0
-        version: 15.5.0(react@18.2.0)
+        version: 15.5.0(react@18.3.0)
     devDependencies:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.6
@@ -3597,6 +3597,11 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
+  react-dom@18.3.0:
+    resolution: {integrity: sha512-zaKdLBftQJnvb7FtDIpZtsAIb2MZU087RM8bRDZU8LVCCFYjPTsDZJNFUWPcVz3HFSN1n/caxi0ca4B/aaVQGQ==}
+    peerDependencies:
+      react: ^18.3.0
+
   react-github-btn@1.4.0:
     resolution: {integrity: sha512-lV4FYClAfjWnBfv0iNlJUGhamDgIq6TayD0kPZED6VzHWdpcHmPfsYOZ/CFwLfPv4Zp+F4m8QKTj0oy2HjiGXg==}
     peerDependencies:
@@ -3622,6 +3627,10 @@ packages:
 
   react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+    engines: {node: '>=0.10.0'}
+
+  react@18.3.0:
+    resolution: {integrity: sha512-RPutkJftSAldDibyrjuku7q11d3oy6wKOyPe5K1HA/HwwrXcEqBdHsLypkC2FFYjP7bPUa6gbzSBhw4sY2JcDg==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -3774,6 +3783,9 @@ packages:
 
   scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+
+  scheduler@0.23.1:
+    resolution: {integrity: sha512-5GKS5JGfiah1O38Vfa9srZE4s3wdHbwjlCrvIookrg2FO9aIwKLOJXuJQFlEfNcVSOXuaL2hzDeY20uVXcUtrw==}
 
   semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
@@ -7931,9 +7943,9 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.373.0(react@18.2.0):
+  lucide-react@0.373.0(react@18.3.0):
     dependencies:
-      react: 18.2.0
+      react: 18.3.0
 
   lz-string@1.5.0: {}
 
@@ -8348,10 +8360,16 @@ snapshots:
       react: 18.2.0
       scheduler: 0.23.0
 
-  react-github-btn@1.4.0(react@18.2.0):
+  react-dom@18.3.0(react@18.3.0):
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.3.0
+      scheduler: 0.23.1
+
+  react-github-btn@1.4.0(react@18.3.0):
     dependencies:
       github-buttons: 2.27.0
-      react: 18.2.0
+      react: 18.3.0
 
   react-is@16.13.1: {}
 
@@ -8361,16 +8379,20 @@ snapshots:
 
   react-refresh@0.14.0: {}
 
-  react-syntax-highlighter@15.5.0(react@18.2.0):
+  react-syntax-highlighter@15.5.0(react@18.3.0):
     dependencies:
       '@babel/runtime': 7.24.1
       highlight.js: 10.7.3
       lowlight: 1.20.0
       prismjs: 1.29.0
-      react: 18.2.0
+      react: 18.3.0
       refractor: 3.6.0
 
   react@18.2.0:
+    dependencies:
+      loose-envify: 1.4.0
+
+  react@18.3.0:
     dependencies:
       loose-envify: 1.4.0
 
@@ -8564,6 +8586,10 @@ snapshots:
       xmlchars: 2.2.0
 
   scheduler@0.23.0:
+    dependencies:
+      loose-envify: 1.4.0
+
+  scheduler@0.23.1:
     dependencies:
       loose-envify: 1.4.0
 
