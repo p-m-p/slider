@@ -83,10 +83,10 @@ importers:
         version: 3.2.5
       react:
         specifier: ^18.2.0
-        version: 18.3.0
+        version: 18.3.1
       react-dom:
         specifier: ^18.2.0
-        version: 18.3.0(react@18.3.0)
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -116,7 +116,7 @@ importers:
         version: link:../slider
       react-github-btn:
         specifier: ^1.4.0
-        version: 1.4.0(react@18.3.0)
+        version: 1.4.0(react@18.3.1)
 
   packages/react:
     dependencies:
@@ -139,10 +139,10 @@ importers:
     dependencies:
       lucide-react:
         specifier: ^0.373.0
-        version: 0.373.0(react@18.3.0)
+        version: 0.373.0(react@18.3.1)
       react-syntax-highlighter:
         specifier: ^15.5.0
-        version: 15.5.0(react@18.3.0)
+        version: 15.5.0(react@18.3.1)
     devDependencies:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.6
@@ -3597,10 +3597,10 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  react-dom@18.3.0:
-    resolution: {integrity: sha512-zaKdLBftQJnvb7FtDIpZtsAIb2MZU087RM8bRDZU8LVCCFYjPTsDZJNFUWPcVz3HFSN1n/caxi0ca4B/aaVQGQ==}
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
-      react: ^18.3.0
+      react: ^18.3.1
 
   react-github-btn@1.4.0:
     resolution: {integrity: sha512-lV4FYClAfjWnBfv0iNlJUGhamDgIq6TayD0kPZED6VzHWdpcHmPfsYOZ/CFwLfPv4Zp+F4m8QKTj0oy2HjiGXg==}
@@ -3629,8 +3629,8 @@ packages:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
 
-  react@18.3.0:
-    resolution: {integrity: sha512-RPutkJftSAldDibyrjuku7q11d3oy6wKOyPe5K1HA/HwwrXcEqBdHsLypkC2FFYjP7bPUa6gbzSBhw4sY2JcDg==}
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -3784,8 +3784,8 @@ packages:
   scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
 
-  scheduler@0.23.1:
-    resolution: {integrity: sha512-5GKS5JGfiah1O38Vfa9srZE4s3wdHbwjlCrvIookrg2FO9aIwKLOJXuJQFlEfNcVSOXuaL2hzDeY20uVXcUtrw==}
+  scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
@@ -7943,9 +7943,9 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.373.0(react@18.3.0):
+  lucide-react@0.373.0(react@18.3.1):
     dependencies:
-      react: 18.3.0
+      react: 18.3.1
 
   lz-string@1.5.0: {}
 
@@ -8360,16 +8360,16 @@ snapshots:
       react: 18.2.0
       scheduler: 0.23.0
 
-  react-dom@18.3.0(react@18.3.0):
+  react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
-      react: 18.3.0
-      scheduler: 0.23.1
+      react: 18.3.1
+      scheduler: 0.23.2
 
-  react-github-btn@1.4.0(react@18.3.0):
+  react-github-btn@1.4.0(react@18.3.1):
     dependencies:
       github-buttons: 2.27.0
-      react: 18.3.0
+      react: 18.3.1
 
   react-is@16.13.1: {}
 
@@ -8379,20 +8379,20 @@ snapshots:
 
   react-refresh@0.14.0: {}
 
-  react-syntax-highlighter@15.5.0(react@18.3.0):
+  react-syntax-highlighter@15.5.0(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.24.1
       highlight.js: 10.7.3
       lowlight: 1.20.0
       prismjs: 1.29.0
-      react: 18.3.0
+      react: 18.3.1
       refractor: 3.6.0
 
   react@18.2.0:
     dependencies:
       loose-envify: 1.4.0
 
-  react@18.3.0:
+  react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
 
@@ -8589,7 +8589,7 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-  scheduler@0.23.1:
+  scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
 
