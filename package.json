@@ -9,6 +9,7 @@
     "dev": "pnpm run --filter=examples dev",
     "format": "prettier --write .",
     "lint": "prettier --check . && eslint",
+    "lint-staged": "lint-staged",
     "prepare": "husky",
     "release": "changeset publish",
     "test": "vitest",
