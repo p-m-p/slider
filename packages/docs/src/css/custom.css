@@ -1,0 +1,53 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --bs-color-blue: #3b82f6;
+  --bs-color-blue-dark: #1e6ff5;
+  --bs-color-blue-darker: #1d4ed8;
+  --bs-color-blue-darkest: #1e3a8a;
+  --bs-color-blue-light: #5895f7;
+  --bs-color-blue-lighter: #679ef8;
+  --bs-color-blue-lightest: #92bafa;
+
+  --bs-color-yellow: #eab308;
+  --bs-color-yellow-dark: #ca8a04;
+  --bs-color-yellow-darker: #c79807;
+  --bs-color-yellow-darkest: #a47d06;
+  --bs-color-yellow-light: #f7c013;
+  --bs-color-yellow-lighter: #f7c31f;
+  --bs-color-yellow-lightest: #fef08a;
+
+  --bs-text-sm: 0.875rem;
+  --bs-text-base: 1rem;
+  --bs-text-lg: 1.125rem;
+  --bs-text-xl: 1.5rem;
+
+  --ifm-color-primary: var(--bs-color-blue);
+  --ifm-color-primary-dark: var(--bs-color-blue-dark);
+  --ifm-color-primary-darker: var(--bs-color-blue-darker);
+  --ifm-color-primary-darkest: var(--bs-color-blue-darkest);
+  --ifm-color-primary-light: var(--bs-color-blue-light);
+  --ifm-color-primary-lighter: var(--bs-color-blue-lighter);
+  --ifm-color-primary-lightest: var(--bs-color-blue-lightest);
+
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: var(--bs-color-yellow);
+  --ifm-color-primary-dark: var(--bs-color-yellow-dark);
+  --ifm-color-primary-darker: var(--bs-color-yellow-darker);
+  --ifm-color-primary-darkest: var(--bs-color-yellow-darkest);
+  --ifm-color-primary-light: var(--bs-color-yellow-light);
+  --ifm-color-primary-lighter: var(--bs-color-yellow-lighter);
+  --ifm-color-primary-lightest: var(--bs-color-yellow-lightest);
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
