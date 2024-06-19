@@ -1,13 +1,18 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import CallToAction from '../components/CallToAction'
-import { Code, Github, Play, SearchCheck, Sparkles } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Code,
+  Github,
+  Play,
+  SearchCheck,
+  Sparkles,
+  Star,
+} from 'lucide-react'
 import FeatureTile from '../components/FeatureTile'
-import type {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  PropsWithChildren,
-} from 'react'
+import type { DetailedHTMLProps, HTMLAttributes } from 'react'
 import type {
   CarouselSliderElement,
   CubeSliderElement,
@@ -15,6 +20,7 @@ import type {
   SliderControlsElement,
   TileSliderElement,
 } from '@boxslider/components'
+import { Button } from '../components/Button'
 
 import '@boxslider/components'
 
@@ -40,7 +46,7 @@ declare global {
 
 import styles from './styles.module.css'
 
-export default function Home({ children }: PropsWithChildren) {
+export default function Home() {
   const { siteConfig } = useDocusaurusContext()
 
   return (
@@ -73,7 +79,7 @@ export default function Home({ children }: PropsWithChildren) {
               <CallToAction
                 variant="secondary"
                 href="https://github.com/p-m-p/slider">
-                <Github /> View on Github
+                <Github /> Github
               </CallToAction>
             </p>
 
@@ -93,26 +99,40 @@ export default function Home({ children }: PropsWithChildren) {
             </section>
           </header>
 
-          <section>{children}</section>
-
-          <bs-slider-controls class={styles.demoContainer}>
-            <bs-carousel
-              class={styles.demoSlider}
-              speed="600"
-              timeout="5000"
-              pause-on-hover>
-              <img
-                src="/slider/img/slides/slide-1-1280x720.jpg"
-                alt="Slide one"
-              />
-              <img
-                src="/slider/img/slides/slide-2-1280x720.jpg"
-                alt="Slide one"
-              />
-            </bs-carousel>
-            <button slot="prev-btn">Previous</button>
-            <button slot="next-btn">Next</button>
-          </bs-slider-controls>
+          <section className={styles.demoContainer}>
+            <h3 className={styles.demoTitle}>
+              <div className={styles.demoTitleBar} />
+              <Star className={styles.demoTitleIcon} />
+              Demo
+              <Star className={styles.demoTitleIcon} />
+              <div className={styles.demoTitleBar} />
+            </h3>
+            <bs-slider-controls class={styles.demoControls}>
+              <bs-carousel
+                class={styles.demoSlider}
+                auto-scroll="true"
+                speed="400"
+                timeout="5000"
+                pause-on-hover>
+                <img
+                  src="/slider/img/slides/slide-1-1280x720.jpg"
+                  alt="Slide one"
+                />
+                <img
+                  src="/slider/img/slides/slide-2-1280x720.jpg"
+                  alt="Slide one"
+                />
+              </bs-carousel>
+              <Button slot="prev-btn" variant="secondary">
+                <ArrowLeft />
+                <span>Previous</span>
+              </Button>
+              <Button slot="next-btn" variant="secondary">
+                <span>Next</span>
+                <ArrowRight />
+              </Button>
+            </bs-slider-controls>
+          </section>
         </div>
       </main>
     </Layout>

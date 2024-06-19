@@ -28,7 +28,7 @@
 .secondary {
   composes: primary;
   --bs-cta-bg: transparent;
-  --bs-cta-hover-bg: var(--ifm-color-gray-100);
+  --bs-cta-hover-bg: var(--ifm-color-gray-200);
   --bs-cta-border: var(--ifm-color-gray-800);
   --bs-cta-color: var(--ifm-color-gray-800);
   --bs-cta-hover-color: var(--ifm-color-gray-800);
