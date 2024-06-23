@@ -114,14 +114,39 @@ export default function Home() {
                 speed="400"
                 timeout="5000"
                 pause-on-hover>
-                <img
-                  src="/slider/img/slides/slide-1-1280x720.jpg"
-                  alt="Slide one"
-                />
-                <img
-                  src="/slider/img/slides/slide-2-1280x720.jpg"
-                  alt="Slide one"
-                />
+                <picture className={styles.demoSlide}>
+                  <source
+                    srcSet="/slider/img/slides/slide-3-square.jpg"
+                    media="(max-width: 480px)"
+                  />
+                  <img
+                    className={styles.demoSlideImage}
+                    src="/slider/img/slides/slide-3.jpg"
+                    alt="Slide one"
+                  />
+                </picture>
+                <picture className={styles.demoSlide}>
+                  <source
+                    srcSet="/slider/img/slides/slide-1-square.jpg"
+                    media="(max-width: 480px)"
+                  />
+                  <img
+                    className={styles.demoSlideImage}
+                    src="/slider/img/slides/slide-1.jpg"
+                    alt="Slide one"
+                  />
+                </picture>
+                <picture className={styles.demoSlide}>
+                  <source
+                    srcSet="/slider/img/slides/slide-2-square.jpg"
+                    media="(max-width: 600px)"
+                  />
+                  <img
+                    className={styles.demoSlideImage}
+                    src="/slider/img/slides/slide-2.jpg"
+                    alt="Slide one"
+                  />
+                </picture>
               </bs-carousel>
               <Button slot="prev-btn" variant="secondary">
                 <ArrowLeft />

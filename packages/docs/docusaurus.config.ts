@@ -44,9 +44,9 @@ const config: Config = {
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       logo: {
-        alt: 'Box Slider',
-        src: 'img/logo-small.webp',
-        srcDark: 'img/logo-small.webp',
+        alt: 'BoxSlider',
+        src: 'img/logo-medium.webp',
+        srcDark: 'img/logo-medium-dark.webp',
       },
       items: [
         {
@@ -64,7 +64,16 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      links: [
+        {
+          label: 'Phil Parsons',
+          href: '#',
+        },
+        {
+          label: 'Github',
+          href: '#',
+        },
+      ],
     },
     prism: {
       theme: prismThemes.github,

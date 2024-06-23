@@ -78,7 +78,7 @@
 }
 
 .demoContainer {
-  margin: 4rem auto;
+  margin: 4rem 0;
 }
 
 .demoTitle {
@@ -94,15 +94,17 @@
 }
 
 .demoTitleIcon {
-  color: var(--ifm-color-gray-800);
+  color: var(--ifm-color-gray-content);
   height: 2rem;
+  opacity: 0.5;
   width: 2rem;
 }
 
 .demoTitleBar {
-  border-bottom: 1px solid var(--ifm-color-gray-800);
+  border-bottom: 1px solid var(--ifm-color-content);
   flex-grow: 1;
   height: 0px;
+  opacity: 0.5;
 }
 
 .demoControls {
@@ -120,8 +122,8 @@
   grid-column: 1;
   display: block;
   box-shadow: 0 0 4rem -2rem light-dark(rgb(0 0 0 / 25%), rgb(255 255 255 / 10%));
-  height: 540px;
-  width: 960px;
+  height: 480px;
+  width: 100%;
 }
 
 .demoControls::part(controls) {
@@ -134,27 +136,43 @@
 
 .demoControls::part(index) {
   display: flex;
+  gap: 0.125rem;
   grid-row: 2;
   justify-self: stretch;
 }
 
 .demoControls::part(index-btn) {
-  background: var(--ifm-color-gray-800);
-  border: 1px solid var(--ifm-color-gray-700);
+  background: light-dark(var(--ifm-color-gray-400), var(--ifm-color-gray-800));
+  border: none;
   cursor: pointer;
   flex-grow: 1;
-  height: 0.25rem;
-  transition: background-color 200ms;
+  height: 0.5rem;
+  transition: background-color 300ms;
 }
 
 .demoControls::part(index-btn active) {
-  background: var(--ifm-color-content);
+  background: light-dark(
+    var(--ifm-color-primary-dark),
+    var(--ifm-color-primary-darkest)
+  );
 }
 
 .demoSlider {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.demoSlide {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.demoSlideImage {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .demoButton {
@@ -194,6 +212,27 @@
   .features {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .demoContainer {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .demoControls::part(slider) {
+    height: 405px;
+    width: 720px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .demoContainer {
+    margin-top: 8rem;
+  }
+
+  .demoControls::part(slider) {
+    height: 540px;
+    width: 960px;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -216,9 +255,5 @@
 
   .features {
     margin-top: 6rem;
-  }
-
-  .demoContainer {
-    margin-top: 8rem;
   }
 }
