@@ -138,8 +138,8 @@ importers:
   packages/website:
     dependencies:
       lucide-react:
-        specifier: ^0.397.0
-        version: 0.397.0(react@18.3.1)
+        specifier: ^0.399.0
+        version: 0.399.0(react@18.3.1)
       react-syntax-highlighter:
         specifier: ^15.5.0
         version: 15.5.0(react@18.3.1)
@@ -6183,8 +6183,8 @@ packages:
       yallist: 3.1.1
     dev: true
 
-  /lucide-react@0.397.0(react@18.3.1):
-    resolution: {integrity: sha512-rUcbRY5jFP/4za/OJvaRUUmdPsPb940Tw9zE1ehrRZmr9JnkDcW8OV3POR3XfEAAMDkssiTc5IWBFv8Y//pkDQ==}
+  /lucide-react@0.399.0(react@18.3.1):
+    resolution: {integrity: sha512-UyTNa3djBISdzL2UktgCrESXexQXaDQWi/WsDkbw6fBFfHlapajR58WoR+gxQ4laxfEyiHmoFrEIM3V+5XOVQg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
