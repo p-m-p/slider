@@ -31,7 +31,7 @@
     "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.6.0",
     "cz-conventional-changelog": "^3.3.0",
-    "esbuild": "^0.21.0",
+    "esbuild": "^0.22.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
