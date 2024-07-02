@@ -22,8 +22,6 @@ import type {
 } from '@boxslider/components'
 import { Button } from '../components/Button'
 
-import '@boxslider/components'
-
 interface JSXSliderElement<T> extends DetailedHTMLProps<HTMLAttributes<T>, T> {
   class?: string
   timeout?: string
@@ -45,6 +43,7 @@ declare global {
 }
 
 import styles from './styles.module.css'
+import BrowserOnly from '@docusaurus/BrowserOnly'
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext()
@@ -107,56 +106,64 @@ export default function Home() {
               <Star className={styles.demoTitleIcon} />
               <div className={styles.demoTitleBar} />
             </h3>
-            <bs-slider-controls class={styles.demoControls}>
-              <bs-carousel
-                class={styles.demoSlider}
-                auto-scroll="true"
-                speed="400"
-                timeout="5000"
-                pause-on-hover>
-                <picture className={styles.demoSlide}>
-                  <source
-                    srcSet="/slider/img/slides/slide-3-square.jpg"
-                    media="(max-width: 480px)"
-                  />
-                  <img
-                    className={styles.demoSlideImage}
-                    src="/slider/img/slides/slide-3.jpg"
-                    alt="Slide one"
-                  />
-                </picture>
-                <picture className={styles.demoSlide}>
-                  <source
-                    srcSet="/slider/img/slides/slide-1-square.jpg"
-                    media="(max-width: 480px)"
-                  />
-                  <img
-                    className={styles.demoSlideImage}
-                    src="/slider/img/slides/slide-1.jpg"
-                    alt="Slide one"
-                  />
-                </picture>
-                <picture className={styles.demoSlide}>
-                  <source
-                    srcSet="/slider/img/slides/slide-2-square.jpg"
-                    media="(max-width: 600px)"
-                  />
-                  <img
-                    className={styles.demoSlideImage}
-                    src="/slider/img/slides/slide-2.jpg"
-                    alt="Slide one"
-                  />
-                </picture>
-              </bs-carousel>
-              <Button slot="prev-btn" variant="secondary">
-                <ArrowLeft />
-                <span>Previous</span>
-              </Button>
-              <Button slot="next-btn" variant="secondary">
-                <span>Next</span>
-                <ArrowRight />
-              </Button>
-            </bs-slider-controls>
+            <BrowserOnly>
+              {() => {
+                import('@boxslider/components')
+
+                return (
+                  <bs-slider-controls class={styles.demoControls}>
+                    <bs-carousel
+                      class={styles.demoSlider}
+                      auto-scroll="true"
+                      speed="400"
+                      timeout="5000"
+                      pause-on-hover>
+                      <picture className={styles.demoSlide}>
+                        <source
+                          srcSet="/slider/img/slides/slide-3-square.jpg"
+                          media="(max-width: 480px)"
+                        />
+                        <img
+                          className={styles.demoSlideImage}
+                          src="/slider/img/slides/slide-3.jpg"
+                          alt="Slide one"
+                        />
+                      </picture>
+                      <picture className={styles.demoSlide}>
+                        <source
+                          srcSet="/slider/img/slides/slide-1-square.jpg"
+                          media="(max-width: 480px)"
+                        />
+                        <img
+                          className={styles.demoSlideImage}
+                          src="/slider/img/slides/slide-1.jpg"
+                          alt="Slide one"
+                        />
+                      </picture>
+                      <picture className={styles.demoSlide}>
+                        <source
+                          srcSet="/slider/img/slides/slide-2-square.jpg"
+                          media="(max-width: 600px)"
+                        />
+                        <img
+                          className={styles.demoSlideImage}
+                          src="/slider/img/slides/slide-2.jpg"
+                          alt="Slide one"
+                        />
+                      </picture>
+                    </bs-carousel>
+                    <Button slot="prev-btn" variant="secondary">
+                      <ArrowLeft />
+                      <span>Previous</span>
+                    </Button>
+                    <Button slot="next-btn" variant="secondary">
+                      <span>Next</span>
+                      <ArrowRight />
+                    </Button>
+                  </bs-slider-controls>
+                )
+              }}
+            </BrowserOnly>
           </section>
         </div>
       </main>

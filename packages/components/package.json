@@ -30,7 +30,7 @@
     },
     "./style/*": "./src/style/*.css"
   },
-  "main": "./dist/cjs/index.cs",
+  "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "pnpm run clean && pnpm run build:lib && pnpm run build:types",

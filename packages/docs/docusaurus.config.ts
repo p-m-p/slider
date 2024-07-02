@@ -22,6 +22,17 @@ const config: Config = {
     locales: ['en'],
   },
 
+  plugins: [
+    () => ({
+      name: 'postcss-plugins',
+      configurePostCss: (options) => {
+        options.plugins.push('postcss-nesting')
+
+        return options
+      },
+    }),
+  ],
+
   presets: [
     [
       'classic',

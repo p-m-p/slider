@@ -29,6 +29,7 @@
     "@docusaurus/module-type-aliases": "3.2.1",
     "@docusaurus/tsconfig": "3.2.1",
     "@docusaurus/types": "3.2.1",
+    "postcss-nesting": "^12.1.5",
     "typescript": "~5.2.2"
   },
   "browserslist": {
