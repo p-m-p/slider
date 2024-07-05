@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.4.2
+
+### Patch Changes
+
+- Updated dependencies [09fdef5]
+  - @boxslider/slider@2.5.0
+  - @boxslider/components@2.5.1
+
 ## 2.4.1
 
 ### Patch Changes
