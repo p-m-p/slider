@@ -35,7 +35,6 @@
     "build:lib": "node build.js",
     "build:types": "tsc --project tsconfig.types.json --emitDeclarationOnly --outDir dist/types",
     "clean": "echo 'Cleaning' && rm -rf dist && rm -f LICENSE",
-    "postbuild": "pnpm run types",
     "prepack": "cp ../../LICENSE ./"
   },
   "dependencies": {
