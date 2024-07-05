@@ -1,4 +1,9 @@
-import type { TileSettings, TileTransition } from './tile-transition'
+import {
+  type TileFace,
+  type TileSettings,
+  type TileTransition,
+  SLIDE_CONTAINER_CLASS,
+} from './tile-transition'
 import { applyCss } from '../../utils'
 
 class FlipTransition implements TileTransition {
@@ -12,6 +17,7 @@ class FlipTransition implements TileTransition {
     applyCss(tileHolder, {
       height: `${tileSettings.height}px`,
       left: `${tileSettings.fromLeft}px`,
+      overflow: 'hidden',
       perspective: '400px',
       position: 'absolute',
       top: `${tileSettings.fromTop}px`,
@@ -20,6 +26,7 @@ class FlipTransition implements TileTransition {
 
     tile.classList.add(tileSettings.tileClass)
     applyCss(tile, {
+      position: 'relative',
       height: `${tileSettings.height}px`,
       'transform-style': 'preserve-3d',
       transition: 'transform 400ms',
@@ -28,20 +35,28 @@ class FlipTransition implements TileTransition {
 
     tileHolder.appendChild(tile)
 
-    applyCss(front, { 'background-image': `url(${tileSettings.imgSrc})` })
+    faces.forEach((face) => {
+      const slideContainer = document.createElement('div')
 
-    faces.forEach((face) =>
-      applyCss(face, {
-        'background-position': `-${tileSettings.fromLeft}px -${tileSettings.fromTop}px`,
-        'background-size': `${tileSettings.boxWidth}px ${tileSettings.boxHeight}px`,
-        'backface-visibility': 'hidden',
-        height: `${tileSettings.height}px`,
-        left: '0',
+      slideContainer.classList.add(SLIDE_CONTAINER_CLASS)
+      applyCss(slideContainer, {
+        width: `${tileSettings.boxWidth}px`,
+        height: `${tileSettings.boxHeight}px`,
+        left: `-${tileSettings.fromLeft}px`,
         position: 'absolute',
+        top: `-${tileSettings.fromTop}px`,
+      })
+      face.appendChild(slideContainer)
+
+      applyCss(face, {
+        position: 'absolute',
+        'backface-visibility': 'hidden',
         top: '0',
+        left: '0',
+        height: `${tileSettings.height}px`,
         width: `${tileSettings.width}px`,
-      }),
-    )
+      })
+    })
 
     front.classList.add(tileSettings.frontClass)
     tile.appendChild(front)
@@ -53,7 +68,7 @@ class FlipTransition implements TileTransition {
     return tileHolder
   }
 
-  transition(tile: HTMLElement, nextFace: 'front' | 'back'): void {
+  transition(tile: HTMLElement, nextFace: TileFace) {
     applyCss(tile, {
       transform: `rotate3d(0, 1, 0, ${nextFace === 'back' ? 180 : 0}deg)`,
     })

@@ -1,8 +1,14 @@
-import type { StateStore } from '../../state-store'
+import { StateStore } from '../../state-store'
 import type { BoxSliderOptions, Effect, TransitionSettings } from '../../types'
-import { applyCss, locateSlideImageSrc } from '../../utils'
+import { applyCss } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
+import {
+  BACK_FACE_CLASS,
+  FRONT_FACE_CLASS,
+  TILE_CLASS,
+  setTileFace,
+} from './tile-transition'
 
 export type TileEffect = 'flip' | 'fade'
 export interface TileSliderOptions {
@@ -24,7 +30,6 @@ interface TileGrid {
   height: number
 }
 
-const TILE_CLASS = 'bs-tile'
 const SLIDE_STYLES = [
   'position',
   'overflow',
@@ -70,12 +75,7 @@ export default class TileSlider implements Effect {
     stateStore: StateStore,
     options: BoxSliderOptions,
   ): void {
-    const imgSrc = locateSlideImageSrc(slides[options.startIndex || 0])
-
-    if (imgSrc == null) {
-      throw new Error('Unable to locate slide image src for Tile slider')
-    }
-
+    const slide = slides[options.startIndex || 0]
     const fragment = document.createDocumentFragment()
 
     stateStore.storeStyles(el, BOX_STYLES)
@@ -109,6 +109,30 @@ export default class TileSlider implements Effect {
       width: '100%',
       height: '100%',
     })
+
+    for (let i = 0; i < this.grid.rows; ++i) {
+      const fromTop = i * this.grid.sideLength
+
+      for (let j = 0; j < this.grid.cols; ++j) {
+        const tile = this.tileTransition.createTile({
+          backClass: `${TILE_CLASS}-back`,
+          boxWidth: el.offsetWidth,
+          boxHeight: el.offsetHeight,
+          fromTop: fromTop,
+          fromLeft: j * this.grid.sideLength,
+          frontClass: `${TILE_CLASS}-front`,
+          width: this.grid.sideLength,
+          height: this.grid.sideLength,
+          tileClass: TILE_CLASS,
+        })
+        fragment.appendChild(tile)
+        setTileFace(
+          slide,
+          tile.querySelector(`.${FRONT_FACE_CLASS}`) as HTMLElement,
+        )
+      }
+    }
+
     slides.forEach((s) =>
       applyCss(s, {
         position: 'absolute',
@@ -122,27 +146,6 @@ export default class TileSlider implements Effect {
       }),
     )
 
-    for (let i = 0; i < this.grid.rows; ++i) {
-      const fromTop = i * this.grid.sideLength
-
-      for (let j = 0; j < this.grid.cols; ++j) {
-        fragment.appendChild(
-          this.tileTransition.createTile({
-            backClass: 'back',
-            boxWidth: el.offsetWidth,
-            boxHeight: el.offsetHeight,
-            fromTop: fromTop,
-            fromLeft: j * this.grid.sideLength,
-            frontClass: 'front',
-            imgSrc,
-            width: this.grid.sideLength,
-            height: this.grid.sideLength,
-            tileClass: TILE_CLASS,
-          }),
-        )
-      }
-    }
-
     this.tileWrapper.appendChild(fragment)
   }
 
@@ -152,15 +155,14 @@ export default class TileSlider implements Effect {
       const rowInterval = this.rowOffset
       const tileInterval =
         (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
-      const imgSrc = locateSlideImageSrc(settings.slides[settings.nextIndex])
       const nextFace = this.activeFace === 'front' ? 'back' : 'front'
 
       this.tileWrapper
-        .querySelectorAll(`.${nextFace}`)
+        .querySelectorAll(
+          `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
+        )
         .forEach((tile: HTMLElement | Element) =>
-          applyCss(tile as HTMLElement, {
-            'background-image': `url(${imgSrc})`,
-          }),
+          setTileFace(settings.slides[settings.nextIndex], tile as HTMLElement),
         )
 
       for (let i = 0; i < this.grid.rows; ++i) {
