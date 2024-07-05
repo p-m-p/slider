@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.0
+
+### Minor Changes
+
+- 09fdef5: Tile effect now supports standard HTML content
+
 ## 2.4.0
 
 ### Minor Changes

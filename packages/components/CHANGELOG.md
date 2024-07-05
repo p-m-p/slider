@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.5.1
+
+### Patch Changes
+
+- Updated dependencies [09fdef5]
+  - @boxslider/slider@2.5.0
+
 ## 2.5.0
 
 ### Minor Changes
