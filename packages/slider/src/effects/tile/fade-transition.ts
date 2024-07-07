@@ -4,7 +4,6 @@ import {
   type TileTransition,
   FRONT_FACE_CLASS,
   BACK_FACE_CLASS,
-  SLIDE_CONTAINER_CLASS,
 } from './tile-transition'
 import { applyCss } from '../../utils'
 
@@ -27,25 +26,13 @@ class FadeTransition implements TileTransition {
     })
 
     faces.forEach((face) => {
-      const slideContainer = document.createElement('div')
-
-      slideContainer.classList.add(SLIDE_CONTAINER_CLASS)
-      applyCss(slideContainer, {
-        width: `${tileSettings.boxWidth}px`,
+      applyCss(face, {
         height: `${tileSettings.boxHeight}px`,
         left: `-${tileSettings.fromLeft}px`,
         position: 'absolute',
         top: `-${tileSettings.fromTop}px`,
-      })
-      face.appendChild(slideContainer)
-
-      applyCss(face, {
-        height: `${tileSettings.height}px`,
-        left: '0',
-        position: 'absolute',
-        top: '0',
         transition: 'opacity 400ms',
-        width: `${tileSettings.width}px`,
+        width: `${tileSettings.boxWidth}px`,
       })
     })
 

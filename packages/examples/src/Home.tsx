@@ -46,12 +46,12 @@ const effects: {
   },
   {
     name: 'Tile Fade',
-    options: { rows: 10, tileEffect: 'fade' },
+    options: { rows: 5, tileEffect: 'fade' },
     component: TileSlider,
   },
   {
     name: 'Tile Flip',
-    options: { rows: 10, tileEffect: 'flip' },
+    options: { rows: 5, tileEffect: 'flip' },
     component: TileSlider,
   },
   {
@@ -74,7 +74,7 @@ const effects: {
 function App() {
   const [activeIndex, setActiveIndex] = useState(0)
   const sliderRef = useRef<BoxSlider>(null)
-  const [effect, setEffect] = useState(effects[0])
+  const [effect, setEffect] = useState(effects[3])
   const startIndex = useMemo(() => activeIndex, [effect])
   const slides = images.map((image, i) => (
     <div key={image} className="slide">
@@ -107,6 +107,7 @@ function App() {
             className: 'slider',
             id: 'slider',
             onAfter: (ev: SliderEventData) => setActiveIndex(ev.currentIndex),
+            autoScroll: false,
             startIndex,
             children: slides,
             sliderRef,
