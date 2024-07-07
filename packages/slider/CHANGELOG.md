@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.1
+
+### Patch Changes
+
+- 5dc061a: Reduce node count for tile flip and resolve tile sizing bug
+
 ## 2.5.0
 
 ### Minor Changes
