@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.2
+
+### Patch Changes
+
+- d009e44: Fix perspective overflow for tile flip transition
+
 ## 2.5.1
 
 ### Patch Changes
