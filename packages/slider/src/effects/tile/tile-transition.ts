@@ -9,6 +9,7 @@ export interface TileSettings {
   speed: number
   tileClass: string
   width: number
+  zIndex: number
 }
 
 export const TILE_CLASS = 'bs-tile'
@@ -20,10 +21,5 @@ export type TileFace = 'front' | 'back'
 export interface TileTransition {
   createTile(tileSettings: TileSettings): HTMLElement
   transition(tile: HTMLElement, face?: TileFace): void
-}
-
-export function setTileFace(slide: HTMLElement, tileFace: HTMLElement) {
-  const clone = slide.cloneNode(true) as HTMLElement
-  clone.removeAttribute('style')
-  tileFace.replaceChildren(clone)
+  setTileFace(slide: HTMLElement, tileFace: HTMLElement): void
 }

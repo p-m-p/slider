@@ -7,7 +7,6 @@ import {
   BACK_FACE_CLASS,
   FRONT_FACE_CLASS,
   TILE_CLASS,
-  setTileFace,
 } from './tile-transition'
 
 export type TileEffect = 'flip' | 'fade'
@@ -108,6 +107,8 @@ export default class TileSlider implements Effect {
       height: '100%',
     })
 
+    const totalTiles = this.grid.rows * this.grid.cols
+
     for (let i = 0; i < this.grid.rows; ++i) {
       const fromTop = i * this.grid.tileHeight
 
@@ -125,9 +126,10 @@ export default class TileSlider implements Effect {
             this.grid.cols,
           tileClass: TILE_CLASS,
           width: this.grid.tileWidth,
+          zIndex: totalTiles - (i + j),
         })
         fragment.appendChild(tile)
-        setTileFace(
+        this.tileTransition.setTileFace(
           slide,
           tile.querySelector(`.${FRONT_FACE_CLASS}`) as HTMLElement,
         )
@@ -162,7 +164,10 @@ export default class TileSlider implements Effect {
           `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
         )
         .forEach((tile: HTMLElement | Element) =>
-          setTileFace(settings.slides[settings.nextIndex], tile as HTMLElement),
+          this.tileTransition.setTileFace(
+            settings.slides[settings.nextIndex],
+            tile as HTMLElement,
+          ),
         )
 
       for (let i = 0; i < this.grid.rows; ++i) {

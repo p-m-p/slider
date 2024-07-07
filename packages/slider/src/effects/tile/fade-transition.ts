@@ -53,6 +53,12 @@ class FadeTransition implements TileTransition {
     applyCss(front, { opacity: nextFace === 'front' ? '1' : '0' })
     applyCss(back, { opacity: nextFace === 'front' ? '0' : '1' })
   }
+
+  setTileFace(slide: HTMLElement, tileFace: HTMLElement) {
+    const clone = slide.cloneNode(true) as HTMLElement
+    clone.removeAttribute('style')
+    tileFace.replaceChildren(clone)
+  }
 }
 
 export default FadeTransition
