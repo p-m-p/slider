@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.3
+
+### Patch Changes
+
+- bd41ae9: Fix for destroyed slide transitions with pending timers
+
 ## 2.5.2
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.5.4
+
+### Patch Changes
+
+- Updated dependencies [bd41ae9]
+  - @boxslider/slider@2.5.3
+
 ## 2.5.3
 
 ### Patch Changes
