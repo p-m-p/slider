@@ -48,6 +48,8 @@ export default class TileSlider implements Effect {
   private tileTransition: FadeTransition | FlipTransition
   private grid!: TileGrid
   private activeFace: 'front' | 'back'
+  private rowTimers: number[] = []
+  private tileTimers: number[] = []
 
   get tileWrapper() {
     if (this._tileWrapper === undefined) {
@@ -159,6 +161,9 @@ export default class TileSlider implements Effect {
         (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
       const nextFace = this.activeFace === 'front' ? 'back' : 'front'
 
+      this.rowTimers.length = 0
+      this.tileTimers.length = 0
+
       this.tileWrapper
         .querySelectorAll(
           `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
@@ -177,23 +182,27 @@ export default class TileSlider implements Effect {
         const rowEnd = j + this.grid.cols
         const rowTimeout = i * rowInterval
 
-        setTimeout(() => {
-          for (; j < rowEnd; ++j) {
-            const tileTimeout = timerIndex * tileInterval
-            const tile = tiles[j] as HTMLElement
+        this.rowTimers.push(
+          window.setTimeout(() => {
+            for (; j < rowEnd; ++j) {
+              const tileTimeout = timerIndex * tileInterval
+              const tile = tiles[j] as HTMLElement
 
-            setTimeout(() => {
-              this.tileTransition.transition(tile, nextFace)
+              this.tileTimers.push(
+                window.setTimeout(() => {
+                  this.tileTransition.transition(tile, nextFace)
 
-              if (tile === tiles[tiles.length - 1]) {
-                this.activeFace = nextFace
-                resolve()
-              }
-            }, tileTimeout)
+                  if (tile === tiles[tiles.length - 1]) {
+                    this.activeFace = nextFace
+                    resolve()
+                  }
+                }, tileTimeout),
+              )
 
-            timerIndex += 1
-          }
-        }, rowTimeout)
+              timerIndex += 1
+            }
+          }, rowTimeout),
+        )
       }
     })
   }
@@ -201,6 +210,8 @@ export default class TileSlider implements Effect {
   destroy(el: HTMLElement) {
     el.removeChild(this.tileWrapper)
     delete this._tileWrapper
+    this.rowTimers.forEach(window.clearTimeout)
+    this.tileTimers.forEach(window.clearTimeout)
   }
 
   private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {

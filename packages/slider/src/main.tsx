@@ -1,15 +1,11 @@
-import { BoxSlider, TileSlider } from '.'
+import { BoxSlider, CarouselSlider } from '.'
 
 const el = document.getElementById('slider')
 
 if (el) {
-  const slider = new BoxSlider(
-    el,
-    new TileSlider({ tileEffect: 'flip', rows: 4 }),
-    {
-      autoScroll: false,
-    },
-  )
+  const slider = new BoxSlider(el, new CarouselSlider(), {
+    autoScroll: true,
+  })
 
   document
     .getElementById('next')
@@ -17,4 +13,7 @@ if (el) {
   document
     .getElementById('prev')
     ?.addEventListener('click', () => slider.prev())
+  document
+    .getElementById('destroy')
+    ?.addEventListener('click', () => slider.destroy())
 }

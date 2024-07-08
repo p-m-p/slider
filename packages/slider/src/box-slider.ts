@@ -40,7 +40,7 @@ export default class BoxSlider {
 
   get el() {
     if (this._el === undefined) {
-      throw new Error('Slider element is null')
+      throw new Error('Slider element is undefined')
     }
 
     return this._el
@@ -53,7 +53,7 @@ export default class BoxSlider {
   private get stateStore() {
     if (this._stateStore === undefined) {
       throw new Error(
-        'State store is null, are you trying to interact with a destroyed slider?',
+        'State store is undefined, are you trying to interact with a destroyed slider?',
       )
     }
 
@@ -63,7 +63,7 @@ export default class BoxSlider {
   private get effect() {
     if (this._effect === undefined) {
       throw new Error(
-        'Slide effect is null, are you trying to interact with a destroyed slider?',
+        'Slide effect is undefined, are you trying to interact with a destroyed slider?',
       )
     }
 

@@ -20,6 +20,8 @@ const BOX_STYLES = ['overflow', 'position']
 
 export default class CarouselSlider implements Effect {
   private readonly options: CarouselSliderOptions
+  private transitionTimer = 0
+  private asyncTimer = 0
 
   constructor(options?: CarouselSliderOptions) {
     this.options = {
@@ -66,6 +68,11 @@ export default class CarouselSlider implements Effect {
     })
   }
 
+  destroy() {
+    window.clearTimeout(this.transitionTimer)
+    window.clearTimeout(this.asyncTimer)
+  }
+
   transition(settings: TransitionSettings): Promise<void> {
     return new Promise((resolve) => {
       const currentSlide = settings.slides[settings.currentIndex]
@@ -79,7 +86,7 @@ export default class CarouselSlider implements Effect {
         })`,
       })
 
-      setTimeout(() => {
+      this.asyncTimer = window.setTimeout(() => {
         applyCss(nextSlide, {
           transform: 'translateX(0px)',
           transition: `transform ${settings.speed}ms ${this.options.timingFunction}`,
@@ -102,7 +109,7 @@ export default class CarouselSlider implements Effect {
           'z-index': '1',
         })
 
-        setTimeout(() => {
+        this.transitionTimer = window.setTimeout(() => {
           applyCss(currentSlide, {
             transform: `translateX(${currentSlideWidth})`,
             transition: 'initial',

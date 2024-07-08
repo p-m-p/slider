@@ -21,6 +21,7 @@ const BOX_STYLES = ['height', 'overflow', 'position']
 
 export default class FadeSlider implements Effect {
   private readonly options: FadeSliderOptions
+  private transitionTimer = 0
 
   constructor(options?: FadeSliderOptions) {
     this.options = {
@@ -72,7 +73,11 @@ export default class FadeSlider implements Effect {
       applyCss(currentSlide, { 'z-index': '1', opacity: '0' })
       applyCss(nextSlide, { 'z-index': '2', opacity: '1' })
 
-      setTimeout(resolve, settings.speed)
+      this.transitionTimer = window.setTimeout(resolve, settings.speed)
     })
+  }
+
+  destroy() {
+    window.clearTimeout(this.transitionTimer)
   }
 }

@@ -23,6 +23,7 @@ const VIEWPORT_STYLES = ['overflow', 'perspective', 'position']
 export default class CubeSlider implements Effect {
   private readonly options: CubeSliderOptions
   private translateZ!: number
+  private transitionTimer = 0
 
   constructor(options?: Partial<CubeSliderOptions>) {
     this.options = {
@@ -91,7 +92,7 @@ export default class CubeSlider implements Effect {
       transform: `translate3d(0, 0, -${this.translateZ}px)`,
     })
 
-    setTimeout(
+    this.transitionTimer = window.setTimeout(
       () =>
         applyCss(el, {
           transition: `transform ${options.speed}ms`,
@@ -118,7 +119,7 @@ export default class CubeSlider implements Effect {
         )}`,
       })
 
-      setTimeout(() => {
+      this.transitionTimer = window.setTimeout(() => {
         settings.slides.forEach((s, index) => {
           if (index !== settings.nextIndex) {
             applyCss(s, { transform: 'initial' })
@@ -142,6 +143,10 @@ export default class CubeSlider implements Effect {
         resolve()
       }, settings.speed)
     })
+  }
+
+  destroy() {
+    window.clearTimeout(this.transitionTimer)
   }
 
   private rotation(angle: number): string {
