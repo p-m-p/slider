@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.3.19
+
+### Patch Changes
+
+- Updated dependencies [a8c5dcb]
+  - @boxslider/react@2.4.5
+
 ## 2.3.18
 
 ### Patch Changes

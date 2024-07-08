@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.4.5
+
+### Patch Changes
+
+- a8c5dcb: Clear any timers on slide transitions when slider is destroyed
+
 ## 2.4.4
 
 ### Patch Changes
