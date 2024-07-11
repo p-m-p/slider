@@ -1,20 +1,27 @@
 import type { BoxSlider } from '@boxslider/slider'
 import type { SliderElement } from './Slider'
+import Slider from './Slider'
 
 const template = document.createElement('template')
 template.innerHTML = `
 <div part="container">
-  <div part="slider">
-    <slot id="slider"></slot>
-  </div>
+  <slot name="play-btn" part="label">
+    <button part="play-btn"></button>
+  </slot>
 
-  <div part="controls">
-    <slot name="prev-btn">
-      <button part="prev-btn nav-btn"></button>
-    </slot>
-    <slot name="next-btn">
-      <button part="next-btn nav-btn"></button>
-    </slot>
+  <div part="slider-container">
+    <div part="slider">
+      <slot id="slider"></slot>
+    </div>
+
+    <div part="controls">
+      <slot name="prev-btn">
+        <button part="prev-btn nav-btn"></button>
+      </slot>
+      <slot name="next-btn">
+        <button part="next-btn nav-btn"></button>
+      </slot>
+    </div>
   </div>
 
   <slot name="index" part="index"></slot>
@@ -31,7 +38,9 @@ export default class SliderControls
   implements SliderControlsElement
 {
   slider?: BoxSlider
+  #sliderEl?: SliderElement | null
   #indexButtons: HTMLButtonElement[] = []
+  #hasBeenInteractedWith = false
 
   connectedCallback() {
     const shadow = this.attachShadow({ mode: 'open' })
@@ -55,22 +64,36 @@ export default class SliderControls
       { 'aria-label': this.getAttribute('next-btn-label') ?? 'Next' },
     )
 
+    this.#initializePlayButton(
+      shadow.querySelector<HTMLSlotElement>('slot[name="play-btn"]')!,
+    )
+
     sliderSlot?.addEventListener('slotchange', () => {
-      const sliderEl = sliderSlot.assignedElements()[0] as SliderElement
+      const sliderSlotRoot = sliderSlot.assignedElements()[0] as HTMLElement
+      this.#sliderEl =
+        sliderSlotRoot instanceof Slider
+          ? (sliderSlotRoot as SliderElement)
+          : sliderSlotRoot.querySelector<SliderElement>(
+              'bs-carousel, bs-cube, bs-fade, bs-tile',
+            )
 
-      if (!sliderEl.id) {
-        sliderEl.id = `bs-slider-${incrementingId++}`
+      if (!this.#sliderEl || !this.#sliderEl.slider) {
+        throw new Error('Slider component not found')
       }
 
-      shadow.querySelectorAll('[part~="nav-btn"]').forEach((btn) => {
-        btn.setAttribute('aria-controls', sliderEl.id)
-      })
+      this.slider = this.#sliderEl?.slider
+      let sliderId = this.#sliderEl?.id
 
-      this.slider = sliderEl?.slider
-
-      if (!this.slider) {
-        throw new Error('Slider component is not defined')
+      if (!sliderId) {
+        sliderId = `bs-slider-${incrementingId++}`
+        this.#sliderEl!.id = sliderId
       }
+
+      shadow
+        .querySelectorAll('[part~="nav-btn"], [slot="play-btn"] > button')
+        .forEach((btn) => {
+          btn.setAttribute('aria-controls', sliderId)
+        })
 
       this.slider.addEventListener('after', ({ currentIndex }) => {
         this.#indexButtons.forEach((btn, index) => {
@@ -102,7 +125,7 @@ export default class SliderControls
 
           btn.setAttribute('aria-label', label)
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false')
-          btn.setAttribute('aria-controls', sliderEl.id)
+          btn.setAttribute('aria-controls', sliderId)
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
           btn.setAttribute('type', 'button')
           btn.addEventListener('click', () => {
@@ -144,17 +167,63 @@ export default class SliderControls
     clickHandler: EventListener,
     attributes: Record<string, string> = {},
   ) {
-    const defaultButton = slot.querySelector('button')
-
-    defaultButton?.addEventListener('click', clickHandler)
+    const defaultButton = slot.querySelector('button')!
+    const addHandlers = (btn: HTMLButtonElement) => {
+      btn.addEventListener('click', clickHandler)
+      btn.addEventListener('focus', () => {
+        if (!this.#hasBeenInteractedWith) {
+          this.#sliderEl?.setAttribute('auto-scroll', 'false')
+        }
+      })
+    }
 
     for (const [key, value] of Object.entries(attributes)) {
       defaultButton?.setAttribute(key, value)
     }
+    addHandlers(defaultButton)
 
     slot.addEventListener('slotchange', () => {
       const customButton = slot.assignedElements()[0]
-      customButton?.addEventListener('click', clickHandler)
+
+      if (customButton) {
+        addHandlers(customButton as HTMLButtonElement)
+      }
+    })
+  }
+
+  #initializePlayButton(slot: HTMLSlotElement) {
+    const defaultButton = slot.querySelector('button')!
+    const playBtnLabel =
+      this.getAttribute('play-btn-label') ?? 'Start slide auto scroll'
+    const pauseBtnLabel =
+      this.getAttribute('pause-btn-label') ?? 'Stop slide auto scroll'
+
+    const addHandler = (btn: HTMLButtonElement) => {
+      btn?.addEventListener('click', () => {
+        this.#hasBeenInteractedWith = true
+
+        if (this.#sliderEl?.autoScroll) {
+          this.#sliderEl?.setAttribute('auto-scroll', 'false')
+          btn.setAttribute('aria-label', playBtnLabel)
+        } else {
+          this.#sliderEl?.setAttribute('auto-scroll', 'true')
+          btn.setAttribute('aria-label', pauseBtnLabel)
+        }
+      })
+    }
+
+    defaultButton.setAttribute(
+      'aria-label',
+      this.#sliderEl?.autoScroll ? pauseBtnLabel : playBtnLabel,
+    )
+    addHandler(defaultButton)
+
+    slot.addEventListener('slotchange', () => {
+      const customButton = slot.assignedElements()[0]
+
+      if (customButton) {
+        addHandler(customButton as HTMLButtonElement)
+      }
     })
   }
 }

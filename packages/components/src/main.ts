@@ -33,6 +33,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </bs-slider-controls>
 
+  <bs-slider-controls>
   <div class="viewport">
     <bs-cube auto-scroll timeout="5000" class="slider" direction="vertical">
       <div class="slide">Slide One</div>
@@ -42,7 +43,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="slide">Slide Five</div>
     </bs-cube>
   </div>
+  </bs-slider-controls>
 
+  <bs-slider-controls>
   <bs-fade auto-scroll timeout="2000" class="slider" timing-function="ease-in">
     <div class="slide">Slide One</div>
     <div class="slide">Slide Two</div>
@@ -50,7 +53,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="slide">Slide Four</div>
     <div class="slide">Slide Five</div>
   </bs-fade>
+  </bs-slider-controls>
 
+  <bs-slider-controls>
   <bs-tile auto-scroll timeout="7000" class="slider" tile-effect="fade">
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_1.png" /></div>
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_2.png" /></div>
@@ -58,5 +63,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_4.png" /></div>
     <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_5.png" /></div>
   </bs-tile>
+  </bs-slider-controls>
 </div>
 `

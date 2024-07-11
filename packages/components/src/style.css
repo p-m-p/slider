@@ -1,9 +1,5 @@
 :root {
   color-scheme: light dark;
-
-  --bs-index-justify: flex-start;
-  --bs-index-btn-color: #555;
-  --bs-index-btn-active-color: #ddd;
 }
 
 html {
@@ -20,11 +16,6 @@ html {
   display: block;
   width: 800px;
   height: 400px;
-}
-
-.slider,
-.viewport {
-  margin: 0 0 100px;
 }
 
 .slide {

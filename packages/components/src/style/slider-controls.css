@@ -1,17 +1,31 @@
 bs-slider-controls {
   --index-justify: var(--bs-index-justify, center);
 
-  --index-btn-active-color: var(--bs-index-btn-active-color, black);
-  --index-btn-color: var(--bs-index-btn-color, rgb(0 0 0 / 40%));
+  --index-btn-active-color: var(
+    --bs-index-btn-active-color,
+    light-dark(rgb(0 0 0 / 80%), white)
+  );
+  --index-btn-color: var(
+    --bs-index-btn-color,
+    light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%))
+  );
   --index-btn-size: var(--bs-index-btn-size, 1rem);
 
+  --nav-btn-color: var(--bs-nav-btn-color, white);
   --nav-btn-bg: var(--bs-nav-btn-bg, rgb(0 0 0 / 5%));
-  --nav-btn-hover-bg: var(--bs-nav-btn-hover-bg, rgb(255 255 255 / 25%));
+  --nav-btn-hover-bg: var(--bs-nav-btn-hover-bg, rgb(0 0 0 / 25%));
+  --nav-btn-border-radius: var(--bs-nav-btn-border-radius, 9999px);
   --nav-btn-color: var(--bs-nav-btn-color, rgb(0 0 0 / 40%));
-  --nav-btn-hover-color: var(--bs-nav-btn-hover-color, rgb(0 0 0 / black));
-  --nav-btn-height: var(--bs-nav-btn-height, 2.5rem);
   --nav-btn-padding: var(--bs-nav-btn-padding, 0.5rem);
-  --nav-btn-width: var(--bs-nav-btn-width, 3rem);
+  --nav-btn-size: var(--bs-nav-btn-size, 1.25rem);
+  --nav-btn-next-icon: var(
+    --bs-nav-btn-next-icon,
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255 255 255 / 80%)" class="bi bi-chevron-right" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/> </svg>')
+  );
+  --nav-btn-prev-icon: var(
+    --bs-nav-btn-prev-icon,
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255 255 255 / 80%)" class="bi bi-chevron-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/> </svg>')
+  );
 
   &::part(container) {
     align-items: center;
@@ -21,78 +35,57 @@ bs-slider-controls {
     position: relative;
   }
 
-  &::part(slider) {
+  &::part(slider-container) {
+    position: relative;
     z-index: 1;
   }
 
   &::part(controls) {
+    align-items: center;
     display: flex;
+    inset: 10px;
     justify-content: space-between;
-    left: 0;
     position: absolute;
-    top: 40%;
-    width: 100%;
     z-index: 2;
   }
 
   &::part(nav-btn) {
     background-color: var(--nav-btn-bg);
-    box-sizing: border-box;
     border: none;
+    border-radius: var(--nav-btn-border-radius);
+    box-sizing: content-box;
     cursor: pointer;
-    height: var(--nav-btn-height);
+    height: var(--nav-btn-size);
     overflow: hidden;
     padding: var(--nav-btn-padding);
     position: relative;
-    transition: background-color 200ms;
-    width: var(--nav-btn-width);
+    transition: background-color color 200ms;
+    width: var(--nav-btn-size);
   }
 
   &::part(nav-btn):hover {
     background-color: var(--nav-btn-hover-bg);
   }
 
-  &::part(nav-btn):before {
-    border-style: solid;
-    border-color: transparent;
-    border-bottom-width: calc(
-      calc(var(--nav-btn-height) / 2) - var(--nav-btn-padding)
-    );
-    border-left-width: calc(
-      var(--nav-btn-width) - calc(var(--nav-btn-padding) * 2)
-    );
-    border-right-width: calc(
-      var(--nav-btn-width) - calc(var(--nav-btn-padding) * 2)
-    );
-    border-top-width: calc(
-      calc(var(--nav-btn-height) / 2) - var(--nav-btn-padding)
-    );
+  &::part(nav-btn)::before {
+    background-size: var(--nav-btn-size) var(--nav-btn-size);
+    box-sizing: inherit;
+    color: var(--nav-btn-color);
     content: '';
     left: var(--nav-btn-padding);
     position: absolute;
     top: var(--nav-btn-padding);
-    transition: border-color 200ms;
+    transition: color 200ms;
+    width: var(--nav-btn-size);
+    height: var(--nav-btn-size);
   }
 
-  &::part(prev-btn):before {
-    left: calc(
-      calc(var(--nav-btn-width) - calc(var(--nav-btn-padding) * 3)) * -1
-    );
-    border-right-color: var(--nav-btn-color);
+  &::part(prev-btn)::before {
+    background-image: var(--nav-btn-prev-icon);
   }
 
-  &::part(prev-btn):focus:before,
-  &::part(prev-btn):hover:before {
-    border-right-color: var(--nav-btn-hover-color);
-  }
-
-  &::part(next-btn):before {
-    border-left-color: var(--nav-btn-color);
-  }
-
-  &::part(next-btn):focus:before,
-  &::part(next-btn):hover:before {
-    border-left-color: var(--nav-btn-hover-color);
+  &::part(next-btn)::before {
+    background-image: var(--nav-btn-next-icon);
   }
 
   &::part(index) {
@@ -117,10 +110,10 @@ bs-slider-controls {
     width: var(--index-btn-size);
   }
 
-  &::part(index-btn):before {
+  &::part(index-btn)::before {
     background-color: var(--index-btn-color);
     border-radius: 99999px;
-    content: ' ';
+    content: '';
     display: block;
     height: 80%;
     left: 10%;
