@@ -6,6 +6,7 @@ const outDir = join(import.meta.dirname, 'dist')
 const entryPoints = [
   'index.ts',
   'core.ts',
+  'Controls.tsx',
   'Carousel.tsx',
   'Cube.tsx',
   'Fade.tsx',

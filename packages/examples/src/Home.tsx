@@ -13,7 +13,10 @@ import {
   CubeSlider,
   FadeSlider,
   TileSlider,
+  SliderControls,
 } from '@boxslider/react'
+
+import '@boxslider/components/style/slider-controls.css'
 import './Home.css'
 
 const images = Array.from({ length: 6 }).map(
@@ -101,20 +104,7 @@ function App() {
       </header>
 
       <main>
-        <section className="slider-viewport" aria-roledescription="carousel">
-          {effect.component({
-            'aria-label': 'Image carousel',
-            className: 'slider',
-            id: 'slider',
-            onAfter: (ev: SliderEventData) => setActiveIndex(ev.currentIndex),
-            startIndex,
-            children: slides,
-            sliderRef,
-            ...effect.options,
-          })}
-        </section>
-
-        <section className="slider-controls">
+        <section className="effect-selector">
           <select
             name="effect"
             value={effect.name}
@@ -131,21 +121,23 @@ function App() {
               </option>
             ))}
           </select>
-
-          <div className="skip-buttons">
-            {images.map((image, i) => (
-              <button
-                key={image}
-                aria-controls="slider"
-                className={`skip-button${i === activeIndex ? ' active' : ''}`}
-                aria-label={`Show slide ${i}`}
-                onClick={() => {
-                  sliderRef.current?.skipTo(i)
-                }}
-              />
-            ))}
-          </div>
         </section>
+
+        <SliderControls className="slider-controls">
+          <section className="slider-viewport" aria-roledescription="carousel">
+            {effect.component({
+              'aria-label': 'Image carousel',
+              className: 'slider',
+              id: 'slider',
+              onAfter: (ev: SliderEventData) => setActiveIndex(ev.currentIndex),
+              startIndex,
+              children: slides,
+              sliderRef,
+              autoScroll: false,
+              ...effect.options,
+            })}
+          </section>
+        </SliderControls>
       </main>
 
       <footer>

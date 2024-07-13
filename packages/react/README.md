@@ -18,6 +18,30 @@ main plugin site. The documentation is linked for each option below.
 - `<FadeSlider />` [documentation](https://github.com/p-m-p/slider#fadeslider)
 - `<TileSlider />` [documentation](https://github.com/p-m-p/slider#tileslider)
 
+## Slider Controls
+
+Slider controls can be added to the slider by using the `SliderControls` component. View the
+[SliderControls](https://github.com/p-m-p/slider/tree/main/packages/components#slider-controls) documentation for details
+on styling and slots. For the React component the component attributes are camel cased, e.g `next-btn-label` becomes `nextBtnLabel`.
+
+```tsx
+import { CarouselSlider, SliderControls } from '@boxslider/react'
+
+function Slider() {
+  return (
+    <SliderControls>
+      <CarouselSlider>
+        <div>Slide one</div>
+        <div>Slide two</div>
+        <div>Slide three</div>
+        <div>Slide four</div>
+        <div>Slide five</div>
+      </CarouselSlider>
+    </SliderControls>
+  )
+}
+```
+
 ## Component props
 
 Each component has optional props for the BoxSlider options and the effect options. In addition to these props an

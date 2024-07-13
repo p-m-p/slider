@@ -177,7 +177,8 @@ bs-slider-controls {
     background-color: var(--index-btn-hover-color);
   }
 
-  &::part(index-btn active) {
+  &::part(index-btn active),
+  &::part(index-btn active):hover {
     background-color: var(--index-btn-active-color);
   }
 }

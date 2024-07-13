@@ -54,8 +54,8 @@ footer p {
 
 .slider {
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-  width: 100%;
-  height: 100%;
+  height: 512px;
+  width: 896px;
 }
 
 .slide,
@@ -65,8 +65,6 @@ footer p {
 }
 
 .slider-controls {
-  justify-content: space-between;
-  display: flex;
   margin: 24px 0 0;
   width: 896px;
 }
@@ -107,7 +105,7 @@ footer p {
   }
 
   .slider-controls {
-    width: 380px;
+    width: 640px;
   }
 }
 

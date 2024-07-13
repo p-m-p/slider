@@ -50,6 +50,10 @@ export default class BoxSlider {
     return this.slides.length
   }
 
+  getOption<T extends keyof BoxSliderOptions>(key: T): BoxSliderOptions[T] {
+    return this.options[key]
+  }
+
   private get stateStore() {
     if (this._stateStore === undefined) {
       throw new Error(
@@ -125,27 +129,16 @@ export default class BoxSlider {
   }
 
   next(): Promise<void> {
-    return new Promise((resolve) => {
-      this.transitionQueue.push(async () => {
-        const nextIndex =
-          this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1
-
-        await this.transitionTo(nextIndex, false)
-        resolve()
-      })
-    })
+    return this.skipTo(
+      this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1,
+      false,
+    )
   }
 
   prev(): Promise<void> {
-    return new Promise((resolve) => {
-      this.transitionQueue.push(async () => {
-        const prevIndex =
-          this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1
-
-        await this.transitionTo(prevIndex, true)
-        resolve()
-      })
-    })
+    return this.skipTo(
+      this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1,
+    )
   }
 
   skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
@@ -161,6 +154,8 @@ export default class BoxSlider {
   }
 
   pause(): BoxSlider {
+    this.options.autoScroll = false
+
     if (this.autoScrollTimer) {
       this.stopAutoScroll()
       this.emit('pause')
@@ -170,6 +165,7 @@ export default class BoxSlider {
   }
 
   play(): BoxSlider {
+    this.options.autoScroll = true
     this.setAutoScroll()
     this.emit('play')
 

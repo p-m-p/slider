@@ -28,7 +28,7 @@
       "require": "./dist/cjs/*.js",
       "types": "./dist/types/*.d.ts"
     },
-    "./style/*": "./src/style/*.css"
+    "./style/*.css": "./src/style/*.css"
   },
   "main": "./dist/cjs/index.cs",
   "types": "./dist/types/index.d.ts",

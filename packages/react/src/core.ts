@@ -14,13 +14,13 @@ import type {
   CubeSliderElement,
   FadeSliderElement,
   TileSliderElement,
+  SliderControlsElement,
   SliderElement,
 } from '@boxslider/components'
 import type { ComponentPropsWithoutRef } from 'react'
 
 interface JSXSliderElement<T> extends DetailedHTMLProps<HTMLAttributes<T>, T> {
   class?: string
-  'start-index'?: number
 }
 
 declare global {
@@ -31,6 +31,7 @@ declare global {
       'bs-cube': JSXSliderElement<CubeSliderElement>
       'bs-fade': JSXSliderElement<FadeSliderElement>
       'bs-tile': JSXSliderElement<TileSliderElement>
+      'bs-slider-controls': JSXSliderElement<SliderControlsElement>
     }
   }
 }

@@ -1,4 +1,5 @@
 import {
+  findByRole,
   getByRole,
   getByTestId,
   getByText,
@@ -70,9 +71,9 @@ async function runAssertions({
       .forEach((b) => expect(b).toHaveAttribute('aria-pressed', 'false'))
   }
 
-  expect(slider).toHaveAttribute('auto-scroll', 'false')
+  expect(slider.slider?.getOption('autoScroll')).toBe(false)
   await user.click(playButton)
-  expect(slider).toHaveAttribute('auto-scroll', 'true')
+  expect(slider.slider?.getOption('autoScroll')).toBe(true)
 }
 
 test('default controls', async () => {
@@ -100,7 +101,7 @@ test('default controls', async () => {
     ),
     nextButton: getByRole(container, 'button', { name: 'Next' }),
     prevButton: getByRole(container, 'button', { name: 'Previous' }),
-    playButton: getByRole(container, 'button', {
+    playButton: await findByRole(container, 'button', {
       name: 'Start slide auto scroll',
     }),
     slider: document.querySelector('bs-carousel')!,
@@ -142,9 +143,9 @@ test('custom controls', async () => {
       getByRole(controls, 'button', { name: '2' }),
       getByRole(controls, 'button', { name: '3' }),
     ],
-    nextButton: getByText(controls, 'Forwards'),
-    prevButton: getByText(controls, 'Backwards'),
-    playButton: getByText(controls, 'Play'),
+    nextButton: getByRole(controls, 'button', { name: 'Forwards' }),
+    prevButton: getByRole(controls, 'button', { name: 'Backwards' }),
+    playButton: await findByRole(controls, 'button', { name: 'Play' }),
     slider: getByTestId(controls, 'slider'),
     slides: [
       getByText(controls, 'Slide 1'),
@@ -196,7 +197,7 @@ test('button label attributes', async () => {
     ).toBeInTheDocument()
   })
 
-  const playBtn = getByRole(container, 'button', { name: playBtnLabel })
+  const playBtn = await findByRole(container, 'button', { name: playBtnLabel })
   await user.click(playBtn)
   expect(playBtn).toHaveAccessibleName(pauseBtnLabel)
 })
