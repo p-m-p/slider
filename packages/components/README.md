@@ -138,22 +138,44 @@ custom properties or target the provided parts for fully custom styles.
 
 ```css
 :root {
-  /* Positioning of the index buttons under the slider */
-  --bs-index-justify: center;
+  /* The amount of space between the slides and the button controls */
+  --bs-button-bar-gap: 0.5rem;
 
-  /* Index button colors and size */
+  /* The color of the index button pips */
+  --bs-index-btn-color: rgb(0 0 0 / 50%);
+
+  /* The color of the index button pip when hovered */
+  --bs-index-btn-hover-color: rgb(0 0 0 / 75%);
+
+  /* The color of the index button pip when it's slide is in view (active) */
   --bs-index-btn-active-color: black;
-  --bs-index-btn-color: rgb(0 0 0 / 40%);
+
+  /* The Size of the index button pips */
   --bs-index-btn-size: 1rem;
 
-  /* Navigation button colors and size */
-  --bs-nav-btn-bg: rgb(0 0 0 / 5%);
-  --bs-nav-btn-hover-bg: rgb(255 255 255 / 25%);
-  --bs-nav-btn-color: rgb(0 0 0 / 40%);
-  --bs-nav-btn-hover-color: rgb(0 0 0 / black);
-  --bs-nav-btn-height: 2.5rem;
-  --bs-nav-btn-padding: 0.5rem;
-  --bs-nav-btn-width: 3rem;
+  /* The background color of the control buttons */
+  --bs-btn-background-color: rgb(0 0 0 / 50%);
+
+  /* The background color of the control buttons when hovered */
+  --bs-btn-hover-background-color: rgb(0 0 0 / 75%);
+
+  /* The border radius of the control buttons */
+  --bs-btn-border-radius: 999px;
+
+  /* The size of the control buttons */
+  --bs-btn-size: 2rem;
+
+  /* The background image icon for the next button */
+  --bs-next-icon: url('/next.svg');
+
+  /* The background image icon for the previous button */
+  --bs-prev-icon: url('/prev.svg');
+
+  /* The background image icon for the play button. */
+  --play-icon: url('/play.svg');
+
+  /* The background image icon for the pause button. */
+  --pause-icon: url('/pause.svg');
 }
 ```
 
@@ -161,31 +183,36 @@ Below is the template for the slider controls showing the available parts.
 
 ```html
 <div part="container">
-  <div part="slider">
+  <div part="slider-container">
     <slot id="slider"></slot>
   </div>
 
-  <div part="controls">
-    <slot name="prev-btn">
-      <button
-        part="prev-btn nav-btn"
-        type="button"
-        aria-label="Previous"></button>
-    </slot>
-    <slot name="next-btn">
-      <button part="next-btn nav-btn" type="button" aria-label="Next"></button>
+  <div part="play-btn-container">
+    <slot name="play-btn">
+      <button part="btn play-btn"></button>
     </slot>
   </div>
 
-  <slot name="index" part="index"></slot>
+  <div part="controls-container">
+    <slot name="prev-btn">
+      <button part="prev-btn btn"></button>
+    </slot>
+    <slot name="next-btn">
+      <button part="next-btn btn"></button>
+    </slot>
+  </div>
+
+  <div part="index-container">
+    <slot name="index"></slot>
+  </div>
 </div>
 ```
 
-As an example, to style the navigation buttons create a selector to target
-the `nav-btn` part.
+As an example, to style the control buttons create a selector to target
+the `btn` part.
 
 ```css
-bs-slider-controls::part(nav-btn) {
+bs-slider-controls::part(btn) {
   background: red;
   color: white;
 }

@@ -32,6 +32,7 @@ async function runAssertions({
   indexButtons,
   nextButton,
   prevButton,
+  playButton,
   slider,
   slides,
 }: {
@@ -39,6 +40,7 @@ async function runAssertions({
   indexButtons: HTMLButtonElement[]
   nextButton: HTMLButtonElement
   prevButton: HTMLButtonElement
+  playButton: HTMLButtonElement
   slider: SliderElement
   slides: HTMLElement[]
 }) {
@@ -67,6 +69,10 @@ async function runAssertions({
       .filter((b) => b !== indexButton)
       .forEach((b) => expect(b).toHaveAttribute('aria-pressed', 'false'))
   }
+
+  expect(slider).toHaveAttribute('auto-scroll', 'false')
+  await user.click(playButton)
+  expect(slider).toHaveAttribute('auto-scroll', 'true')
 }
 
 test('default controls', async () => {
@@ -87,13 +93,16 @@ test('default controls', async () => {
 
   await runAssertions({
     controls,
-    indexButtons: [
-      getByRole(container, 'button', { name: 'View slide 1' }),
-      getByRole(container, 'button', { name: 'View slide 2' }),
-      getByRole(container, 'button', { name: 'View slide 3' }),
-    ],
+    indexButtons: Array.from(
+      container
+        .querySelector<HTMLSlotElement>('slot[name="index"]')!
+        .assignedElements() as HTMLButtonElement[],
+    ),
     nextButton: getByRole(container, 'button', { name: 'Next' }),
     prevButton: getByRole(container, 'button', { name: 'Previous' }),
+    playButton: getByRole(container, 'button', {
+      name: 'Start slide auto scroll',
+    }),
     slider: document.querySelector('bs-carousel')!,
     slides: [
       getByText(controls, 'Slide one'),
@@ -111,6 +120,8 @@ test('custom controls', async () => {
       <div>Slide 2</div>
       <div>Slide 3</div>
     </bs-carousel>
+
+    <button slot="play-btn" aria-controls="my-slider">Play</button>
 
     <button slot="prev-btn" aria-controls="my-slider">Backwards</button>
     <button slot="next-btn" aria-controls="my-slider">Forwards</button>
@@ -133,6 +144,7 @@ test('custom controls', async () => {
     ],
     nextButton: getByText(controls, 'Forwards'),
     prevButton: getByText(controls, 'Backwards'),
+    playButton: getByText(controls, 'Play'),
     slider: getByTestId(controls, 'slider'),
     slides: [
       getByText(controls, 'Slide 1'),
@@ -146,10 +158,14 @@ test('button label attributes', async () => {
   const controls = document.createElement('bs-slider-controls')
   const nextBtnLabel = 'Next slide'
   const prevBtnLabel = 'Previous slide'
+  const playBtnLabel = 'Start slideshow'
+  const pauseBtnLabel = 'Stop slideshow'
 
   controls.setAttribute('prev-btn-label', prevBtnLabel)
   controls.setAttribute('next-btn-label', nextBtnLabel)
   controls.setAttribute('index-btn-label', 'Show slide %d')
+  controls.setAttribute('play-btn-label', playBtnLabel)
+  controls.setAttribute('pause-btn-label', pauseBtnLabel)
   controls.innerHTML = `
     <bs-carousel auto-scroll="false" data-testid="slider" speed="0">
       <div>Slide one</div>
@@ -157,7 +173,6 @@ test('button label attributes', async () => {
       <div>Slide three</div>
     </bs-carousel>
   `
-
   document.body.appendChild(controls)
 
   const container =
@@ -180,4 +195,8 @@ test('button label attributes', async () => {
       getByRole(container, 'button', { name: 'Show slide 3' }),
     ).toBeInTheDocument()
   })
+
+  const playBtn = getByRole(container, 'button', { name: playBtnLabel })
+  await user.click(playBtn)
+  expect(playBtn).toHaveAccessibleName(pauseBtnLabel)
 })

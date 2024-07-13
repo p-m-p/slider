@@ -1,133 +1,183 @@
 bs-slider-controls {
-  --index-justify: var(--bs-index-justify, center);
+  /**
+  * The amount of space between the slides and the button controls.
+  */
+  --button-bar-gap: var(--bs-button-bar-gap, 0.5rem);
 
-  --index-btn-active-color: var(
-    --bs-index-btn-active-color,
-    light-dark(rgb(0 0 0 / 80%), white)
-  );
+  /**
+  * The color of the index button pips.
+  */
   --index-btn-color: var(
     --bs-index-btn-color,
+    light-dark(rgb(0 0 0 / 20%), rgb(255 255 255 / 20%))
+  );
+
+  /**
+  * The color of the index button pip when hovered.
+  */
+  --index-btn-hover-color: var(
+    --bs-index-btn-hover-color,
     light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%))
   );
+
+  /**
+  * The color of the index button pip when it's slide is in view (active).
+  */
+  --index-btn-active-color: var(
+    --bs-index-btn-active-color,
+    light-dark(rgb(0 0 0 / 80%), rgb(255 255 255 / 80%))
+  );
+
+  /**
+  * The Size of the index button pips.
+  */
   --index-btn-size: var(--bs-index-btn-size, 1rem);
 
-  --nav-btn-color: var(--bs-nav-btn-color, white);
-  --nav-btn-bg: var(--bs-nav-btn-bg, rgb(0 0 0 / 5%));
-  --nav-btn-hover-bg: var(--bs-nav-btn-hover-bg, rgb(0 0 0 / 25%));
-  --nav-btn-border-radius: var(--bs-nav-btn-border-radius, 9999px);
-  --nav-btn-color: var(--bs-nav-btn-color, rgb(0 0 0 / 40%));
-  --nav-btn-padding: var(--bs-nav-btn-padding, 0.5rem);
-  --nav-btn-size: var(--bs-nav-btn-size, 1.25rem);
-  --nav-btn-next-icon: var(
-    --bs-nav-btn-next-icon,
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255 255 255 / 80%)" class="bi bi-chevron-right" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/> </svg>')
+  /**
+  * The background color of the control buttons.
+  */
+  --btn-background-color: var(
+    --bs-btn-background-color,
+    light-dark(rgb(0 0 0 / 20%), rgb(255 255 255 / 20%))
   );
-  --nav-btn-prev-icon: var(
-    --bs-nav-btn-prev-icon,
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255 255 255 / 80%)" class="bi bi-chevron-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/> </svg>')
+
+  /**
+  * The background color of the control buttons when hovered.
+  */
+  --btn-hover-background-color: var(
+    --bs-btn-hover-background-color,
+    light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%))
+  );
+
+  /**
+  * The border radius of the control buttons.
+  */
+  --btn-border-radius: var(--bs-btn-border-radius, 9999px);
+
+  /**
+  * The size of the control buttons.
+  */
+  --btn-size: var(--bs-btn-size, 2rem);
+
+  /**
+  * The background image icon for the next button.
+  */
+  --next-icon: var(
+    --bs-next-icon,
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-right" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/></svg>')
+  );
+
+  /**
+  * The background image icon for the previous button.
+  */
+  --prev-icon: var(
+    --bs-prev-icon,
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/></svg>')
+  );
+
+  /**
+  * The background image icon for the play button.
+  */
+  --play-icon: var(
+    --bs-play-icon,
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/></svg>')
+  );
+
+  /**
+  * The background image icon for the pause button.
+  */
+  --pause-icon: var(
+    --bs-pause-icon,
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-pause" viewBox="0 0 16 16"> <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5"/></svg>')
   );
 
   &::part(container) {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
+    display: grid;
+    gap: var(--button-bar-gap);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
   }
 
   &::part(slider-container) {
-    position: relative;
-    z-index: 1;
+    grid-column: 1 / 3;
   }
 
-  &::part(controls) {
-    align-items: center;
-    display: flex;
-    inset: 10px;
-    justify-content: space-between;
-    position: absolute;
-    z-index: 2;
+  &::part(controls-container) {
+    grid-row: 2;
+    justify-self: right;
   }
 
-  &::part(nav-btn) {
-    background-color: var(--nav-btn-bg);
+  &::part(play-btn-container) {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: left;
+  }
+
+  &::part(btn) {
+    background-color: var(--btn-background-color);
     border: none;
-    border-radius: var(--nav-btn-border-radius);
-    box-sizing: content-box;
+    border-radius: var(--btn-border-radius);
     cursor: pointer;
-    height: var(--nav-btn-size);
+    height: var(--btn-size);
     overflow: hidden;
-    padding: var(--nav-btn-padding);
     position: relative;
-    transition: background-color color 200ms;
-    width: var(--nav-btn-size);
+    transition: background-color 200ms;
+    width: var(--btn-size);
   }
 
-  &::part(nav-btn):hover {
-    background-color: var(--nav-btn-hover-bg);
+  &::part(btn):hover {
+    background-color: var(--btn-hover-background-color);
   }
 
-  &::part(nav-btn)::before {
-    background-size: var(--nav-btn-size) var(--nav-btn-size);
+  &::part(btn)::before,
+  &::part(play-btn)::before {
+    background: no-repeat center;
     box-sizing: inherit;
-    color: var(--nav-btn-color);
     content: '';
-    left: var(--nav-btn-padding);
+    inset: 0;
     position: absolute;
-    top: var(--nav-btn-padding);
-    transition: color 200ms;
-    width: var(--nav-btn-size);
-    height: var(--nav-btn-size);
   }
 
   &::part(prev-btn)::before {
-    background-image: var(--nav-btn-prev-icon);
+    background-image: var(--prev-icon);
   }
 
   &::part(next-btn)::before {
-    background-image: var(--nav-btn-next-icon);
+    background-image: var(--next-icon);
   }
 
-  &::part(index) {
+  &::part(play-btn)::before {
+    background-image: var(--play-icon);
+  }
+
+  &::part(play-btn pause)::before {
+    background-image: var(--pause-icon);
+  }
+
+  &::part(index-container) {
     align-items: center;
     display: flex;
     gap: 0.5rem;
-    justify-content: var(--index-justify);
-    padding: 1rem 0;
-    width: 100%;
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: center;
   }
 
   &::part(index-btn) {
-    background: transparent;
-    border: solid 1px var(--index-btn-color);
-    border-radius: 99999px;
-    box-sizing: border-box;
+    background-color: var(--index-btn-color);
+    border: none;
+    border-radius: 999px;
     cursor: pointer;
-    display: block;
     height: var(--index-btn-size);
-    position: relative;
-    transition: border-color 300ms;
+    transition: background-color 400ms;
     width: var(--index-btn-size);
   }
 
-  &::part(index-btn)::before {
-    background-color: var(--index-btn-color);
-    border-radius: 99999px;
-    content: '';
-    display: block;
-    height: 80%;
-    left: 10%;
-    position: absolute;
-    top: 10%;
-    transition: background-color 200ms;
-    width: 80%;
+  &::part(index-btn):hover {
+    background-color: var(--index-btn-hover-color);
   }
 
   &::part(index-btn active) {
-    border-color: var(--index-btn-active-color);
-  }
-
-  &::part(index-btn active):before {
     background-color: var(--index-btn-active-color);
   }
 }
