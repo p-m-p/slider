@@ -321,8 +321,13 @@ export default class BoxSlider {
   private setAutoScroll() {
     this.stopAutoScroll()
 
-    // Use RAF to prevent continually running when the tab is in background
     window.requestAnimationFrame(() => {
+      // Check if the element is still in the DOM, might have been removed
+      // before animation frame callback is called
+      if (!this._el) {
+        return
+      }
+
       this.el.setAttribute('aria-live', 'off')
 
       this.autoScrollTimer = window.setTimeout(
