@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.0
+
+### Minor Changes
+
+- 120b33c: Add play/pause button to slider controls and create SliderControls component in react package
+
 ## 2.5.3
 
 ### Patch Changes
