@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.5.0
+
+### Minor Changes
+
+- 120b33c: Add play/pause button to slider controls and create SliderControls component in react package
+
+### Patch Changes
+
+- Updated dependencies [120b33c]
+  - @boxslider/components@2.6.0
+  - @boxslider/slider@2.6.0
+
 ## 2.4.6
 
 ### Patch Changes
