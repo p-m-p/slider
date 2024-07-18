@@ -1,10 +1,11 @@
 import { build } from 'esbuild'
 import { join } from 'path'
 
-export default async function (entryPoints, outdir, options = {}) {
+export default async function(entryPoints, outdir, options = {}) {
   const buildOptions = {
     entryPoints,
     bundle: true,
+    packages: 'external',
     platform: 'node',
     target: 'esnext',
     tsconfig: join(import.meta.dirname, '../tsconfig.json'),
