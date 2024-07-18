@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.5.1
+
+### Patch Changes
+
+- d164759: Fix bundling for react package
+- Updated dependencies [32f8681]
+  - @boxslider/components@2.6.1
+
 ## 2.5.0
 
 ### Minor Changes
