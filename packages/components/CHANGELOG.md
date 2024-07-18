@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.1
+
+### Patch Changes
+
+- 32f8681: Prevent repeat attempts to define elements
+
 ## 2.6.0
 
 ### Minor Changes
