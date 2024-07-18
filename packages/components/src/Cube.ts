@@ -1,4 +1,5 @@
 import CubeSlider from '@boxslider/slider/effects/Cube'
+import { register } from './register'
 import Slider, {
   SLIDER_ATTRIBUTES,
   type SliderElement,
@@ -56,6 +57,4 @@ export default class Cube extends Slider implements CubeSliderElement {
   }
 }
 
-if (typeof customElements !== 'undefined') {
-  customElements.define('bs-cube', Cube)
-}
+register('bs-cube', Cube)

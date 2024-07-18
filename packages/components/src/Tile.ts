@@ -1,4 +1,5 @@
 import TileSlider, { type TileEffect } from '@boxslider/slider/effects/Tile'
+import { register } from './register'
 import Slider, {
   SLIDER_ATTRIBUTES,
   SliderElement,
@@ -57,6 +58,4 @@ export default class Tile extends Slider implements TileSliderElement {
   }
 }
 
-if (typeof customElements !== 'undefined') {
-  customElements.define('bs-tile', Tile)
-}
+register('bs-tile', Tile)

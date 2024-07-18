@@ -1,3 +1,4 @@
+import { register } from './register'
 import type { SliderElement } from './Slider'
 
 const template = document.createElement('template')
@@ -331,6 +332,4 @@ export default class SliderControls
   }
 }
 
-if (typeof customElements !== 'undefined') {
-  customElements.define('bs-slider-controls', SliderControls)
-}
+register('bs-slider-controls', SliderControls)

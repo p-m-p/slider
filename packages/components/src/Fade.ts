@@ -1,4 +1,5 @@
 import FadeSlider from '@boxslider/slider/effects/Fade'
+import { register } from './register'
 import Slider, { SLIDER_ATTRIBUTES, SliderElement, camelize } from './Slider'
 
 export interface FadeSliderElement extends SliderElement {
@@ -38,6 +39,4 @@ export default class Fade extends Slider implements FadeSliderElement {
   }
 }
 
-if (typeof customElements !== 'undefined') {
-  customElements.define('bs-fade', Fade)
-}
+register('bs-fade', Fade)

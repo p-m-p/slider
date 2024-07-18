@@ -1,4 +1,5 @@
 import CarouselSlider from '@boxslider/slider/effects/Carousel'
+import { register } from './register'
 import Slider, {
   SLIDER_ATTRIBUTES,
   getBbooleanAttribute,
@@ -49,6 +50,4 @@ export default class Carousel extends Slider implements CarouselSliderElement {
   }
 }
 
-if (typeof customElements !== 'undefined') {
-  customElements.define('bs-carousel', Carousel)
-}
+register('bs-carousel', Carousel)
