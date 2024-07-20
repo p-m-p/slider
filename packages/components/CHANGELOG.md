@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.6.2
+
+### Patch Changes
+
+- 151bc2b: Use grid template areas in controls layout
+- Updated dependencies [cda78bc]
+  - @boxslider/slider@2.6.1
+
 ## 2.6.1
 
 ### Patch Changes

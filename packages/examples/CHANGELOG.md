@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.3.23
+
+### Patch Changes
+
+- Updated dependencies [cda78bc]
+- Updated dependencies [151bc2b]
+  - @boxslider/slider@2.6.1
+  - @boxslider/components@2.6.2
+  - @boxslider/react@2.5.2
+
 ## 2.3.22
 
 ### Patch Changes
