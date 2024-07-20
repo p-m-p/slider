@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.1
+
+### Patch Changes
+
+- cda78bc: Apply computed style before offset dimensions in effects and simplify the style caching with attribute
+
 ## 2.6.0
 
 ### Minor Changes
