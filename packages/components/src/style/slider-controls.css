@@ -96,20 +96,22 @@ bs-slider-controls {
     gap: var(--button-bar-gap);
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'slider slider slider'
+      'play index nav';
   }
 
   &::part(slider-container) {
-    grid-column: 1 / 3;
+    grid-area: slider;
   }
 
   &::part(controls-container) {
-    grid-row: 2;
+    grid-area: nav;
     justify-self: right;
   }
 
   &::part(play-btn-container) {
-    grid-column: 1;
-    grid-row: 2;
+    grid-area: play;
     justify-self: left;
   }
 
@@ -158,8 +160,7 @@ bs-slider-controls {
     align-items: center;
     display: flex;
     gap: 0.5rem;
-    grid-column: 2;
-    grid-row: 2;
+    grid-area: index;
     justify-self: center;
   }
 
