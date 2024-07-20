@@ -7,19 +7,6 @@ export interface CubeSliderOptions {
   perspective?: number
 }
 
-const SLIDE_STYLES = ['left', 'position', 'top', 'transform', 'z-index']
-const BOX_STYLES = [
-  'left',
-  'overflow',
-  'position',
-  'top',
-  'transform',
-  'transform-style',
-  'transition',
-  'z-index',
-]
-const VIEWPORT_STYLES = ['overflow', 'perspective', 'position']
-
 export default class CubeSlider implements Effect {
   private readonly options: CubeSliderOptions
   private translateZ!: number
@@ -35,8 +22,8 @@ export default class CubeSlider implements Effect {
   initialize(
     el: HTMLElement,
     slides: HTMLElement[],
-    stateStore: StateStore,
     options: BoxSliderOptions,
+    stateStore: StateStore,
   ): void {
     const width = el.offsetWidth
     const height = el.offsetHeight
@@ -50,9 +37,7 @@ export default class CubeSlider implements Effect {
     this.translateZ =
       this.options.direction === 'vertical' ? height / 2 : width / 2
 
-    stateStore.storeStyles(slides, SLIDE_STYLES)
-    stateStore.storeStyles(el, BOX_STYLES)
-    stateStore.storeStyles(viewport, VIEWPORT_STYLES)
+    stateStore.storeAttributes(viewport, ['style'])
 
     slides.forEach((slide: HTMLElement) =>
       applyCss(slide, {

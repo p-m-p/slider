@@ -102,8 +102,8 @@ export interface Effect {
   initialize(
     el: HTMLElement,
     slides: HTMLElement[],
-    stateStore: StateStore,
     options?: BoxSliderOptions,
+    stateStore?: StateStore,
   ): void
   transition(settings: TransitionSettings): Promise<void>
 }

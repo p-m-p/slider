@@ -1,23 +1,9 @@
-import type { StateStore } from '../state-store'
 import type { BoxSliderOptions, Effect, TransitionSettings } from '../types'
 import { applyCss } from '../utils'
 
 export interface FadeSliderOptions {
   timingFunction?: string
 }
-
-const SLIDE_STYLES = [
-  'display',
-  'height',
-  'left',
-  'opacity',
-  'position',
-  'top',
-  'transition',
-  'width',
-  'z-index',
-]
-const BOX_STYLES = ['height', 'overflow', 'position']
 
 export default class FadeSlider implements Effect {
   private readonly options: FadeSliderOptions
@@ -32,19 +18,18 @@ export default class FadeSlider implements Effect {
   initialize(
     el: HTMLElement,
     slides: HTMLElement[],
-    styleStore: StateStore,
     options: BoxSliderOptions,
   ): void {
-    styleStore.storeStyles(slides, SLIDE_STYLES)
-    styleStore.storeStyles(el, BOX_STYLES)
-
     if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
       applyCss(el, { position: 'relative' })
     }
 
+    const { width, height } = getComputedStyle(el)
+
     applyCss(el, {
-      height: `${slides[options.startIndex || 0].offsetHeight}px`,
+      height: `${parseInt(height, 10) ?? el.offsetHeight}px`,
       overflow: 'hidden',
+      width: `${parseInt(width, 10) ?? el.offsetWidth}px`,
     })
 
     slides.forEach((slide: HTMLElement, index: number) => {

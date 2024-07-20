@@ -1,4 +1,3 @@
-import { StateStore } from '../../state-store'
 import type { BoxSliderOptions, Effect, TransitionSettings } from '../../types'
 import { applyCss } from '../../utils'
 import FadeTransition from './fade-transition'
@@ -24,21 +23,12 @@ export const defaultOptions = {
 
 interface TileGrid {
   cols: number
+  height: number
   rows: number
   tileHeight: number
   tileWidth: number
+  width: number
 }
-
-const SLIDE_STYLES = [
-  'position',
-  'clip',
-  'height',
-  'width',
-  'margin',
-  'padding',
-  'border',
-]
-const BOX_STYLES = ['height', 'position']
 
 export default class TileSlider implements Effect {
   private readonly rowCount: number
@@ -72,16 +62,12 @@ export default class TileSlider implements Effect {
   initialize(
     el: HTMLElement,
     slides: HTMLElement[],
-    stateStore: StateStore,
     options: BoxSliderOptions,
-  ): void {
+  ) {
     const slide = slides[options.startIndex || 0]
     const fragment = document.createDocumentFragment()
 
-    stateStore.storeStyles(el, BOX_STYLES)
-    stateStore.storeStyles(slides, SLIDE_STYLES)
-
-    this.grid = this.calculateGrid(el, slides)
+    this.grid = this.calculateGrid(el)
 
     if (this._tileWrapper) {
       this.destroy(el)
@@ -99,7 +85,8 @@ export default class TileSlider implements Effect {
     }
 
     applyCss(el, {
-      height: `${el.offsetHeight}px`,
+      height: `${this.grid.height}px`,
+      width: `${this.grid.width}px`,
     })
     applyCss(this.tileWrapper, {
       position: 'absolute',
@@ -117,8 +104,8 @@ export default class TileSlider implements Effect {
       for (let j = 0; j < this.grid.cols; ++j) {
         const tile = this.tileTransition.createTile({
           backClass: `${TILE_CLASS}-back`,
-          boxWidth: el.offsetWidth,
-          boxHeight: el.offsetHeight,
+          boxWidth: this.grid.width,
+          boxHeight: this.grid.height,
           fromTop: fromTop,
           fromLeft: j * this.grid.tileWidth,
           frontClass: `${TILE_CLASS}-front`,
@@ -214,14 +201,15 @@ export default class TileSlider implements Effect {
     this.tileTimers.forEach(window.clearTimeout)
   }
 
-  private calculateGrid(el: HTMLElement, slides: HTMLElement[]): TileGrid {
-    const height = slides[0].offsetHeight
-    const width = slides[0].offsetWidth
+  private calculateGrid(el: HTMLElement): TileGrid {
+    const { width: elWidth, height: elHeight } = getComputedStyle(el)
+    const height = parseInt(elHeight, 10) ?? el.offsetHeight
+    const width = parseInt(elWidth, 10) ?? el.offsetWidth
     const rows = this.rowCount
     const tileHeight = Math.ceil(height / rows)
     const cols = Math.floor(el.offsetWidth / tileHeight)
     const tileWidth = Math.ceil(width / cols)
 
-    return { cols, rows, tileHeight, tileWidth }
+    return { cols, height, rows, tileHeight, tileWidth, width }
   }
 }

@@ -1,4 +1,3 @@
-import type { StateStore } from '../state-store'
 import type { BoxSliderOptions, Effect, TransitionSettings } from '../types'
 import { applyCss } from '../utils'
 
@@ -6,17 +5,6 @@ export interface CarouselSliderOptions {
   cover?: boolean
   timingFunction?: string
 }
-
-const SLIDE_STYLES = [
-  'left',
-  'position',
-  'top',
-  'transform',
-  'transition',
-  'visibility',
-  'z-index',
-]
-const BOX_STYLES = ['overflow', 'position']
 
 export default class CarouselSlider implements Effect {
   private readonly options: CarouselSliderOptions
@@ -33,12 +21,8 @@ export default class CarouselSlider implements Effect {
   initialize(
     el: HTMLElement,
     slides: HTMLElement[],
-    stateStore: StateStore,
     options: BoxSliderOptions,
   ): void {
-    stateStore.storeStyles(slides, SLIDE_STYLES)
-    stateStore.storeStyles(el, BOX_STYLES)
-
     applyCss(el, {
       overflow: 'hidden',
     })

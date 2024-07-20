@@ -1,70 +1,37 @@
-interface StoreItem {
-  el: HTMLElement
-  styles: { [style: string]: string }
-  attributes: { [attribute: string]: string | null }
-}
-
 export class StateStore {
-  private elementStore: StoreItem[]
+  private elementStore: Map<HTMLElement, Record<string, null | string>>
 
   constructor() {
-    this.elementStore = []
-  }
-
-  storeStyles(elements: HTMLElement[] | HTMLElement, styles: string[]) {
-    this.applyToElements(elements, (el, elementStore) => {
-      const computedStyles = getComputedStyle(el)
-      styles.forEach(
-        (p: string) =>
-          (elementStore.styles[p] = computedStyles.getPropertyValue(p)),
-      )
-    })
+    this.elementStore = new Map()
   }
 
   storeAttributes(elements: HTMLElement[] | HTMLElement, attributes: string[]) {
-    this.applyToElements(elements, (el, elementStore) => {
+    const elems = Array.isArray(elements) ? elements : [elements]
+
+    elems.forEach((el) => {
+      const store = this.elementStore.get(el) ?? {}
+
       attributes.forEach(
-        (attribute: string) =>
-          (elementStore.attributes[attribute] = el.getAttribute(attribute)),
+        (attr: string) => (store[attr] = el.getAttribute(attr)),
       )
+
+      this.elementStore.set(el, store)
     })
   }
 
   revert() {
-    this.elementStore.forEach((elementStore) => {
-      Object.keys(elementStore.styles).forEach((property) =>
-        elementStore.el.style.setProperty(
-          property,
-          elementStore.styles[property],
-        ),
-      )
+    for (const [el, attributes] of this.elementStore.entries()) {
+      Object.keys(attributes).forEach((attribute) => {
+        const cachedValue = attributes[attribute]
 
-      Object.keys(elementStore.attributes).forEach((attribute) => {
-        const cachedValue = elementStore.attributes[attribute]
-
-        if (attribute === null || attribute === '') {
-          elementStore.el.removeAttribute(attribute)
+        if (cachedValue === null || cachedValue === '') {
+          el.removeAttribute(attribute)
         } else if (cachedValue !== null) {
-          elementStore.el.setAttribute(attribute, cachedValue)
+          el.setAttribute(attribute, cachedValue)
         }
       })
-    })
-    this.elementStore = []
-  }
+    }
 
-  private applyToElements(
-    elements: HTMLElement[] | HTMLElement,
-    fn: (element: HTMLElement, store: StoreItem) => void,
-  ) {
-    ;(Array.isArray(elements) ? elements : [elements]).forEach((el) => {
-      let elementStore = this.elementStore.find((s) => s.el === el)
-
-      if (!elementStore) {
-        elementStore = { el, styles: {}, attributes: {} }
-        this.elementStore.push(elementStore)
-      }
-
-      fn(el, elementStore)
-    })
+    this.elementStore.clear()
   }
 }

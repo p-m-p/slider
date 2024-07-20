@@ -227,10 +227,17 @@ export default class BoxSlider {
   private init(effect: Effect) {
     this._effect = effect
     this.slides = this.getSlides()
-    this.effect.initialize(this.el, this.slides, this.stateStore, {
-      ...this.options,
-      startIndex: this.activeIndex,
-    })
+    this.stateStore.storeAttributes([this.el, ...this.slides], ['style'])
+
+    this.effect.initialize(
+      this.el,
+      this.slides,
+      {
+        ...this.options,
+        startIndex: this.activeIndex,
+      },
+      this.stateStore,
+    )
     this.addAriaAttributes()
 
     if (this.options.autoScroll) {
@@ -239,12 +246,18 @@ export default class BoxSlider {
   }
 
   private addAriaAttributes() {
-    this.stateStore.storeAttributes(this.el, ['aria-live'])
-    this.el.setAttribute('aria-live', 'polite')
-    this.stateStore.storeAttributes(this.slides, ['aria-roledescription'])
-    this.slides.forEach((slide) =>
-      slide.setAttribute('aria-roledescription', 'slide'),
+    this.stateStore.storeAttributes(
+      [this.el, ...this.slides],
+      ['aria-live', 'role', 'aria-roledescription'],
     )
+
+    this.el.setAttribute('aria-live', 'polite')
+    this.el.setAttribute('role', 'region')
+
+    this.slides.forEach((slide) => {
+      slide.setAttribute('aria-roledescription', 'slide')
+      slide.setAttribute('role', 'region')
+    })
   }
 
   private getSlides(): HTMLElement[] {
