@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.2
+
+### Patch Changes
+
+- 15c4bb4: Remove fixed dimensions from fade and tile slider
+
 ## 2.6.1
 
 ### Patch Changes
