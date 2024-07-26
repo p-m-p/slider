@@ -84,10 +84,6 @@ export default class TileSlider implements Effect {
       applyCss(el, { position: 'relative' })
     }
 
-    applyCss(el, {
-      height: `${this.grid.height}px`,
-      width: `${this.grid.width}px`,
-    })
     applyCss(this.tileWrapper, {
       position: 'absolute',
       top: '0',

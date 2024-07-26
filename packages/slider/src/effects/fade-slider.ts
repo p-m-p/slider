@@ -24,14 +24,6 @@ export default class FadeSlider implements Effect {
       applyCss(el, { position: 'relative' })
     }
 
-    const { width, height } = getComputedStyle(el)
-
-    applyCss(el, {
-      height: `${parseInt(height, 10) ?? el.offsetHeight}px`,
-      overflow: 'hidden',
-      width: `${parseInt(width, 10) ?? el.offsetWidth}px`,
-    })
-
     slides.forEach((slide: HTMLElement, index: number) => {
       applyCss(slide, {
         height: '100%',
