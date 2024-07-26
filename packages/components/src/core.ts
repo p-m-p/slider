@@ -1,3 +1,8 @@
+export const SafeBaseElement =
+  typeof HTMLElement !== 'undefined'
+    ? HTMLElement
+    : (class {} as CustomElementConstructor)
+
 export const register =
   typeof customElements !== 'undefined'
     ? (name: string, Element: new () => HTMLElement) => {

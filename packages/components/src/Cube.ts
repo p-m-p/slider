@@ -1,5 +1,5 @@
 import CubeSlider from '@boxslider/slider/effects/Cube'
-import { register } from './register'
+import { register } from './core'
 import Slider, {
   SLIDER_ATTRIBUTES,
   type SliderElement,

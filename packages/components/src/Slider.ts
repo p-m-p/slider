@@ -5,6 +5,7 @@ import type {
   SliderEventData,
   SliderEventType,
 } from '@boxslider/slider'
+import { SafeBaseElement } from './core'
 
 declare global {
   interface ElementEventMap {
@@ -69,7 +70,7 @@ export interface SliderElement extends HTMLElement {
 }
 
 export default abstract class Slider
-  extends HTMLElement
+  extends SafeBaseElement
   implements SliderElement
 {
   #slider?: BoxSlider

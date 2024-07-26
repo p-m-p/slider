@@ -1,8 +1,12 @@
-import { register } from './register'
+import { register, SafeBaseElement } from './core'
 import type { SliderElement } from './Slider'
 
-const template = document.createElement('template')
-template.innerHTML = `
+let incrementingId = 1
+let template: HTMLTemplateElement
+
+if (typeof document !== 'undefined') {
+  template = document.createElement('template')
+  template.innerHTML = `
 <div part="container">
   <div part="slider-container">
     <slot id="slider"></slot>
@@ -28,12 +32,12 @@ template.innerHTML = `
   </div>
 </div>
 `
-let incrementingId = 1
+}
 
 export interface SliderControlsElement extends HTMLElement {}
 
 export default class SliderControls
-  extends HTMLElement
+  extends SafeBaseElement
   implements SliderControlsElement
 {
   #sliderElement: SliderElement | null = null

@@ -1,5 +1,5 @@
 import CarouselSlider from '@boxslider/slider/effects/Carousel'
-import { register } from './register'
+import { register } from './core'
 import Slider, {
   SLIDER_ATTRIBUTES,
   getBbooleanAttribute,

@@ -1,5 +1,5 @@
 import TileSlider, { type TileEffect } from '@boxslider/slider/effects/Tile'
-import { register } from './register'
+import { register } from './core'
 import Slider, {
   SLIDER_ATTRIBUTES,
   SliderElement,
