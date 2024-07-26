@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.6.3
+
+### Patch Changes
+
+- 1919d60: Make slider custom elements safe when added to non browser bundle
+- Updated dependencies [15c4bb4]
+  - @boxslider/slider@2.6.2
+
 ## 2.6.2
 
 ### Patch Changes
