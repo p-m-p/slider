@@ -18,7 +18,7 @@ The following slide effects are available:
 - [Carousel](/docs/effects/carousel) - A traditional slide effect that animates slides horizontally.
 - [Cube](/docs/effects/cube) - A 3D cube effect that rotates slides horizontally or vertically.
 - [Fade](/docs/effects/fade) - A fade effect that fades slides in and out of view.
-- [Tile](docs/effects/tile) - A tile effect that flips in 3d or fades slides in a grid pattern.
+- [Tile](/docs/effects/tile) - A tile effect that flips in 3d or fades slides in a grid pattern.
 
 ## Key features
 

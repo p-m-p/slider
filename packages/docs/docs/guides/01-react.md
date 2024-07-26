@@ -2,7 +2,7 @@
 title: React
 ---
 
-BoxSlider React components are a thin wrapper around the [Web Components](/docs/guides/web-commponents) for each
+BoxSlider React components are a thin wrapper around the [Web Components](/docs/guides/web-components) for each
 slide effect and the slider controls.
 
 ## Installation
