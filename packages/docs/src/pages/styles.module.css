@@ -1,0 +1,172 @@
+.mainContent {
+  background: linear-gradient(
+    -45deg,
+    transparent,
+    rgb(0 0 0 / 5%),
+    transparent
+  );
+  background-size: 200% 200%;
+  flex: 1;
+}
+
+.article {
+  display: flex;
+  flex-flow: column;
+}
+
+.header {
+  margin: 0 auto;
+  padding: 4rem 1rem 1rem;
+  text-align: center;
+}
+
+.heroText {
+  margin: 0 auto;
+  max-width: 56rem;
+  text-wrap: pretty;
+}
+
+.heading {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.textEmphasis {
+  background: linear-gradient(
+    to top right,
+    var(--ifm-color-primary-dark),
+    var(--ifm-color-primary-lightest)
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+.subHeading {
+  color: light-dark(var(--ifm-color-gray-800), var(--ifm-color-gray-400));
+  display: block;
+  font-size: var(--bs-text-sm);
+  font-weight: 300;
+  line-height: 1;
+  margin: 2rem 0 0;
+  min-height: 2em;
+}
+
+.ctaLinks {
+  display: inline-flex;
+  flex-flow: column;
+  gap: 1rem;
+  justify-content: center;
+  margin: 3rem 0 0;
+}
+
+.features {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin: 3rem auto 0;
+  max-width: 1280px;
+}
+
+.demoContainer {
+  margin: 4rem 0;
+  width: 100%;
+}
+
+.demoTitle {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: var(--bs-text-xl);
+  font-weight: 600;
+  gap: 1rem;
+  line-height: 1;
+  margin: 0 auto 2rem;
+  text-transform: uppercase;
+}
+
+.demoTitleIcon {
+  color: var(--ifm-color-gray-content);
+  height: 2rem;
+  opacity: 0.5;
+  width: 2rem;
+}
+
+.demoTitleBar {
+  border-bottom: 1px solid var(--ifm-color-content);
+  flex-grow: 1;
+  height: 0px;
+  opacity: 0.5;
+}
+
+[data-theme='dark'] {
+  .mainContent {
+    background: linear-gradient(
+      -45deg,
+      transparent,
+      rgb(255 255 255 / 5%),
+      transparent
+    );
+  }
+}
+
+@media (min-width: 480px) {
+  .ctaLinks {
+    flex-flow: row;
+  }
+
+  .subHeading {
+    font-size: var(--bs-text-base);
+  }
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 3.75rem;
+  }
+
+  .subHeading {
+    font-size: var(--bs-text-lg);
+    min-height: 1em;
+  }
+
+  .features {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .demoContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 768px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .demoContainer {
+    margin-top: 8rem;
+    width: 960px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .header {
+    padding-top: 6rem;
+  }
+
+  .heading {
+    font-size: 4.5rem;
+  }
+
+  .subHeading {
+    font-size: var(--bs-text-xl);
+    margin-top: 3rem;
+  }
+
+  .ctaLinks {
+    margin-top: 4rem;
+  }
+
+  .features {
+    margin-top: 6rem;
+  }
+}

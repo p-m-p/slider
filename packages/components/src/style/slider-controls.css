@@ -9,7 +9,7 @@ bs-slider-controls {
   */
   --index-btn-color: var(
     --bs-index-btn-color,
-    light-dark(rgb(0 0 0 / 20%), rgb(255 255 255 / 20%))
+    light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 20%))
   );
 
   /**
@@ -17,7 +17,7 @@ bs-slider-controls {
   */
   --index-btn-hover-color: var(
     --bs-index-btn-hover-color,
-    light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%))
+    light-dark(rgb(0 0 0 / 60%), rgb(255 255 255 / 40%))
   );
 
   /**
@@ -25,7 +25,7 @@ bs-slider-controls {
   */
   --index-btn-active-color: var(
     --bs-index-btn-active-color,
-    light-dark(rgb(0 0 0 / 80%), rgb(255 255 255 / 80%))
+    light-dark(rgb(0 0 0 / 100%), rgb(255 255 255 / 80%))
   );
 
   /**
@@ -38,7 +38,7 @@ bs-slider-controls {
   */
   --btn-background-color: var(
     --bs-btn-background-color,
-    light-dark(rgb(0 0 0 / 20%), rgb(255 255 255 / 20%))
+    light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 20%))
   );
 
   /**
@@ -46,7 +46,7 @@ bs-slider-controls {
   */
   --btn-hover-background-color: var(
     --bs-btn-hover-background-color,
-    light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%))
+    light-dark(rgb(0 0 0 / 60%), rgb(255 255 255 / 40%))
   );
 
   /**
@@ -94,11 +94,9 @@ bs-slider-controls {
   &::part(container) {
     display: grid;
     gap: var(--button-bar-gap);
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      'slider slider slider'
-      'play index nav';
+    grid-template:
+      'slider slider slider' auto
+      'play index nav' 1fr / auto;
   }
 
   &::part(slider-container) {

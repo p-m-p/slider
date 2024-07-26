@@ -1,0 +1,43 @@
+.tile {
+  background-color: light-dark(
+    rgb(255 255 255 / 60%),
+    var(--ifm-color-gray-900)
+  );
+  border-radius: 0.5rem;
+  border: solid 2px
+    light-dark(var(--ifm-color-gray-200), var(--ifm-color-gray-900));
+  padding: 1rem;
+}
+
+.title {
+  align-items: center;
+  display: flex;
+  font-size: var(--bs-text-lg);
+  font-weight: 700;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 0 0 0.5rem;
+}
+
+.icon {
+  display: flex;
+  align-content: center;
+  color: var(--ifm-color-primary);
+}
+
+.description {
+  font-size: var(--bs-text-md);
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+}
+
+@media (min-width: 1280px) {
+  .title {
+    font-size: var(--bs-text-xl);
+  }
+
+  .description {
+    font-size: var(--bs-text-lg);
+  }
+}
