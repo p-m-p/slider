@@ -211,8 +211,8 @@ export default class BoxSlider {
     responder.remove(this)
     this.emit('destroy')
     this.eventListeners = {}
-    Object.keys(this.elListeners).forEach((ev) =>
-      this.elListeners[ev].forEach((listener) =>
+    Object.entries(this.elListeners).forEach(([ev, listeners]) =>
+      listeners.forEach((listener) =>
         this.el.removeEventListener(ev, listener),
       ),
     )
@@ -252,11 +252,19 @@ export default class BoxSlider {
     )
 
     this.el.setAttribute('aria-live', 'polite')
-    this.el.setAttribute('role', 'region')
+
+    if (!this.el.hasAttribute('role')) {
+      this.el.setAttribute('role', 'region')
+    }
 
     this.slides.forEach((slide) => {
-      slide.setAttribute('aria-roledescription', 'slide')
-      slide.setAttribute('role', 'region')
+      if (!slide.hasAttribute('role')) {
+        slide.setAttribute('role', 'group')
+      }
+
+      if (!slide.hasAttribute('aria-roledescription')) {
+        slide.setAttribute('aria-roledescription', 'slide')
+      }
     })
   }
 
