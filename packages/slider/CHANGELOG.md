@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.6.3
+
+### Patch Changes
+
+- 5cd3ca4: Fix ARIA attributes inline with WAI carousel pattern
+- 778af1a: Only apply aria attributes if not already present
+
 ## 2.6.2
 
 ### Patch Changes
