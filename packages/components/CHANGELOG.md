@@ -1,5 +1,14 @@
 # Change Log
 
+## 2.6.4
+
+### Patch Changes
+
+- 5cd3ca4: Fix ARIA attributes inline with WAI carousel pattern
+- Updated dependencies [5cd3ca4]
+- Updated dependencies [778af1a]
+  - @boxslider/slider@2.6.3
+
 ## 2.6.3
 
 ### Patch Changes
