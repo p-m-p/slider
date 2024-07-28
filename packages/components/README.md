@@ -103,7 +103,8 @@ Button labels for the default controls can be set via attributes. The
   prev-btn-label="Previous slide"
   play-btn-label="Start slide show"
   pause-btn-label="Stop slide show"
-  index-btn-label="Go to slide %d">
+  index-label="Select a slide to view"
+  index-btn-label="View slide %d of 10">
   <!-- slider content --->
 </bs-slider-controls>
 ```

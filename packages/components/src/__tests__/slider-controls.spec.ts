@@ -64,11 +64,11 @@ async function runAssertions({
     await user.click(indexButton)
 
     await waitFor(() =>
-      expect(indexButton).toHaveAttribute('aria-pressed', 'true'),
+      expect(indexButton).toHaveAttribute('aria-disabled', 'true'),
     )
     indexButtons
       .filter((b) => b !== indexButton)
-      .forEach((b) => expect(b).toHaveAttribute('aria-pressed', 'false'))
+      .forEach((b) => expect(b).toHaveAttribute('aria-disabled', 'false'))
   }
 
   expect(slider.slider?.getOption('autoScroll')).toBe(false)

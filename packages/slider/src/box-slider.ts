@@ -251,6 +251,7 @@ export default class BoxSlider {
       ['aria-live', 'role', 'aria-roledescription'],
     )
 
+    this.el.setAttribute('aria-atomic', 'false')
     this.el.setAttribute('aria-live', 'polite')
 
     if (!this.el.hasAttribute('role')) {

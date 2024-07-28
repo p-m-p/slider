@@ -27,7 +27,7 @@ if (typeof document !== 'undefined') {
     </slot>
   </div>
 
-  <div part="index-container">
+  <div part="index-container" role="group">
     <slot name="index"></slot>
   </div>
 </div>
@@ -60,6 +60,10 @@ export default class SliderControls
 
     if (!this.hasAttribute('aria-roledescription')) {
       this.setAttribute('aria-roledescription', 'carousel')
+    }
+
+    if (!this.hasAttribute('role')) {
+      this.setAttribute('role', 'region')
     }
 
     this.#initializeControl(
@@ -162,6 +166,7 @@ export default class SliderControls
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
 
     if (indexSlot) {
+      indexSlot.setAttribute('aria-label', this.#indexSlotLabel())
       indexSlot?.addEventListener('click', (ev) => {
         const container = indexSlot.assignedElements()[0] ?? indexSlot
 
@@ -188,7 +193,7 @@ export default class SliderControls
           if (slider && buttons) {
             buttons.forEach((btn, index) => {
               btn.setAttribute(
-                'aria-pressed',
+                'aria-disabled',
                 index === slider.activeIndex ? 'true' : 'false',
               )
             })
@@ -217,7 +222,7 @@ export default class SliderControls
           const label = labelTemplate.replace(/%d/g, `${i + 1}`)
 
           btn.setAttribute('aria-label', label)
-          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false')
+          btn.setAttribute('aria-disabled', isActive ? 'true' : 'false')
           btn.setAttribute('aria-controls', this.#sliderElement!.id)
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
           btn.setAttribute('type', 'button')
@@ -241,7 +246,7 @@ export default class SliderControls
       const nextBtn = buttons?.item(nextIndex ?? -1)
 
       if (currentBtn) {
-        currentBtn.setAttribute('aria-pressed', 'false')
+        currentBtn.setAttribute('aria-disabled', 'false')
 
         if (currentBtn.hasAttribute('part')) {
           currentBtn.setAttribute('part', 'index-btn')
@@ -249,7 +254,7 @@ export default class SliderControls
       }
 
       if (nextBtn) {
-        nextBtn.setAttribute('aria-pressed', 'true')
+        nextBtn.setAttribute('aria-disabled', 'true')
 
         if (nextBtn.hasAttribute('part')) {
           nextBtn.setAttribute('part', 'index-btn active')
@@ -317,6 +322,10 @@ export default class SliderControls
           : 'btn play-btn',
       )
     }
+  }
+
+  #indexSlotLabel() {
+    return this.getAttribute('index-label') ?? 'Select a slide'
   }
 
   #nextBtnLabel() {
