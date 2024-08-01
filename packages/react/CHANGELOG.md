@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.5
+
+### Patch Changes
+
+- 8385226: Add index label to slider controls component
+
 ## 2.5.4
 
 ### Patch Changes
