@@ -52,6 +52,10 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      respectPrefersColorScheme: true,
+    },
     image: 'img/social-card.jpg',
     navbar: {
       logo: {
