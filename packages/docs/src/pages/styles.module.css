@@ -16,7 +16,7 @@
 
 .header {
   margin: 0 auto;
-  padding: 4rem 1rem 1rem;
+  padding: 4rem 1rem 0;
   text-align: center;
 }
 
@@ -73,6 +73,24 @@
   width: 100%;
 }
 
+.demo {
+  overflow: clip;
+  position: relative;
+  margin: 3rem 0 0;
+}
+
+.demoBg {
+  border-radius: 50%;
+  border: solid 1px light-dark(var(--ifm-color-gray-400), rgb(255 255 255 / 8%));
+  height: 2000px;
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 500%;
+  background: light-dark(var(--ifm-color-gray-100), rgb(0 0 0 / 20%));
+  z-index: -1;
+}
+
 .demoTitle {
   align-items: center;
   justify-content: center;
@@ -95,7 +113,7 @@
 .demoTitleBar {
   border-bottom: 1px solid var(--ifm-color-content);
   flex-grow: 1;
-  height: 0px;
+  height: 0;
   opacity: 0.5;
 }
 
@@ -110,7 +128,7 @@
   }
 }
 
-@media (min-width: 480px) {
+@media (width >= 480px) {
   .ctaLinks {
     flex-flow: row;
   }
@@ -120,7 +138,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .heading {
     font-size: 3.75rem;
   }
@@ -141,14 +159,22 @@
   }
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
   .demoContainer {
-    margin-top: 8rem;
     width: 960px;
+  }
+
+  .demoBg {
+    left: -100%;
+    width: 300%;
+  }
+
+  .features {
+    gap: 2rem;
   }
 }
 
-@media (min-width: 1280px) {
+@media (width >= 1280px) {
   .header {
     padding-top: 6rem;
   }
@@ -166,7 +192,8 @@
     margin-top: 4rem;
   }
 
-  .features {
+  .features,
+  .demo {
     margin-top: 6rem;
   }
 }

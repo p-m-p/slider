@@ -15,7 +15,7 @@ function Inner() {
   )
 }
 
-export function Fade({ showOptions = false }: { showOptions: boolean }) {
+export function Fade({ showOptions = false }: { showOptions?: boolean }) {
   return (
     <Example
       showOptions={showOptions}

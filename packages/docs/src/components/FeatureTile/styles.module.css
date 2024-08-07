@@ -1,11 +1,7 @@
 .tile {
-  background-color: light-dark(
-    rgb(255 255 255 / 60%),
-    var(--ifm-color-gray-900)
-  );
-  border-radius: 0.5rem;
-  border: solid 2px
-    light-dark(var(--ifm-color-gray-200), var(--ifm-color-gray-900));
+  background: light-dark(white, rgb(0 0 0 / 20%));
+  border: solid 1px light-dark(var(--ifm-color-gray-400), rgb(255 255 255 / 8%));
+  border-radius: 1rem;
   padding: 1rem;
 }
 
@@ -32,7 +28,7 @@
   text-align: center;
 }
 
-@media (min-width: 1280px) {
+@media (width >= 1280px) {
   .title {
     font-size: var(--bs-text-xl);
   }

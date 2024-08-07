@@ -35,7 +35,7 @@ export function Example({
           setOptions((o) => ({ ...o, [key]: value }))
         },
       }}>
-      <SliderControls>
+      <SliderControls indexBtnLabel="Slide %d of 4">
         <div className={styles.viewport}>{children}</div>
       </SliderControls>
       {showOptions && (

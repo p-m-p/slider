@@ -15,7 +15,7 @@ function Inner() {
   )
 }
 
-export function Cube({ showOptions = false }: { showOptions: boolean }) {
+export function Cube({ showOptions = false }: { showOptions?: boolean }) {
   return (
     <Example
       showOptions={showOptions}

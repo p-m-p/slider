@@ -25,6 +25,7 @@ attribute may include a `%d` placeholder for the slide number.
   prev-btn-label="Previous slide"
   play-btn-label="Start slide show"
   pause-btn-label="Stop slide show"
+  index-label="Select a slide"
   index-btn-label="Go to slide %d">
   <!-- slider content --->
 </bs-slider-controls>

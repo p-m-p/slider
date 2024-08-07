@@ -15,7 +15,7 @@ function Inner() {
   )
 }
 
-export function Carousel({ showOptions = false }: { showOptions: boolean }) {
+export function Carousel({ showOptions = false }: { showOptions?: boolean }) {
   return (
     <Example
       showOptions={showOptions}

@@ -63,16 +63,19 @@ export default function Home() {
             </section>
           </header>
 
-          <section className={styles.demoContainer}>
-            <h3 className={styles.demoTitle}>
-              <div className={styles.demoTitleBar} />
-              <Star className={styles.demoTitleIcon} />
-              Demo
-              <Star className={styles.demoTitleIcon} />
-              <div className={styles.demoTitleBar} />
-            </h3>
-            <Carousel />
-          </section>
+          <div className={styles.demo}>
+            <section className={styles.demoContainer}>
+              <h3 className={styles.demoTitle}>
+                <div className={styles.demoTitleBar} />
+                <Star className={styles.demoTitleIcon} />
+                Demo
+                <Star className={styles.demoTitleIcon} />
+                <div className={styles.demoTitleBar} />
+              </h3>
+              <Carousel />
+            </section>
+            <div className={styles.demoBg} />
+          </div>
         </div>
       </main>
     </Layout>
