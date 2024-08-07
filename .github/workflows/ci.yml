@@ -14,7 +14,7 @@ jobs:
           node-version: 20
       - uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 9
       - run: pnpm install
       - run: pnpm run lint
       - run: pnpm run build
@@ -31,4 +31,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: packages/examples/dist
+          FOLDER: packages/docs/build
