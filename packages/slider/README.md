@@ -1,13 +1,5 @@
-# @boxslider/slider
+# `@boxslider/slider`
 
-The core library for the slider and effects.
-
-## Installation
-
-```shell
-npm i -P @boxslider/slider
-```
-
-## Usage
-
-Usage instructions can be found in the [main readme file](https://github.com/boxslider/slider)
+The [BoxSlider](https://github.com/p-m-p/slider) core JavaScript library. View the
+[JavaScript guide](https://philparsons.co.uk/slider/docs/guides/javascript) for installation
+and usage instructions.
