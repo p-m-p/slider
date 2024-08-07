@@ -17,8 +17,8 @@
 BoxSlider is a small library with zero dependencies that provides a light-weight, responsive content slider with
 multiple slide transition effects for modern browsers.
 
-The library can be used standalone or via React and web components. View the
-[documentation](https://philparsons.co.uk/slider/docs) for full details.
+The library can be used standalone or via React and web components. View the [website](https://philparsons.co.uk/slider/)
+for full details.
 
 ## Installation
 
