@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.5.6
+
+### Patch Changes
+
+- Updated dependencies [ab00052]
+  - @boxslider/components@2.6.5
+
 ## 2.5.5
 
 ### Patch Changes
