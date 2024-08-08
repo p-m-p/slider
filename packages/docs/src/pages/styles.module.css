@@ -47,14 +47,23 @@
   display: block;
   font-size: var(--bs-text-sm);
   font-weight: 300;
-  line-height: 1;
+  line-height: 1.2;
   margin: 2rem 0 0;
   min-height: 2em;
+  position: relative;
+
+  p {
+    position: absolute;
+    opacity: 0;
+  }
+
+  p:first-child {
+    opacity: 1;
+  }
 }
 
 .ctaLinks {
   display: inline-flex;
-  flex-flow: column;
   gap: 1rem;
   justify-content: center;
   margin: 3rem 0 0;
