@@ -35,7 +35,10 @@ export function Example({
           setOptions((o) => ({ ...o, [key]: value }))
         },
       }}>
-      <SliderControls indexBtnLabel="Slide %d of 4">
+      <SliderControls
+        className={styles.controls}
+        indexBtnLabel="%d of 4"
+        aria-label="AI generated images of animals in a Vaporwave style">
         <div className={styles.viewport}>{children}</div>
       </SliderControls>
       {showOptions && (

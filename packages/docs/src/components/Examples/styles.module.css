@@ -1,5 +1,55 @@
 @import '@boxslider/components/src/style/slider-controls.css';
 
+.controls {
+  --bs-button-bar-gap: 0;
+  --bs-index-btn-size: 1.25rem;
+  --bs-btn-size: 2.5rem;
+  --bs-btn-background-color: light-dark(
+    rgb(0 0 0 / 30%),
+    rgb(255 255 255 / 20%)
+  );
+  --bs-btn-hover-background-color: var(--ifm-color-primary-darkest);
+  --bs-index-btn-color: light-dark(rgb(0 0 0 / 30%), rgb(255 255 255 / 20%));
+  --bs-index-btn-active-color: var(--ifm-color-primary-dark);
+  --bs-index-btn-hover-color: var(--ifm-color-primary-dark);
+  --container-bg: light-dark(rgb(0 0 0 / 15%), rgb(255 255 255 / 10%));
+
+  &::part(container) {
+    grid-template-columns: auto auto 1fr;
+  }
+
+  &::part(slider-container) {
+    margin-bottom: 0.5rem;
+  }
+
+  &::part(index-container) {
+    background: var(--container-bg);
+    border-radius: 0 99px 99px 0;
+    gap: 0.875rem;
+    justify-self: left;
+    padding: 1rem;
+  }
+
+  &::part(play-btn-container) {
+    align-items: center;
+    background: var(--container-bg);
+    border-radius: 99px 0 0 99px;
+    display: flex;
+    margin-left: 0.5rem;
+    padding: 0 0 0 0.5rem;
+  }
+
+  &::part(controls-container) {
+    align-items: center;
+    background: var(--container-bg);
+    border-radius: 99px;
+    display: flex;
+    gap: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
 .viewport {
   width: 100%;
   height: 480px;
