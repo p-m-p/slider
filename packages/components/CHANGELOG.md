@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.5
+
+### Patch Changes
+
+- ab00052: Only apply button hover states when supported
+
 ## 2.6.4
 
 ### Patch Changes
