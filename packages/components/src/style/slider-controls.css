@@ -13,14 +13,6 @@ bs-slider-controls {
   );
 
   /**
-  * The color of the index button pip when hovered.
-  */
-  --index-btn-hover-color: var(
-    --bs-index-btn-hover-color,
-    light-dark(rgb(0 0 0 / 60%), rgb(255 255 255 / 40%))
-  );
-
-  /**
   * The color of the index button pip when it's slide is in view (active).
   */
   --index-btn-active-color: var(
@@ -39,14 +31,6 @@ bs-slider-controls {
   --btn-background-color: var(
     --bs-btn-background-color,
     light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 20%))
-  );
-
-  /**
-  * The background color of the control buttons when hovered.
-  */
-  --btn-hover-background-color: var(
-    --bs-btn-hover-background-color,
-    light-dark(rgb(0 0 0 / 60%), rgb(255 255 255 / 40%))
   );
 
   /**
@@ -125,10 +109,6 @@ bs-slider-controls {
     width: var(--btn-size);
   }
 
-  &::part(btn):hover {
-    background-color: var(--btn-hover-background-color);
-  }
-
   &::part(btn)::before,
   &::part(play-btn)::before {
     background: no-repeat center;
@@ -172,12 +152,36 @@ bs-slider-controls {
     width: var(--index-btn-size);
   }
 
-  &::part(index-btn):hover {
-    background-color: var(--index-btn-hover-color);
-  }
-
   &::part(index-btn active),
   &::part(index-btn active):hover {
     background-color: var(--index-btn-active-color);
+  }
+}
+
+@media (hover: hover) {
+  bs-slider-controls {
+    /**
+    * The color of the index button pip when hovered.
+    */
+    --index-btn-hover-color: var(
+      --bs-index-btn-hover-color,
+      light-dark(rgb(0 0 0 / 60%), rgb(255 255 255 / 40%))
+    );
+
+    /**
+    * The background color of the control buttons when hovered.
+    */
+    --btn-hover-background-color: var(
+      --bs-btn-hover-background-color,
+      light-dark(rgb(0 0 0 / 60%), rgb(255 255 255 / 40%))
+    );
+
+    &::part(index-btn):hover {
+      background-color: var(--index-btn-hover-color);
+    }
+
+    &::part(btn):hover {
+      background-color: var(--btn-hover-background-color);
+    }
   }
 }
