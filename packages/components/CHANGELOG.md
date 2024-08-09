@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.6.9
+
+### Patch Changes
+
+- 25488c2: Fix repo url and add homepage
+- Updated dependencies [25488c2]
+  - @boxslider/slider@2.6.6
+
 ## 2.6.8
 
 ### Patch Changes

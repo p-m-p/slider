@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.6
+
+### Patch Changes
+
+- 25488c2: Fix repo url and add homepage
+
 ## 2.6.5
 
 ### Patch Changes
