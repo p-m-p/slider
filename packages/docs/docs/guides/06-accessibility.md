@@ -9,8 +9,8 @@ component with the default controls. The controls implement the
 If you are using the core JavaScript library directly or building your own control you will need to add
 some appropriate attributes to the slider and slide elements.
 
-The slider element will automatically be given a `role` of `region` if role is not already set, applied with the
-`aria-live="off"` attribute when it is in the autoScroll state and `aria-live="polite"` when slide
+The slider element will automatically be given a `role` of `region` if no other value is set, applied with the
+`aria-live="off"` attribute when in the autoScroll state and `aria-live="polite"` when slide
 transitions are being controlled externally. Each slide is given the `aria-roledescription="slide"`
 attribute and the `role` of `group` if these area not already set. You will need to add
 `aria-roledescription="carousel"` to the container housing the slider and it's controls. An example
@@ -58,4 +58,25 @@ implementation is shown below.
     .addEventListener('click', () => slider.prev())
   // ... other button controls
 </script>
+```
+
+## Reduced motion
+
+If the user has requested reduced motion in their operating system or browser settings then the `autoScroll` option should be set to `false`
+on page load to prevent the slider from automatically scrolling. The default configuration value for `autoScroll` is determined from the
+`prefers-reduced-motion` media query. You may also want to set the `speed` option to `0` to prevent slide transitions from animating.
+
+```js
+const hasReducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)',
+).matches
+
+const slider = new BoxSlider(
+  document.getElementById('demo-slider'),
+  new FadeSlider(),
+  {
+    autoScroll: !hasReducedMotion,
+    speed: hasReducedMotion ? 0 : 300,
+  },
+)
 ```

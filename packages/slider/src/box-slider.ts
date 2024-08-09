@@ -11,7 +11,9 @@ import type {
 } from './types'
 
 export const defaultOptions: BoxSliderOptions = Object.freeze({
-  autoScroll: true,
+  autoScroll:
+    typeof matchMedia !== 'undefined' &&
+    !matchMedia('(prefers-reduced-motion: reduce)').matches,
   pauseOnHover: false,
   speed: 800,
   startIndex: 0,
@@ -89,13 +91,7 @@ export default class BoxSlider {
     this.isDestroyed = false
 
     this.options = {
-      autoScroll: true,
-      speed: 800,
-      timeout: 5000,
-      pauseOnHover: false,
-      startIndex: 0,
-      swipe: true,
-      swipeTolerance: 30,
+      ...defaultOptions,
       ...options,
     }
     this._activeIndex = this.options.startIndex

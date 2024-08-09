@@ -4,14 +4,14 @@ title: Configuration
 
 ## Slider options
 
-| Option           | Type    | Default | Description                                                                                                                  |
-| ---------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `speed`          | number  | 800     | The time interval in milliseconds within which the slide animation will complete                                             |
-| `autoScroll`     | boolean | true    | Set true to automatically transition through the slides                                                                      |
-| `timeout`        | number  | 5000    | The time interval between slide transitions. For use with autoScroll                                                         |
-| `pauseOnHover`   | boolean | false   | Pause an auto-scrolling slider when the users mouse hovers over it. For use with autoScroll or a slider in play mode         |
-| `swipe`          | boolean | true    | Enable swiping the box to navigate to the next or previous slide                                                             |
-| `swipeTolerance` | number  | 30      | The number of pixels between the pointer down and pointer up events during the swipe action that will trigger the transition |
+| Option           | Type    | Default                                   | Description                                                                                                                  |
+| ---------------- | ------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `speed`          | number  | 800                                       | The time interval in milliseconds within which the slide animation will complete                                             |
+| `autoScroll`     | boolean | true (unless user prefers reduced motion) | Set true to automatically transition through the slides                                                                      |
+| `timeout`        | number  | 5000                                      | The time interval between slide transitions. For use with autoScroll                                                         |
+| `pauseOnHover`   | boolean | false                                     | Pause an auto-scrolling slider when the users mouse hovers over it. For use with autoScroll or a slider in play mode         |
+| `swipe`          | boolean | true                                      | Enable swiping the box to navigate to the next or previous slide                                                             |
+| `swipeTolerance` | number  | 30                                        | The number of pixels between the pointer down and pointer up events during the swipe action that will trigger the transition |
 
 ## Effect Options
 

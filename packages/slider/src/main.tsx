@@ -3,9 +3,7 @@ import { BoxSlider, FadeSlider } from '.'
 const el = document.getElementById('slider')
 
 if (el) {
-  const slider = new BoxSlider(el, new FadeSlider(), {
-    autoScroll: true,
-  })
+  const slider = new BoxSlider(el, new FadeSlider())
 
   document
     .getElementById('next')
