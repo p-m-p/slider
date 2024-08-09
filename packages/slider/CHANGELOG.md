@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.5
+
+### Patch Changes
+
+- cfc56b8: Fix repository urls in package.json
+
 ## 2.6.4
 
 ### Patch Changes

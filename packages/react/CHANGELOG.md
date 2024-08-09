@@ -1,5 +1,14 @@
 # Change Log
 
+## 2.5.9
+
+### Patch Changes
+
+- cfc56b8: Fix repository urls in package.json
+- Updated dependencies [cfc56b8]
+  - @boxslider/components@2.6.8
+  - @boxslider/slider@2.6.5
+
 ## 2.5.8
 
 ### Patch Changes
