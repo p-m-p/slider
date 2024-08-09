@@ -110,7 +110,11 @@ export default class BoxSlider {
 
   reset(options?: Partial<BoxSliderOptions>, effect?: Effect) {
     this.stopAutoScroll()
-    this.effect.destroy && this.effect.destroy(this.el)
+
+    if (typeof this.effect.destroy === 'function') {
+      this.effect.destroy(this.el)
+    }
+
     this.stateStore.revert()
     this.options = {
       ...this.options,

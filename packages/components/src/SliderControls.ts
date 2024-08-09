@@ -34,12 +34,7 @@ if (typeof document !== 'undefined') {
 `
 }
 
-export interface SliderControlsElement extends HTMLElement {}
-
-export default class SliderControls
-  extends SafeBaseElement
-  implements SliderControlsElement
-{
+export default class SliderControls extends SafeBaseElement {
   #sliderElement: SliderElement | null = null
   #mutationObserver: MutationObserver
   #hasBeenInteractedWith = false

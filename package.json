@@ -25,18 +25,18 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^2.0.5",
     "@vitest/ui": "^2.0.5",
     "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.23.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.9.0",
     "husky": "^9.1.4",
@@ -48,7 +48,7 @@
     "stylelint": "^16.8.1",
     "stylelint-config-standard": "^36.0.1",
     "typescript": "^5.5.4",
-    "vite": "^5.3.5",
+    "vite": "^5.4.0",
     "vitest": "^2.0.5"
   },
   "config": {
@@ -64,8 +64,5 @@
     "*.{md,html}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@types/node": "^20.14.14"
   }
 }
