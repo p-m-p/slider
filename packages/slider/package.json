@@ -4,7 +4,7 @@
   "description": "Flexible and light weight content slider",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boxslider/slider/packages/slider"
+    "url": "https://github.com/p-m-p/slider/packages/slider"
   },
   "author": "Phil Parsons",
   "license": "MIT",

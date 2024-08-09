@@ -3,7 +3,7 @@
   "version": "2.5.8",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boxslider/slider/packages/react"
+    "url": "https://github.com/p-m-p/slider/packages/react"
   },
   "author": "Phil Parsons",
   "license": "MIT",

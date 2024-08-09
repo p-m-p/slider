@@ -4,7 +4,7 @@
   "description": "Box slider Web components",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boxslider/slider/packages/components"
+    "url": "https://github.com/p-m-p/slider/packages/components"
   },
   "author": "Phil Parsons",
   "license": "MIT",
