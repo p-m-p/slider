@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.4
+
+### Patch Changes
+
+- 262a029: Set default configuration value for autoScroll to false if user prefers reduced motion
+
 ## 2.6.3
 
 ### Patch Changes
