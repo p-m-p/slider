@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.7
+
+### Patch Changes
+
+- a4d1e67: Add custom element demo to readme
+
 ## 2.6.6
 
 ### Patch Changes
