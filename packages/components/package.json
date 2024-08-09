@@ -1,10 +1,11 @@
 {
   "name": "@boxslider/components",
   "version": "2.6.8",
-  "description": "Box slider Web components",
+  "description": "BoxSlider Web components",
+  "hoempage": "https://philparsons.co.uk/slider",
   "repository": {
     "type": "git",
-    "url": "https://github.com/p-m-p/slider/packages/components"
+    "url": "https://github.com/p-m-p/slider"
   },
   "author": "Phil Parsons",
   "license": "MIT",

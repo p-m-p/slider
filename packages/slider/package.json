@@ -2,9 +2,10 @@
   "name": "@boxslider/slider",
   "version": "2.6.5",
   "description": "Flexible and light weight content slider",
+  "hoempage": "https://philparsons.co.uk/slider",
   "repository": {
     "type": "git",
-    "url": "https://github.com/p-m-p/slider/packages/slider"
+    "url": "https://github.com/p-m-p/slider"
   },
   "author": "Phil Parsons",
   "license": "MIT",
