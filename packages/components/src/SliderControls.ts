@@ -34,7 +34,13 @@ if (typeof document !== 'undefined') {
 `
 }
 
-export default class SliderControls extends SafeBaseElement {
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SliderControlsElement extends HTMLElement {}
+
+export default class SliderControls
+  extends SafeBaseElement
+  implements SliderControlsElement
+{
   #sliderElement: SliderElement | null = null
   #mutationObserver: MutationObserver
   #hasBeenInteractedWith = false
