@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.5.11
+
+### Patch Changes
+
+- Updated dependencies [a4ba04d]
+  - @boxslider/components@2.7.0
+  - @boxslider/slider@2.7.0
+
 ## 2.5.10
 
 ### Patch Changes
