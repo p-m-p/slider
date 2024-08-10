@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.7.0
+
+### Minor Changes
+
+- a4ba04d: Add property setters for slider component attributes
+
+### Patch Changes
+
+- Updated dependencies [a4ba04d]
+  - @boxslider/slider@2.7.0
+
 ## 2.6.9
 
 ### Patch Changes
