@@ -6,7 +6,7 @@ export interface FadeSliderOptions {
 }
 
 export default class FadeSlider implements Effect {
-  private readonly options: FadeSliderOptions
+  readonly options: FadeSliderOptions
   private transitionTimer = 0
 
   constructor(options?: FadeSliderOptions) {

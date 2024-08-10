@@ -1,32 +1,35 @@
 import FadeSlider from '@boxslider/slider/effects/Fade'
 import { register } from './core'
-import Slider, { SLIDER_ATTRIBUTES, SliderElement, camelize } from './Slider'
+import Slider, { SLIDER_ATTRIBUTES, SliderElement } from './Slider'
 
 export interface FadeSliderElement extends SliderElement {
   timingFunction: string
 }
 
-export const FADE_ATTRIBUTES = ['timing-function']
-
 export default class Fade extends Slider implements FadeSliderElement {
-  static observedAttributes = [...SLIDER_ATTRIBUTES, ...FADE_ATTRIBUTES]
+  static observedAttributes = [...SLIDER_ATTRIBUTES, 'timing-function']
+
+  #timingFunction?: string
 
   get timingFunction() {
-    return this.getAttribute('timing-function')?.trim() || 'ease-in-out'
+    return this.#timingFunction ?? 'ease-in-out'
   }
 
-  attributeChangedCallback(name: string) {
-    if (FADE_ATTRIBUTES.includes(name)) {
-      const propName = camelize(name) as keyof FadeSliderElement
+  set timingFunction(timingFunction: string) {
+    this.#timingFunction = timingFunction
+    this.reset(
+      {},
+      new FadeSlider({
+        timingFunction,
+      }),
+    )
+  }
 
-      this.reset(
-        { [propName]: this[propName] },
-        new FadeSlider({
-          timingFunction: this.timingFunction,
-        }),
-      )
+  attributeChangedCallback(name: string, _: string, value: string) {
+    if (name === 'timing-function') {
+      this.timingFunction = value
     } else {
-      super.attributeChangedCallback(name)
+      super.attributeChangedCallback(name, _, value)
     }
   }
 

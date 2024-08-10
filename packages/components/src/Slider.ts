@@ -36,7 +36,7 @@ export function getNumericAttribute(
   return isNaN(value) ? defaultValue : value
 }
 
-export function getBbooleanAttribute(
+export function getBooleanAttribute(
   el: HTMLElement,
   attribute: string,
   defaultValue: boolean,
@@ -48,18 +48,16 @@ export function getBbooleanAttribute(
   return defaultValue
 }
 
-const BOOLEAN_ATTRIBUTES = ['auto-scroll', 'pause-on-hover']
-const NUMBER_ATTRIBUTES = [
+const BOOLEAN_ATTRIBUTES = ['auto-scroll', 'pause-on-hover', 'swipe']
+const NUMERIC_ATTRIBUTES = [
   'speed',
-  'timeout',
   'start-index',
-  'swipe',
   'swipe-tolerance',
+  'timeout',
 ]
-export const SLIDER_ATTRIBUTES = [...BOOLEAN_ATTRIBUTES, ...NUMBER_ATTRIBUTES]
+export const SLIDER_ATTRIBUTES = [...BOOLEAN_ATTRIBUTES, ...NUMERIC_ATTRIBUTES]
 
-export interface SliderElement extends HTMLElement {
-  readonly slider?: BoxSlider
+export interface SliderElementProps {
   autoScroll: boolean
   pauseOnHover: boolean
   speed: number
@@ -69,9 +67,17 @@ export interface SliderElement extends HTMLElement {
   timeout: number
 }
 
+type NumericProp = 'speed' | 'startIndex' | 'swipeTolerance' | 'timeout'
+type BooleanProp = 'autoScroll' | 'pauseOnHover' | 'swipe'
+
+export interface SliderElement extends SliderElementProps, HTMLElement {
+  readonly slider?: BoxSlider
+  readonly options: BoxSliderOptions
+}
+
 export default abstract class Slider
   extends SafeBaseElement
-  implements SliderElement
+  implements SliderElementProps
 {
   #slider?: BoxSlider
 
@@ -80,39 +86,83 @@ export default abstract class Slider
   }
 
   get autoScroll() {
-    return getBbooleanAttribute(this, 'auto-scroll', defaultOptions.autoScroll)
+    return (
+      this.#slider?.getOption('autoScroll') ??
+      getBooleanAttribute(this, 'auto-scroll', defaultOptions.autoScroll)
+    )
+  }
+
+  set autoScroll(autoScroll: boolean) {
+    this.reset({ autoScroll })
   }
 
   get pauseOnHover() {
-    return getBbooleanAttribute(
-      this,
-      'pause-on-hover',
-      defaultOptions.pauseOnHover,
+    return (
+      this.#slider?.getOption('pauseOnHover') ?? defaultOptions.pauseOnHover
     )
+  }
+
+  set pauseOnHover(pauseOnHover: boolean) {
+    this.reset({ pauseOnHover })
   }
 
   get speed() {
-    return getNumericAttribute(this, 'speed', defaultOptions.speed)
-  }
-
-  get startIndex() {
-    return getNumericAttribute(this, 'start-index', defaultOptions.startIndex)
-  }
-
-  get swipe() {
-    return getBbooleanAttribute(this, 'swipe', defaultOptions.swipe)
-  }
-
-  get swipeTolerance() {
-    return getNumericAttribute(
-      this,
-      'swipe-tolerance',
-      defaultOptions.swipeTolerance,
+    return (
+      this.#slider?.getOption('speed') ??
+      getNumericAttribute(this, 'speed', defaultOptions.speed)
     )
   }
 
+  set speed(speed: number) {
+    this.reset({ speed })
+  }
+
+  get startIndex() {
+    return (
+      this.#slider?.getOption('startIndex') ??
+      getNumericAttribute(this, 'start-index', defaultOptions.startIndex)
+    )
+  }
+
+  set startIndex(startIndex: number) {
+    this.reset({ startIndex })
+  }
+
+  get swipe() {
+    return (
+      this.#slider?.getOption('swipe') ??
+      getBooleanAttribute(this, 'swipe', defaultOptions.swipe)
+    )
+  }
+
+  set swipe(swipe: boolean) {
+    this.reset({ swipe })
+  }
+
+  get swipeTolerance() {
+    return (
+      this.#slider?.getOption('swipeTolerance') ??
+      getNumericAttribute(
+        this,
+        'swipe-tolerance',
+        defaultOptions.swipeTolerance,
+      )
+    )
+  }
+
+  set swipeTolerance(swipeTolerance: number) {
+    this.reset({ swipeTolerance })
+  }
+
   get timeout() {
-    return getNumericAttribute(this, 'timeout', defaultOptions.timeout)
+    return (
+      this.#slider?.getOption('timeout') ??
+      getNumericAttribute(this, 'timeout', defaultOptions.timeout)
+    )
+  }
+
+  set timeout(timeout: number) {
+    this.reset({ timeout })
   }
 
   get options(): BoxSliderOptions {
@@ -150,10 +200,15 @@ export default abstract class Slider
     this.slider?.reset(options, effect)
   }
 
-  attributeChangedCallback(name: string) {
+  attributeChangedCallback(name: string, _: string, value: string) {
     if (SLIDER_ATTRIBUTES.includes(name)) {
-      const propName = camelize(name) as keyof SliderElement
-      this.reset({ [propName]: this[propName] })
+      const propName = camelize(name)
+
+      if (NUMERIC_ATTRIBUTES.includes(name)) {
+        this[propName as NumericProp] = parseInt(value, 10)
+      } else if (BOOLEAN_ATTRIBUTES.includes(name)) {
+        this[propName as BooleanProp] = value !== 'false'
+      }
     }
   }
 

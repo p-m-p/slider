@@ -1,12 +1,26 @@
+import {
+  FadeSlider,
+  TileSlider,
+  type CarouselSlider,
+  type CubeSlider,
+} from '@boxslider/slider'
 import { getByText, waitFor } from '@testing-library/dom'
+import type { MockInstance } from 'vitest'
 import type { SliderElement } from '../Slider'
+import type {
+  CarouselSliderElement,
+  CubeSliderElement,
+  FadeSliderElement,
+  TileSliderElement,
+} from '..'
+
 import '..'
 
-export function createSliderElement(
+export function createSliderElement<T extends SliderElement>(
   tagName: string,
   attributes: Record<string, string>,
-) {
-  const el = document.createElement(tagName) as SliderElement
+): T {
+  const el = document.createElement(tagName)
   const viewport = document.createElement('div')
 
   Object.entries(attributes).forEach(([key, value]) => {
@@ -23,10 +37,13 @@ export function createSliderElement(
   viewport.appendChild(el)
   document.body.appendChild(viewport)
 
-  return el
+  return el as T
 }
 
-test('attribute values and props', () => {
+function testEffectProps<T extends SliderElement>(
+  tag: 'bs-carousel' | 'bs-cube' | 'bs-fade' | 'bs-tile',
+  propAssertions: (spy: MockInstance, el: T) => void,
+) {
   const autoScroll = false
   const pauseOnHover = false
   const speed = 500
@@ -35,7 +52,7 @@ test('attribute values and props', () => {
   const swipeTolerance = 100
   const timeout = 5000
 
-  const el = createSliderElement('bs-carousel', {
+  const el = createSliderElement<T>(tag, {
     'auto-scroll': `${autoScroll}`,
     'pause-on-hover': `${pauseOnHover}`,
     'start-index': `${startIndex}`,
@@ -58,24 +75,162 @@ test('attribute values and props', () => {
 
   el.setAttribute('auto-scroll', '')
   expect(resetSpy.mock.calls[0][0]).toEqual({ autoScroll: true })
+  el.autoScroll = false
+  expect(resetSpy.mock.calls[1][0]).toEqual({ autoScroll: false })
 
   el.setAttribute('pause-on-hover', 'true')
-  expect(resetSpy.mock.calls[1][0]).toEqual({ pauseOnHover: true })
+  expect(resetSpy.mock.calls[2][0]).toEqual({ pauseOnHover: true })
+  el.pauseOnHover = false
+  expect(resetSpy.mock.calls[3][0]).toEqual({ pauseOnHover: false })
 
   el.setAttribute('speed', '2000')
-  expect(resetSpy.mock.calls[2][0]).toEqual({ speed: 2000 })
+  expect(resetSpy.mock.calls[4][0]).toEqual({ speed: 2000 })
+  el.speed = 3000
+  expect(resetSpy.mock.calls[5][0]).toEqual({ speed: 3000 })
 
   el.setAttribute('start-index', '2')
-  expect(resetSpy.mock.calls[3][0]).toEqual({ startIndex: 2 })
+  expect(resetSpy.mock.calls[6][0]).toEqual({ startIndex: 2 })
+  el.startIndex = 1
+  expect(resetSpy.mock.calls[7][0]).toEqual({ startIndex: 1 })
 
   el.setAttribute('swipe', '')
-  expect(resetSpy.mock.calls[4][0]).toEqual({ swipe: true })
+  expect(resetSpy.mock.calls[8][0]).toEqual({ swipe: true })
+  el.swipe = false
+  expect(resetSpy.mock.calls[9][0]).toEqual({ swipe: false })
 
   el.setAttribute('swipe-tolerance', '50')
-  expect(resetSpy.mock.calls[5][0]).toEqual({ swipeTolerance: 50 })
+  expect(resetSpy.mock.calls[10][0]).toEqual({ swipeTolerance: 50 })
+  el.swipeTolerance = 100
+  expect(resetSpy.mock.calls[11][0]).toEqual({ swipeTolerance: 100 })
 
   el.setAttribute('timeout', '850')
-  expect(resetSpy.mock.calls[6][0]).toEqual({ timeout: 850 })
+  expect(resetSpy.mock.calls[12][0]).toEqual({ timeout: 850 })
+  el.timeout = 300
+  expect(resetSpy.mock.calls[13][0]).toEqual({ timeout: 300 })
+
+  resetSpy.mockClear()
+
+  propAssertions(resetSpy, el)
+}
+
+test('carousel attributes and props', () => {
+  testEffectProps<CarouselSliderElement>('bs-carousel', (resetSpy, el) => {
+    expect(el.timingFunction).toBe('ease-out')
+    expect(el.cover).toBeFalsy()
+
+    el.setAttribute('cover', 'false')
+    expect((resetSpy.mock.calls[0][1] as CarouselSlider).options).toEqual({
+      cover: false,
+      timingFunction: 'ease-out',
+    })
+    el.cover = true
+    expect((resetSpy.mock.calls[1][1] as CarouselSlider).options).toEqual({
+      cover: true,
+      timingFunction: 'ease-out',
+    })
+
+    el.setAttribute('timing-function', 'ease-in')
+    expect((resetSpy.mock.calls[2][1] as CarouselSlider).options).toEqual({
+      cover: true,
+      timingFunction: 'ease-in',
+    })
+    el.timingFunction = 'ease-in-out'
+    expect((resetSpy.mock.calls[3][1] as CarouselSlider).options).toEqual({
+      cover: true,
+      timingFunction: 'ease-in-out',
+    })
+  })
+})
+
+test('cube attributes and props', () => {
+  testEffectProps<CubeSliderElement>('bs-cube', (resetSpy, el) => {
+    expect(el.direction).toBe('horizontal')
+    expect(el.perspective).toBe(1000)
+
+    el.setAttribute('direction', 'vertical')
+    expect((resetSpy.mock.calls[0][1] as CubeSlider).options).toEqual({
+      direction: 'vertical',
+      perspective: 1000,
+    })
+    el.direction = 'horizontal'
+    expect((resetSpy.mock.calls[1][1] as CubeSlider).options).toEqual({
+      direction: 'horizontal',
+      perspective: 1000,
+    })
+
+    el.setAttribute('perspective', '2000')
+    expect((resetSpy.mock.calls[2][1] as CubeSlider).options).toEqual({
+      direction: 'horizontal',
+      perspective: 2000,
+    })
+    el.perspective = 900
+    expect((resetSpy.mock.calls[3][1] as CubeSlider).options).toEqual({
+      direction: 'horizontal',
+      perspective: 900,
+    })
+  })
+})
+
+test('fade attributes and props', () => {
+  testEffectProps<FadeSliderElement>('bs-fade', (resetSpy, el) => {
+    expect(el.timingFunction).toBe('ease-in-out')
+
+    el.setAttribute('timing-function', 'ease-in')
+    expect((resetSpy.mock.calls[0][1] as FadeSlider).options).toEqual({
+      timingFunction: 'ease-in',
+    })
+    el.timingFunction = 'ease-out'
+    expect((resetSpy.mock.calls[1][1] as FadeSlider).options).toEqual({
+      timingFunction: 'ease-out',
+    })
+  })
+})
+
+test('tile attributes and props', () => {
+  testEffectProps<TileSliderElement>('bs-tile', (resetSpy, el) => {
+    expect(el.rowOffset).toBe(50)
+    expect(el.rows).toBe(8)
+    expect(el.tileEffect).toBe('flip')
+
+    el.setAttribute('rows', '4')
+    expect((resetSpy.mock.calls[0][1] as TileSlider).options).toEqual({
+      rowOffset: 50,
+      rows: 4,
+      tileEffect: 'flip',
+    })
+    el.rows = 10
+    expect((resetSpy.mock.calls[1][1] as TileSlider).options).toEqual({
+      rowOffset: 50,
+      rows: 10,
+      tileEffect: 'flip',
+    })
+
+    el.setAttribute('row-offset', '100')
+    expect((resetSpy.mock.calls[2][1] as TileSlider).options).toEqual({
+      rowOffset: 100,
+      rows: 10,
+      tileEffect: 'flip',
+    })
+    el.rowOffset = 20
+    expect((resetSpy.mock.calls[3][1] as TileSlider).options).toEqual({
+      rowOffset: 20,
+      rows: 10,
+      tileEffect: 'flip',
+    })
+
+    el.setAttribute('tile-effect', 'fade')
+    expect((resetSpy.mock.calls[4][1] as TileSlider).options).toEqual({
+      rowOffset: 20,
+      rows: 10,
+      tileEffect: 'fade',
+    })
+    el.tileEffect = 'flip'
+    expect((resetSpy.mock.calls[5][1] as TileSlider).options).toEqual({
+      rowOffset: 20,
+      rows: 10,
+      tileEffect: 'flip',
+    })
+  })
 })
 
 test('slide transition', async () => {

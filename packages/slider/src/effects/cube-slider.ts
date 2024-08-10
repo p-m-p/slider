@@ -8,7 +8,7 @@ export interface CubeSliderOptions {
 }
 
 export default class CubeSlider implements Effect {
-  private readonly options: CubeSliderOptions
+  readonly options: CubeSliderOptions
   private translateZ!: number
   private transitionTimer = 0
 

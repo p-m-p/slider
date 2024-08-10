@@ -2,9 +2,8 @@ import CarouselSlider from '@boxslider/slider/effects/Carousel'
 import { register } from './core'
 import Slider, {
   SLIDER_ATTRIBUTES,
-  getBbooleanAttribute,
+  getBooleanAttribute,
   type SliderElement,
-  camelize,
 } from './Slider'
 
 export interface CarouselSliderElement extends SliderElement {
@@ -12,20 +11,46 @@ export interface CarouselSliderElement extends SliderElement {
   timingFunction: string
 }
 
-export const CAROUSEL_ATTRIBUTES = ['cover', 'timing-function']
-
 export default class Carousel extends Slider implements CarouselSliderElement {
-  static observedAttributes = [...SLIDER_ATTRIBUTES, ...CAROUSEL_ATTRIBUTES]
+  static observedAttributes = [...SLIDER_ATTRIBUTES, 'cover', 'timing-function']
+
+  #timingFunction: string | null = null
+  #cover = false
 
   get cover() {
-    return getBbooleanAttribute(this, 'cover', false)
+    return this.#cover
+  }
+
+  set cover(cover: boolean) {
+    this.#cover = cover
+    this.reset(
+      {},
+      new CarouselSlider({
+        cover,
+        timingFunction: this.timingFunction,
+      }),
+    )
   }
 
   get timingFunction() {
-    return this.getAttribute('timing-function') || 'ease-out'
+    return this.#timingFunction ?? 'ease-out'
+  }
+
+  set timingFunction(timingFunction: string) {
+    this.#timingFunction = timingFunction
+    this.reset(
+      {},
+      new CarouselSlider({
+        cover: this.cover,
+        timingFunction,
+      }),
+    )
   }
 
   connectedCallback() {
+    this.#timingFunction = this.getAttribute('timing-function')
+    this.#cover = getBooleanAttribute(this, 'cover', false)
+
     this.init(
       new CarouselSlider({
         cover: this.cover,
@@ -34,18 +59,13 @@ export default class Carousel extends Slider implements CarouselSliderElement {
     )
   }
 
-  attributeChangedCallback(name: string) {
-    if (CAROUSEL_ATTRIBUTES.includes(name)) {
-      const propName = camelize(name) as keyof CarouselSliderElement
-      this.reset(
-        { [propName]: this[propName] },
-        new CarouselSlider({
-          cover: this.cover,
-          timingFunction: this.timingFunction,
-        }),
-      )
+  attributeChangedCallback(name: string, _: string, value: string) {
+    if (name === 'timing-function') {
+      this.timingFunction = value
+    } else if (name === 'cover') {
+      this.cover = value !== 'false'
     } else {
-      super.attributeChangedCallback(name)
+      super.attributeChangedCallback(name, _, value)
     }
   }
 }

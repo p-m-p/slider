@@ -7,7 +7,7 @@ export interface CarouselSliderOptions {
 }
 
 export default class CarouselSlider implements Effect {
-  private readonly options: CarouselSliderOptions
+  readonly options: CarouselSliderOptions
   private transitionTimer = 0
   private asyncTimer = 0
 

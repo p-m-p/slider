@@ -4,46 +4,58 @@ import Slider, {
   SLIDER_ATTRIBUTES,
   type SliderElement,
   getNumericAttribute,
-  camelize,
 } from './Slider'
+
+export type Direction = 'horizontal' | 'vertical'
 
 export interface CubeSliderElement extends SliderElement {
   direction: 'horizontal' | 'vertical'
   perspective: number
 }
 
-export const CUBE_ATTRIBUTES = ['direction', 'perspective']
-
 export default class Cube extends Slider implements CubeSliderElement {
-  static observedAttributes = [...SLIDER_ATTRIBUTES, ...CUBE_ATTRIBUTES]
+  static observedAttributes = [...SLIDER_ATTRIBUTES, 'direction', 'perspective']
+
+  #direction: Direction = 'horizontal'
+  #perspective = 1000
 
   get direction() {
-    const propDirection = this.getAttribute('direction')?.trim()
+    return this.#direction
+  }
 
-    if (propDirection === 'horizontal' || propDirection === 'vertical') {
-      return propDirection
-    }
-
-    return 'horizontal'
+  set direction(direction: Direction) {
+    this.#direction = direction
+    this.reset(
+      {},
+      new CubeSlider({
+        direction,
+        perspective: this.perspective,
+      }),
+    )
   }
 
   get perspective() {
-    return getNumericAttribute(this, 'perspective', 1000)
+    return this.#perspective
   }
 
-  attributeChangedCallback(name: string) {
-    if (CUBE_ATTRIBUTES.includes(name)) {
-      const propName = camelize(name) as keyof CubeSliderElement
+  set perspective(perspective: number) {
+    this.#perspective = perspective
+    this.reset(
+      {},
+      new CubeSlider({
+        direction: this.direction,
+        perspective,
+      }),
+    )
+  }
 
-      this.reset(
-        { [propName]: this[propName] },
-        new CubeSlider({
-          direction: this.direction,
-          perspective: this.perspective,
-        }),
-      )
+  attributeChangedCallback(name: string, _: string, value: string) {
+    if (name === 'perspective') {
+      this.perspective = getNumericAttribute(this, name, 1000)
+    } else if (name === 'direction') {
+      this.direction = value as Direction
     } else {
-      super.attributeChangedCallback(name)
+      super.attributeChangedCallback(name, _, value)
     }
   }
 
