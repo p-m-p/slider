@@ -1,10 +1,6 @@
 import CubeSlider from '@boxslider/slider/effects/Cube'
 import { register } from './core'
-import Slider, {
-  SLIDER_ATTRIBUTES,
-  type SliderElement,
-  getNumericAttribute,
-} from './Slider'
+import Slider, { SLIDER_ATTRIBUTES, type SliderElement } from './Slider'
 
 export type Direction = 'horizontal' | 'vertical'
 
@@ -51,7 +47,7 @@ export default class Cube extends Slider implements CubeSliderElement {
 
   attributeChangedCallback(name: string, _: string, value: string) {
     if (name === 'perspective') {
-      this.perspective = getNumericAttribute(this, name, 1000)
+      this.perspective = parseInt(value, 10)
     } else if (name === 'direction') {
       this.direction = value as Direction
     } else {

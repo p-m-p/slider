@@ -1,10 +1,6 @@
 import CarouselSlider from '@boxslider/slider/effects/Carousel'
 import { register } from './core'
-import Slider, {
-  SLIDER_ATTRIBUTES,
-  getBooleanAttribute,
-  type SliderElement,
-} from './Slider'
+import Slider, { SLIDER_ATTRIBUTES, type SliderElement } from './Slider'
 
 export interface CarouselSliderElement extends SliderElement {
   cover: boolean
@@ -48,9 +44,6 @@ export default class Carousel extends Slider implements CarouselSliderElement {
   }
 
   connectedCallback() {
-    this.#timingFunction = this.getAttribute('timing-function')
-    this.#cover = getBooleanAttribute(this, 'cover', false)
-
     this.init(
       new CarouselSlider({
         cover: this.cover,
