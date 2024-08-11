@@ -38,7 +38,7 @@ export function Example({
       <SliderControls
         className={styles.controls}
         indexBtnLabel="%d of 4"
-        aria-label="AI generated images of animals in a Vaporwave style">
+        aria-label="BoxSlider demonstration with AI generated images of animals in a Vaporwave style">
         <div className={styles.viewport}>{children}</div>
       </SliderControls>
       {showOptions && (

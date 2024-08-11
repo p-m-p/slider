@@ -2,7 +2,7 @@ import { FadeSlider } from '@boxslider/react'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import CallToAction from '../components/CallToAction'
-import { Code, Github, Play, SearchCheck, Sparkles, Star } from 'lucide-react'
+import { Code, Github, Play, SearchCheck, Sparkles } from 'lucide-react'
 import FeatureTile from '../components/FeatureTile'
 import { Carousel } from '../components/Examples'
 
@@ -65,13 +65,6 @@ export default function Home() {
 
           <div className={styles.demo}>
             <section className={styles.demoContainer}>
-              <h3 className={styles.demoTitle}>
-                <div className={styles.demoTitleBar} />
-                <Star className={styles.demoTitleIcon} />
-                Demo
-                <Star className={styles.demoTitleIcon} />
-                <div className={styles.demoTitleBar} />
-              </h3>
               <Carousel />
             </section>
             <div className={styles.demoBg} />

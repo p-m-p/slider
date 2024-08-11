@@ -35,7 +35,6 @@
     background: var(--container-bg);
     border-radius: 99px 0 0 99px;
     display: flex;
-    margin-left: 0.5rem;
     padding: 0 0 0 0.5rem;
   }
 
@@ -45,7 +44,6 @@
     border-radius: 99px;
     display: flex;
     gap: 0.5rem;
-    margin-right: 0.5rem;
     padding: 0 0.5rem;
   }
 }
