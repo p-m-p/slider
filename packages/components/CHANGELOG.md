@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.7.1
+
+### Patch Changes
+
+- a8a722b: Resolve issue with slider props not being honoured in slider elements
+
 ## 2.7.0
 
 ### Minor Changes
