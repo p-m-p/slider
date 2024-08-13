@@ -88,7 +88,9 @@
 
 .demoContainer {
   padding: 4rem 0.5rem 3rem;
+  position: relative;
   width: 100%;
+  z-index: 2;
 }
 
 .demoBg {
@@ -100,6 +102,7 @@
   left: -200%;
   width: 500%;
   background: light-dark(rgb(255 255 255 / 50%), rgb(0 0 0 / 20%));
+  z-index: 1;
 }
 
 @media (width >= 480px) {
