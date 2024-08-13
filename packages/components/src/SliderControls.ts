@@ -1,7 +1,6 @@
 import { register, SafeBaseElement } from './core'
 import type { SliderElement } from './Slider'
 
-let incrementingId = 1
 let template: HTMLTemplateElement
 
 if (typeof document !== 'undefined') {
@@ -108,15 +107,8 @@ export default class SliderControls
     }
 
     if (this.#sliderElement?.slider) {
-      let sliderId = this.#sliderElement?.id
-
-      if (!sliderId) {
-        sliderId = `bs-slider-${incrementingId++}`
-        this.#sliderElement!.id = sliderId
-      }
-
       this.shadowRoot?.querySelectorAll('[part~="btn"]').forEach((btn) => {
-        btn.setAttribute('aria-controls', sliderId)
+        btn.setAttribute('aria-controls', 'slider')
       })
 
       this.#setPlayBtnState()
@@ -224,7 +216,7 @@ export default class SliderControls
 
           btn.setAttribute('aria-label', label)
           btn.setAttribute('aria-disabled', isActive ? 'true' : 'false')
-          btn.setAttribute('aria-controls', this.#sliderElement!.id)
+          btn.setAttribute('aria-controls', 'slider')
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
           btn.setAttribute('type', 'button')
 

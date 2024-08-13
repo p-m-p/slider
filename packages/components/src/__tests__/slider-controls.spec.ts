@@ -35,6 +35,7 @@ async function runAssertions({
   prevButton,
   playButton,
   slider,
+  sliderId = 'slider',
   slides,
 }: {
   controls: SliderControlsElement
@@ -43,19 +44,20 @@ async function runAssertions({
   prevButton: HTMLButtonElement
   playButton: HTMLButtonElement
   slider: SliderElement
+  sliderId?: string
   slides: HTMLElement[]
 }) {
   expect(controls).toHaveAttribute('aria-roledescription', 'carousel')
   assertActiveSlideIndex(slides, 0)
 
   await waitFor(() => {
-    expect(nextButton).toHaveAttribute('aria-controls', slider.id)
+    expect(nextButton).toHaveAttribute('aria-controls', sliderId)
   })
   await user.click(nextButton)
   await waitFor(() => assertActiveSlideIndex(slides, 1))
 
   await waitFor(() => {
-    expect(prevButton).toHaveAttribute('aria-controls', slider.id)
+    expect(prevButton).toHaveAttribute('aria-controls', sliderId)
   })
   await user.click(prevButton)
   await waitFor(() => assertActiveSlideIndex(slides, 0))
@@ -147,6 +149,7 @@ test('custom controls', async () => {
     prevButton: getByRole(controls, 'button', { name: 'Backwards' }),
     playButton: await findByRole(controls, 'button', { name: 'Play' }),
     slider: getByTestId(controls, 'slider'),
+    sliderId: 'my-slider',
     slides: [
       getByText(controls, 'Slide 1'),
       getByText(controls, 'Slide 2'),
