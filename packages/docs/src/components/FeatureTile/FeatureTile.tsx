@@ -10,10 +10,10 @@ export interface FeatureTileProps extends ComponentPropsWithoutRef<'div'> {
 export function FeatureTile({ children, icon, title }: FeatureTileProps) {
   return (
     <div className={styles.tile}>
-      <h3 className={styles.title}>
+      <h2 className={styles.title}>
         <span className={styles.icon}>{icon}</span>
         {title}
-      </h3>
+      </h2>
       <p className={styles.description}>{children}</p>
     </div>
   )
