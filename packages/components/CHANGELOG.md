@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.7.2
+
+### Patch Changes
+
+- bfd3d2e: Fix aria-controls attribute for shadow id
+
 ## 2.7.1
 
 ### Patch Changes
