@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.5.13
+
+### Patch Changes
+
+- Updated dependencies [bfd3d2e]
+  - @boxslider/components@2.7.2
+
 ## 2.5.12
 
 ### Patch Changes

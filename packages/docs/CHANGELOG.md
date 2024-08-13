@@ -1,5 +1,13 @@
 # docs
 
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies [bfd3d2e]
+  - @boxslider/components@2.7.2
+  - @boxslider/react@2.5.13
+
 ## 0.0.10
 
 ### Patch Changes
