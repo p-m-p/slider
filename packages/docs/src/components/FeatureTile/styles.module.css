@@ -1,5 +1,5 @@
 .tile {
-  background: light-dark(white, rgb(0 0 0 / 20%));
+  background: light-dark(rgb(255 255 255 / 50%), rgb(0 0 0 / 20%));
   border: solid 1px light-dark(var(--ifm-color-gray-400), rgb(255 255 255 / 8%));
   border-radius: 1rem;
   padding: 1rem;

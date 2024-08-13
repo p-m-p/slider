@@ -2,7 +2,7 @@
   background: linear-gradient(
     -45deg,
     transparent,
-    rgb(0 0 0 / 5%),
+    light-dark(rgb(0 0 0 / 15%), rgb(255 255 255 / 10%)),
     transparent
   );
   background-size: 200% 200%;
@@ -35,8 +35,11 @@
 .textEmphasis {
   background: linear-gradient(
     to top right,
-    var(--ifm-color-primary-dark),
-    var(--ifm-color-primary-lightest)
+    light-dark(var(--ifm-color-primary-darker), var(--ifm-color-primary-dark)),
+    light-dark(
+      var(--ifm-color-primary-lighter),
+      var(--ifm-color-primary-lightest)
+    )
   );
   background-clip: text;
   color: transparent;
@@ -77,15 +80,15 @@
   max-width: 1280px;
 }
 
-.demoContainer {
-  padding: 4rem 0.5rem 3rem;
-  width: 100%;
-}
-
 .demo {
   overflow: clip;
   position: relative;
   margin: 3rem 0 0;
+}
+
+.demoContainer {
+  padding: 4rem 0.5rem 3rem;
+  width: 100%;
 }
 
 .demoBg {
@@ -96,19 +99,7 @@
   top: 0;
   left: -200%;
   width: 500%;
-  background: light-dark(var(--ifm-color-gray-100), rgb(0 0 0 / 20%));
-  z-index: -1;
-}
-
-[data-theme='dark'] {
-  .mainContent {
-    background: linear-gradient(
-      -45deg,
-      transparent,
-      rgb(255 255 255 / 5%),
-      transparent
-    );
-  }
+  background: light-dark(rgb(255 255 255 / 50%), rgb(0 0 0 / 20%));
 }
 
 @media (width >= 480px) {

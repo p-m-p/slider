@@ -64,10 +64,10 @@ export default function Home() {
           </header>
 
           <div className={styles.demo}>
+            <div className={styles.demoBg} />
             <section className={styles.demoContainer}>
               <Carousel />
             </section>
-            <div className={styles.demoBg} />
           </div>
         </div>
       </main>
