@@ -125,20 +125,15 @@ properties console.log(component.speed)
 
 ## Events
 
-[Slider events](/docs/getting-started/api#events) can be listened for by adding event handlers to either the
-slider element or the BoxSlider instance.
+[Slider events](/docs/getting-started/api#events) can be listened for by adding event handlers to the
+slider element.
 
 ```ts
 // Select the slider element
 const component = document.querySelector('bs-fade')
 
-// Add an event listener to the element
+// Add an event listener
 component.addEventListener('before', (ev) => {
   console.log(`About to show slide ${ev.detail.nextIndex}`)
-})
-
-// Add an event listener to the BoxSlider instance
-component.slider.addEventListener('after', (ev) => {
-  console.log(`Slide ${ev.detail.currentIndex} is now active`)
 })
 ```

@@ -44,7 +44,7 @@ query to suit your design.
   width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (width < 600px) {
   .slider {
     height: 200px;
     width: 400px;

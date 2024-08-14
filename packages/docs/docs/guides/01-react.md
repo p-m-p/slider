@@ -39,8 +39,8 @@ controls to the slider. See the [slider controls](/docs/guides/slider-controls) 
 
 ## Styling
 
-The components do not include any styles by default. The display, width and height style properties need to be set drectly or
-with CSS as a minimum for the slider to work. View the [styling guide](/docs/guides/styling) for more information on how to
+The components do not include any styles by default. The display, width and height style properties need to be set
+as a minimum for the slider to work. View the [styling guide](/docs/guides/styling) for more information on how to
 effectively style the slider components.
 
 ```tsx
@@ -77,7 +77,7 @@ function MySlider({ children }) {
 
 ## `sliderRef` prop
 
-To can gain access to the BoxSlider instance pass a ref to the `sliderRef` props. The current value
+To gain access to the BoxSlider instance pass a ref to the `sliderRef` props. The current value
 of the ref will be set once the component is mounted and the slider instance is initialised. View
 the [API reference](/docs/getting-started/api) for more information on the available methods.
 
