@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.8.0
+
+### Minor Changes
+
+- 633b8eb: Add loop option so slider rotation can be disabled
+
 ## 2.7.0
 
 ### Minor Changes

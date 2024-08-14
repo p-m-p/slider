@@ -1,5 +1,12 @@
 # docs
 
+## 0.0.12
+
+### Patch Changes
+
+- @boxslider/components@2.7.3
+- @boxslider/react@2.5.14
+
 ## 0.0.11
 
 ### Patch Changes
