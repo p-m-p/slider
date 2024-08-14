@@ -1,5 +1,4 @@
 import { FadeSlider } from '@boxslider/react'
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import CallToAction from '../components/CallToAction'
 import { Code, Github, Play, SearchCheck, Sparkles } from 'lucide-react'
@@ -9,12 +8,8 @@ import { Carousel } from '../components/Examples'
 import styles from './styles.module.css'
 
 export default function Home() {
-  const { siteConfig } = useDocusaurusContext()
-
   return (
-    <Layout
-      title={siteConfig.title}
-      description="BoxSlider is a super small carousel for modern web projects">
+    <Layout description="BoxSlider is a super small carousel for modern web projects">
       <main className={styles.mainContent}>
         <div className={styles.article}>
           <header className={styles.header}>

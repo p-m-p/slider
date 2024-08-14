@@ -6,7 +6,7 @@ import type {
 } from '@boxslider/slider'
 import { SafeBaseElement } from './core'
 
-const BOOLEAN_ATTRIBUTES = ['auto-scroll', 'pause-on-hover', 'swipe']
+const BOOLEAN_ATTRIBUTES = ['auto-scroll', 'loop', 'pause-on-hover', 'swipe']
 const NUMERIC_ATTRIBUTES = [
   'speed',
   'start-index',
@@ -26,7 +26,7 @@ export interface SliderElementProps {
 }
 
 type NumericProp = 'speed' | 'startIndex' | 'swipeTolerance' | 'timeout'
-type BooleanProp = 'autoScroll' | 'pauseOnHover' | 'swipe'
+type BooleanProp = 'autoScroll' | 'loop' | 'pauseOnHover' | 'swipe'
 
 export interface SliderElement extends SliderElementProps, HTMLElement {
   readonly slider?: BoxSlider
@@ -40,6 +40,7 @@ export default abstract class Slider
   #slider?: BoxSlider
 
   #autoScroll = defaultOptions.autoScroll
+  #loop = defaultOptions.loop
   #pauseOnHove = defaultOptions.pauseOnHover
   #speed = defaultOptions.speed
   #swipe = defaultOptions.swipe
@@ -58,6 +59,15 @@ export default abstract class Slider
   set autoScroll(autoScroll: boolean) {
     this.#autoScroll = autoScroll
     this.reset({ autoScroll })
+  }
+
+  get loop() {
+    return this.#loop
+  }
+
+  set loop(loop: boolean) {
+    this.#loop = loop
+    this.reset({ loop })
   }
 
   get pauseOnHover() {
@@ -117,6 +127,7 @@ export default abstract class Slider
   get options(): BoxSliderOptions {
     return {
       autoScroll: this.autoScroll,
+      loop: this.loop,
       pauseOnHover: this.pauseOnHover,
       speed: this.speed,
       startIndex: this.startIndex,

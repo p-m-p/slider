@@ -57,6 +57,11 @@ export interface BoxSliderOptions {
   autoScroll: boolean
 
   /**
+   * Rotate from first to last slides when next and prev methods are called
+   */
+  loop: boolean
+
+  /**
    * Pause auto scrolling on mouse over
    */
   pauseOnHover: boolean

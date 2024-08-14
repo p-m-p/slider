@@ -52,6 +52,15 @@ export function Options({ controls = [] }: OptionsProps) {
           />
         </div>
         <div className={styles.field}>
+          <label htmlFor={`loop-${id}`}>loop</label>
+          <input
+            id={`loop-${id}`}
+            type="checkbox"
+            checked={options.loop as boolean}
+            onChange={(ev) => setOption('loop', ev.target.checked)}
+          />
+        </div>
+        <div className={styles.field}>
           <label htmlFor={`swipe-${id}`}>swipe</label>
           <input
             id={`swipe-${id}`}

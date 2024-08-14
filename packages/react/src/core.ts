@@ -51,6 +51,7 @@ export type BaseComponentProps<T extends ElementName> = BoxSliderProps &
   Omit<
     ComponentPropsWithoutRef<T>,
     | 'auto-scroll'
+    | 'loop'
     | 'pause-on-hover'
     | 'start-index'
     | 'swipe-tolerance'
@@ -60,6 +61,7 @@ export type BaseComponentProps<T extends ElementName> = BoxSliderProps &
 export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
   const {
     autoScroll,
+    loop,
     onAfter,
     onBefore,
     onDestroy,
@@ -83,6 +85,10 @@ export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
 
   if (autoScroll !== undefined) {
     attributes['auto-scroll'] = `${autoScroll}`
+  }
+
+  if (loop !== undefined) {
+    attributes.loop = `${loop}`
   }
 
   if (pauseOnHover !== undefined) {

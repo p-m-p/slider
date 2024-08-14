@@ -14,6 +14,7 @@ export const defaultOptions: BoxSliderOptions = Object.freeze({
   autoScroll:
     typeof matchMedia !== 'undefined' &&
     !matchMedia('(prefers-reduced-motion: reduce)').matches,
+  loop: true,
   pauseOnHover: false,
   speed: 800,
   startIndex: 0,
@@ -36,10 +37,16 @@ export default class BoxSlider {
   private isDestroyed: boolean
   private transitionQueue: TransitionQueue
 
+  /**
+   * The currently active slide index
+   */
   get activeIndex() {
     return this._activeIndex
   }
 
+  /**
+   * The slider element
+   */
   get el() {
     if (this._el === undefined) {
       throw new Error('Slider element is undefined')
@@ -48,10 +55,16 @@ export default class BoxSlider {
     return this._el
   }
 
+  /**
+   * The number of slides in the slider
+   */
   get length() {
     return this.slides.length
   }
 
+  /**
+   * Return the value of a option at key
+   */
   getOption<T extends keyof BoxSliderOptions>(key: T): BoxSliderOptions[T] {
     return this.options[key]
   }
@@ -108,6 +121,9 @@ export default class BoxSlider {
     responder.add(this)
   }
 
+  /**
+   * Reset the slider with optional new settings and effect
+   */
   reset(options?: Partial<BoxSliderOptions>, effect?: Effect) {
     this.stopAutoScroll()
 
@@ -128,19 +144,39 @@ export default class BoxSlider {
     this.init(effect || this.effect)
   }
 
-  next(): Promise<void> {
-    return this.skipTo(
-      this.activeIndex === this.slides.length - 1 ? 0 : this.activeIndex + 1,
-      false,
-    )
+  /**
+   * Show the next slide. If the slider is at the last slide and loop is disabled
+   * then the slider will not advance back to the first slide.
+   */
+  next() {
+    const isLastSlide = this.activeIndex === this.slides.length - 1
+
+    if (isLastSlide && !this.options.loop) {
+      return Promise.resolve()
+    }
+
+    return this.skipTo(isLastSlide ? 0 : this.activeIndex + 1, false)
   }
 
+  /**
+   * Show the previous slide. If the slider is at the first slide and loop is disabled
+   * then the slider will not advance back to the last slide.
+   */
   prev(): Promise<void> {
+    const isFirstSlide = this.activeIndex === 0
+
+    if (isFirstSlide && !this.options.loop) {
+      return Promise.resolve()
+    }
+
     return this.skipTo(
-      this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1,
+      isFirstSlide ? this.slides.length - 1 : this.activeIndex - 1,
     )
   }
 
+  /**
+   * Skip to a specific slide index
+   */
   skipTo(nextIndex: number, backwards?: boolean): Promise<void> {
     return new Promise((resolve) => {
       this.transitionQueue.push(async () => {
@@ -153,6 +189,9 @@ export default class BoxSlider {
     })
   }
 
+  /**
+   * Pause the slider from auto scrolling
+   */
   pause(): BoxSlider {
     this.options.autoScroll = false
 
@@ -164,6 +203,9 @@ export default class BoxSlider {
     return this
   }
 
+  /**
+   * Start the slider auto scrolling
+   */
   play(): BoxSlider {
     this.options.autoScroll = true
     this.setAutoScroll()
@@ -172,6 +214,9 @@ export default class BoxSlider {
     return this
   }
 
+  /**
+   * Add an event listener for a slider event
+   */
   addEventListener<T extends SliderEventType>(
     ev: T,
     callback: SliderEventListenerMap[T],
@@ -185,6 +230,10 @@ export default class BoxSlider {
     return this
   }
 
+  /**
+   * Remove an event listener for a slider event. The listener
+   * must be the original function passed to addEventListener
+   */
   removeEventListener<T extends SliderEventType>(
     ev: T,
     callback: SliderEventListenerMap[T],
@@ -198,6 +247,9 @@ export default class BoxSlider {
     return this
   }
 
+  /**
+   * Destroy the slider, remove all event listeners and attributes
+   */
   destroy(): void {
     this.isDestroyed = true
     this.stopAutoScroll()

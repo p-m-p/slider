@@ -16,6 +16,7 @@ export function Example({
 }: ExampleProps) {
   const [options, setOptions] = useState({
     autoScroll: true,
+    loop: true,
     speed: '800',
     swipe: true,
     swipeTolerance: 30,
