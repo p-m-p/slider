@@ -57,16 +57,16 @@ with event listeners to control the slider for you.
 </bs-slider-controls>
 ```
 
-The slider-controls element has some basic layout and button styles that can be configured via custom properties show below.
-This styling can be disabled by setting the `unstyled` attribute on the `bs-slider-controls` element.
+The `bs-slider-controls` element has some basic layout and button styles that can be configured via the
+custom properties as show below. The styling can be disabled completely by setting the `unstyled` attribute.
 
 ```html
-<bs-slider-controls unstyled>
-  <!-- slider content --->
-</bs-slider-controls>
+<!-- Disable default styling -->
+<bs-slider-controls unstyled></bs-slider-controls>
 ```
 
 ```css
+/* Override the default styles via custom properties */
 :root {
   /* The amount of space between the slides and the button controls */
   --bs-button-bar-gap: 0.5rem;
