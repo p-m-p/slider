@@ -57,9 +57,14 @@ with event listeners to control the slider for you.
 </bs-slider-controls>
 ```
 
-To style the provided navigation and index buttons either import the default stylesheet from
-`@boxslider/components/src/style/slider-controls.css` and provide custom properties or target the
-provided parts for fully custom styles.
+The slider-controls element has some basic layout and button styles that can be configured via custom properties show below.
+This styling can be disabled by setting the `unstyled` attribute on the `bs-slider-controls` element.
+
+```html
+<bs-slider-controls unstyled>
+  <!-- slider content --->
+</bs-slider-controls>
+```
 
 ```css
 :root {
@@ -104,6 +109,7 @@ provided parts for fully custom styles.
 }
 ```
 
+To further customize the controls, the `part` attribute can be used to target the individual parts of the controls.
 Below is the template for the slider controls showing the available parts.
 
 ```html

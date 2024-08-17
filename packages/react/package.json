@@ -19,14 +19,14 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/index.js"
     },
     "./*": {
+      "types": "./dist/types/*.d.ts",
       "import": "./dist/esm/*.js",
-      "require": "./dist/cjs/*.js",
-      "types": "./dist/types/*.d.ts"
+      "require": "./dist/cjs/*.js"
     }
   },
   "main": "./dist/cjs/index.js",

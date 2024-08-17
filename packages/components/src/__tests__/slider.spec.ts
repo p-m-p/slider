@@ -71,42 +71,58 @@ function testEffectProps<T extends SliderElement>(
   expect(el.timeout).toBe(timeout)
 
   const slider = el.slider!
+
+  vi.spyOn(slider, 'play')
+  el.setAttribute('auto-scroll', '')
+  expect(el.autoScroll).toBe(true)
+  expect(slider.play).toHaveBeenCalled()
+
+  vi.spyOn(slider, 'pause')
+  el.autoScroll = false
+  expect(el.autoScroll).toBe(false)
+  expect(slider.pause).toHaveBeenCalled()
+
   const resetSpy = vi.spyOn(slider, 'reset')
 
-  el.setAttribute('auto-scroll', '')
-  expect(resetSpy.mock.calls[0][0]).toEqual({ autoScroll: true })
-  el.autoScroll = false
-  expect(resetSpy.mock.calls[1][0]).toEqual({ autoScroll: false })
-
   el.setAttribute('pause-on-hover', 'true')
-  expect(resetSpy.mock.calls[2][0]).toEqual({ pauseOnHover: true })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ pauseOnHover: true })
   el.pauseOnHover = false
-  expect(resetSpy.mock.calls[3][0]).toEqual({ pauseOnHover: false })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ pauseOnHover: false })
+
+  resetSpy.mockClear()
 
   el.setAttribute('speed', '2000')
-  expect(resetSpy.mock.calls[4][0]).toEqual({ speed: 2000 })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ speed: 2000 })
   el.speed = 3000
-  expect(resetSpy.mock.calls[5][0]).toEqual({ speed: 3000 })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ speed: 3000 })
+
+  resetSpy.mockClear()
 
   el.setAttribute('start-index', '2')
-  expect(resetSpy.mock.calls[6][0]).toEqual({ startIndex: 2 })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ startIndex: 2 })
   el.startIndex = 1
-  expect(resetSpy.mock.calls[7][0]).toEqual({ startIndex: 1 })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ startIndex: 1 })
+
+  resetSpy.mockClear()
 
   el.setAttribute('swipe', '')
-  expect(resetSpy.mock.calls[8][0]).toEqual({ swipe: true })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ swipe: true })
   el.swipe = false
-  expect(resetSpy.mock.calls[9][0]).toEqual({ swipe: false })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ swipe: false })
+
+  resetSpy.mockClear()
 
   el.setAttribute('swipe-tolerance', '50')
-  expect(resetSpy.mock.calls[10][0]).toEqual({ swipeTolerance: 50 })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ swipeTolerance: 50 })
   el.swipeTolerance = 100
-  expect(resetSpy.mock.calls[11][0]).toEqual({ swipeTolerance: 100 })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ swipeTolerance: 100 })
+
+  resetSpy.mockClear()
 
   el.setAttribute('timeout', '850')
-  expect(resetSpy.mock.calls[12][0]).toEqual({ timeout: 850 })
+  expect(resetSpy.mock.calls[0][0]).toEqual({ timeout: 850 })
   el.timeout = 300
-  expect(resetSpy.mock.calls[13][0]).toEqual({ timeout: 300 })
+  expect(resetSpy.mock.calls[1][0]).toEqual({ timeout: 300 })
 
   resetSpy.mockClear()
 

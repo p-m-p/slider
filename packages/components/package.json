@@ -20,14 +20,19 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/index.js"
+    },
+    "./SliderControls": {
+      "types": "./dist/types/SliderControls/index.d.ts",
+      "import": "./dist/esm/SliderControls/index.js",
+      "require": "./dist/cjs/SliderControls/index.js"
     },
     "./*": {
+      "types": "./dist/types/*.d.ts",
       "import": "./dist/esm/*.js",
-      "require": "./dist/cjs/*.js",
-      "types": "./dist/types/*.d.ts"
+      "require": "./dist/cjs/*.js"
     },
     "./style/*.css": "./src/style/*.css"
   },

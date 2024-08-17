@@ -8,7 +8,7 @@ const entryPoints = [
   'Carousel.ts',
   'Cube.ts',
   'Fade.ts',
-  'SliderControls.ts',
+  'SliderControls/index.ts',
   'Tile.ts',
 ].map((entry) => join(srcDir, entry))
 

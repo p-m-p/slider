@@ -1,32 +1,33 @@
-import { register, SafeBaseElement } from './core'
-import type { SliderElement } from './Slider'
+import { register, SafeBaseElement } from '../core'
+import type { SliderElement } from '../Slider'
+import styles from './styles'
 
 let template: HTMLTemplateElement
 
 if (typeof document !== 'undefined') {
   template = document.createElement('template')
   template.innerHTML = `
-<div part="container">
-  <div part="slider-container">
+<div part="container" id="container">
+  <div part="slider-container" id="slider-container">
     <slot id="slider"></slot>
   </div>
 
-  <div  part="play-btn-container">
+  <div part="play-btn-container" id="play-btn-container">
     <slot name="play-btn">
-      <button part="btn play-btn"></button>
+      <button part="btn play-btn" id="play-btn" class="btn"></button>
     </slot>
   </div>
 
-  <div part="controls-container">
+  <div part="controls-container" id="controls-container">
     <slot name="prev-btn">
-      <button part="prev-btn btn"></button>
+      <button part="prev-btn btn" id="prev-btn" class="btn"></button>
     </slot>
     <slot name="next-btn">
-      <button part="next-btn btn"></button>
+      <button part="next-btn btn" id="next-btn" class="btn"></button>
     </slot>
   </div>
 
-  <div part="index-container" role="group">
+  <div part="index-container" id="index-container" role="group">
     <slot name="index"></slot>
   </div>
 </div>
@@ -40,7 +41,7 @@ export default class SliderControls
   extends SafeBaseElement
   implements SliderControlsElement
 {
-  #sliderElement: SliderElement | null = null
+  #sliderElement!: SliderElement
   #mutationObserver: MutationObserver
   #hasBeenInteractedWith = false
 
@@ -54,6 +55,16 @@ export default class SliderControls
 
   connectedCallback() {
     const shadow = this.attachShadow({ mode: 'open' })
+
+    if (
+      !this.hasAttribute('unstyled') ||
+      this.getAttribute('unstyled') === 'false'
+    ) {
+      const style = document.createElement('style')
+      style.appendChild(document.createTextNode(styles))
+      shadow.appendChild(style)
+    }
+
     shadow.appendChild(template.content.cloneNode(true))
 
     const sliderSlot = shadow.querySelector<HTMLSlotElement>('#slider')
@@ -101,28 +112,35 @@ export default class SliderControls
         subtree: true,
         childList: true,
       })
-      this.#sliderElement = sliderSlotRoot.querySelector<SliderElement>(
+
+      const sliderElement = sliderSlotRoot.querySelector<SliderElement>(
         'bs-carousel, bs-cube, bs-fade, bs-tile',
       )
+
+      if (!sliderElement) {
+        throw new Error('No bs-* slider element found in default slot')
+      }
+
+      this.#sliderElement = sliderElement
     }
 
-    if (this.#sliderElement?.slider) {
+    if (this.#sliderElement.slider) {
       this.shadowRoot?.querySelectorAll('[part~="btn"]').forEach((btn) => {
         btn.setAttribute('aria-controls', 'slider')
       })
 
       this.#setPlayBtnState()
-      this.#sliderElement?.slider.addEventListener('play', () =>
+      this.#sliderElement.addEventListener('play', () =>
         this.#setPlayBtnState(),
       )
-      this.#sliderElement?.slider.addEventListener('pause', () =>
+      this.#sliderElement.addEventListener('pause', () =>
         this.#setPlayBtnState(),
       )
 
       this.#addIndexPips()
-      this.#sliderElement?.slider.addEventListener(
+      this.#sliderElement.addEventListener(
         'before',
-        ({ currentIndex, nextIndex }) => {
+        ({ detail: { currentIndex, nextIndex } }) => {
           this.#setIndexPipState(currentIndex, nextIndex)
         },
       )
@@ -134,7 +152,7 @@ export default class SliderControls
     clickHandler: EventListener,
     attributes: Record<string, string> = {},
   ) {
-    const defaultButton = slot.querySelector('[part~="btn"]')
+    const defaultButton = slot.querySelector('.btn')
 
     if (defaultButton) {
       for (const [key, value] of Object.entries(attributes)) {
@@ -144,12 +162,12 @@ export default class SliderControls
 
     slot.addEventListener('click', (ev) => {
       this.#hasBeenInteractedWith = true
-      this.#sliderElement?.slider?.pause()
+      this.#sliderElement.autoScroll = false
       clickHandler(ev)
     })
     slot.addEventListener('focusin', () => {
       if (!this.#hasBeenInteractedWith) {
-        this.#sliderElement?.slider?.pause()
+        this.#sliderElement.autoScroll = false
       }
     })
   }
@@ -170,8 +188,11 @@ export default class SliderControls
 
           if (index > -1) {
             this.#hasBeenInteractedWith = true
-            this.#sliderElement?.slider?.pause()
-            this.#sliderElement?.slider?.skipTo(index)
+
+            if (this.#sliderElement) {
+              this.#sliderElement.autoScroll = false
+              this.#sliderElement.slider?.skipTo(index)
+            }
           }
         }
       })
@@ -214,9 +235,10 @@ export default class SliderControls
           const isActive = i === this.#sliderElement!.slider!.activeIndex
           const label = labelTemplate.replace(/%d/g, `${i + 1}`)
 
-          btn.setAttribute('aria-label', label)
           btn.setAttribute('aria-disabled', isActive ? 'true' : 'false')
+          btn.setAttribute('aria-label', label)
           btn.setAttribute('aria-controls', 'slider')
+          btn.setAttribute('class', 'index-btn')
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
           btn.setAttribute('type', 'button')
 
@@ -284,10 +306,8 @@ export default class SliderControls
       slot.addEventListener('click', () => {
         this.#hasBeenInteractedWith = true
 
-        if (this.#sliderElement?.slider?.getOption('autoScroll')) {
-          this.#sliderElement?.slider?.pause()
-        } else {
-          this.#sliderElement?.slider?.play()
+        if (this.#sliderElement) {
+          this.#sliderElement.autoScroll = !this.#sliderElement.autoScroll
         }
       })
     }
@@ -299,20 +319,17 @@ export default class SliderControls
     )
 
     if (slot) {
-      const button =
-        slot.assignedElements()[0] ?? slot.querySelector('[part~="btn"]')
+      const button = slot.assignedElements()[0] ?? slot.querySelector('.btn')
 
       button.setAttribute(
         'aria-label',
-        this.#sliderElement?.slider?.getOption('autoScroll')
+        this.#sliderElement?.autoScroll
           ? this.#pauseButtonLabel()
           : this.#playButtonLabel(),
       )
       button?.setAttribute(
         'part',
-        this.#sliderElement?.slider?.getOption('autoScroll')
-          ? 'btn play-btn pause'
-          : 'btn play-btn',
+        this.#sliderElement?.autoScroll ? 'btn play-btn pause' : 'btn play-btn',
       )
     }
   }

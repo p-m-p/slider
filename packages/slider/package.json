@@ -19,34 +19,34 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.cjs",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/index.cjs"
     },
     "./BoxSlider": {
+      "types": "./dist/types/box-slider.d.ts",
       "import": "./dist/esm/box-slider.js",
-      "require": "./dist/cjs/box-slider.cjs",
-      "types": "./dist/types/box-slider.d.ts"
+      "require": "./dist/cjs/box-slider.cjs"
     },
     "./effects/Carousel": {
+      "types": "./dist/types/effects/carousel-slider.d.ts",
       "import": "./dist/esm/effects/carousel-slider.js",
-      "require": "./dist/cjs/effects/carousel-slider.cjs",
-      "types": "./dist/types/effects/carousel-slider.d.ts"
+      "require": "./dist/cjs/effects/carousel-slider.cjs"
     },
     "./effects/Cube": {
+      "types": "./dist/types/effects/cube-slider.d.ts",
       "import": "./dist/esm/effects/cube-slider.js",
-      "require": "./dist/cjs/effects/cube-slider.cjs",
-      "types": "./dist/types/effects/cube-slider.d.ts"
+      "require": "./dist/cjs/effects/cube-slider.cjs"
     },
     "./effects/Fade": {
+      "types": "./dist/types/effects/fade-slider.d.ts",
       "import": "./dist/esm/effects/fade-slider.js",
-      "require": "./dist/cjs/effects/fade-slider.cjs",
-      "types": "./dist/types/effects/fade-slider.d.ts"
+      "require": "./dist/cjs/effects/fade-slider.cjs"
     },
     "./effects/Tile": {
+      "types": "./dist/types/effects/tile/tile-slider.d.ts",
       "import": "./dist/esm/effects/tile/tile-slider.js",
-      "require": "./dist/cjs/effects/tile/tile-slider.cjs",
-      "types": "./dist/types/effects/tile/tile-slider.d.ts"
+      "require": "./dist/cjs/effects/tile/tile-slider.cjs"
     }
   },
   "main": "./dist/cjs/index.cjs",

@@ -58,7 +58,12 @@ export default abstract class Slider
 
   set autoScroll(autoScroll: boolean) {
     this.#autoScroll = autoScroll
-    this.reset({ autoScroll })
+
+    if (autoScroll) {
+      this.slider?.play()
+    } else {
+      this.slider?.pause()
+    }
   }
 
   get loop() {

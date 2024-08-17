@@ -1,5 +1,4 @@
 import './style.css'
-import './style/slider-controls.css'
 import '.'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -47,7 +46,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </bs-slider-controls>
 
-  <bs-slider-controls>
+  <bs-slider-controls unstyled>
     <bs-fade auto-scroll timeout="2000" class="slider" timing-function="ease-in">
       <div class="slide">Slide One</div>
       <div class="slide">Slide Two</div>
@@ -55,6 +54,17 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="slide">Slide Four</div>
       <div class="slide">Slide Five</div>
     </bs-fade>
+
+    <button slot="play-btn">Play/Pause</button>
+
+    <button slot="prev-btn">Prev</button>
+    <button slot="next-btn">Next</button>
+
+    <div slot="index">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+    </div>
   </bs-slider-controls>
 
   <bs-slider-controls>
