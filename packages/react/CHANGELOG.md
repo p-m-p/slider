@@ -1,5 +1,14 @@
 # Change Log
 
+## 2.5.15
+
+### Patch Changes
+
+- 483388e: Apply default slider control styles via component with attribute to disable
+- Updated dependencies [483388e]
+  - @boxslider/components@2.8.0
+  - @boxslider/slider@2.8.1
+
 ## 2.5.14
 
 ### Patch Changes

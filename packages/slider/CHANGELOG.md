@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.8.1
+
+### Patch Changes
+
+- 483388e: Apply default slider control styles via component with attribute to disable
+
 ## 2.8.0
 
 ### Minor Changes
