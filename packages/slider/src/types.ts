@@ -94,21 +94,71 @@ export interface BoxSliderOptions {
 }
 
 export interface TransitionSettings {
+  /**
+   * The slider element
+   */
   el: HTMLElement
+
+  /**
+   * The slide elements
+   */
   slides: HTMLElement[]
+
+  /**
+   * The currently active slide index
+   */
   currentIndex: number
+
+  /**
+   * The next slide index to be shown
+   */
   nextIndex: number
+
+  /**
+   * `true` if the next slide index should be shown in a backward direction
+   */
   isPrevious: boolean
+
+  /**
+   * The transition speed for the slide animation
+   */
   speed: number
 }
 
 export interface Effect {
-  destroy?: (el: HTMLElement) => void
+  /**
+   * Destroy the effect to remove any timers, event listeners, etc.
+   */
+  destroy?: (el: HTMLElement, slides: HTMLElement[]) => void
+
+  /**
+   * Set the initial state of the effect
+   */
   initialize(
+    /**
+     * The slider element
+     */
     el: HTMLElement,
+
+    /**
+     * The slide elements
+     */
     slides: HTMLElement[],
-    options?: BoxSliderOptions,
-    stateStore?: StateStore,
+
+    /**
+     * The box slider options
+     */
+    options: BoxSliderOptions,
+
+    /**
+     * State store to persist any attributes that need to be restored
+     * when the slider is destroyed.
+     */
+    stateStore: StateStore,
   ): void
-  transition(settings: TransitionSettings): Promise<void>
+
+  /**
+   * Transition to the next slide
+   */
+  transition(settings: TransitionSettings): void | Promise<void>
 }

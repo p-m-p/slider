@@ -128,7 +128,7 @@ export default class BoxSlider {
     this.stopAutoScroll()
 
     if (typeof this.effect.destroy === 'function') {
-      this.effect.destroy(this.el)
+      this.effect.destroy(this.el, this.slides)
     }
 
     this.stateStore.revert()
@@ -255,7 +255,7 @@ export default class BoxSlider {
     this.stopAutoScroll()
 
     if (this.effect.destroy) {
-      this.effect.destroy(this.el)
+      this.effect.destroy(this.el, this.slides)
     }
 
     this.stateStore.revert()
@@ -356,7 +356,8 @@ export default class BoxSlider {
         speed: settings.speed,
       })
 
-      this.effect.transition(settings).then(() => {
+      const transition = this.effect.transition(settings) ?? Promise.resolve()
+      transition.then(() => {
         if (this.options.autoScroll) {
           this.setAutoScroll()
         }

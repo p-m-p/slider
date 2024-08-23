@@ -1,9 +1,41 @@
-import { BoxSlider, FadeSlider } from '.'
+import { BoxSlider, type Effect } from '.'
 
 const el = document.getElementById('slider')
 
 if (el) {
-  const slider = new BoxSlider(el, new FadeSlider(), { loop: false })
+  const fadeEffect: Effect = {
+    initialize(el, slides, options) {
+      el.style.setProperty('position', 'relative')
+      slides.forEach((slide, index) => {
+        slide.style.setProperty('position', 'absolute')
+        slide.style.setProperty(
+          'opacity',
+          index === options.startIndex ? '1' : '0',
+        )
+      })
+    },
+
+    async transition({ slides, speed, currentIndex, nextIndex }) {
+      const animateOut = slides[currentIndex].animate(
+        { opacity: 0 },
+        { duration: speed, fill: 'forwards' },
+      )
+      const animateIn = slides[nextIndex].animate(
+        { opacity: 1 },
+        { duration: speed, fill: 'forwards' },
+      )
+
+      await Promise.all([animateIn.finished, animateOut.finished])
+    },
+
+    destroy(_, slides) {
+      slides.forEach((slide) => {
+        slide.getAnimations().forEach((animation) => animation.cancel())
+      })
+    },
+  }
+
+  const slider = new BoxSlider(el, fadeEffect, { loop: false, speed: 500 })
 
   document
     .getElementById('next')
