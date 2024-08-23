@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.8.2
+
+### Patch Changes
+
+- 4d9e14d: Pass slides as second option to effect destroy method
+
 ## 2.8.1
 
 ### Patch Changes
