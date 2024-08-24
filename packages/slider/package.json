@@ -51,6 +51,9 @@
   },
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm run clean && pnpm run esbuild && pnpm run types",
     "clean": "rm -rf dist && rm -f LICENSE",

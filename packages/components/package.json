@@ -38,6 +38,9 @@
   },
   "main": "./dist/cjs/index.cs",
   "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm run clean && pnpm run build:lib && pnpm run build:types",
     "build:lib": "node build.js",
