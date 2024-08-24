@@ -7,15 +7,15 @@ if (el) {
     initialize(el, slides, options) {
       el.style.setProperty('position', 'relative')
       slides.forEach((slide, index) => {
+        const isActive = index === options.startIndex
         slide.style.setProperty('position', 'absolute')
-        slide.style.setProperty(
-          'opacity',
-          index === options.startIndex ? '1' : '0',
-        )
+        slide.style.setProperty('visibility', isActive ? 'visible' : 'hidden')
+        slide.style.setProperty('opacity', isActive ? '1' : '0')
       })
     },
 
     async transition({ slides, speed, currentIndex, nextIndex }) {
+      slides[nextIndex].style.setProperty('visibility', 'visible')
       const animateOut = slides[currentIndex].animate(
         { opacity: [1, 0], transform: ['scale(1)', 'scale(0.9)'] },
         { duration: speed, fill: 'forwards' },
@@ -26,6 +26,7 @@ if (el) {
       )
 
       await Promise.all([animateIn.finished, animateOut.finished])
+      slides[currentIndex].style.setProperty('visibility', 'hidden')
     },
 
     destroy(_, slides) {

@@ -2,6 +2,12 @@
 title: Custom Effect
 ---
 
+:::note
+The examples provided here are for illustrative purposes and may not be
+suitable for production use. You should consider browser compatibility,
+accessibility and performance when creating custom effects.
+:::
+
 It's possible to create your own custom effects for BoxSlider with an object that
 implements the slide [Effect interface](https://github.com/p-m-p/slider/blob/main/packages/slider/src/types.ts#L128).
 
@@ -70,7 +76,7 @@ const effect = {
 }
 ```
 
-## Destroying an effect
+## Destroying the effect
 
 When a slider is destroyed via the `destroy` method any style properties applied by the effect to the slider
 and slide elements will be either reset to their original values or removed by the `BoxSlider` object.
@@ -87,7 +93,38 @@ destroy(el, slides) {
 }
 ```
 
-:::note
-The examples provided here are for illustrative purposes and may not be suitable for production use. You
-should consider browser compatibility, accessibility and performance when creating custom effects.
-:::
+## Custom web component
+
+To use a custom effect as a web component, define an element that extends the `Slider` class and call the `init`
+method with the effect object from the `connectedCallback` method.
+
+```js
+import { Slider } from '@boxslider/components'
+
+class CustomSlider extends Slider {
+  connectedCallback() {
+    this.init(effect)
+  }
+}
+
+customElements.define('my-slider', CustomSlider)
+```
+
+The custom slider element can now be used standalone in HTML or be combined with the
+[slider controls](/docs/guides/slider-controls).
+
+```html
+<bs-slider-controls>
+  <my-slider speed="300" auto-scroll="false">
+    <div>Slide one</div>
+    <div>Slide two</div>
+    <div>Slide three</div>
+  </my-slider>
+</bs-slider-controls>
+```
+
+Check out the result!
+
+import { CustomEffect } from '@site/src/components/Examples'
+
+<CustomEffect />
