@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.8.2
+
+### Patch Changes
+
+- c288ea3: Allow custom effects to extend base slider element
+
 ## 2.8.1
 
 ### Patch Changes
