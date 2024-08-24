@@ -11,6 +11,7 @@ export function Slides() {
           />
           <img
             className={styles.slideImage}
+            loading="lazy"
             src="/slider/img/slides/hyena.webp"
             alt="Face of a hyena looking slightly to the left with the sun and pyramids in the background"
           />
@@ -24,6 +25,7 @@ export function Slides() {
           />
           <img
             className={styles.slideImage}
+            loading="lazy"
             src="/slider/img/slides/elephant.webp"
             alt="Front view of an elephant with patterns on it's skin walking forwards with the suns rays and palm trees in the background"
           />
@@ -37,6 +39,7 @@ export function Slides() {
           />
           <img
             className={styles.slideImage}
+            loading="lazy"
             src="/slider/img/slides/lion.webp"
             alt="Face of a lion looking slightly to the right with a wavey pattern mane and plant leafs in the background"
           />
@@ -50,6 +53,7 @@ export function Slides() {
           />
           <img
             className={styles.slideImage}
+            loading="lazy"
             src="/slider/img/slides/ram.webp"
             alt="Face of a ram with horns and large ears with hair that creates a pattern of swirls in the background"
           />
