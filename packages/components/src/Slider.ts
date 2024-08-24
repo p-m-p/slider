@@ -48,6 +48,8 @@ export default abstract class Slider
   #startIndex = defaultOptions.startIndex
   #timeout = defaultOptions.timeout
 
+  static observedAttributes = SLIDER_ATTRIBUTES
+
   get slider() {
     return this.#slider
   }

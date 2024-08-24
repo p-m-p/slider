@@ -1,8 +1,61 @@
 import './style.css'
 import '.'
+import { Slider } from '.'
+import type { Effect } from '@boxslider/slider'
+
+const effect: Effect = {
+  initialize(el, slides, options) {
+    el.style.setProperty('position', 'relative')
+    slides.forEach((slide, index) => {
+      const isActive = index === options.startIndex
+      slide.style.setProperty('position', 'absolute')
+      slide.style.setProperty('visibility', isActive ? 'visible' : 'hidden')
+      slide.style.setProperty('opacity', isActive ? '1' : '0')
+    })
+  },
+
+  async transition({ slides, speed, currentIndex, nextIndex }) {
+    slides[nextIndex].style.setProperty('visibility', 'visible')
+    const animateOut = slides[currentIndex].animate(
+      { opacity: [1, 0], transform: ['scale(1)', 'scale(0.95)'] },
+      { duration: speed, fill: 'forwards' },
+    )
+    const animateIn = slides[nextIndex].animate(
+      { opacity: [0, 1], transform: ['scale(0.95)', 'scale(1)'] },
+      { duration: speed, fill: 'forwards' },
+    )
+
+    await Promise.all([animateIn.finished, animateOut.finished])
+    slides[currentIndex].style.setProperty('visibility', 'hidden')
+  },
+
+  destroy(_, slides) {
+    slides.forEach((slide) => {
+      slide.getAnimations().forEach((animation) => animation.cancel())
+    })
+  },
+}
+
+class CustomSlider extends Slider {
+  connectedCallback() {
+    this.init(effect)
+  }
+}
+
+customElements.define('custom-slider', CustomSlider)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="sliders">
+  <bs-slider-controls>
+    <custom-slider auto-scroll="false" timeout="5000" speed="300" class="full-carousel">
+      <div class="slide">Slide One</div>
+      <div class="slide">Slide Two</div>
+      <div class="slide">Slide Three</div>
+      <div class="slide">Slide Four</div>
+      <div class="slide">Slide Five</div>
+    </custom-slider>
+  </bs-slider-controls>
+
   <bs-slider-controls>
     <bs-carousel auto-scroll="false" timeout="5000" cover class="full-carousel">
       <div class="slide">Slide One</div>

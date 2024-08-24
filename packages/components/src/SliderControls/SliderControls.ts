@@ -100,10 +100,13 @@ export default class SliderControls
 
     const sliderSlotRoot = this.shadowRoot
       ?.querySelector<HTMLSlotElement>('#slider')
-      ?.assignedElements()[0] as HTMLElement
-    const isSliderElement = sliderSlotRoot.tagName
-      .toLowerCase()
-      .startsWith('bs-')
+      ?.assignedElements()[0]
+
+    if (!sliderSlotRoot) {
+      return
+    }
+
+    const isSliderElement = !!(sliderSlotRoot as SliderElement).slider
 
     if (isSliderElement) {
       this.#sliderElement = sliderSlotRoot as SliderElement
@@ -113,12 +116,19 @@ export default class SliderControls
         childList: true,
       })
 
-      const sliderElement = sliderSlotRoot.querySelector<SliderElement>(
-        'bs-carousel, bs-cube, bs-fade, bs-tile',
-      )
+      let sliderElement: SliderElement | undefined
+
+      for (const childEl of sliderSlotRoot.querySelectorAll<SliderElement>(
+        '*',
+      )) {
+        if (childEl.slider) {
+          sliderElement = childEl
+          continue
+        }
+      }
 
       if (!sliderElement) {
-        throw new Error('No bs-* slider element found in default slot')
+        throw new Error('No slider element found in default slot')
       }
 
       this.#sliderElement = sliderElement
