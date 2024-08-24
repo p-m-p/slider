@@ -17,11 +17,11 @@ if (el) {
 
     async transition({ slides, speed, currentIndex, nextIndex }) {
       const animateOut = slides[currentIndex].animate(
-        { opacity: 0 },
+        { opacity: [1, 0], transform: ['scale(1)', 'scale(0.9)'] },
         { duration: speed, fill: 'forwards' },
       )
       const animateIn = slides[nextIndex].animate(
-        { opacity: 1 },
+        { opacity: [0, 1], transform: ['scale(0.9)', 'scale(1)'] },
         { duration: speed, fill: 'forwards' },
       )
 

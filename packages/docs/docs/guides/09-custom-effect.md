@@ -5,7 +5,7 @@ title: Custom Effect
 It's possible to create your own custom effects for BoxSlider with an object that
 implements the slide [Effect interface](https://github.com/p-m-p/slider/blob/main/packages/slider/src/types.ts#L128).
 
-Considering an example where the slide visibility is controlled by the CSS `display` property
+Considering an example where the slide visibility is controlled by the CSS `display` property,
 the `initialize` method sets the initial display value of all slides and the `transition` method
 updates the display setting of the current and next slide so that the next slide is made visible.
 
@@ -42,7 +42,7 @@ is finished. The animation speed is determined from the `speed` option set in th
 is provided in the transition settings passed to the `transition` method.
 
 ```js
-const fadeEffect = {
+const effect = {
   initialize(el, slides, options) {
     el.style.setProperty('position', 'relative')
 
@@ -57,11 +57,11 @@ const fadeEffect = {
 
   async transition({ slides, speed, currentIndex, nextIndex }) {
     const animateOut = slides[currentIndex].animate(
-      { opacity: 0 },
+      { opacity: [1, 0], transform: ['scale(1)', 'scale(0.9)'] },
       { duration: speed, fill: 'forwards' },
     )
     const animateIn = slides[nextIndex].animate(
-      { opacity: 1 },
+      { opacity: [0, 1], transform: ['scale(0.9)', 'scale(1)'] },
       { duration: speed, fill: 'forwards' },
     )
 
@@ -89,5 +89,5 @@ destroy(el, slides) {
 
 :::note
 The examples provided here are for illustrative purposes and may not be suitable for production use. You
-should consider browser compatibility and performance when creating custom effects.
+should consider browser compatibility, accessibility and performance when creating custom effects.
 :::
