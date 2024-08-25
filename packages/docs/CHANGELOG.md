@@ -1,5 +1,14 @@
 # docs
 
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies [80870d3]
+  - @boxslider/slider@2.8.3
+  - @boxslider/components@2.8.3
+  - @boxslider/react@2.5.18
+
 ## 0.0.15
 
 ### Patch Changes

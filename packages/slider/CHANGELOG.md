@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.8.3
+
+### Patch Changes
+
+- 80870d3: Update tile transition so that original slide content is no obscured by the tile transition wrapper
+
 ## 2.8.2
 
 ### Patch Changes
