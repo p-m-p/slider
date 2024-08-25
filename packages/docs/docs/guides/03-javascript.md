@@ -94,6 +94,6 @@ BoxSlider instance.
 ```ts
 // Add an event listener to the BoxSlider instance
 slider.addEventListener('after', (ev) => {
-  console.log(`Slide ${ev.detail.currentIndex} is now active`)
+  console.log(`Slide ${ev.currentIndex} is now active`)
 })
 ```
