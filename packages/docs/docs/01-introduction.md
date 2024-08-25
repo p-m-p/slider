@@ -20,6 +20,8 @@ The following slide effects are available:
 - [Fade](/docs/effects/fade) - A fade effect that fades slides in and out of view.
 - [Tile](/docs/effects/tile) - A tile effect that flips in 3d or fades slides in a grid pattern.
 
+Don't like the built-in effects? It's super easy to create a [custom effect](/docs/guides/custom-effect).
+
 ## Key features
 
 - **Performance**: BoxSlider is a small library with no third party dependencies that will help keep bundle sizes small.

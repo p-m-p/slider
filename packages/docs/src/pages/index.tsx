@@ -44,16 +44,16 @@ export default function Home() {
 
             <section className={styles.features}>
               <FeatureTile title="Multiple effects" icon={<Sparkles />}>
-                Carousel, fade, tile and 3D slide transitions to suit multiple
-                different project requirements
+                Carousel, fade, tile and 3D slide transitions built in and a
+                simple API to create your own
               </FeatureTile>
               <FeatureTile title="Easy to use" icon={<Code />}>
                 Bring your own styles! There&apos;s no complicated setup or
                 style sheets to include
               </FeatureTile>
               <FeatureTile title="SEO and Accessibility" icon={<SearchCheck />}>
-                SSR compatible, ARIA attributes and easy to integrate with
-                accessible controls
+                SSR compatible, ARIA attributes and easy to integrate accessible
+                control components
               </FeatureTile>
             </section>
           </header>
