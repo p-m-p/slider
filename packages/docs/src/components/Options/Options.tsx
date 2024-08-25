@@ -33,7 +33,7 @@ export function Options({ controls = [] }: OptionsProps) {
           />
         </div>
         <div className={styles.field}>
-          <label htmlFor={`'timeout-${id}'`}>timeout</label>
+          <label htmlFor={`timeout-${id}`}>timeout</label>
           <input
             id={`timeout-${id}`}
             size={4}
