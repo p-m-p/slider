@@ -84,10 +84,8 @@ export default class TileSlider implements Effect {
 
     applyCss(this.tileWrapper, {
       position: 'absolute',
-      top: '0',
-      left: '0',
-      width: '100%',
-      height: '100%',
+      inset: '0',
+      display: 'none',
     })
 
     const totalTiles = this.grid.rows * this.grid.cols
@@ -119,15 +117,10 @@ export default class TileSlider implements Effect {
       }
     }
 
-    slides.forEach((s) =>
+    slides.forEach((s, index) =>
       applyCss(s, {
         position: 'absolute',
-        clip: 'rect(0 0 0 0)',
-        height: '1px',
-        width: '1px',
-        margin: '-1px',
-        padding: '0',
-        border: '0',
+        visibility: index === options.startIndex ? 'visible' : 'hidden',
       }),
     )
 
@@ -145,6 +138,11 @@ export default class TileSlider implements Effect {
       this.rowTimers.length = 0
       this.tileTimers.length = 0
 
+      this.tileWrapper.style.setProperty('display', 'block')
+      settings.slides[settings.currentIndex].style.setProperty(
+        'visibility',
+        'hidden',
+      )
       this.tileWrapper
         .querySelectorAll(
           `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
@@ -175,6 +173,15 @@ export default class TileSlider implements Effect {
 
                   if (tile === tiles[tiles.length - 1]) {
                     this.activeFace = nextFace
+                    this.tileTimers.push(
+                      window.setTimeout(() => {
+                        this.tileWrapper.style.setProperty('display', 'none')
+                        settings.slides[settings.nextIndex].style.setProperty(
+                          'visibility',
+                          'visible',
+                        )
+                      }, tileTimeout),
+                    )
                     resolve()
                   }
                 }, tileTimeout),

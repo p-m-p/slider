@@ -36,7 +36,11 @@ if (el) {
     },
   }
 
-  const slider = new BoxSlider(el, fadeEffect, { loop: false, speed: 500 })
+  const slider = new BoxSlider(el, fadeEffect, {
+    autoScroll: false,
+    loop: false,
+    speed: 500,
+  })
 
   document
     .getElementById('next')

@@ -300,7 +300,7 @@ export default class BoxSlider {
   private addAriaAttributes() {
     this.stateStore.storeAttributes(
       [this.el, ...this.slides],
-      ['aria-live', 'role', 'aria-roledescription'],
+      ['aria-hidden', 'aria-live', 'aria-roledescription', 'role'],
     )
 
     this.el.setAttribute('aria-atomic', 'false')
@@ -310,7 +310,7 @@ export default class BoxSlider {
       this.el.setAttribute('role', 'region')
     }
 
-    this.slides.forEach((slide) => {
+    this.slides.forEach((slide, index) => {
       if (!slide.hasAttribute('role')) {
         slide.setAttribute('role', 'group')
       }
@@ -318,6 +318,11 @@ export default class BoxSlider {
       if (!slide.hasAttribute('aria-roledescription')) {
         slide.setAttribute('aria-roledescription', 'slide')
       }
+
+      slide.setAttribute(
+        'aria-hidden',
+        index === this.activeIndex ? 'false' : 'true',
+      )
     })
   }
 
@@ -361,6 +366,9 @@ export default class BoxSlider {
         if (this.options.autoScroll) {
           this.setAutoScroll()
         }
+
+        this.slides[settings.currentIndex].setAttribute('aria-hidden', 'true')
+        this.slides[settings.nextIndex].setAttribute('aria-hidden', 'false')
 
         this.emit('after')
         resolve()
