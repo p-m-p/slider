@@ -8,8 +8,6 @@ export interface CarouselSliderOptions {
 
 export default class CarouselSlider implements Effect {
   readonly options: CarouselSliderOptions
-  private transitionTimer = 0
-  private asyncTimer = 0
 
   constructor(options?: CarouselSliderOptions) {
     this.options = {
@@ -22,7 +20,7 @@ export default class CarouselSlider implements Effect {
     el: HTMLElement,
     slides: HTMLElement[],
     options: BoxSliderOptions,
-  ): void {
+  ) {
     applyCss(el, {
       overflow: 'hidden',
     })
@@ -32,77 +30,77 @@ export default class CarouselSlider implements Effect {
     }
 
     slides.forEach((slide, index) => {
+      const active = index === options.startIndex
+
       applyCss(slide, {
         left: '0',
         position: 'absolute',
         top: '0',
-        transform: `translateX(${slide.offsetWidth}px)`,
-        transition: 'initial',
-        visibility: 'hidden',
-        'z-index': '1',
+        transform: `translateX(${active ? 0 : slide.offsetWidth}px)`,
+        visibility: active ? 'visible' : 'hidden',
+        'z-index': active ? '2' : '1',
       })
-
-      if (index === options.startIndex) {
-        applyCss(slide, {
-          transform: 'translateX(0px)',
-          visibility: 'visible',
-          'z-index': '2',
-        })
-      }
     })
   }
 
-  destroy() {
-    window.clearTimeout(this.transitionTimer)
-    window.clearTimeout(this.asyncTimer)
+  async transition({
+    currentIndex,
+    isPrevious,
+    nextIndex,
+    slides,
+    speed,
+  }: TransitionSettings) {
+    const currentSlide = slides[currentIndex]
+    const currentSlideWidth = currentSlide.offsetWidth
+    const nextSlide = slides[nextIndex]
+    const nextSlideWidth = nextSlide.offsetWidth
+
+    applyCss(nextSlide, {
+      visibility: 'visible',
+      'z-index': '2',
+    })
+
+    applyCss(currentSlide, {
+      'z-index': '1',
+    })
+
+    const animateIn = nextSlide.animate(
+      {
+        transform: [
+          `translateX(${isPrevious ? '-' + nextSlideWidth : nextSlideWidth}px)`,
+          'translateX(0px)',
+        ],
+      },
+      {
+        duration: speed,
+        easing: this.options.timingFunction,
+        fill: 'forwards',
+      },
+    )
+
+    if (!this.options.cover) {
+      await currentSlide.animate(
+        {
+          transform: `translateX(${isPrevious ? currentSlideWidth : '-' + currentSlideWidth}px)`,
+        },
+        {
+          duration: speed,
+          easing: this.options.timingFunction,
+          fill: 'forwards',
+        },
+      ).finished
+    }
+
+    await animateIn.finished
+
+    applyCss(currentSlide, {
+      visibility: 'hidden',
+    })
   }
 
-  transition(settings: TransitionSettings): Promise<void> {
-    return new Promise((resolve) => {
-      const currentSlide = settings.slides[settings.currentIndex]
-      const currentSlideWidth = `${currentSlide.offsetWidth}px`
-      const nextSlide = settings.slides[settings.nextIndex]
-      const nextSlideWidth = `${nextSlide.offsetWidth}px`
-
-      applyCss(nextSlide, {
-        transform: `translateX(${
-          settings.isPrevious ? '-' + nextSlideWidth : nextSlideWidth
-        })`,
-      })
-
-      this.asyncTimer = window.setTimeout(() => {
-        applyCss(nextSlide, {
-          transform: 'translateX(0px)',
-          transition: `transform ${settings.speed}ms ${this.options.timingFunction}`,
-          visibility: 'visible',
-          'z-index': '2',
-        })
-
-        applyCss(currentSlide, {
-          transform: this.options.cover
-            ? 'translateX(0px)'
-            : `translateX(${
-                settings.isPrevious
-                  ? currentSlideWidth
-                  : '-' + currentSlideWidth
-              })`,
-          transition: this.options.cover
-            ? 'initial'
-            : `transform ${settings.speed}ms ${this.options.timingFunction}`,
-          visibility: 'visible',
-          'z-index': '1',
-        })
-
-        this.transitionTimer = window.setTimeout(() => {
-          applyCss(currentSlide, {
-            transform: `translateX(${currentSlideWidth})`,
-            transition: 'initial',
-            visibility: 'hidden',
-          })
-
-          resolve()
-        }, settings.speed)
-      }, 0)
+  destroy(_: HTMLElement, slides: HTMLElement[]) {
+    slides.forEach((slide) => {
+      slide.getAnimations().forEach((animation) => animation.cancel())
     })
   }
 }

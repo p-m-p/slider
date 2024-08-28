@@ -1,4 +1,4 @@
-import { BoxSlider, TileSlider } from '.'
+import { BoxSlider, CarouselSlider } from '.'
 
 const el = document.getElementById('slider')
 
@@ -38,14 +38,10 @@ if (el) {
   }
   */
 
-  const slider = new BoxSlider(
-    el,
-    new TileSlider({ tileEffect: 'fade', rows: 5 }),
-    {
-      autoScroll: false,
-      loop: false,
-    },
-  )
+  const slider = new BoxSlider(el, new CarouselSlider({}), {
+    autoScroll: false,
+    loop: false,
+  })
 
   document
     .getElementById('next')
