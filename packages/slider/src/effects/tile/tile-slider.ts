@@ -37,8 +37,6 @@ export default class TileSlider implements Effect {
   private tileTransition: FadeTransition | FlipTransition
   private grid!: TileGrid
   private activeFace: 'front' | 'back'
-  private rowTimers: number[] = []
-  private tileTimers: number[] = []
 
   get tileWrapper() {
     if (this._tileWrapper === undefined) {
@@ -127,79 +125,56 @@ export default class TileSlider implements Effect {
     this.tileWrapper.appendChild(fragment)
   }
 
-  transition(settings: TransitionSettings): Promise<void> {
-    return new Promise((resolve) => {
-      const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`)
-      const rowInterval = this.options.rowOffset
-      const tileInterval =
-        (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
-      const nextFace = this.activeFace === 'front' ? 'back' : 'front'
+  async transition(settings: TransitionSettings): Promise<void> {
+    const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`)
+    const rowInterval = this.options.rowOffset
+    const tileDuration =
+      (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
+    const nextFace = this.activeFace === 'front' ? 'back' : 'front'
 
-      this.rowTimers.length = 0
-      this.tileTimers.length = 0
-
-      this.tileWrapper.style.setProperty('display', 'block')
-      settings.slides[settings.currentIndex].style.setProperty(
-        'visibility',
-        'hidden',
+    this.tileWrapper.style.setProperty('display', 'block')
+    settings.slides[settings.currentIndex].style.setProperty(
+      'visibility',
+      'hidden',
+    )
+    this.tileWrapper
+      .querySelectorAll(
+        `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
       )
-      this.tileWrapper
-        .querySelectorAll(
-          `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
-        )
-        .forEach((tile: HTMLElement | Element) =>
-          this.tileTransition.setTileFace(
-            settings.slides[settings.nextIndex],
-            tile as HTMLElement,
-          ),
-        )
+      .forEach((tile: HTMLElement | Element) =>
+        this.tileTransition.setTileFace(
+          settings.slides[settings.nextIndex],
+          tile as HTMLElement,
+        ),
+      )
 
-      for (let i = 0; i < this.grid.rows; ++i) {
-        let j = i * this.grid.cols
-        let timerIndex = 0
+    for (let i = 0; i < this.grid.rows; i++) {
+      for (let j = 0; j < this.grid.cols; j++) {
+        const index = i * this.grid.cols + j
+        const tile = tiles[index] as HTMLElement
+        const transition = this.tileTransition.transition({
+          delay: i * rowInterval + j * tileDuration,
+          duration: tileDuration,
+          nextFace,
+          tile,
+        })
 
-        const rowEnd = j + this.grid.cols
-        const rowTimeout = i * rowInterval
-
-        this.rowTimers.push(
-          window.setTimeout(() => {
-            for (; j < rowEnd; ++j) {
-              const tileTimeout = timerIndex * tileInterval
-              const tile = tiles[j] as HTMLElement
-
-              this.tileTimers.push(
-                window.setTimeout(() => {
-                  this.tileTransition.transition(tile, nextFace)
-
-                  if (tile === tiles[tiles.length - 1]) {
-                    this.activeFace = nextFace
-                    this.tileTimers.push(
-                      window.setTimeout(() => {
-                        this.tileWrapper.style.setProperty('display', 'none')
-                        settings.slides[settings.nextIndex].style.setProperty(
-                          'visibility',
-                          'visible',
-                        )
-                      }, tileTimeout),
-                    )
-                    resolve()
-                  }
-                }, tileTimeout),
-              )
-
-              timerIndex += 1
-            }
-          }, rowTimeout),
-        )
+        if (index === tiles.length - 1) {
+          await transition
+          this.activeFace = nextFace
+          this.tileWrapper.style.setProperty('display', 'none')
+          settings.slides[settings.nextIndex].style.setProperty(
+            'visibility',
+            'visible',
+          )
+        }
       }
-    })
+    }
   }
 
   destroy(el: HTMLElement) {
     el.removeChild(this.tileWrapper)
     delete this._tileWrapper
-    this.rowTimers.forEach(window.clearTimeout)
-    this.tileTimers.forEach(window.clearTimeout)
   }
 
   private calculateGrid(el: HTMLElement): TileGrid {

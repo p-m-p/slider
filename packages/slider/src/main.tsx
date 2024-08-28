@@ -1,8 +1,9 @@
-import { BoxSlider, type Effect } from '.'
+import { BoxSlider, TileSlider } from '.'
 
 const el = document.getElementById('slider')
 
 if (el) {
+  /*
   const fadeEffect: Effect = {
     initialize(el, slides, options) {
       el.style.setProperty('position', 'relative')
@@ -35,12 +36,17 @@ if (el) {
       })
     },
   }
+  */
 
-  const slider = new BoxSlider(el, fadeEffect, {
-    autoScroll: false,
-    loop: false,
-    speed: 500,
-  })
+  const slider = new BoxSlider(
+    el,
+    new TileSlider({ tileEffect: 'fade', rows: 5 }),
+    {
+      autoScroll: false,
+      loop: false,
+      speed: 500,
+    },
+  )
 
   document
     .getElementById('next')

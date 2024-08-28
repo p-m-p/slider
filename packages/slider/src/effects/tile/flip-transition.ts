@@ -1,5 +1,5 @@
 import {
-  type TileFace,
+  TransitionSettings,
   type TileSettings,
   type TileTransition,
 } from './tile-transition'
@@ -30,7 +30,6 @@ class FlipTransition implements TileTransition {
       height: '100%',
       position: 'relative',
       'transform-style': 'preserve-3d',
-      transition: `transform ${tileSettings.speed}ms`,
       width: '100%',
     })
     tileHolder.appendChild(tile)
@@ -69,10 +68,15 @@ class FlipTransition implements TileTransition {
     return tileHolder
   }
 
-  transition(tile: HTMLElement, nextFace: TileFace) {
-    applyCss(tile, {
-      transform: `rotateY(${nextFace === 'back' ? 180 : 0}deg)`,
-    })
+  async transition({ tile, nextFace, delay, duration }: TransitionSettings) {
+    await tile.animate(
+      { transform: `rotateY(${nextFace === 'back' ? 180 : 0}deg)` },
+      {
+        duration,
+        fill: 'forwards',
+        delay,
+      },
+    ).finished
   }
 
   setTileFace(slide: HTMLElement, tileFace: HTMLElement) {

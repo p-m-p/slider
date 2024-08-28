@@ -1,9 +1,9 @@
 import {
-  type TileFace,
   type TileSettings,
   type TileTransition,
   FRONT_FACE_CLASS,
   BACK_FACE_CLASS,
+  TransitionSettings,
 } from './tile-transition'
 import { applyCss } from '../../utils'
 
@@ -31,7 +31,6 @@ class FadeTransition implements TileTransition {
         left: `-${tileSettings.fromLeft}px`,
         position: 'absolute',
         top: `-${tileSettings.fromTop}px`,
-        transition: 'opacity 400ms',
         width: `${tileSettings.boxWidth}px`,
       })
     })
@@ -46,12 +45,20 @@ class FadeTransition implements TileTransition {
     return tile
   }
 
-  transition(tile: HTMLElement, nextFace: TileFace): void {
+  async transition({ tile, nextFace, delay, duration }: TransitionSettings) {
     const front = tile.querySelector(`.${FRONT_FACE_CLASS}`) as HTMLElement
     const back = tile.querySelector(`.${BACK_FACE_CLASS}`) as HTMLElement
 
-    applyCss(front, { opacity: nextFace === 'front' ? '1' : '0' })
-    applyCss(back, { opacity: nextFace === 'front' ? '0' : '1' })
+    const frontAnimation = front.animate(
+      { opacity: nextFace === 'front' ? 1 : 0 },
+      { duration, fill: 'forwards', delay },
+    )
+    const backAnimation = back.animate(
+      { opacity: nextFace === 'front' ? 0 : 1 },
+      { duration, fill: 'forwards', delay },
+    )
+
+    await Promise.all([frontAnimation.finished, backAnimation.finished])
   }
 
   setTileFace(slide: HTMLElement, tileFace: HTMLElement) {

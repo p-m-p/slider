@@ -18,8 +18,15 @@ export const BACK_FACE_CLASS = 'bs-tile-back'
 
 export type TileFace = 'front' | 'back'
 
+export interface TransitionSettings {
+  tile: HTMLElement
+  nextFace: TileFace
+  delay: number
+  duration: number
+}
+
 export interface TileTransition {
   createTile(tileSettings: TileSettings): HTMLElement
-  transition(tile: HTMLElement, face?: TileFace): void
+  transition(settings: TransitionSettings): Promise<void>
   setTileFace(slide: HTMLElement, tileFace: HTMLElement): void
 }
