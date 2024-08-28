@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BoxSlider</title>
     <style>
-      #slider {
+      #viewport {
         height: 400px;
         margin: 100px auto 40px;
-        position: relative;
         width: 600px;
+      }
+
+      #slider {
+        height: 100%;
+        position: relative;
+        width: 100%;
       }
 
       .slide {
@@ -37,17 +42,19 @@
   </head>
 
   <body>
-    <div id="slider">
-      <div class="slide">Slide one <a href="#">Things will get weird</a></div>
-      <div class="slide alt">Slide two</div>
-      <div class="slide">Slide three</div>
-      <div class="slide alt">Slide four</div>
-      <div class="slide">Slide five</div>
-      <div class="slide alt">Slide six</div>
-      <div class="slide">Slide seven</div>
-      <div class="slide alt">Slide eight</div>
-      <div class="slide">Slide nine</div>
-      <div class="slide alt">Slide ten</div>
+    <div id="viewport">
+      <div id="slider">
+        <div class="slide">Slide one <a href="#">Things will get weird</a></div>
+        <div class="slide alt">Slide two</div>
+        <div class="slide">Slide three</div>
+        <div class="slide alt">Slide four</div>
+        <div class="slide">Slide five</div>
+        <div class="slide alt">Slide six</div>
+        <div class="slide">Slide seven</div>
+        <div class="slide alt">Slide eight</div>
+        <div class="slide">Slide nine</div>
+        <div class="slide alt">Slide ten</div>
+      </div>
     </div>
     <div id="controls">
       <button type="button" id="prev">Previous</button>

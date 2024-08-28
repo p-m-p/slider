@@ -2,4 +2,4 @@
 '@boxslider/slider': minor
 ---
 
-Use web animations api for tile transitions
+Use web animations api for effect transitions

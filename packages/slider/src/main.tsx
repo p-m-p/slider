@@ -1,4 +1,4 @@
-import { BoxSlider, FadeSlider } from '.'
+import { BoxSlider, CubeSlider } from '.'
 
 const el = document.getElementById('slider')
 
@@ -38,9 +38,10 @@ if (el) {
   }
   */
 
-  const slider = new BoxSlider(el, new FadeSlider({}), {
+  const slider = new BoxSlider(el, new CubeSlider({ direction: 'vertical' }), {
     autoScroll: false,
     loop: false,
+    speed: 400,
   })
 
   document
