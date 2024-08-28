@@ -7,7 +7,6 @@ export interface FadeSliderOptions {
 
 export default class FadeSlider implements Effect {
   readonly options: FadeSliderOptions
-  private transitionTimer = 0
 
   constructor(options?: FadeSliderOptions) {
     this.options = {
@@ -25,36 +24,55 @@ export default class FadeSlider implements Effect {
     }
 
     slides.forEach((slide: HTMLElement, index: number) => {
+      const active = index === options.startIndex
+
       applyCss(slide, {
         height: '100%',
         left: '0',
-        opacity: '2',
+        opacity: active ? '1' : '0',
         position: 'absolute',
         top: '0',
-        transition: `opacity ${options.speed}ms ${this.options.timingFunction}`,
         width: '100%',
-        'z-index': '2',
+        'z-index': active ? '2' : '1',
       })
-
-      if (index !== options.startIndex) {
-        applyCss(slide, { opacity: '0', 'z-index': '1' })
-      }
     })
   }
 
-  transition(settings: TransitionSettings): Promise<void> {
-    return new Promise((resolve) => {
-      const currentSlide = settings.slides[settings.currentIndex]
-      const nextSlide = settings.slides[settings.nextIndex]
+  async transition({
+    currentIndex,
+    nextIndex,
+    slides,
+    speed,
+  }: TransitionSettings) {
+    const currentSlide = slides[currentIndex]
+    const nextSlide = slides[nextIndex]
 
-      applyCss(currentSlide, { 'z-index': '1', opacity: '0' })
-      applyCss(nextSlide, { 'z-index': '2', opacity: '1' })
+    applyCss(currentSlide, { 'z-index': '1' })
+    applyCss(nextSlide, { 'z-index': '2' })
 
-      this.transitionTimer = window.setTimeout(resolve, settings.speed)
-    })
+    await Promise.all([
+      currentSlide.animate(
+        { opacity: [1, 0] },
+        {
+          duration: speed,
+          easing: this.options.timingFunction,
+          fill: 'forwards',
+        },
+      ).finished,
+      nextSlide.animate(
+        { opacity: [0, 1] },
+        {
+          duration: speed,
+          easing: this.options.timingFunction,
+          fill: 'forwards',
+        },
+      ).finished,
+    ])
   }
 
-  destroy() {
-    window.clearTimeout(this.transitionTimer)
+  destroy(_: HTMLElement, slides: HTMLElement[]) {
+    slides.forEach((slide) => {
+      slide.getAnimations().forEach((animation) => animation.cancel())
+    })
   }
 }
