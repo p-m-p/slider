@@ -44,7 +44,6 @@ if (el) {
     {
       autoScroll: false,
       loop: false,
-      speed: 500,
     },
   )
 

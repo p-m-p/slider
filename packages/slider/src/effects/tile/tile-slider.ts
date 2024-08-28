@@ -127,9 +127,9 @@ export default class TileSlider implements Effect {
 
   async transition(settings: TransitionSettings): Promise<void> {
     const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`)
-    const rowInterval = this.options.rowOffset
     const tileDuration =
-      (settings.speed - rowInterval * (this.grid.rows - 1)) / this.grid.cols
+      (settings.speed - this.options.rowOffset * (this.grid.rows - 1)) /
+      this.grid.cols
     const nextFace = this.activeFace === 'front' ? 'back' : 'front'
 
     this.tileWrapper.style.setProperty('display', 'block')
@@ -141,7 +141,7 @@ export default class TileSlider implements Effect {
       .querySelectorAll(
         `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
       )
-      .forEach((tile: HTMLElement | Element) =>
+      .forEach((tile) =>
         this.tileTransition.setTileFace(
           settings.slides[settings.nextIndex],
           tile as HTMLElement,
@@ -153,7 +153,7 @@ export default class TileSlider implements Effect {
         const index = i * this.grid.cols + j
         const tile = tiles[index] as HTMLElement
         const transition = this.tileTransition.transition({
-          delay: i * rowInterval + j * tileDuration,
+          delay: i * this.options.rowOffset + j * tileDuration,
           duration: tileDuration,
           nextFace,
           tile,
