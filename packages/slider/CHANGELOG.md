@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.9.0
+
+### Minor Changes
+
+- 1da6a38: Use web animations api for effect transitions
+
 ## 2.8.3
 
 ### Patch Changes
