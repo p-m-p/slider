@@ -79,7 +79,10 @@ export default class CarouselSlider implements Effect {
     if (!this.options.cover) {
       await currentSlide.animate(
         {
-          transform: `translateX(${isPrevious ? currentSlideWidth : '-' + currentSlideWidth}px)`,
+          transform: [
+            'translateX(0px)',
+            `translateX(${isPrevious ? currentSlideWidth : '-' + currentSlideWidth}px)`,
+          ],
         },
         {
           duration: speed,
