@@ -71,6 +71,7 @@ export default class TileSlider implements Effect {
 
     const tileWrapper = document.createElement('div')
     tileWrapper.setAttribute('aria-hidden', 'true')
+    tileWrapper.dataset.bsElement = 'true'
     el.appendChild(tileWrapper)
     this._tileWrapper = tileWrapper
 
