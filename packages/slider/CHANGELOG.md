@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.10.0
+
+### Minor Changes
+
+- 536b842: Add init and reset events to core slider and update components when mutations to slides are observed
+
 ## 2.9.0
 
 ### Minor Changes

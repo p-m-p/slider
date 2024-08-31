@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.9.0
+
+### Minor Changes
+
+- 536b842: Add init and reset events to core slider and update components when mutations to slides are observed
+
+### Patch Changes
+
+- Updated dependencies [536b842]
+  - @boxslider/slider@2.10.0
+
 ## 2.8.4
 
 ### Patch Changes
