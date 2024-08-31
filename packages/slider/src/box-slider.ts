@@ -173,6 +173,7 @@ export default class BoxSlider {
 
     return this.skipTo(
       isFirstSlide ? this.slides.length - 1 : this.activeIndex - 1,
+      true,
     )
   }
 
