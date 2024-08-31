@@ -21,9 +21,9 @@ afterEach(() => {
 function assertActiveSlideIndex(slides: HTMLElement[], index: number) {
   slides.forEach((slide, i) => {
     if (i === index) {
-      expect(slide).toBeVisible()
+      expect(slide).toHaveAttribute('aria-hidden', 'false')
     } else {
-      expect(slide).not.toBeVisible()
+      expect(slide).toHaveAttribute('aria-hidden', 'true')
     }
   })
 }

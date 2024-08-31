@@ -257,10 +257,10 @@ test('slide transition', async () => {
     speed: `${speed}`,
   })
 
-  expect(getByText(el, 'Slide one')).toBeVisible()
-  expect(getByText(el, 'Slide two')).not.toBeVisible()
-  expect(getByText(el, 'Slide three')).not.toBeVisible()
-  expect(getByText(el, 'Slide four')).not.toBeVisible()
+  expect(getByText(el, 'Slide one')).toHaveAttribute('aria-hidden', 'false')
+  expect(getByText(el, 'Slide two')).toHaveAttribute('aria-hidden', 'true')
+  expect(getByText(el, 'Slide three')).toHaveAttribute('aria-hidden', 'true')
+  expect(getByText(el, 'Slide four')).toHaveAttribute('aria-hidden', 'true')
 
   const beforeHandler = vi.fn()
   const afterHandler = vi.fn()
@@ -279,10 +279,10 @@ test('slide transition', async () => {
         },
       }),
     )
-    expect(getByText(el, 'Slide three')).toBeVisible()
-    expect(getByText(el, 'Slide one')).not.toBeVisible()
-    expect(getByText(el, 'Slide two')).not.toBeVisible()
-    expect(getByText(el, 'Slide four')).not.toBeVisible()
+    expect(getByText(el, 'Slide one')).toHaveAttribute('aria-hidden', 'true')
+    expect(getByText(el, 'Slide two')).toHaveAttribute('aria-hidden', 'true')
+    expect(getByText(el, 'Slide three')).toHaveAttribute('aria-hidden', 'false')
+    expect(getByText(el, 'Slide four')).toHaveAttribute('aria-hidden', 'true')
     expect(afterHandler).toHaveBeenCalledWith(
       new CustomEvent('after', {
         detail: {
