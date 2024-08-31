@@ -94,6 +94,16 @@ slider.removeEventListener('after', afterTransitionListener)
 
 ## Events
 
+### `init`
+
+Fires when a slider is initialised.
+
+```javascript
+slider.addEventListener('init', () => {
+  // No event data
+})
+```
+
 ### `before`
 
 Fires before each slide transition starts. The current and next indexes are supplied in the
@@ -146,6 +156,17 @@ slider.addEventListener('pause', (data) => {
   //   currentIndex: number
   //   speed: number
   // }
+})
+```
+
+### `reset`
+
+Fires when a slider is reset. This can happen when the `reset` method is called or
+when the slider element is resized.
+
+```javascript
+slider.addEventListener('reset', () => {
+  // No event data
 })
 ```
 
