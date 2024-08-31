@@ -1,5 +1,6 @@
 import { register, SafeBaseElement } from '../core'
 import type { SliderElement } from '../Slider'
+import Slider from '../Slider'
 import styles from './styles'
 
 let template: HTMLTemplateElement
@@ -48,8 +49,14 @@ export default class SliderControls
   constructor() {
     super()
 
-    this.#mutationObserver = new MutationObserver(() => {
-      this.#init()
+    this.#mutationObserver = new MutationObserver((mutations) => {
+      const hasNewSlider = mutations.some((mutation) => {
+        Array.from(mutation.addedNodes).some((node) => node instanceof Slider)
+      })
+
+      if (hasNewSlider) {
+        this.#init()
+      }
     })
   }
 
@@ -123,7 +130,7 @@ export default class SliderControls
       )) {
         if (childEl.slider) {
           sliderElement = childEl
-          continue
+          break
         }
       }
 
@@ -146,6 +153,7 @@ export default class SliderControls
       this.#sliderElement.addEventListener('pause', () =>
         this.#setPlayBtnState(),
       )
+      this.#sliderElement.addEventListener('reset', () => this.#init())
 
       this.#addIndexPips()
       this.#sliderElement.addEventListener(

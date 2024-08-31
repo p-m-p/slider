@@ -38,6 +38,7 @@ export default abstract class Slider
   implements SliderElementProps
 {
   #slider?: BoxSlider
+  #observer: MutationObserver
 
   #autoScroll = defaultOptions.autoScroll
   #loop = defaultOptions.loop
@@ -144,14 +145,35 @@ export default abstract class Slider
     }
   }
 
+  constructor() {
+    super()
+    this.#observer = new MutationObserver((mutations) => {
+      const needsReset = mutations.some((mutation) =>
+        [...mutation.addedNodes, ...mutation.removedNodes].some(
+          (node: Node) => {
+            return !(node instanceof HTMLElement && node.dataset.bsElement)
+          },
+        ),
+      )
+
+      if (needsReset) {
+        this.reset({
+          ...this.options,
+          startIndex: this.slider?.activeIndex ?? 0,
+        })
+      }
+    })
+  }
+
   protected init(effect: Effect) {
     const slider = new BoxSlider(this, effect, this.options)
     const events: SliderEventType[] = [
-      'play',
-      'pause',
-      'before',
       'after',
+      'before',
       'destroy',
+      'pause',
+      'play',
+      'reset',
     ]
 
     events.forEach((ev) =>
@@ -161,6 +183,7 @@ export default abstract class Slider
     )
 
     this.#slider = slider
+    this.#observer.observe(this, { childList: true })
   }
 
   protected reset(options: Partial<BoxSliderOptions>, effect?: Effect) {
@@ -180,6 +203,7 @@ export default abstract class Slider
   }
 
   disconnectedCallback() {
+    this.#observer.disconnect()
     this.slider?.destroy()
     this.#slider = undefined
   }

@@ -45,9 +45,11 @@ class CustomSlider extends Slider {
 customElements.define('custom-slider', CustomSlider)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+<button id="add-slides">Add Slides</button>
+
 <div class="sliders">
   <bs-slider-controls>
-    <custom-slider auto-scroll="false" timeout="5000" speed="300" class="full-carousel">
+    <custom-slider auto-scroll="true" timeout="1000" speed="300" class="full-carousel" id="custom">
       <div class="slide">Slide One</div>
       <div class="slide">Slide Two</div>
       <div class="slide">Slide Three</div>
@@ -121,7 +123,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </bs-slider-controls>
 
   <bs-slider-controls>
-    <bs-tile auto-scroll timeout="7000" class="slider" tile-effect="fade">
+    <bs-tile auto-scroll="false" timeout="7000" class="slider" tile-effect="fade">
       <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_1.png" /></div>
       <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_2.png" /></div>
       <div class="slide"><img src="/Futuristic_city_scape_on_a_distant_alien_planet_3.png" /></div>
@@ -131,3 +133,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </bs-slider-controls>
 </div>
 `
+
+setTimeout(() => {
+  document.getElementById('add-slides')!.addEventListener('click', () => {
+    const custom = document.getElementById('custom')
+    custom!.innerHTML += '<div class="slide">Slide Six</div>'
+  })
+}, 1000)
