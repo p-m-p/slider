@@ -37,8 +37,7 @@ export default class CarouselSlider implements Effect {
         position: 'absolute',
         top: '0',
         transform: `translateX(${active ? 0 : slide.offsetWidth}px)`,
-        visibility: active ? 'visible' : 'hidden',
-        'z-index': active ? '2' : '1',
+        'z-index': active ? '3' : '1',
       })
     })
   }
@@ -56,12 +55,11 @@ export default class CarouselSlider implements Effect {
     const nextSlideWidth = nextSlide.offsetWidth
 
     applyCss(nextSlide, {
-      visibility: 'visible',
-      'z-index': '2',
+      'z-index': '3',
     })
 
     applyCss(currentSlide, {
-      'z-index': '1',
+      'z-index': '2',
     })
 
     const animateIn = nextSlide.animate(
@@ -94,7 +92,7 @@ export default class CarouselSlider implements Effect {
     await animateIn.finished
 
     applyCss(currentSlide, {
-      visibility: 'hidden',
+      'z-index': '1',
     })
   }
 
