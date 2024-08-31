@@ -34,6 +34,11 @@ export interface SliderEventListenerMap {
   destroy: () => void
 
   /**
+   * Event triggered when slider is initialized
+   */
+  init: () => void
+
+  /**
    * Event triggered when slider auto scrolling is stopped
    */
   pause: (data: SliderEventData) => void
@@ -42,6 +47,11 @@ export interface SliderEventListenerMap {
    * Event triggered when slider auto scrolling is started
    */
   play: (data: SliderEventData) => void
+
+  /**
+   * Event triggered when slider is reset
+   */
+  reset: () => void
 }
 
 export type SliderEventType = keyof SliderEventListenerMap

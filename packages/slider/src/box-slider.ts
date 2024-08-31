@@ -119,6 +119,7 @@ export default class BoxSlider {
 
     this.applyEventListeners()
     responder.add(this)
+    this.emit('init')
   }
 
   /**
@@ -142,6 +143,7 @@ export default class BoxSlider {
     }
 
     this.init(effect || this.effect)
+    this.emit('reset')
   }
 
   /**
