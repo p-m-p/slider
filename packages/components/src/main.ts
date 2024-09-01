@@ -45,16 +45,12 @@ class CustomSlider extends Slider {
 customElements.define('custom-slider', CustomSlider)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<button id="add-slides">Add Slides</button>
+<button id="add-slides">Add Slide</button>
+<button id="remove-slides">Remove Slide</button>
 
 <div class="sliders">
   <bs-slider-controls>
     <custom-slider auto-scroll="true" timeout="1000" speed="300" class="full-carousel" id="custom">
-      <div class="slide">Slide One</div>
-      <div class="slide">Slide Two</div>
-      <div class="slide">Slide Three</div>
-      <div class="slide">Slide Four</div>
-      <div class="slide">Slide Five</div>
     </custom-slider>
   </bs-slider-controls>
 
@@ -134,9 +130,16 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 </div>
 `
 
-setTimeout(() => {
-  document.getElementById('add-slides')!.addEventListener('click', () => {
-    const custom = document.getElementById('custom')
-    custom!.innerHTML += '<div class="slide">Slide Six</div>'
-  })
-}, 1000)
+let slides = 0
+
+document.getElementById('add-slides')!.addEventListener('click', () => {
+  slides += 1
+  const custom = document.getElementById('custom')
+  custom!.innerHTML += `<div class="slide" id="slide-${slides}">Slide ${slides}</div>`
+})
+
+document.getElementById('remove-slides')!.addEventListener('click', () => {
+  const custom = document.getElementById('custom')
+  custom!.removeChild(document.getElementById(`slide-${slides}`)!)
+  slides -= 1
+})

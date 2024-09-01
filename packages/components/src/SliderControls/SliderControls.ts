@@ -45,6 +45,7 @@ export default class SliderControls
   #sliderElement!: SliderElement
   #mutationObserver: MutationObserver
   #hasBeenInteractedWith = false
+  #sliderEventListeners: Record<string, EventListener> = {}
 
   constructor() {
     super()
@@ -147,13 +148,45 @@ export default class SliderControls
       })
 
       this.#setPlayBtnState()
-      this.#sliderElement.addEventListener('play', () =>
-        this.#setPlayBtnState(),
+
+      if (this.#sliderEventListeners.play) {
+        this.#sliderElement.removeEventListener(
+          'play',
+          this.#sliderEventListeners.play,
+        )
+      }
+
+      if (this.#sliderEventListeners.reset) {
+        this.#sliderElement.removeEventListener(
+          'reset',
+          this.#sliderEventListeners.reset,
+        )
+      }
+
+      if (this.#sliderEventListeners.pause) {
+        this.#sliderElement.removeEventListener(
+          'pause',
+          this.#sliderEventListeners.pause,
+        )
+      }
+
+      this.#sliderEventListeners.play = () => this.#setPlayBtnState()
+      this.#sliderElement.addEventListener(
+        'play',
+        this.#sliderEventListeners.play,
       )
-      this.#sliderElement.addEventListener('pause', () =>
-        this.#setPlayBtnState(),
+
+      this.#sliderEventListeners.pause = () => this.#setPlayBtnState()
+      this.#sliderElement.addEventListener(
+        'pause',
+        this.#sliderEventListeners.pause,
       )
-      this.#sliderElement.addEventListener('reset', () => this.#init())
+
+      this.#sliderEventListeners.reset = () => this.#init()
+      this.#sliderElement.addEventListener(
+        'reset',
+        this.#sliderEventListeners.reset,
+      )
 
       this.#addIndexPips()
       this.#sliderElement.addEventListener(

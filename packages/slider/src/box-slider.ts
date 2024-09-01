@@ -109,16 +109,10 @@ export default class BoxSlider {
     }
     this._activeIndex = this.options.startIndex
     this.init(effect)
-
-    if (this.slides.length < this.activeIndex) {
-      this.destroy()
-      throw new Error(
-        `Start index option is out of bounds - slides=${this.slides.length} start=${this.activeIndex}`,
-      )
-    }
-
     this.applyEventListeners()
+
     responder.add(this)
+
     this.emit('init')
   }
 
@@ -284,6 +278,10 @@ export default class BoxSlider {
     this.slides = this.getSlides()
     this.stateStore.storeAttributes([this.el, ...this.slides], ['style'])
 
+    if (this.activeIndex >= this.slides.length) {
+      this._activeIndex = 0
+    }
+
     this.effect.initialize(
       this.el,
       this.slides,
@@ -336,16 +334,17 @@ export default class BoxSlider {
   }
 
   private transitionTo(nextIndex: number, backwards: boolean): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (this.isDestroyed || nextIndex === this.activeIndex) {
+    return new Promise((resolve) => {
+      this.stopAutoScroll()
+
+      if (
+        this.isDestroyed ||
+        nextIndex === this.activeIndex ||
+        nextIndex < 0 ||
+        nextIndex >= this.slides.length
+      ) {
         return resolve()
       }
-
-      if (nextIndex < 0 || nextIndex >= this.slides.length) {
-        return reject(new Error(`${nextIndex} is not a valid slide index`))
-      }
-
-      this.stopAutoScroll()
 
       const settings = {
         el: this.el,
