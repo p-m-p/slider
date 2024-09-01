@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.0
+
+### Minor Changes
+
+- a9f9511: Core slider no longer throws error if initialized without slides and calling any transition method will not update the state or attempt to transition. Invalid calls to next or prev etc will return an immediately resolved promise.
+
 ## 2.10.0
 
 ### Minor Changes
