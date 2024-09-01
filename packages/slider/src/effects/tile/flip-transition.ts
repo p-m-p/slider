@@ -70,7 +70,12 @@ class FlipTransition implements TileTransition {
 
   async transition({ tile, nextFace, delay, duration }: TransitionSettings) {
     await tile.animate(
-      { transform: `rotateY(${nextFace === 'back' ? 180 : 0}deg)` },
+      {
+        transform: [
+          `rotateY(${nextFace === 'back' ? 0 : 180}deg)`,
+          `rotateY(${nextFace === 'back' ? 180 : 0}deg)`,
+        ],
+      },
       {
         duration,
         fill: 'forwards',
