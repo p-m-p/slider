@@ -333,49 +333,54 @@ export default class BoxSlider {
     ) as HTMLElement[]
   }
 
-  private transitionTo(nextIndex: number, backwards: boolean): Promise<void> {
-    return new Promise((resolve) => {
-      this.stopAutoScroll()
+  private async transitionTo(
+    nextIndex: number,
+    backwards: boolean,
+  ): Promise<void> {
+    this.stopAutoScroll()
 
-      if (
-        this.isDestroyed ||
-        nextIndex === this.activeIndex ||
-        nextIndex < 0 ||
-        nextIndex >= this.slides.length
-      ) {
-        return resolve()
-      }
+    if (
+      this.isDestroyed ||
+      nextIndex === this.activeIndex ||
+      nextIndex < 0 ||
+      nextIndex >= this.slides.length
+    ) {
+      return
+    }
 
-      const settings = {
-        el: this.el,
-        slides: this.slides,
-        speed: this.options.speed,
-        currentIndex: this.activeIndex,
-        isPrevious: backwards,
-        nextIndex,
-      }
+    const settings = {
+      el: this.el,
+      slides: this.slides,
+      speed: this.options.speed,
+      currentIndex: this.activeIndex,
+      isPrevious: backwards,
+      nextIndex,
+    }
 
-      this._activeIndex = nextIndex
+    this._activeIndex = nextIndex
 
-      this.emit('before', {
-        currentIndex: settings.currentIndex,
-        nextIndex: settings.nextIndex,
-        speed: settings.speed,
-      })
-
-      const transition = this.effect.transition(settings) ?? Promise.resolve()
-      transition.then(() => {
-        if (this.options.autoScroll) {
-          this.setAutoScroll()
-        }
-
-        this.slides[settings.currentIndex].setAttribute('aria-hidden', 'true')
-        this.slides[settings.nextIndex].setAttribute('aria-hidden', 'false')
-
-        this.emit('after')
-        resolve()
-      })
+    this.emit('before', {
+      currentIndex: settings.currentIndex,
+      nextIndex: settings.nextIndex,
+      speed: settings.speed,
     })
+
+    try {
+      await (this.effect.transition(settings) ?? Promise.resolve())
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      // Transition may throw an error from aborted animation if slides are removed
+      return
+    }
+
+    if (this.options.autoScroll) {
+      this.setAutoScroll()
+    }
+
+    this.slides[settings.currentIndex].setAttribute('aria-hidden', 'true')
+    this.slides[settings.nextIndex].setAttribute('aria-hidden', 'false')
+
+    this.emit('after')
   }
 
   private stopAutoScroll() {
