@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.10.2
+
+### Patch Changes
+
+- Updated dependencies [d91662e]
+  - @boxslider/slider@2.11.2
+
 ## 2.10.1
 
 ### Patch Changes

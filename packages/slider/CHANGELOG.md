@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.2
+
+### Patch Changes
+
+- d91662e: fix flip tile transition in safari
+
 ## 2.11.1
 
 ### Patch Changes
