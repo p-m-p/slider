@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.1
+
+### Patch Changes
+
+- 743016f: Handle aborted animation when slide content changes during transition
+
 ## 2.11.0
 
 ### Minor Changes
