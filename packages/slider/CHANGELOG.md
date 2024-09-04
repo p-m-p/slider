@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.3
+
+### Patch Changes
+
+- 3316a16: Resolve issuw with tile flip effect in Safari
+
 ## 2.11.2
 
 ### Patch Changes
