@@ -47,15 +47,17 @@ class FlipTransition implements TileTransition {
     applyCss(front, {
       'backface-visibility': 'hidden',
       inset: '0',
-      overflow: 'clip',
+      overflow: 'hidden',
       position: 'absolute',
+      'z-index': '1',
     })
     applyCss(back, {
       'backface-visibility': 'hidden',
       inset: '0',
-      overflow: 'clip',
+      overflow: 'hidden',
       position: 'absolute',
       transform: 'rotateY(180deg)',
+      'z-index': '2',
     })
 
     front.appendChild(frontFace)
@@ -77,9 +79,9 @@ class FlipTransition implements TileTransition {
         ],
       },
       {
+        delay,
         duration,
         fill: 'forwards',
-        delay,
       },
     ).finished
   }
@@ -87,7 +89,7 @@ class FlipTransition implements TileTransition {
   setTileFace(slide: HTMLElement, tileFace: HTMLElement) {
     const clone = slide.cloneNode(true) as HTMLElement
     clone.removeAttribute('style')
-    ;(tileFace.firstChild as HTMLElement).replaceChildren(clone)
+    tileFace.firstElementChild!.replaceChildren(clone)
   }
 }
 
