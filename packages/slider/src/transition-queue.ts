@@ -6,29 +6,37 @@ export type TransitionQueue = {
 }
 
 export const createQueue = (): TransitionQueue => {
-  const queue: TransitionFn[] = []
+  let next: TransitionFn | null = null
 
-  const run = () => {
-    const fn = queue[0]
+  function run() {
+    const fn = next
 
-    if (fn) {
-      fn().then(() => {
-        queue.shift()
+    fn?.().then(() => {
+      if (fn !== next) {
+        console.log('has next')
         run()
-      })
-    }
+      } else {
+        console.log('no next')
+        next = null
+      }
+    })
   }
 
   return {
     push(fn: TransitionFn) {
-      queue.push(fn)
+      const runNow = next === null
 
-      if (queue.length === 1) {
+      next = fn
+
+      if (runNow) {
+        console.log('run now')
         run()
+      } else {
+        console.log('only set next')
       }
     },
     clear() {
-      queue.length = 0
+      next = null
     },
   }
 }
