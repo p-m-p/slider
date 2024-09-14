@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.10.4
+
+### Patch Changes
+
+- Updated dependencies [e422cab]
+  - @boxslider/slider@2.11.4
+
 ## 2.10.3
 
 ### Patch Changes

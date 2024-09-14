@@ -1,5 +1,14 @@
 # docs
 
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies [e422cab]
+  - @boxslider/slider@2.11.4
+  - @boxslider/components@2.10.4
+  - @boxslider/react@2.5.25
+
 ## 0.0.22
 
 ### Patch Changes
