@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.4
+
+### Patch Changes
+
+- e422cab: Update transition queue to only honour the last transition request during an active transition
+
 ## 2.11.3
 
 ### Patch Changes
