@@ -13,10 +13,8 @@ export const createQueue = (): TransitionQueue => {
 
     fn?.().then(() => {
       if (fn !== next) {
-        console.log('has next')
         run()
       } else {
-        console.log('no next')
         next = null
       }
     })
@@ -29,10 +27,7 @@ export const createQueue = (): TransitionQueue => {
       next = fn
 
       if (runNow) {
-        console.log('run now')
         run()
-      } else {
-        console.log('only set next')
       }
     },
     clear() {
