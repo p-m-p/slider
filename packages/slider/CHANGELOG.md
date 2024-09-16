@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.5
+
+### Patch Changes
+
+- c408391: Remove console logs from slider packages
+
 ## 2.11.4
 
 ### Patch Changes
