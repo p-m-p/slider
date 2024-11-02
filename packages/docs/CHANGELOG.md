@@ -1,5 +1,16 @@
 # docs
 
+## 0.0.25
+
+### Patch Changes
+
+- 7e5a75c: Only default pause on hover setting if using fine pointer like a mouse
+- Updated dependencies [5407aa4]
+- Updated dependencies [7e5a75c]
+  - @boxslider/slider@2.12.0
+  - @boxslider/components@2.10.6
+  - @boxslider/react@2.5.27
+
 ## 0.0.24
 
 ### Patch Changes
