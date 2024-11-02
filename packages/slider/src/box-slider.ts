@@ -449,24 +449,21 @@ export default class BoxSlider {
   }
 
   private addSwipeNavigation() {
-    let pointerTraceX = 0
+    let startX = 0
 
-    this.addElListener('pointerdown', (ev) => {
-      pointerTraceX = (ev as PointerEvent).clientX
+    this.addElListener('touchstart', (ev) => {
+      startX = (ev as TouchEvent).changedTouches[0].screenX
     })
 
-    this.addElListener('pointerup', (ev) => {
-      const distanceX = (ev as PointerEvent).clientX - pointerTraceX
+    this.addElListener('touchend', (ev) => {
+      const distanceX = (ev as TouchEvent).changedTouches[0].screenX - startX
 
-      // XXX Need to be able to determine if effect scrolling is vertical
       if (Math.abs(distanceX) >= this.options.swipeTolerance) {
         if (distanceX > 0) {
           this.prev()
         } else {
           this.next()
         }
-
-        ev.stopPropagation()
       }
     })
   }
