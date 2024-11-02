@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.12.0
+
+### Minor Changes
+
+- 5407aa4: Use touch events for horizontal swipe detection
+
+### Patch Changes
+
+- 7e5a75c: Only default pause on hover setting if using fine pointer like a mouse
+
 ## 2.11.5
 
 ### Patch Changes
