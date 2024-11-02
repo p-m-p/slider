@@ -10,12 +10,14 @@ import type {
   SliderEventType,
 } from './types'
 
+function safeMatchMedia(query: string): boolean {
+  return typeof matchMedia !== 'undefined' && matchMedia(query).matches
+}
+
 export const defaultOptions: BoxSliderOptions = Object.freeze({
-  autoScroll:
-    typeof matchMedia !== 'undefined' &&
-    !matchMedia('(prefers-reduced-motion: reduce)').matches,
+  autoScroll: !safeMatchMedia('(prefers-reduced-motion: reduce)'),
   loop: true,
-  pauseOnHover: false,
+  pauseOnHover: safeMatchMedia('(pointer: fine)'),
   speed: 800,
   startIndex: 0,
   swipe: true,

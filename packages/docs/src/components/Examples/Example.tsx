@@ -21,7 +21,7 @@ export function Example({
     swipe: true,
     swipeTolerance: 30,
     timeout: 5000,
-    pauseOnHover: true,
+    pauseOnHover: false,
     ...effectControls.reduce(
       (_c, c) => ({ ..._c, [c.optionKey]: c.defaultValue }),
       {},

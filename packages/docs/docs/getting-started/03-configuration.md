@@ -8,7 +8,7 @@ title: Configuration
 | ---------------- | ------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `autoScroll`     | boolean | true (unless user prefers reduced motion) | Set true to automatically transition through the slides                                                                      |
 | `loop`           | boolean | true                                      | Set true to rotate the slider back to the first or last slide when next and prev methods are called                          |
-| `pauseOnHover`   | boolean | false                                     | Pause an auto-scrolling slider when the users mouse hovers over it. For use with autoScroll or a slider in play mode         |
+| `pauseOnHover`   | boolean | true when a using a fine pointing device  | Pause an auto-scrolling slider when the users mouse hovers over it. For use with autoScroll or a slider in play mode         |
 | `speed`          | number  | 800                                       | The time interval in milliseconds within which the slide animation will complete                                             |
 | `swipe`          | boolean | true                                      | Enable swiping the box to navigate to the next or previous slide                                                             |
 | `swipeTolerance` | number  | 30                                        | The number of pixels between the pointer down and pointer up events during the swipe action that will trigger the transition |
