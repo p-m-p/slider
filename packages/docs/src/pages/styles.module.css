@@ -41,7 +41,7 @@
       var(--ifm-color-primary-lightest)
     )
   );
-  background-clip: text;
+  background-clip: text !important;
   color: transparent;
 }
 
@@ -105,13 +105,13 @@
   z-index: 1;
 }
 
-@media (width >= 480px) {
+@media (width >=480px) {
   .ctaLinks {
     flex-flow: row;
   }
 }
 
-@media (width >= 768px) {
+@media (width >=768px) {
   .heading {
     font-size: 3.75rem;
   }
@@ -132,7 +132,7 @@
   }
 }
 
-@media (width >= 1000px) {
+@media (width >=1000px) {
   .demoContainer {
     width: 960px;
     padding-top: 6rem;
@@ -148,7 +148,7 @@
   }
 }
 
-@media (width >= 1280px) {
+@media (width >=1280px) {
   .header {
     padding-top: 6rem;
   }
