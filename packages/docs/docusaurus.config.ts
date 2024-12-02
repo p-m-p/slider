@@ -106,11 +106,11 @@ const config: Config = {
           title: 'Guides',
           items: [
             {
-              label: 'React comoonents',
+              label: 'React components',
               to: '/docs/guides/react',
             },
             {
-              label: 'Web comoonents',
+              label: 'Web components',
               to: '/docs/guides/web-components',
             },
             {
