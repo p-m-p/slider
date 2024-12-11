@@ -142,7 +142,7 @@ importers:
         version: 0.462.0(react@18.3.1)
       prism-react-renderer:
         specifier: ^2.3.1
-        version: 2.4.0(react@18.3.1)
+        version: 2.4.1(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2199,8 +2199,8 @@ packages:
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
 
-  '@types/prismjs@1.26.4':
-    resolution: {integrity: sha512-rlAnzkW2sZOjbqZ743IHUhFcvzaGbqijwOu8QZnZCjfQzBqFE3s4lOTJEsxikImav9uzz/42I+O7YUs1mWgMlg==}
+  '@types/prismjs@1.26.5':
+    resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
 
   '@types/prop-types@15.7.13':
     resolution: {integrity: sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==}
@@ -5946,8 +5946,8 @@ packages:
     resolution: {integrity: sha512-28iF6xPQrP8Oa6uxE6a1biz+lWeTOAPKggvjB8HAs6nVMKZwf5bG++632Dx614hIWgUPkgivRfG+a8uAXGTIbA==}
     engines: {node: '>=4'}
 
-  prism-react-renderer@2.4.0:
-    resolution: {integrity: sha512-327BsVCD/unU4CNLZTWVHyUHKnsqcvj2qbPlQ8MiBE2eq2rgctjigPA1Gp9HLF83kZ20zNN6jgizHJeEsyFYOw==}
+  prism-react-renderer@2.4.1:
+    resolution: {integrity: sha512-ey8Ls/+Di31eqzUxC46h8MksNuGx/n0AAC8uKpwFau4RPDYLuE3EXTp8N8G2vX2N7UC/+IXeNUnlWBGGcAG+Ig==}
     peerDependencies:
       react: '>=16.0.0'
 
@@ -9312,7 +9312,7 @@ snapshots:
       lodash: 4.17.21
       nprogress: 0.2.0
       postcss: 8.4.49
-      prism-react-renderer: 2.4.0(react@18.3.1)
+      prism-react-renderer: 2.4.1(react@18.3.1)
       prismjs: 1.29.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -9352,7 +9352,7 @@ snapshots:
       '@types/react-router-config': 5.0.11
       clsx: 2.1.1
       parse-numeric-range: 1.3.0
-      prism-react-renderer: 2.4.0(react@18.3.1)
+      prism-react-renderer: 2.4.1(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.7.0
@@ -10164,7 +10164,7 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
-  '@types/prismjs@1.26.4': {}
+  '@types/prismjs@1.26.5': {}
 
   '@types/prop-types@15.7.13': {}
 
@@ -14625,9 +14625,9 @@ snapshots:
 
   pretty-time@1.1.0: {}
 
-  prism-react-renderer@2.4.0(react@18.3.1):
+  prism-react-renderer@2.4.1(react@18.3.1):
     dependencies:
-      '@types/prismjs': 1.26.4
+      '@types/prismjs': 1.26.5
       clsx: 2.1.1
       react: 18.3.1
 
