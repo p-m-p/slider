@@ -37,10 +37,10 @@ importers:
         version: 22.10.2
       '@types/react':
         specifier: ^18.3.5
-        version: 18.3.16
+        version: 18.3.17
       '@types/react-dom':
         specifier: ^18.3.0
-        version: 18.3.5(@types/react@18.3.16)
+        version: 18.3.5(@types/react@18.3.17)
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.3.0
         version: 8.18.0(@typescript-eslint/parser@8.18.0(eslint@9.17.0(jiti@2.4.1))(typescript@5.7.2))(eslint@9.17.0(jiti@2.4.1))(typescript@5.7.2)
@@ -2231,8 +2231,8 @@ packages:
   '@types/react@18.3.12':
     resolution: {integrity: sha512-D2wOSq/d6Agt28q7rSI3jhU7G6aiuzljDGZ2hTZHIkrTLUI+AF3WMeKkEZ9nN2fkBAlcktT6vcZjDFiIhMYEQw==}
 
-  '@types/react@18.3.16':
-    resolution: {integrity: sha512-oh8AMIC4Y2ciKufU8hnKgs+ufgbA/dhPTACaZPM86AbwX9QwnFtSoPWEeRUj8fge+v6kFt78BXcDhAU1SrrAsw==}
+  '@types/react@18.3.17':
+    resolution: {integrity: sha512-opAQ5no6LqJNo9TqnxBKsgnkIYHozW9KSTlFVoSUJYh1Fl/sswkEoqIugRSm7tbh6pABtYjGAjW+GOS23j8qbw==}
 
   '@types/react@19.0.1':
     resolution: {integrity: sha512-YW6614BDhqbpR5KtUYzTA+zlA7nayzJRA9ljz9CQoxthR0sDisYZLuvSMsil36t4EH/uAt8T52Xb4sVw17G+SQ==}
@@ -9291,7 +9291,7 @@ snapshots:
 
   '@docusaurus/react-loadable@6.0.0(react@18.3.1)':
     dependencies:
-      '@types/react': 18.3.16
+      '@types/react': 18.3.12
       react: 18.3.1
 
   '@docusaurus/theme-classic@3.6.3(@types/react@19.0.1)(esbuild@0.24.0)(eslint@9.17.0(jiti@2.4.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)':
@@ -10180,9 +10180,9 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@18.3.5(@types/react@18.3.16)':
+  '@types/react-dom@18.3.5(@types/react@18.3.17)':
     dependencies:
-      '@types/react': 18.3.16
+      '@types/react': 18.3.17
 
   '@types/react-router-config@5.0.11':
     dependencies:
@@ -10199,14 +10199,14 @@ snapshots:
   '@types/react-router@5.1.20':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.3.16
+      '@types/react': 18.3.12
 
   '@types/react@18.3.12':
     dependencies:
       '@types/prop-types': 15.7.13
       csstype: 3.1.3
 
-  '@types/react@18.3.16':
+  '@types/react@18.3.17':
     dependencies:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
