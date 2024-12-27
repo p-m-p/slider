@@ -12,32 +12,16 @@ export interface CubeSliderProps extends BaseComponentProps<CubeSliderElement> {
   perspective?: number
 }
 
-export function Cube({
-  children,
-  direction,
-  perspective,
-  sliderRef,
-  ...props
-}: CubeSliderProps) {
+export function Cube({ sliderRef, ...props }: CubeSliderProps) {
   const { attributes, elementProps, eventHandlers } =
     extractSliderAttributes(props)
-  const htmlAttributes = { ...attributes }
-
-  if (direction !== undefined) {
-    htmlAttributes.direction = direction
-  }
-
-  if (perspective !== undefined) {
-    htmlAttributes.perspective = `${perspective}`
-  }
 
   return (
     <bs-cube
       {...elementProps}
-      {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}>
-      {children}
-    </bs-cube>
+      {...attributes}
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
+    />
   )
 }
 

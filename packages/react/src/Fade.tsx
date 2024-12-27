@@ -12,7 +12,6 @@ export interface FadeSliderProps extends BaseComponentProps<FadeSliderElement> {
 }
 
 export function FadeSlider({
-  children,
   sliderRef,
   timingFunction,
   ...props
@@ -29,9 +28,8 @@ export function FadeSlider({
     <bs-fade
       {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}>
-      {children}
-    </bs-fade>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
+    />
   )
 }
 

@@ -14,8 +14,6 @@ export interface CarouselSliderProps
 }
 
 export function CarouselSlider({
-  children,
-  cover,
   sliderRef,
   timingFunction,
   ...props
@@ -28,17 +26,12 @@ export function CarouselSlider({
     htmlAttributes['timing-function'] = timingFunction
   }
 
-  if (cover !== undefined) {
-    htmlAttributes.cover = `${cover}`
-  }
-
   return (
     <bs-carousel
       {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}>
-      {children}
-    </bs-carousel>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
+    />
   )
 }
 

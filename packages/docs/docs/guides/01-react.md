@@ -8,7 +8,7 @@ slide effect and the slider controls.
 ## Installation
 
 ```sh
-npm i --save @boxslider/react
+npm i --save @boxslider/react@latest
 ```
 
 ## Components

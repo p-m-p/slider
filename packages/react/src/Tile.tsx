@@ -15,9 +15,7 @@ export interface TileSliderProps extends BaseComponentProps<TileSliderElement> {
 }
 
 export function TileSlider({
-  children,
   sliderRef,
-  rows,
   rowOffset,
   tileEffect,
   ...props
@@ -26,12 +24,8 @@ export function TileSlider({
     extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
-  if (rows !== undefined) {
-    htmlAttributes.rows = `${rows}`
-  }
-
   if (rowOffset !== undefined) {
-    htmlAttributes['row-offset'] = `${rowOffset}`
+    htmlAttributes['row-offset'] = rowOffset
   }
 
   if (tileEffect !== undefined) {
@@ -42,9 +36,8 @@ export function TileSlider({
     <bs-tile
       {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}>
-      {children}
-    </bs-tile>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}
+    />
   )
 }
 
