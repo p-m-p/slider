@@ -45,7 +45,7 @@ export function Slides() {
           />
         </picture>
       </div>
-      <div className={styles.slide} aria-label="4 of 4" role="region">
+      <div className={styles.slide} aria-label="4 of 4">
         <picture>
           <source
             srcSet="/slider/img/slides/ram-square.webp"

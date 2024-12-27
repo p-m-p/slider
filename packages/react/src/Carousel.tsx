@@ -1,3 +1,4 @@
+import type { CarouselSliderElement } from '@boxslider/components/Carousel'
 import {
   extractSliderAttributes,
   type BaseComponentProps,
@@ -6,20 +7,21 @@ import {
 
 import '@boxslider/components/Carousel'
 
-export interface CarouselSliderProps extends BaseComponentProps<'bs-carousel'> {
+export interface CarouselSliderProps
+  extends BaseComponentProps<CarouselSliderElement> {
   timingFunction?: string
   cover?: boolean
 }
 
 export function CarouselSlider({
   children,
-  className,
   cover,
   sliderRef,
   timingFunction,
   ...props
 }: CarouselSliderProps) {
-  const { attributes, eventHandlers } = extractSliderAttributes(props)
+  const { attributes, elementProps, eventHandlers } =
+    extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (timingFunction) {
@@ -32,9 +34,9 @@ export function CarouselSlider({
 
   return (
     <bs-carousel
+      {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}
-      class={className}>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}>
       {children}
     </bs-carousel>
   )

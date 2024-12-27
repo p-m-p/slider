@@ -1,3 +1,4 @@
+import type { FadeSliderElement } from '@boxslider/components/Fade'
 import {
   extractSliderAttributes,
   type BaseComponentProps,
@@ -6,18 +7,18 @@ import {
 
 import '@boxslider/components/Fade'
 
-export interface FadeSliderProps extends BaseComponentProps<'bs-fade'> {
+export interface FadeSliderProps extends BaseComponentProps<FadeSliderElement> {
   timingFunction?: string
 }
 
 export function FadeSlider({
   children,
-  className,
   sliderRef,
   timingFunction,
   ...props
 }: FadeSliderProps) {
-  const { attributes, eventHandlers } = extractSliderAttributes(props)
+  const { attributes, elementProps, eventHandlers } =
+    extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (timingFunction) {
@@ -26,9 +27,9 @@ export function FadeSlider({
 
   return (
     <bs-fade
+      {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}
-      class={className}>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}>
       {children}
     </bs-fade>
   )
