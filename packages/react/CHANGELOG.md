@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.6.0
+
+### Minor Changes
+
+- 287628c: Update components for use with React 19
+
 ## 2.5.27
 
 ### Patch Changes

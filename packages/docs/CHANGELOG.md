@@ -1,5 +1,12 @@
 # docs
 
+## 0.0.26
+
+### Patch Changes
+
+- Updated dependencies [287628c]
+  - @boxslider/react@2.6.0
+
 ## 0.0.25
 
 ### Patch Changes
