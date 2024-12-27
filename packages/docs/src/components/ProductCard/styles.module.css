@@ -1,0 +1,23 @@
+.card {
+  display: flex;
+  flex-flow: row-reverse;
+}
+
+.details {
+  width: 40%;
+}
+
+.images {
+  width: 60%;
+}
+
+.slider {
+  display: block;
+  height: 300px;
+  width: 100%;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+}

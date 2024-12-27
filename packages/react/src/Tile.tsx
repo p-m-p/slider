@@ -1,3 +1,4 @@
+import type { TileSliderElement } from '@boxslider/components/Tile'
 import type { TileEffect } from '@boxslider/slider'
 import {
   extractSliderAttributes,
@@ -7,7 +8,7 @@ import {
 
 import '@boxslider/components/Tile'
 
-export interface TileSliderProps extends BaseComponentProps<'bs-tile'> {
+export interface TileSliderProps extends BaseComponentProps<TileSliderElement> {
   tileEffect?: TileEffect
   rows?: number
   rowOffset?: number
@@ -15,14 +16,14 @@ export interface TileSliderProps extends BaseComponentProps<'bs-tile'> {
 
 export function TileSlider({
   children,
-  className,
   sliderRef,
   rows,
   rowOffset,
   tileEffect,
   ...props
 }: TileSliderProps) {
-  const { attributes, eventHandlers } = extractSliderAttributes(props)
+  const { attributes, elementProps, eventHandlers } =
+    extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (rows !== undefined) {
@@ -39,9 +40,9 @@ export function TileSlider({
 
   return (
     <bs-tile
+      {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}
-      class={className}>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}>
       {children}
     </bs-tile>
   )

@@ -1,3 +1,4 @@
+import type { CubeSliderElement } from '@boxslider/components/Cube'
 import {
   extractSliderAttributes,
   type BaseComponentProps,
@@ -6,20 +7,20 @@ import {
 
 import '@boxslider/components/Cube'
 
-export interface CubeSliderProps extends BaseComponentProps<'bs-cube'> {
+export interface CubeSliderProps extends BaseComponentProps<CubeSliderElement> {
   direction?: 'horizontal' | 'vertical'
   perspective?: number
 }
 
 export function Cube({
   children,
-  className,
   direction,
   perspective,
   sliderRef,
   ...props
 }: CubeSliderProps) {
-  const { attributes, eventHandlers } = extractSliderAttributes(props)
+  const { attributes, elementProps, eventHandlers } =
+    extractSliderAttributes(props)
   const htmlAttributes = { ...attributes }
 
   if (direction !== undefined) {
@@ -32,9 +33,9 @@ export function Cube({
 
   return (
     <bs-cube
+      {...elementProps}
       {...htmlAttributes}
-      ref={sliderRefCallback(eventHandlers, sliderRef)}
-      class={className}>
+      ref={sliderRefCallback(eventHandlers, sliderRef)}>
       {children}
     </bs-cube>
   )

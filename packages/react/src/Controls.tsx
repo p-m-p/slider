@@ -1,9 +1,22 @@
-import type { ComponentPropsWithoutRef } from 'react'
+import type { DetailedHTMLProps, HTMLAttributes } from 'react'
+import type { SliderControlsElement } from '@boxslider/components/SliderControls'
 
 import '@boxslider/components/SliderControls'
 
-export interface SliderControlsProps
-  extends ComponentPropsWithoutRef<'bs-slider-controls'> {
+type BaseProps = Omit<
+  DetailedHTMLProps<
+    HTMLAttributes<SliderControlsElement>,
+    SliderControlsElement
+  >,
+  | 'index-btn-label'
+  | 'index-label'
+  | 'next-btn-label'
+  | 'pause-btn-label'
+  | 'play-btn-label'
+  | 'prev-btn-label'
+>
+
+export interface SliderControlsProps extends BaseProps {
   indexBtnLabel?: string
   indexLabel?: string
   nextBtnLabel?: string
@@ -13,7 +26,6 @@ export interface SliderControlsProps
 }
 
 export function SliderControls({
-  className,
   indexBtnLabel,
   indexLabel,
   nextBtnLabel,
@@ -31,7 +43,7 @@ export function SliderControls({
   if (playBtnLabel) htmlAttributes['play-btn-label'] = playBtnLabel
   if (prevBtnLabel) htmlAttributes['prev-btn-label'] = prevBtnLabel
 
-  return <bs-slider-controls class={className} {...htmlAttributes} {...props} />
+  return <bs-slider-controls {...htmlAttributes} {...props} />
 }
 
 export default SliderControls
