@@ -426,7 +426,7 @@ export default class BoxSlider {
   }
 
   private addElListener(ev: keyof HTMLElementEventMap, handler: EventListener) {
-    this.el.addEventListener(ev, handler)
+    this.el.addEventListener(ev, handler, { passive: true })
     this.elListeners[ev] = this.elListeners[ev] || []
     this.elListeners[ev].push(handler)
   }
