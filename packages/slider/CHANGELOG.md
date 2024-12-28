@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.12.1
+
+### Patch Changes
+
+- e35ae04: Make element event listeners passive
+
 ## 2.12.0
 
 ### Minor Changes
