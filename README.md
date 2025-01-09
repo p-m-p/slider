@@ -7,7 +7,7 @@
 <p align="center">A modern, light weight content slider</p>
 <p align="center">
   <a href="https://www.npmjs.com/package/@boxslider/slider"><img alt="NPM Status" src="https://img.shields.io/npm/v/@boxslider/slider.svg?style=flat"></a>
-  <a href="https://data.jsdelivr.com/v1/package/npm/@boxslider/slider/badge"><img alt="jsDelivr hits" src="https://www.jsdelivr.com/package/npm/@boxslider/slider"></a>
+  <a href="https://www.jsdelivr.com/package/npm/@boxslider/slider"><img alt="jsDelivr hits" src="https://data.jsdelivr.com/v1/package/npm/@boxslider/slider/badge"></a>
   <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/p-m-p/slider/ci.yml?branch=main">
 </p>
 
