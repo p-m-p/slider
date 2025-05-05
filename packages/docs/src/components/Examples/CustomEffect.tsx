@@ -54,7 +54,7 @@ export function CustomEffect() {
   return (
     <SliderControls className={styles.controls}>
       <div className={styles.viewport}>
-        <custom-slider class={styles.slider} speed="300">
+        <custom-slider className={styles.slider} speed={300}>
           <Slides />
         </custom-slider>
       </div>
