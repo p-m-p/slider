@@ -28,8 +28,8 @@ export function Options({ controls = [] }: OptionsProps) {
             id={`speed-${id}`}
             size={4}
             type="number"
-            value={options.speed as string}
-            onChange={(ev) => setOption('speed', ev.target.value)}
+            value={options.speed}
+            onChange={(ev) => setOption('speed', parseInt(ev.target.value, 10))}
           />
         </div>
         <div className={styles.field}>
@@ -38,8 +38,10 @@ export function Options({ controls = [] }: OptionsProps) {
             id={`timeout-${id}`}
             size={4}
             type="number"
-            value={options.timeout as string}
-            onChange={(ev) => setOption('timeout', ev.target.value)}
+            value={options.timeout}
+            onChange={(ev) =>
+              setOption('timeout', parseInt(ev.target.value, 10))
+            }
           />
         </div>
         <div className={styles.field}>
@@ -47,7 +49,7 @@ export function Options({ controls = [] }: OptionsProps) {
           <input
             id={`pause-on-hover-${id}`}
             type="checkbox"
-            checked={options.pauseOnHover as boolean}
+            checked={options.pauseOnHover}
             onChange={(ev) => setOption('pauseOnHover', ev.target.checked)}
           />
         </div>
@@ -56,7 +58,7 @@ export function Options({ controls = [] }: OptionsProps) {
           <input
             id={`loop-${id}`}
             type="checkbox"
-            checked={options.loop as boolean}
+            checked={options.loop}
             onChange={(ev) => setOption('loop', ev.target.checked)}
           />
         </div>
@@ -65,7 +67,7 @@ export function Options({ controls = [] }: OptionsProps) {
           <input
             id={`swipe-${id}`}
             type="checkbox"
-            checked={options.swipe as boolean}
+            checked={options.swipe}
             onChange={(ev) => setOption('swipe', ev.target.checked)}
           />
         </div>
@@ -75,8 +77,10 @@ export function Options({ controls = [] }: OptionsProps) {
             id={`swipe-tolerance-${id}`}
             size={4}
             type="number"
-            value={options.swipeTolerance as string}
-            onChange={(ev) => setOption('swipeTolerance', ev.target.value)}
+            value={options.swipeTolerance}
+            onChange={(ev) =>
+              setOption('swipeTolerance', parseInt(ev.target.value, 10))
+            }
           />
         </div>
         {controls.map(({ label, type, optionKey, values }) => (
@@ -104,14 +108,19 @@ export function Options({ controls = [] }: OptionsProps) {
                 <input
                   id={`${optionKey}-${id}`}
                   type={type}
-                  value={options[optionKey] as string}
+                  value={options[optionKey]}
                   checked={options[optionKey] === true}
-                  onChange={(ev) =>
-                    setOption(
-                      optionKey,
-                      type === 'checkbox' ? ev.target.checked : ev.target.value,
-                    )
-                  }
+                  onChange={(ev) => {
+                    let value: string | number | boolean = ev.target.value
+
+                    if (type === 'number') {
+                      value = parseInt(value, 10)
+                    } else if (type === 'checkbox') {
+                      value = ev.target.checked
+                    }
+
+                    setOption(optionKey, value)
+                  }}
                 />
               </>
             )}

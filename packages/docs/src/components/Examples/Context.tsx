@@ -1,8 +1,9 @@
+import { BoxSliderOptions } from '@boxslider/slider'
 import { createContext } from 'react'
 
 export const Context = createContext<{
-  options: Record<string, string | boolean | number>
-  setOption: (key: string, value: string | boolean) => void
+  options: Partial<BoxSliderOptions>
+  setOption: (key: string, value: string | boolean | number) => void
 }>({
   options: {},
   setOption: () => {},
