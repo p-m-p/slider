@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.13.0
+
+### Minor Changes
+
+- 3ce2a2c: Add shorthand methods for creating sliders
+
 ## 2.12.1
 
 ### Patch Changes
