@@ -56,14 +56,8 @@ Use directly from a CDN
 
 ```html
 <script type="module">
-  import {
-    BoxSlider,
-    FadeSlider,
-  } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
 
-  const slider = new BoxSlider(
-    document.getElementById('slider'),
-    new FadeSlider(),
-  )
+  const slider = createFadeSlider('#slider')
 </script>
 ```

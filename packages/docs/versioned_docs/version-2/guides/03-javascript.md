@@ -20,15 +20,9 @@ Alternatively use from CDN.
 
 ```html
 <script type="module">
-  import {
-    BoxSlider,
-    FadeSlider,
-  } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
 
-  const slider = new BoxSlider(
-    document.getElementById('slider'),
-    new FadeSlider(),
-  )
+  createFadeSlider('#slider', { speed: 300 })
 </script>
 ```
 
@@ -44,13 +38,14 @@ Create the HTML structure for your slider content.
 </section>
 ```
 
-Select the slider element and create a new `BoxSlider` instance with the desired settings
-and effect and use the API methods to control the slider. View the available
-[configuration options](/docs/getting-started/configuration) and the [API reference](/docs/getting-started/api)
-for more details.
+Create a new `BoxSlider` instance with the desired settings and effect. To do this either
+use the create slider helper functions or create a new `BoxSlider` instance directly.
+
+The helper functions are a convenient way to create a new slider with either a reference
+to the slider element or a CSS selector.
 
 ```javascript
-import { BoxSlider, FadeSlider } from '@boxslider/slider'
+import { createCarouselSlider, BoxSlider, FadeSlider } from '@boxslider/slider'
 
 // Options for the slider
 const options = {
@@ -58,16 +53,24 @@ const options = {
   timeout: 5000,
 }
 
-// Create a slider with the fade slide transition
-const slider = new BoxSlider(
+// Create a slider with the carousel slide transition using the helper function
+const slider = createCarouselSlider('#slider', options)
+
+// Call API methods on the slider to control it
+await slider.next()
+
+// Alternatively, create a slider with the fade slide transition from the Slider
+// and effect directly.
+const fadeSlider = new BoxSlider(
   document.getElementById('slider'),
   new FadeSlider(),
   options,
 )
-
-// Call API methods on the slider to control it
-await slider.next()
 ```
+
+Use the API methods to control the slider. View the available [configuration options
+](/docs/getting-started/configuration) and the [API reference](/docs/getting-started/api)
+for more details.
 
 ## Styling
 

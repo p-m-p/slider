@@ -44,14 +44,10 @@ implementation is shown below.
   </div>
 </section>
 
-<script>
-  const slider = new BoxSlider(
-    document.getElementById('demo-slider'),
-    new CarouselSlider(),
-    {
-      autoScroll: false,
-    },
-  )
+<script type="module">
+  import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+
+  const slider = createFadeSlider('#demo-slider', { autoScroll: false })
 
   document
     .getElementById('prev-slide')
@@ -71,12 +67,8 @@ const hasReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)',
 ).matches
 
-const slider = new BoxSlider(
-  document.getElementById('demo-slider'),
-  new FadeSlider(),
-  {
-    autoScroll: !hasReducedMotion,
-    speed: hasReducedMotion ? 0 : 300,
-  },
-)
+const slider = createFadeSlider('#demo-slider', {
+  autoScroll: !hasReducedMotion,
+  speed: hasReducedMotion ? 0 : 300,
+})
 ```
