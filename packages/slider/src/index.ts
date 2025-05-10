@@ -36,7 +36,7 @@ export type CreateCarouselSliderOptions = Partial<BoxSliderOptions> &
 
 export function createCarouselSlider(
   el: string | HTMLElement,
-  options: CreateCarouselSliderOptions,
+  options: CreateCarouselSliderOptions = {},
 ) {
   const { timingFunction, cover, ...boxSliderOptions } = options
 
@@ -52,7 +52,7 @@ export type CreateCubeSliderOptions = Partial<BoxSliderOptions> &
 
 export function createCubeSlider(
   el: string | HTMLElement,
-  options: CreateCubeSliderOptions,
+  options: CreateCubeSliderOptions = {},
 ) {
   const { direction, perspective, ...boxSliderOptions } = options
 
@@ -68,7 +68,7 @@ export type CreateFadeSliderOptions = Partial<BoxSliderOptions> &
 
 export function createFadeSlider(
   el: string | HTMLElement,
-  options: CreateFadeSliderOptions,
+  options: CreateFadeSliderOptions = {},
 ) {
   const { timingFunction, ...boxSliderOptions } = options
 
@@ -80,11 +80,11 @@ export function createFadeSlider(
 }
 
 export type CreateTileSliderOptions = Partial<BoxSliderOptions> &
-  TileSliderOptions
+  Partial<TileSliderOptions>
 
 export function createTileSlider(
   el: string | HTMLElement,
-  options: CreateTileSliderOptions,
+  options: CreateTileSliderOptions = {},
 ) {
   const { rowOffset, rows, tileEffect, ...boxSliderOptions } = options
 
