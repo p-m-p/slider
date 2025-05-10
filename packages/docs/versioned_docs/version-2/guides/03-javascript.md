@@ -45,7 +45,14 @@ The helper functions are a convenient way to create a new slider with either a r
 to the slider element or a CSS selector.
 
 ```javascript
-import { createCarouselSlider, BoxSlider, FadeSlider } from '@boxslider/slider'
+import {
+  createCarouselSlider,
+  createCubeSlider,
+  createFadeSlider,
+  createTileSlider,
+  BoxSlider,
+  FadeSlider,
+} from '@boxslider/slider'
 
 // Options for the slider
 const options = {
@@ -55,6 +62,12 @@ const options = {
 
 // Create a slider with the carousel slide transition using the helper function
 const slider = createCarouselSlider('#slider', options)
+// or
+const cubeSlider = createCubeSlider('#slider', options)
+// or
+const fadeSlider = createFadeSlider('#slider', options)
+// or
+const tileSlider = createTileSlider('#slider', options)
 
 // Call API methods on the slider to control it
 await slider.next()
