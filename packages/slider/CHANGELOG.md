@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.13.1
+
+### Patch Changes
+
+- 9858e59: Make options optional in create slider helper functions
+
 ## 2.13.0
 
 ### Minor Changes
