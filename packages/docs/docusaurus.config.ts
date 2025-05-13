@@ -152,7 +152,12 @@ const config: Config = {
           title: 'Examples',
           items: [
             {
-              html: '<span>Coming soon...</span>',
+              label: 'Basic carousel',
+              href: 'https://codepen.io/p-m-p/pen/mdQVxKZ',
+            },
+            {
+              label: 'Accessible controls',
+              href: 'https://codepen.io/p-m-p/pen/QwwZxLG',
             },
           ],
         },
