@@ -92,6 +92,14 @@ Removes the listener for the specified event.
 slider.removeEventListener('after', afterTransitionListener)
 ```
 
+### `getOption`
+
+Returns the value of the specified option.
+
+```javascript
+slider.getOption('autoScroll')
+```
+
 ## Events
 
 ### `init`
