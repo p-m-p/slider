@@ -47,7 +47,8 @@
       "types": "./dist/types/effects/tile/tile-slider.d.ts",
       "import": "./dist/esm/effects/tile/tile-slider.js",
       "require": "./dist/cjs/effects/tile/tile-slider.cjs"
-    }
+    },
+    "./browser.min.js": "./dist/min.js"
   },
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/types/index.d.ts",
