@@ -1,5 +1,5 @@
 import { join } from 'path'
-import build from '../../scripts/build.js'
+import { buildLib, buildBrowser } from '../../scripts/build.js'
 
 const srcDir = join(import.meta.dirname, 'src')
 const outDir = join(import.meta.dirname, 'dist')
@@ -12,4 +12,5 @@ const entryPoints = [
   'effects/fade-slider.ts',
 ].map((entry) => join(srcDir, entry))
 
-await build(entryPoints, outDir)
+await buildLib(entryPoints, outDir)
+await buildBrowser([join(srcDir, 'index.ts')], outDir)

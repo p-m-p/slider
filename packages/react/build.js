@@ -1,5 +1,5 @@
 import { join } from 'path'
-import build from '../../scripts/build.js'
+import { buildLib } from '../../scripts/build.js'
 
 const srcDir = join(import.meta.dirname, 'src')
 const outDir = join(import.meta.dirname, 'dist')
@@ -12,4 +12,4 @@ const entryPoints = [
   'Tile.tsx',
 ].map((entry) => join(srcDir, entry))
 
-await build(entryPoints, outDir)
+await buildLib(entryPoints, outDir)

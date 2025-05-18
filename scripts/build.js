@@ -1,10 +1,10 @@
 import { build } from 'esbuild'
 import { join } from 'path'
 
-export default async function (entryPoints, outdir, options = {}) {
+export async function buildLib(entryPoints, outdir, options = {}) {
   const buildOptions = {
-    entryPoints,
     bundle: true,
+    entryPoints,
     packages: 'external',
     platform: 'node',
     target: 'esnext',
@@ -15,13 +15,27 @@ export default async function (entryPoints, outdir, options = {}) {
   await Promise.all([
     build({
       ...buildOptions,
-      outdir: join(outdir, 'esm'),
       format: 'esm',
+      outdir: join(outdir, 'esm'),
     }),
     build({
       ...buildOptions,
-      outdir: join(outdir, 'cjs'),
       format: 'cjs',
+      outdir: join(outdir, 'cjs'),
     }),
   ])
+}
+
+export async function buildBrowser(entryPoints, outdir, options = {}) {
+  await build({
+    bundle: true,
+    entryPoints,
+    format: 'iife',
+    minify: true,
+    outfile: join(outdir, 'min.js'),
+    platform: 'browser',
+    target: 'esnext',
+    tsconfig: join(import.meta.dirname, '../tsconfig.json'),
+    ...options,
+  })
 }
