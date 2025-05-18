@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.11.0
+
+### Minor Changes
+
+- b6d8541: Add minified browser builds for slider and components
+
+### Patch Changes
+
+- Updated dependencies [b6d8541]
+  - @boxslider/slider@2.14.0
+
 ## 2.10.9
 
 ### Patch Changes
