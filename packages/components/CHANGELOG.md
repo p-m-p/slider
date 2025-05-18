@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.11.1
+
+### Patch Changes
+
+- d8733e3: Change minified browser build export name to browser.min.js
+- Updated dependencies [d8733e3]
+  - @boxslider/slider@2.14.1
+
 ## 2.11.0
 
 ### Minor Changes

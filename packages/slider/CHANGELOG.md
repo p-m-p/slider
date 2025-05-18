@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.14.1
+
+### Patch Changes
+
+- d8733e3: Change minified browser build export name to browser.min.js
+
 ## 2.14.0
 
 ### Minor Changes
