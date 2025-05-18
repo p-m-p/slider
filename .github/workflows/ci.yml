@@ -8,6 +8,7 @@ permissions:
   packages: write
   pages: write
   id-token: write
+  pull-requests: write
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   release:
