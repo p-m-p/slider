@@ -159,6 +159,10 @@ const config: Config = {
               label: 'Accessible controls',
               href: 'https://codepen.io/p-m-p/pen/QwwZxLG',
             },
+            {
+              label: 'Web component',
+              href: 'https://codepen.io/p-m-p/pen/XJJQJGW',
+            },
           ],
         },
       ],
