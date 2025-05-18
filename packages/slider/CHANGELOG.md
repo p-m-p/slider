@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.14.0
+
+### Minor Changes
+
+- b6d8541: Add minified browser builds for slider and components
+
 ## 2.13.1
 
 ### Patch Changes
