@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.7.0
+
+### Minor Changes
+
+- ad78472: Remove HTML attributes from react components
+
 ## 2.6.5
 
 ### Patch Changes
