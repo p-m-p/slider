@@ -25,25 +25,8 @@ export interface SliderControlsProps extends BaseProps {
   prevBtnLabel?: string
 }
 
-export function SliderControls({
-  indexBtnLabel,
-  indexLabel,
-  nextBtnLabel,
-  pauseBtnLabel,
-  playBtnLabel,
-  prevBtnLabel,
-  ...props
-}: SliderControlsProps) {
-  const htmlAttributes: Record<string, string> = {}
-
-  if (indexBtnLabel) htmlAttributes['index-btn-label'] = indexBtnLabel
-  if (indexLabel) htmlAttributes['index-label'] = indexLabel
-  if (nextBtnLabel) htmlAttributes['next-btn-label'] = nextBtnLabel
-  if (pauseBtnLabel) htmlAttributes['pause-btn-label'] = pauseBtnLabel
-  if (playBtnLabel) htmlAttributes['play-btn-label'] = playBtnLabel
-  if (prevBtnLabel) htmlAttributes['prev-btn-label'] = prevBtnLabel
-
-  return <bs-slider-controls {...htmlAttributes} {...props} />
+export function SliderControls(props: SliderControlsProps) {
+  return <bs-slider-controls {...props} />
 }
 
 export default SliderControls

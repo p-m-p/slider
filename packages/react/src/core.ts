@@ -52,19 +52,9 @@ export type BaseComponentProps<T> = BoxSliderProps &
     | 'timing-function'
   >
 
-export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
-  const {
-    autoScroll,
-    onAfter,
-    onBefore,
-    onDestroy,
-    onPause,
-    onPlay,
-    pauseOnHover,
-    startIndex,
-    swipeTolerance,
-    ...elementProps
-  } = props
+export function extractEventHandlers<T extends BoxSliderProps>(props: T) {
+  const { onAfter, onBefore, onDestroy, onPause, onPlay, ...elementProps } =
+    props
   const eventHandlers = {
     onAfter,
     onBefore,
@@ -72,25 +62,8 @@ export function extractSliderAttributes<T extends BoxSliderProps>(props: T) {
     onPause,
     onPlay,
   }
-  const attributes: Record<string, string | number | boolean> = {}
 
-  if (autoScroll !== undefined) {
-    attributes['auto-scroll'] = autoScroll
-  }
-
-  if (pauseOnHover !== undefined) {
-    attributes['pause-on-hover'] = pauseOnHover
-  }
-
-  if (startIndex !== undefined) {
-    attributes['start-index'] = startIndex
-  }
-
-  if (swipeTolerance !== undefined) {
-    attributes['swipe-tolerance'] = swipeTolerance
-  }
-
-  return { attributes, elementProps, eventHandlers }
+  return { elementProps, eventHandlers }
 }
 
 export function sliderRefCallback<T extends BoxSliderProps>(

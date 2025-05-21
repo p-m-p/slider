@@ -1,6 +1,6 @@
 import type { CubeSliderElement } from '@boxslider/components/Cube'
 import {
-  extractSliderAttributes,
+  extractEventHandlers,
   type BaseComponentProps,
   sliderRefCallback,
 } from './core'
@@ -13,13 +13,11 @@ export interface CubeSliderProps extends BaseComponentProps<CubeSliderElement> {
 }
 
 export function Cube({ sliderRef, ...props }: CubeSliderProps) {
-  const { attributes, elementProps, eventHandlers } =
-    extractSliderAttributes(props)
+  const { elementProps, eventHandlers } = extractEventHandlers(props)
 
   return (
     <bs-cube
       {...elementProps}
-      {...attributes}
       ref={sliderRefCallback(eventHandlers, sliderRef)}
     />
   )
