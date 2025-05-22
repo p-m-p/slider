@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.2
+
+### Patch Changes
+
+- 89ba69b: Fix play/pause button state in slider controls when using the pause on hover option
+
 ## 2.11.1
 
 ### Patch Changes
