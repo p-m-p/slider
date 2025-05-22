@@ -160,8 +160,12 @@ const config: Config = {
               href: 'https://codepen.io/p-m-p/pen/QwwZxLG',
             },
             {
-              label: 'Web component',
+              label: 'Web components',
               href: 'https://codepen.io/p-m-p/pen/XJJQJGW',
+            },
+            {
+              label: 'React components',
+              href: 'https://codepen.io/p-m-p/pen/JooQxvY',
             },
           ],
         },
