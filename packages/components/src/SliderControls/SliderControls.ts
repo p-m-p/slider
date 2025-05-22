@@ -358,7 +358,8 @@ export default class SliderControls
         this.#hasBeenInteractedWith = true
 
         if (this.#sliderElement) {
-          this.#sliderElement.autoScroll = !this.#sliderElement.autoScroll
+          this.#sliderElement.autoScroll =
+            !this.#sliderElement.slider?.getOption('autoScroll')
         }
       })
     }
@@ -371,16 +372,15 @@ export default class SliderControls
 
     if (slot) {
       const button = slot.assignedElements()[0] ?? slot.querySelector('.btn')
+      const isPlaying = this.#sliderElement?.slider?.getOption('autoScroll')
 
       button.setAttribute(
         'aria-label',
-        this.#sliderElement?.autoScroll
-          ? this.#pauseButtonLabel()
-          : this.#playButtonLabel(),
+        isPlaying ? this.#pauseButtonLabel() : this.#playButtonLabel(),
       )
       button?.setAttribute(
         'part',
-        this.#sliderElement?.autoScroll ? 'btn play-btn pause' : 'btn play-btn',
+        isPlaying ? 'btn play-btn pause' : 'btn play-btn',
       )
     }
   }
