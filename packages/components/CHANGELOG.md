@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.12.0
+
+### Minor Changes
+
+- c00ff4b: Remove locally stored slider options from the Slider base component class and surface the underlying slider attributes instead
+
 ## 2.11.2
 
 ### Patch Changes
