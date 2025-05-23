@@ -46,7 +46,11 @@ export default abstract class Slider
   #getOrDefault<T extends keyof BoxSliderOptions>(
     option: T,
   ): BoxSliderOptions[T] {
-    return this.#slider?.getOption(option) ?? defaultOptions[option]
+    return (
+      this.#optionsCache[option] ??
+      this.#slider?.getOption(option) ??
+      defaultOptions[option]
+    )
   }
 
   get slider() {
@@ -58,10 +62,14 @@ export default abstract class Slider
   }
 
   set autoScroll(autoScroll: boolean) {
-    if (autoScroll) {
-      this.slider?.play()
+    if (this.slider) {
+      if (autoScroll) {
+        this.slider.play()
+      } else {
+        this.slider.pause()
+      }
     } else {
-      this.slider?.pause()
+      this.reset({ autoScroll })
     }
   }
 
