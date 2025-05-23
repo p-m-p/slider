@@ -358,8 +358,7 @@ export default class SliderControls
         this.#hasBeenInteractedWith = true
 
         if (this.#sliderElement) {
-          this.#sliderElement.autoScroll =
-            !this.#sliderElement.slider?.getOption('autoScroll')
+          this.#sliderElement.autoScroll = !this.#sliderElement.autoScroll
         }
       })
     }
@@ -372,7 +371,7 @@ export default class SliderControls
 
     if (slot) {
       const button = slot.assignedElements()[0] ?? slot.querySelector('.btn')
-      const isPlaying = this.#sliderElement?.slider?.getOption('autoScroll')
+      const isPlaying = this.#sliderElement.autoScroll
 
       button.setAttribute(
         'aria-label',

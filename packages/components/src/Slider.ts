@@ -39,29 +39,25 @@ export default abstract class Slider
 {
   #slider?: BoxSlider
   #observer: MutationObserver
-
-  #autoScroll = defaultOptions.autoScroll
-  #loop = defaultOptions.loop
-  #pauseOnHove = defaultOptions.pauseOnHover
-  #speed = defaultOptions.speed
-  #swipe = defaultOptions.swipe
-  #swipeTolerance = defaultOptions.swipeTolerance
-  #startIndex = defaultOptions.startIndex
-  #timeout = defaultOptions.timeout
+  #optionsCache: Partial<BoxSliderOptions> = {}
 
   static observedAttributes = SLIDER_ATTRIBUTES
+
+  #getOrDefault<T extends keyof BoxSliderOptions>(
+    option: T,
+  ): BoxSliderOptions[T] {
+    return this.#slider?.getOption(option) ?? defaultOptions[option]
+  }
 
   get slider() {
     return this.#slider
   }
 
   get autoScroll() {
-    return this.#autoScroll
+    return this.#getOrDefault('autoScroll')
   }
 
   set autoScroll(autoScroll: boolean) {
-    this.#autoScroll = autoScroll
-
     if (autoScroll) {
       this.slider?.play()
     } else {
@@ -70,65 +66,58 @@ export default abstract class Slider
   }
 
   get loop() {
-    return this.#loop
+    return this.#getOrDefault('loop')
   }
 
   set loop(loop: boolean) {
-    this.#loop = loop
     this.reset({ loop })
   }
 
   get pauseOnHover() {
-    return this.#pauseOnHove
+    return this.#getOrDefault('pauseOnHover')
   }
 
   set pauseOnHover(pauseOnHover: boolean) {
-    this.#pauseOnHove = pauseOnHover
     this.reset({ pauseOnHover })
   }
 
   get speed() {
-    return this.#speed
+    return this.#getOrDefault('speed')
   }
 
   set speed(speed: number) {
-    this.#speed = speed
     this.reset({ speed })
   }
 
   get startIndex() {
-    return this.#startIndex
+    return this.#getOrDefault('startIndex')
   }
 
   set startIndex(startIndex: number) {
-    this.#startIndex = startIndex
     this.reset({ startIndex })
   }
 
   get swipe() {
-    return this.#swipe
+    return this.#getOrDefault('swipe')
   }
 
   set swipe(swipe: boolean) {
-    this.#swipe = swipe
     this.reset({ swipe })
   }
 
   get swipeTolerance() {
-    return this.#swipeTolerance
+    return this.#getOrDefault('swipeTolerance')
   }
 
   set swipeTolerance(swipeTolerance: number) {
-    this.#swipeTolerance = swipeTolerance
     this.reset({ swipeTolerance })
   }
 
   get timeout() {
-    return this.#timeout
+    return this.#getOrDefault('timeout')
   }
 
   set timeout(timeout: number) {
-    this.#timeout = timeout
     this.reset({ timeout })
   }
 
@@ -147,6 +136,7 @@ export default abstract class Slider
 
   constructor() {
     super()
+
     this.#observer = new MutationObserver((mutations) => {
       const needsReset = mutations.some((mutation) =>
         [...mutation.addedNodes, ...mutation.removedNodes].some(
@@ -157,16 +147,14 @@ export default abstract class Slider
       )
 
       if (needsReset) {
-        this.reset({
-          ...this.options,
-          startIndex: this.slider?.activeIndex ?? 0,
-        })
+        this.reset({ startIndex: this.slider?.activeIndex ?? 0 })
       }
     })
   }
 
   protected init(effect: Effect) {
-    const slider = new BoxSlider(this, effect, this.options)
+    const options = { ...this.options, ...this.#optionsCache }
+    const slider = new BoxSlider(this, effect, options)
     const events: SliderEventType[] = [
       'after',
       'before',
@@ -184,10 +172,21 @@ export default abstract class Slider
 
     this.#slider = slider
     this.#observer.observe(this, { childList: true })
+    this.#optionsCache = {}
   }
 
   protected reset(options: Partial<BoxSliderOptions>, effect?: Effect) {
-    this.slider?.reset(options, effect)
+    if (this.slider) {
+      const combinedOptions = { ...this.#optionsCache, ...options }
+
+      console.log('setting options', combinedOptions)
+
+      this.slider?.reset(combinedOptions, effect)
+      this.#optionsCache = {}
+    } else {
+      console.log('caching options', { ...this.#optionsCache, ...options })
+      this.#optionsCache = { ...this.#optionsCache, ...options }
+    }
   }
 
   attributeChangedCallback(name: string, _: string, value: string) {
