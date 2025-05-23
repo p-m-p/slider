@@ -153,8 +153,7 @@ export default abstract class Slider
   }
 
   protected init(effect: Effect) {
-    const options = { ...this.options, ...this.#optionsCache }
-    const slider = new BoxSlider(this, effect, options)
+    const slider = new BoxSlider(this, effect, this.#optionsCache)
     const events: SliderEventType[] = [
       'after',
       'before',
@@ -179,12 +178,9 @@ export default abstract class Slider
     if (this.slider) {
       const combinedOptions = { ...this.#optionsCache, ...options }
 
-      console.log('setting options', combinedOptions)
-
       this.slider?.reset(combinedOptions, effect)
       this.#optionsCache = {}
     } else {
-      console.log('caching options', { ...this.#optionsCache, ...options })
       this.#optionsCache = { ...this.#optionsCache, ...options }
     }
   }
