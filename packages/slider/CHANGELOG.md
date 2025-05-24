@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.14.2
+
+### Patch Changes
+
+- 9a742f0: Fix error where slider is destroyed before transition completes
+
 ## 2.14.1
 
 ### Patch Changes
