@@ -20,6 +20,10 @@ const config: Config = {
       defer: true,
       'data-cf-beacon': '{"token": "86e36e0634bb461e84a1b6a61f287b46"}',
     },
+    {
+      src: 'https://public.codepenassets.com/embed/index.js',
+      async: true,
+    },
   ],
 
   // Even if you don't use internationalization, you can use this field to set
