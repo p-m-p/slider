@@ -370,8 +370,13 @@ export default class BoxSlider {
     try {
       await (this.effect.transition(settings) ?? Promise.resolve())
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
+    } catch (err) {
       // Transition may throw an error from aborted animation if slides are removed
+      return
+    }
+
+    // It's possible that the slider was destroyed before the transition completed
+    if (this.isDestroyed) {
       return
     }
 
