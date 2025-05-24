@@ -153,19 +153,19 @@ const config: Config = {
           items: [
             {
               label: 'Basic carousel',
-              href: 'https://codepen.io/p-m-p/pen/mdQVxKZ',
+              to: '/docs/examples/basic-carousel',
+            },
+            {
+              label: 'Web components',
+              to: '/docs/examples/web-components',
+            },
+            {
+              label: 'React components',
+              to: '/docs/examples/react-components',
             },
             {
               label: 'Accessible controls',
               href: 'https://codepen.io/p-m-p/pen/QwwZxLG',
-            },
-            {
-              label: 'Web components',
-              href: 'https://codepen.io/p-m-p/pen/XJJQJGW',
-            },
-            {
-              label: 'React components',
-              href: 'https://codepen.io/p-m-p/pen/JooQxvY',
             },
           ],
         },
