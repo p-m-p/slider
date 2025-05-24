@@ -1,3 +1,5 @@
+import styles from './styles.module.css'
+
 export function CodePen({
   penId,
   title,
@@ -10,7 +12,7 @@ export function CodePen({
   return (
     <>
       <p
-        className="codepen"
+        className={styles.codepen + ' codepen'}
         data-height="600"
         data-default-tab={`${tab},result`}
         data-slug-hash={penId}
