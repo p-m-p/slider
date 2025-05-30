@@ -11,8 +11,6 @@
   <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/p-m-p/slider/ci.yml?branch=main">
 </p>
 
-![Demo of the different slide effects](https://share.cleanshot.com/jyF3BWLw)
-
 ## About
 
 BoxSlider is a small library with zero dependencies that provides a light-weight, responsive content slider with
