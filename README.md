@@ -10,8 +10,9 @@
   <a href="https://www.jsdelivr.com/package/npm/@boxslider/slider"><img alt="jsDelivr hits" src="https://data.jsdelivr.com/v1/package/npm/@boxslider/slider/badge"></a>
   <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/p-m-p/slider/ci.yml?branch=main">
 </p>
-
-![Demo of the different slide effects](https://res.cloudinary.com/djkib1uvi/image/upload/v1748590591/CleanShot_2025-05-30_at_08.35.31_tzdt10.gif)
+<p align="center">
+  <img src="https://res.cloudinary.com/djkib1uvi/image/upload/v1748590591/CleanShot_2025-05-30_at_08.35.31_tzdt10.gif" width="680" alt="Box Slider demo">
+</p>
 
 ## About
 
