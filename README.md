@@ -31,15 +31,9 @@ Use from CDN
 
 ```html
 <script type="module">
-  import {
-    BoxSlider,
-    FadeSlider,
-  } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { createCarouselSlider } from 'https://esm.sh/@boxslider/slider'
 
-  const slider = new BoxSlider(
-    document.getElementById('slider'),
-    new FadeSlider(),
-  )
+  createCarouselSlider('#slider')
 </script>
 ```
 
@@ -54,10 +48,14 @@ npm install --save @boxslider/react
 ```tsx
 import { SliderControls, CarouselSlider } from '@boxslider/react'
 
-function MySlider({ children }) {
+function MySlider() {
   return (
     <SliderControls>
-      <CarouselSlider>{children}</CarouselSlider>
+      <CarouselSlider>
+        <div>Slide 1</div>
+        <div>Slide 2</div>
+        <div>Slide 3</div>
+      </CarouselSlider>
     </SliderControls>
   )
 }
@@ -76,13 +74,13 @@ npm install --save @boxslider/components
 Use from CDN
 
 ```html
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
+<script type="module" src="https://esm.sh/@boxslider/components"></script>
 
 <bx-slider-controls>
   <bs-carousel>
-    <!-- Slides -->
+    <div>Slide 1</div>
+    <div>Slide 2</div>
+    <div>Slide 3</div>
   </bs-carousel>
 </bx-slider-controls
 ```
