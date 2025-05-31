@@ -20,10 +20,7 @@ Alternatively use from CDN.
 
 ```html
 <script type="module">
-  import {
-    BoxSlider,
-    FadeSlider,
-  } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { BoxSlider, FadeSlider } from 'https://esm.sh/@boxslider/slider'
 
   const slider = new BoxSlider(
     document.getElementById('slider'),

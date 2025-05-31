@@ -20,7 +20,7 @@ Alternatively use from CDN.
 
 ```html
 <script type="module">
-  import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { createFadeSlider } from 'https://esm.sh/@boxslider/slider'
 
   createFadeSlider('#slider', { speed: 300 })
 </script>

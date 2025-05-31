@@ -24,9 +24,7 @@ import '@boxslider/components'
 Alternatively use from CDN.
 
 ```html
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
+<script type="module" src="https://esm.sh/@boxslider/components"></script>
 
 <bs-slider-controls>
   <bs-carousel>
@@ -46,7 +44,7 @@ import '@boxslider/components/Carousel'
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/@boxslider/components/Carousel/+esm"></script>
+  src="https://esm.sh/@boxslider/components/Carousel"></script>
 
 <bs-carousel>
   <!-- Slides -->

@@ -44,10 +44,7 @@ for more information. Use the `bs-slider-controls` component to add navigation c
 [slider controls](/docs/guides/slider-controls) guide for more information.
 
 ```html
-<script
-  defer
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm">
+<script defer type="module" src="https://esm.sh/@boxslider/components">
   document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('slider')
 
@@ -73,20 +70,13 @@ a new `BoxSlider` instance with the desired effect and options. See the [JavaScr
 for more information.
 
 ```javascript
-import { BoxSlider, FadeSlider } from '@boxslider/slider'
+import { createCarouselSlider } from '@boxslider/slider'
 
-// Create a slider with fading slide transition that moves
-// to the next slide every 5 seconds (5000ms)
-const sliderOptions = {
+const slider = createCarouselSlider('#slider', {
   autoScroll: true,
   timeout: 5000,
-}
-const effectOptions = {
   timingFunction: 'ease-in-out',
-}
-const slider = new BoxSlider(
-  document.getElementById('slider'),
-  new FadeSlider(effectOptions),
-  sliderOptions,
-)
+})
+
+slider.next()
 ```

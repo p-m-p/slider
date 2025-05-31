@@ -45,7 +45,7 @@ implementation is shown below.
 </section>
 
 <script type="module">
-  import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { createFadeSlider } from 'https://esm.sh/@boxslider/slider'
 
   const slider = createFadeSlider('#demo-slider', { autoScroll: false })
 

@@ -44,10 +44,7 @@ for more information. Use the `bs-slider-controls` component to add navigation c
 [slider controls](/docs/guides/slider-controls) guide for more information.
 
 ```html
-<script
-  defer
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm">
+<script defer type="module" src="https://esm.sh/npm/@boxslider/components">
   document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('slider')
 
