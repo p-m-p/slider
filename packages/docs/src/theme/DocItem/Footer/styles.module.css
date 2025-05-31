@@ -1,0 +1,14 @@
+.starOnGithub {
+  align-items: center;
+  margin: 3rem 0 0;
+  display: flex;
+  flex-flow: column;
+}
+
+.text {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  font-size: 1.2rem;
+}
