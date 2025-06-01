@@ -112,11 +112,19 @@ const config: Config = {
               label: 'API Reference',
               to: '/docs/getting-started/api',
             },
+            {
+              label: 'Styling',
+              to: '/docs/guides/styling',
+            },
           ],
         },
         {
           title: 'Guides',
           items: [
+            {
+              label: 'JavaScript library',
+              to: '/docs/guides/javascript',
+            },
             {
               label: 'React components',
               to: '/docs/guides/react',
@@ -168,8 +176,8 @@ const config: Config = {
               to: '/docs/examples/react-components',
             },
             {
-              label: 'Accessible controls',
-              href: 'https://codepen.io/p-m-p/pen/QwwZxLG',
+              label: 'Styled controls',
+              to: '/docs/examples/styled-controls',
             },
           ],
         },
