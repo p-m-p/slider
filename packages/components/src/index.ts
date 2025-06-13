@@ -1,4 +1,9 @@
 import type { SliderEventData } from '@boxslider/slider'
+import type { CarouselSliderElement } from './Carousel'
+import type { CubeSliderElement } from './Cube'
+import type { FadeSliderElement } from './Fade'
+import type { TileSliderElement } from './Tile'
+import type { SliderControlsElement } from './SliderControls'
 
 declare global {
   interface ElementEventMap {
@@ -7,6 +12,14 @@ declare global {
     destroy: CustomEvent<void>
     pause: CustomEvent<SliderEventData>
     play: CustomEvent<SliderEventData>
+  }
+
+  interface HTMLElementTagNameMap {
+    'bs-carousel': CarouselSliderElement
+    'bs-cube': CubeSliderElement
+    'bs-fade': FadeSliderElement
+    'bs-tile': TileSliderElement
+    'bs-slider-controls': SliderControlsElement
   }
 }
 

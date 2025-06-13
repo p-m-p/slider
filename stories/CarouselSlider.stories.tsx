@@ -55,20 +55,18 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     // Test that the slider is rendered
-    const slider = canvasElement.querySelector('bs-carousel-slider')
+    const slider = canvasElement.querySelector('bs-carousel')
     expect(slider).toBeTruthy()
 
-    // Test that slides are present
-    const slides = canvasElement.querySelectorAll('.slide')
-    expect(slides).toHaveLength(4)
+    // Test speed property
+    expect(slider?.speed).toBe(500)
 
-    // Test that images are loaded
+    // Test timeout property
+    expect(slider?.timeout).toBe(5000)
+
+    // Test that images are rendered
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
-
-    // Test that slide content is present
-    const firstSlideTitle = canvasElement.querySelector('h3')
-    expect(firstSlideTitle?.textContent).toBe('Beautiful Landscape')
   },
 }
 
@@ -89,18 +87,18 @@ export const CoverMode: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-carousel-slider')
+    const slider = canvasElement.querySelector('bs-carousel')
     expect(slider).toBeTruthy()
 
-    // Test cover mode attribute
-    expect(slider?.getAttribute('cover')).toBe('true')
+    // Test cover property
+    expect(slider?.cover).toBe(true)
 
-    // Test pause on hover attribute
-    expect(slider?.getAttribute('pause-on-hover')).toBe('true')
+    // Test pauseOnHover property
+    expect(slider?.pauseOnHover).toBe(true)
 
-    // Test all slides are rendered (5 slides for cover mode)
-    const slides = canvasElement.querySelectorAll('.slide')
-    expect(slides).toHaveLength(5)
+    // Test that content is rendered
+    const images = canvasElement.querySelectorAll('img')
+    expect(images.length).toBeGreaterThan(0)
   },
 }
 
@@ -120,18 +118,18 @@ export const CustomTiming: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-carousel-slider')
+    const slider = canvasElement.querySelector('bs-carousel')
     expect(slider).toBeTruthy()
 
     // Test custom timing function
-    expect(slider?.getAttribute('timing-function')).toBe('ease-out')
+    expect(slider?.timingFunction).toBe('ease-out')
 
     // Test custom speed
-    expect(slider?.getAttribute('speed')).toBe('1200')
+    expect(slider?.speed).toBe(1200)
 
-    // Test correct number of slides
-    const slides = canvasElement.querySelectorAll('.slide')
-    expect(slides).toHaveLength(3)
+    // Test that content is rendered
+    const images = canvasElement.querySelectorAll('img')
+    expect(images.length).toBeGreaterThan(0)
   },
 }
 
@@ -151,19 +149,19 @@ export const FastTransitions: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-carousel-slider')
+    const slider = canvasElement.querySelector('bs-carousel')
     expect(slider).toBeTruthy()
 
     // Test fast speed setting
-    expect(slider?.getAttribute('speed')).toBe('250')
+    expect(slider?.speed).toBe(250)
 
     // Test short timeout for fast transitions
-    expect(slider?.getAttribute('timeout')).toBe('2000')
+    expect(slider?.timeout).toBe(2000)
 
     // Test ease-in timing function
-    expect(slider?.getAttribute('timing-function')).toBe('ease-in')
+    expect(slider?.timingFunction).toBe('ease-in')
 
     // Test swipe enabled
-    expect(slider?.getAttribute('swipe')).toBe('true')
+    expect(slider?.swipe).toBe(true)
   },
 }

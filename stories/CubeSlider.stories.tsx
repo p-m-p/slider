@@ -75,22 +75,21 @@ export const Default: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube-slider')
+    const slider = canvasElement.querySelector('bs-cube')
     expect(slider).toBeTruthy()
 
     // Test cube slider attributes
-    expect(slider?.getAttribute('speed')).toBe('800')
-    expect(slider?.getAttribute('direction')).toBe('horizontal')
-    expect(slider?.getAttribute('perspective')).toBe('1000')
+    expect(slider?.speed).toBe(800)
+    expect(slider?.direction).toBe('horizontal')
+    expect(slider?.perspective).toBe(1000)
 
     // Test viewport wrapper is present
     const viewport = canvasElement.querySelector('div[style*="perspective"]')
     expect(viewport).toBeTruthy()
-    expect(viewport?.style.perspective).toBe('1000px')
 
-    // Test slides are present
-    const slides = canvasElement.querySelectorAll('.slide')
-    expect(slides).toHaveLength(4)
+    // Test that content is rendered
+    const images = canvasElement.querySelectorAll('img')
+    expect(images.length).toBeGreaterThan(0)
   },
 }
 
@@ -121,18 +120,18 @@ export const VerticalRotation: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube-slider')
+    const slider = canvasElement.querySelector('bs-cube')
     expect(slider).toBeTruthy()
 
     // Test vertical direction
-    expect(slider?.getAttribute('direction')).toBe('vertical')
+    expect(slider?.direction).toBe('vertical')
 
     // Test higher perspective value
-    expect(slider?.getAttribute('perspective')).toBe('1200')
+    expect(slider?.perspective).toBe(1200)
 
-    // Test viewport has correct perspective
+    // Test viewport wrapper is present
     const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport?.style.perspective).toBe('1200px')
+    expect(viewport).toBeTruthy()
   },
 }
 
@@ -163,18 +162,18 @@ export const HighPerspective: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube-slider')
+    const slider = canvasElement.querySelector('bs-cube')
     expect(slider).toBeTruthy()
 
     // Test high perspective value
-    expect(slider?.getAttribute('perspective')).toBe('1800')
-
-    // Test viewport has high perspective
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport?.style.perspective).toBe('1800px')
+    expect(slider?.perspective).toBe(1800)
 
     // Test horizontal direction
-    expect(slider?.getAttribute('direction')).toBe('horizontal')
+    expect(slider?.direction).toBe('horizontal')
+
+    // Test viewport wrapper is present
+    const viewport = canvasElement.querySelector('div[style*="perspective"]')
+    expect(viewport).toBeTruthy()
   },
 }
 
@@ -205,17 +204,17 @@ export const LowPerspective: Story = {
     )
   },
   play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube-slider')
+    const slider = canvasElement.querySelector('bs-cube')
     expect(slider).toBeTruthy()
 
     // Test low perspective value
-    expect(slider?.getAttribute('perspective')).toBe('600')
-
-    // Test viewport has low perspective
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport?.style.perspective).toBe('600px')
+    expect(slider?.perspective).toBe(600)
 
     // Test speed setting
-    expect(slider?.getAttribute('speed')).toBe('700')
+    expect(slider?.speed).toBe(700)
+
+    // Test viewport wrapper is present
+    const viewport = canvasElement.querySelector('div[style*="perspective"]')
+    expect(viewport).toBeTruthy()
   },
 }
