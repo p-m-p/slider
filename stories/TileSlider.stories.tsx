@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from '@storybook/test'
 import { TileSlider } from '../packages/react/src/index'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 
@@ -68,6 +69,19 @@ export const Default: Story = {
       </TileSlider>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-tile-slider')
+    expect(slider).toBeTruthy()
+
+    // Test tile slider attributes
+    expect(slider?.getAttribute('tile-effect')).toBe('fade')
+    expect(slider?.getAttribute('rows')).toBe('4')
+    expect(slider?.getAttribute('row-offset')).toBe('100')
+
+    // Test slides are present
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(4)
+  },
 }
 
 export const FlipEffect: Story = {
@@ -86,6 +100,19 @@ export const FlipEffect: Story = {
         {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
       </TileSlider>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-tile-slider')
+    expect(slider).toBeTruthy()
+
+    // Test flip effect
+    expect(slider?.getAttribute('tile-effect')).toBe('flip')
+
+    // Test 5 rows configuration
+    expect(slider?.getAttribute('rows')).toBe('5')
+
+    // Test row offset
+    expect(slider?.getAttribute('row-offset')).toBe('120')
   },
 }
 
@@ -106,6 +133,19 @@ export const ManyRows: Story = {
       </TileSlider>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-tile-slider')
+    expect(slider).toBeTruthy()
+
+    // Test many rows (8)
+    expect(slider?.getAttribute('rows')).toBe('8')
+
+    // Test faster row offset
+    expect(slider?.getAttribute('row-offset')).toBe('60')
+
+    // Test speed setting
+    expect(slider?.getAttribute('speed')).toBe('1200')
+  },
 }
 
 export const NoOffset: Story = {
@@ -125,6 +165,20 @@ export const NoOffset: Story = {
       </TileSlider>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-tile-slider')
+    expect(slider).toBeTruthy()
+
+    // Test no offset (simultaneous tiles)
+    expect(slider?.getAttribute('row-offset')).toBe('0')
+
+    // Test 6 rows
+    expect(slider?.getAttribute('rows')).toBe('6')
+
+    // Test slides count
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(3)
+  },
 }
 
 export const HighOffset: Story = {
@@ -143,5 +197,19 @@ export const HighOffset: Story = {
         {slideData.map((slide, index) => createSlide(slide, index))}
       </TileSlider>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-tile-slider')
+    expect(slider).toBeTruthy()
+
+    // Test high offset (delayed tiles)
+    expect(slider?.getAttribute('row-offset')).toBe('200')
+
+    // Test fade effect
+    expect(slider?.getAttribute('tile-effect')).toBe('fade')
+
+    // Test all slides rendered
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(5)
   },
 }

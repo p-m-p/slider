@@ -8,7 +8,13 @@
       "Bash(git checkout:*)",
       "Bash(git add:*)",
       "Bash(grep:*)",
-      "WebFetch(domain:philparsons.co.uk)"
+      "WebFetch(domain:philparsons.co.uk)",
+      "Bash(npx prettier:*)",
+      "Bash(npm run lint)",
+      "WebFetch(domain:storybook.js.org)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm run:*)"
     ],
     "deny": []
   }

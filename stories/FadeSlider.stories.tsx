@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from '@storybook/test'
 import { FadeSlider } from '../packages/react/src/index'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 
@@ -58,6 +59,23 @@ export const Default: Story = {
       </FadeSlider>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-fade-slider')
+    expect(slider).toBeTruthy()
+
+    // Test fade slider attributes
+    expect(slider?.getAttribute('speed')).toBe('600')
+    expect(slider?.getAttribute('timing-function')).toBe('ease-in-out')
+    expect(slider?.getAttribute('swipe')).toBe('true')
+
+    // Test slides are present
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(4)
+
+    // Test first slide content
+    const firstSlideTitle = canvasElement.querySelector('h3')
+    expect(firstSlideTitle?.textContent).toBe('Beautiful Landscape')
+  },
 }
 
 export const EaseInTiming: Story = {
@@ -76,6 +94,20 @@ export const EaseInTiming: Story = {
       </FadeSlider>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-fade-slider')
+    expect(slider).toBeTruthy()
+
+    // Test ease-in timing function
+    expect(slider?.getAttribute('timing-function')).toBe('ease-in')
+
+    // Test pause on hover
+    expect(slider?.getAttribute('pause-on-hover')).toBe('true')
+
+    // Test all slides rendered
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(5)
+  },
 }
 
 export const LinearFade: Story = {
@@ -93,6 +125,20 @@ export const LinearFade: Story = {
       </FadeSlider>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-fade-slider')
+    expect(slider).toBeTruthy()
+
+    // Test linear timing function
+    expect(slider?.getAttribute('timing-function')).toBe('linear')
+
+    // Test speed setting
+    expect(slider?.getAttribute('speed')).toBe('1000')
+
+    // Test correct number of slides
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(3)
+  },
 }
 
 export const FastFade: Story = {
@@ -109,5 +155,18 @@ export const FastFade: Story = {
         {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
       </FadeSlider>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-fade-slider')
+    expect(slider).toBeTruthy()
+
+    // Test fast fade settings
+    expect(slider?.getAttribute('speed')).toBe('400')
+    expect(slider?.getAttribute('timeout')).toBe('3000')
+    expect(slider?.getAttribute('timing-function')).toBe('ease-out')
+
+    // Test slides rendered
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(4)
   },
 }

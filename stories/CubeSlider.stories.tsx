@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from '@storybook/test'
 import { CubeSlider } from '../packages/react/src/index'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 
@@ -73,6 +74,24 @@ export const Default: Story = {
       </div>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-cube-slider')
+    expect(slider).toBeTruthy()
+
+    // Test cube slider attributes
+    expect(slider?.getAttribute('speed')).toBe('800')
+    expect(slider?.getAttribute('direction')).toBe('horizontal')
+    expect(slider?.getAttribute('perspective')).toBe('1000')
+
+    // Test viewport wrapper is present
+    const viewport = canvasElement.querySelector('div[style*="perspective"]')
+    expect(viewport).toBeTruthy()
+    expect(viewport?.style.perspective).toBe('1000px')
+
+    // Test slides are present
+    const slides = canvasElement.querySelectorAll('.slide')
+    expect(slides).toHaveLength(4)
+  },
 }
 
 export const VerticalRotation: Story = {
@@ -100,6 +119,20 @@ export const VerticalRotation: Story = {
         </CubeSlider>
       </div>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-cube-slider')
+    expect(slider).toBeTruthy()
+
+    // Test vertical direction
+    expect(slider?.getAttribute('direction')).toBe('vertical')
+
+    // Test higher perspective value
+    expect(slider?.getAttribute('perspective')).toBe('1200')
+
+    // Test viewport has correct perspective
+    const viewport = canvasElement.querySelector('div[style*="perspective"]')
+    expect(viewport?.style.perspective).toBe('1200px')
   },
 }
 
@@ -129,6 +162,20 @@ export const HighPerspective: Story = {
       </div>
     )
   },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-cube-slider')
+    expect(slider).toBeTruthy()
+
+    // Test high perspective value
+    expect(slider?.getAttribute('perspective')).toBe('1800')
+
+    // Test viewport has high perspective
+    const viewport = canvasElement.querySelector('div[style*="perspective"]')
+    expect(viewport?.style.perspective).toBe('1800px')
+
+    // Test horizontal direction
+    expect(slider?.getAttribute('direction')).toBe('horizontal')
+  },
 }
 
 export const LowPerspective: Story = {
@@ -156,5 +203,19 @@ export const LowPerspective: Story = {
         </CubeSlider>
       </div>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-cube-slider')
+    expect(slider).toBeTruthy()
+
+    // Test low perspective value
+    expect(slider?.getAttribute('perspective')).toBe('600')
+
+    // Test viewport has low perspective
+    const viewport = canvasElement.querySelector('div[style*="perspective"]')
+    expect(viewport?.style.perspective).toBe('600px')
+
+    // Test speed setting
+    expect(slider?.getAttribute('speed')).toBe('700')
   },
 }
