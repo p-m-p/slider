@@ -23,6 +23,12 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run build
       - run: pnpm run test:coverage
+      - name: Build Storybook
+        run: pnpm run build-storybook
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Run Storybook tests
+        run: pnpm run test-storybook:ci
       - uses: changesets/action@v1
         with:
           publish: pnpm run release

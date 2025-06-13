@@ -64,3 +64,17 @@ The library provides multiple slide transition effects (carousel, fade, cube, ti
 - Vitest workspace configuration across all packages
 - Testing Library for DOM testing
 - Tests located in `__tests__/` directories within packages
+- Storybook tests with play functions in `stories/` directory
+- Storybook test runner for automated component testing in CI
+
+**Storybook:**
+
+- Comprehensive React component stories with visual examples
+- Interactive testing with play functions for component validation
+- Tests cover all slider types and configurations
+- Automated testing in CI via test runner
+- Commands:
+  - `pnpm run storybook` - Start development server
+  - `pnpm run build-storybook` - Build static files
+  - `pnpm run test-storybook` - Run tests (requires running Storybook)
+  - `pnpm run test-storybook:ci` - Run tests with static build
