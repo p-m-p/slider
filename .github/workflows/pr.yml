@@ -21,9 +21,9 @@ jobs:
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps
       - name: Run Storybook tests
         run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on http://127.0.0.1:6006 && pnpm run test-storybook --url http://127.0.0.1:6006"
+          pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm exec http-server storybook-static --port 6006 --silent" \
+            "pnpm exec wait-on http://127.0.0.1:6006 && pnpm run test-storybook --url http://127.0.0.1:6006"
