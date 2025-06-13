@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(pnpm build-storybook:*)",
+      "Bash(pnpm storybook:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(grep:*)"
+    ],
+    "deny": []
+  }
+}
