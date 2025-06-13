@@ -14,7 +14,8 @@
       "WebFetch(domain:storybook.js.org)",
       "Bash(pnpm add:*)",
       "Bash(pnpm remove:*)",
-      "Bash(pnpm run:*)"
+      "Bash(pnpm run:*)",
+      "Bash(npx changeset:*)"
     ],
     "deny": []
   }
