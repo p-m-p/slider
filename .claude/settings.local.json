@@ -7,7 +7,8 @@
       "Bash(pnpm storybook:*)",
       "Bash(git checkout:*)",
       "Bash(git add:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebFetch(domain:philparsons.co.uk)"
     ],
     "deny": []
   }

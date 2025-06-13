@@ -152,64 +152,20 @@ export const ProfessionalStyled: Story = {
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       position: 'relative',
 
-      // Professional control styling with CSS variables
-      '--bx-controls-position': 'absolute',
-      '--bx-controls-bottom': '0',
-      '--bx-controls-left': '0',
-      '--bx-controls-right': '0',
-      '--bx-controls-background':
-        'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%)',
-      '--bx-controls-padding': '30px 40px 25px',
-      '--bx-controls-display': 'flex',
-      '--bx-controls-justify-content': 'space-between',
-      '--bx-controls-align-items': 'center',
+      // BoxSlider control styling with correct CSS custom properties
+      '--bs-button-bar-gap': '20px',
 
-      // Navigation buttons - sleek rectangular design
-      '--bx-btn-background': 'rgba(255, 255, 255, 0.95)',
-      '--bx-btn-color': '#2c3e50',
-      '--bx-btn-border': 'none',
-      '--bx-btn-border-radius': '8px',
-      '--bx-btn-padding': '12px 20px',
-      '--bx-btn-font-size': '13px',
-      '--bx-btn-font-weight': '600',
-      '--bx-btn-letter-spacing': '0.5px',
-      '--bx-btn-text-transform': 'uppercase',
-      '--bx-btn-box-shadow': '0 4px 12px rgba(0,0,0,0.15)',
-      '--bx-btn-transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      // Control buttons styling
+      '--bs-btn-background-color': 'rgba(255, 255, 255, 0.95)',
+      '--bs-btn-hover-background-color': '#ffffff',
+      '--bs-btn-border-radius': '12px',
+      '--bs-btn-size': '48px',
 
-      // Button hover effects
-      '--bx-btn-hover-background': '#ffffff',
-      '--bx-btn-hover-color': '#1a252f',
-      '--bx-btn-hover-transform': 'translateY(-2px)',
-      '--bx-btn-hover-box-shadow': '0 8px 20px rgba(0,0,0,0.25)',
-
-      // Play/Pause button special styling
-      '--bx-play-pause-background': '#3498db',
-      '--bx-play-pause-color': 'white',
-      '--bx-play-pause-hover-background': '#2980b9',
-      '--bx-play-pause-border-radius': '50px',
-      '--bx-play-pause-padding': '14px 24px',
-      '--bx-play-pause-font-weight': '700',
-
-      // Index buttons - modern pill design
-      '--bx-pager-position': 'absolute',
-      '--bx-pager-top': '20px',
-      '--bx-pager-right': '25px',
-      '--bx-pager-display': 'flex',
-      '--bx-pager-gap': '6px',
-      '--bx-pager-btn-width': '32px',
-      '--bx-pager-btn-height': '6px',
-      '--bx-pager-btn-border-radius': '3px',
-      '--bx-pager-btn-background': 'rgba(255, 255, 255, 0.4)',
-      '--bx-pager-btn-border': 'none',
-      '--bx-pager-btn-transition': 'all 0.4s ease',
-
-      // Index button states
-      '--bx-pager-btn-hover-background': 'rgba(255, 255, 255, 0.7)',
-      '--bx-pager-btn-hover-transform': 'scaleY(1.5)',
-      '--bx-pager-btn-active-background': '#ffffff',
-      '--bx-pager-btn-active-transform': 'scaleY(2)',
-      '--bx-pager-btn-active-box-shadow': '0 0 8px rgba(255,255,255,0.6)',
+      // Index button styling
+      '--bs-index-btn-color': 'rgba(255, 255, 255, 0.5)',
+      '--bs-index-btn-hover-color': 'rgba(255, 255, 255, 0.8)',
+      '--bs-index-btn-active-color': '#ffffff',
+      '--bs-index-btn-size': '14px',
     },
   },
   render: function ProfessionalStyledRender(args) {
