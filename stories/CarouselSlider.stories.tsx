@@ -41,7 +41,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     speed: 500,
-    timeout: 0,
+    timeout: 5000,
     swipe: true,
     style: defaultSliderStyle,
   },
@@ -54,15 +54,16 @@ export const Default: Story = {
   },
 }
 
-export const AutoScroll: Story = {
+export const CoverMode: Story = {
   args: {
     speed: 600,
-    timeout: 3000,
-    pauseOnHover: true,
+    timeout: 5000,
+    cover: true,
     swipe: true,
+    pauseOnHover: true,
     style: defaultSliderStyle,
   },
-  render: function AutoScrollRender(args) {
+  render: function CoverModeRender(args) {
     return (
       <CarouselSlider {...args}>
         {slideData.map((slide, index) => createSlide(slide, index))}
@@ -71,17 +72,35 @@ export const AutoScroll: Story = {
   },
 }
 
-export const FastTransition: Story = {
+export const CustomTiming: Story = {
   args: {
-    speed: 300,
-    timeout: 0,
+    speed: 1200,
+    timeout: 5000,
+    timingFunction: 'ease-out',
     swipe: true,
     style: defaultSliderStyle,
   },
-  render: function FastTransitionRender(args) {
+  render: function CustomTimingRender(args) {
     return (
       <CarouselSlider {...args}>
         {slideData.slice(0, 3).map((slide, index) => createSlide(slide, index))}
+      </CarouselSlider>
+    )
+  },
+}
+
+export const FastTransitions: Story = {
+  args: {
+    speed: 250,
+    timeout: 2000,
+    timingFunction: 'ease-in',
+    swipe: true,
+    style: defaultSliderStyle,
+  },
+  render: function FastTransitionsRender(args) {
+    return (
+      <CarouselSlider {...args}>
+        {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
       </CarouselSlider>
     )
   },

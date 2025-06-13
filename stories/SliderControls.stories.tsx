@@ -3,6 +3,8 @@ import {
   SliderControls,
   CarouselSlider,
   FadeSlider,
+  CubeSlider,
+  TileSlider,
 } from '../packages/react/src/index'
 import { slideData, createSlide } from './shared'
 
@@ -106,10 +108,12 @@ export const WithFadeSlider: Story = {
   },
 }
 
-export const NoAutoplay: Story = {
+export const WithCubeSlider: Story = {
   args: {
-    nextBtnLabel: 'Next',
-    prevBtnLabel: 'Previous',
+    nextBtnLabel: 'Rotate →',
+    prevBtnLabel: '← Rotate',
+    playBtnLabel: 'Auto Rotate',
+    pauseBtnLabel: 'Stop',
     style: {
       display: 'block',
       width: '600px',
@@ -119,18 +123,57 @@ export const NoAutoplay: Story = {
       boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
     },
   },
-  render: function NoAutoplayRender(args) {
+  render: function WithCubeSliderRender(args) {
+    return (
+      <div style={{ perspective: '1000px', overflow: 'hidden' }}>
+        <SliderControls {...args}>
+          <CubeSlider
+            speed={800}
+            timeout={5000}
+            direction="horizontal"
+            perspective={1000}
+            swipe
+            style={{ display: 'block', width: '100%', height: '300px' }}>
+            {slideData
+              .slice(0, 4)
+              .map((slide, index) => createSlide(slide, index))}
+          </CubeSlider>
+        </SliderControls>
+      </div>
+    )
+  },
+}
+
+export const WithTileSlider: Story = {
+  args: {
+    nextBtnLabel: 'Next Tiles',
+    prevBtnLabel: 'Previous Tiles',
+    playBtnLabel: 'Auto Tiles',
+    pauseBtnLabel: 'Pause',
+    style: {
+      display: 'block',
+      width: '600px',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      overflow: 'hidden',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+    },
+  },
+  render: function WithTileSliderRender(args) {
     return (
       <SliderControls {...args}>
-        <CarouselSlider
-          speed={500}
-          timeout={0}
+        <TileSlider
+          speed={900}
+          timeout={5000}
+          tileEffect="flip"
+          rows={5}
+          rowOffset={100}
           swipe
           style={{ display: 'block', width: '100%', height: '300px' }}>
           {slideData
-            .slice(0, 3)
+            .slice(0, 4)
             .map((slide, index) => createSlide(slide, index))}
-        </CarouselSlider>
+        </TileSlider>
       </SliderControls>
     )
   },

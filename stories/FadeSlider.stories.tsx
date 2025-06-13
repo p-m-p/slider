@@ -46,7 +46,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     speed: 600,
-    timeout: 0,
+    timeout: 5000,
     timingFunction: 'ease-in-out',
     swipe: true,
     style: defaultSliderStyle,
@@ -60,16 +60,16 @@ export const Default: Story = {
   },
 }
 
-export const AutoFade: Story = {
+export const EaseInTiming: Story = {
   args: {
     speed: 800,
-    timeout: 2500,
-    pauseOnHover: true,
-    timingFunction: 'ease-in-out',
+    timeout: 5000,
+    timingFunction: 'ease-in',
     swipe: true,
+    pauseOnHover: true,
     style: defaultSliderStyle,
   },
-  render: function AutoFadeRender(args) {
+  render: function EaseInTimingRender(args) {
     return (
       <FadeSlider {...args}>
         {slideData.map((slide, index) => createSlide(slide, index))}
@@ -78,18 +78,35 @@ export const AutoFade: Story = {
   },
 }
 
-export const SlowFade: Story = {
+export const LinearFade: Story = {
   args: {
-    speed: 1200,
-    timeout: 0,
-    timingFunction: 'ease-in-out',
+    speed: 1000,
+    timeout: 5000,
+    timingFunction: 'linear',
     swipe: true,
     style: defaultSliderStyle,
   },
-  render: function SlowFadeRender(args) {
+  render: function LinearFadeRender(args) {
     return (
       <FadeSlider {...args}>
         {slideData.slice(0, 3).map((slide, index) => createSlide(slide, index))}
+      </FadeSlider>
+    )
+  },
+}
+
+export const FastFade: Story = {
+  args: {
+    speed: 400,
+    timeout: 3000,
+    timingFunction: 'ease-out',
+    swipe: true,
+    style: defaultSliderStyle,
+  },
+  render: function FastFadeRender(args) {
+    return (
+      <FadeSlider {...args}>
+        {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
       </FadeSlider>
     )
   },

@@ -50,7 +50,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     speed: 800,
-    timeout: 0,
+    timeout: 5000,
     direction: 'horizontal',
     perspective: 1000,
     swipe: true,
@@ -78,7 +78,7 @@ export const Default: Story = {
 export const VerticalRotation: Story = {
   args: {
     speed: 900,
-    timeout: 0,
+    timeout: 5000,
     direction: 'vertical',
     perspective: 1200,
     swipe: true,
@@ -103,23 +103,50 @@ export const VerticalRotation: Story = {
   },
 }
 
-export const AutoRotate: Story = {
+export const HighPerspective: Story = {
   args: {
-    speed: 1000,
-    timeout: 3500,
+    speed: 800,
+    timeout: 5000,
     direction: 'horizontal',
-    perspective: 1000,
-    pauseOnHover: true,
+    perspective: 1800,
     swipe: true,
     style: defaultSliderStyle,
   },
-  render: function AutoRotateRender(args) {
+  render: function HighPerspectiveRender(args) {
     return (
       <div
         style={{
           width: '600px',
           height: '300px',
-          perspective: '1000px',
+          perspective: '1800px',
+          overflow: 'hidden',
+        }}>
+        <CubeSlider {...args}>
+          {slideData
+            .slice(0, 4)
+            .map((slide, index) => createSlide(slide, index))}
+        </CubeSlider>
+      </div>
+    )
+  },
+}
+
+export const LowPerspective: Story = {
+  args: {
+    speed: 700,
+    timeout: 5000,
+    direction: 'horizontal',
+    perspective: 600,
+    swipe: true,
+    style: defaultSliderStyle,
+  },
+  render: function LowPerspectiveRender(args) {
+    return (
+      <div
+        style={{
+          width: '600px',
+          height: '300px',
+          perspective: '600px',
           overflow: 'hidden',
         }}>
         <CubeSlider {...args}>
