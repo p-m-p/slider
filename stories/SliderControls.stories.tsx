@@ -138,10 +138,10 @@ export const NoAutoplay: Story = {
 
 export const ProfessionalStyled: Story = {
   args: {
-    nextBtnLabel: 'NEXT',
-    prevBtnLabel: 'PREV',
-    playBtnLabel: 'PLAY',
-    pauseBtnLabel: 'PAUSE',
+    nextBtnLabel: '→',
+    prevBtnLabel: '←',
+    playBtnLabel: '▶',
+    pauseBtnLabel: '⏸',
     style: {
       display: 'block',
       width: '600px',
@@ -155,17 +155,43 @@ export const ProfessionalStyled: Story = {
       // BoxSlider control styling with correct CSS custom properties
       '--bs-button-bar-gap': '20px',
 
-      // Control buttons styling
-      '--bs-btn-background-color': 'rgba(255, 255, 255, 0.95)',
-      '--bs-btn-hover-background-color': '#ffffff',
-      '--bs-btn-border-radius': '12px',
-      '--bs-btn-size': '48px',
+      // Control buttons styling with SVG icons
+      '--bs-btn-background-color': 'rgba(0, 0, 0, 0.7)',
+      '--bs-btn-hover-background-color': 'rgba(0, 0, 0, 0.9)',
+      '--bs-btn-border-radius': '50%',
+      '--bs-btn-size': '52px',
 
-      // Index button styling
-      '--bs-index-btn-color': 'rgba(255, 255, 255, 0.5)',
-      '--bs-index-btn-hover-color': 'rgba(255, 255, 255, 0.8)',
+      // Custom SVG icons for control buttons
+      '--bs-next-icon': `url("data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `)}")`,
+
+      '--bs-prev-icon': `url("data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `)}")`,
+
+      '--play-icon': `url("data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M8 5V19L19 12L8 5Z" fill="white" stroke="white" stroke-width="1" stroke-linejoin="round"/>
+        </svg>
+      `)}")`,
+
+      '--pause-icon': `url("data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect x="6" y="4" width="4" height="16" fill="white"/>
+          <rect x="14" y="4" width="4" height="16" fill="white"/>
+        </svg>
+      `)}")`,
+
+      // Index button styling - elegant pill design
+      '--bs-index-btn-color': 'rgba(255, 255, 255, 0.4)',
+      '--bs-index-btn-hover-color': 'rgba(255, 255, 255, 0.7)',
       '--bs-index-btn-active-color': '#ffffff',
-      '--bs-index-btn-size': '14px',
+      '--bs-index-btn-size': '12px',
     },
   },
   render: function ProfessionalStyledRender(args) {
