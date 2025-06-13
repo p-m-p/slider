@@ -26,6 +26,7 @@
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.53.0",
     "@storybook/addon-docs": "^9.0.9",
     "@storybook/addon-onboarding": "^9.0.9",
     "@storybook/react-vite": "^9.0.9",
