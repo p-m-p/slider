@@ -58,9 +58,19 @@ export const Default: Story = {
   },
   render: function DefaultRender(args) {
     return (
-      <CubeSlider {...args}>
-        {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
-      </CubeSlider>
+      <div
+        style={{
+          width: '600px',
+          height: '300px',
+          perspective: '1000px',
+          overflow: 'hidden',
+        }}>
+        <CubeSlider {...args}>
+          {slideData
+            .slice(0, 4)
+            .map((slide, index) => createSlide(slide, index))}
+        </CubeSlider>
+      </div>
     )
   },
 }
@@ -76,9 +86,19 @@ export const VerticalRotation: Story = {
   },
   render: function VerticalRotationRender(args) {
     return (
-      <CubeSlider {...args}>
-        {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
-      </CubeSlider>
+      <div
+        style={{
+          width: '600px',
+          height: '300px',
+          perspective: '1200px',
+          overflow: 'hidden',
+        }}>
+        <CubeSlider {...args}>
+          {slideData
+            .slice(0, 4)
+            .map((slide, index) => createSlide(slide, index))}
+        </CubeSlider>
+      </div>
     )
   },
 }
@@ -95,9 +115,19 @@ export const AutoRotate: Story = {
   },
   render: function AutoRotateRender(args) {
     return (
-      <CubeSlider {...args}>
-        {slideData.slice(0, 4).map((slide, index) => createSlide(slide, index))}
-      </CubeSlider>
+      <div
+        style={{
+          width: '600px',
+          height: '300px',
+          perspective: '1000px',
+          overflow: 'hidden',
+        }}>
+        <CubeSlider {...args}>
+          {slideData
+            .slice(0, 4)
+            .map((slide, index) => createSlide(slide, index))}
+        </CubeSlider>
+      </div>
     )
   },
 }
