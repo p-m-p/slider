@@ -121,12 +121,15 @@ export const WithCarousel: Story = {
 
     controls!.indexBtnLabel = 'Go to slide %d'
 
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
     expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
     expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
 
     const indexSlot = controls!.shadowRoot!.querySelector('slot[name="index"]')!
     expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
     controls!.indexLabel = 'Choose a slide'
+    await new Promise((resolve) => setTimeout(resolve, 50))
     expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
   },
 }
