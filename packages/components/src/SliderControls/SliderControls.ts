@@ -361,8 +361,7 @@ export default class SliderControls
 
       if (slideCount > 1 && !this.hasAttribute('disable-index')) {
         const frag = document.createDocumentFragment()
-        const labelTemplate =
-          this.getAttribute('index-btn-label') ?? 'View slide %d'
+        const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
 
         for (let i = 0; i < slideCount; i++) {
           const btn = document.createElement('button')
@@ -487,6 +486,31 @@ export default class SliderControls
     }
     if (playButton) {
       this.#setPlayBtnState()
+    }
+
+    // Update index slot label
+    const indexSlot =
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
+    if (indexSlot) {
+      indexSlot.setAttribute('aria-label', this.indexLabel)
+    }
+
+    // Update index button labels
+    this.#updateIndexButtonLabels()
+  }
+
+  #updateIndexButtonLabels() {
+    const indexSlot =
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
+    if (indexSlot) {
+      const container = indexSlot.assignedElements()[0] ?? indexSlot
+      const buttons = container?.querySelectorAll('button')
+      const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
+
+      buttons?.forEach((btn, index) => {
+        const label = labelTemplate.replace(/%d/g, `${index + 1}`)
+        btn.setAttribute('aria-label', label)
+      })
     }
   }
 }

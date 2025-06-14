@@ -134,6 +134,31 @@ export const WithCarousel: Story = {
       // Verify button was clicked and some state changed
       expect(indexButtons[1]).toHaveAttribute('aria-disabled')
     }
+
+    // Test that index button labels update when properties change
+    if (controls && indexButtons && indexButtons.length > 0) {
+      // Check initial default labels
+      expect(indexButtons[0]).toHaveAttribute('aria-label', 'View slide 1')
+
+      // Change the index button label property
+      controls.indexBtnLabel = 'Go to slide %d'
+
+      // Wait for attribute change callback to trigger
+      await new Promise((resolve) => setTimeout(resolve, 50))
+
+      // Verify the labels were updated
+      expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
+      if (indexButtons.length > 1) {
+        expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
+      }
+
+      // Test index slot label updates
+      const indexSlot = controls.shadowRoot?.querySelector('slot[name="index"]')
+      expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
+      controls.indexLabel = 'Choose a slide'
+      await new Promise((resolve) => setTimeout(resolve, 50))
+      expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
+    }
   },
 }
 
