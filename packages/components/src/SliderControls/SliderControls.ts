@@ -72,8 +72,8 @@ export default class SliderControls
   }
 
   // Property setters for React component compatibility
-  get nextBtnLabel() {
-    return this.getAttribute('next-btn-label')
+  get nextBtnLabel(): string {
+    return this.getAttribute('next-btn-label') ?? 'Next'
   }
 
   set nextBtnLabel(value: string | null) {
@@ -84,8 +84,8 @@ export default class SliderControls
     }
   }
 
-  get prevBtnLabel() {
-    return this.getAttribute('prev-btn-label')
+  get prevBtnLabel(): string {
+    return this.getAttribute('prev-btn-label') ?? 'Previous'
   }
 
   set prevBtnLabel(value: string | null) {
@@ -96,8 +96,8 @@ export default class SliderControls
     }
   }
 
-  get playBtnLabel() {
-    return this.getAttribute('play-btn-label')
+  get playBtnLabel(): string {
+    return this.getAttribute('play-btn-label') ?? 'Start slide auto scroll'
   }
 
   set playBtnLabel(value: string | null) {
@@ -108,8 +108,8 @@ export default class SliderControls
     }
   }
 
-  get pauseBtnLabel() {
-    return this.getAttribute('pause-btn-label')
+  get pauseBtnLabel(): string {
+    return this.getAttribute('pause-btn-label') ?? 'Stop slide auto scroll'
   }
 
   set pauseBtnLabel(value: string | null) {
@@ -120,7 +120,7 @@ export default class SliderControls
     }
   }
 
-  get indexBtnLabel() {
+  get indexBtnLabel(): string | null {
     return this.getAttribute('index-btn-label')
   }
 
@@ -132,8 +132,8 @@ export default class SliderControls
     }
   }
 
-  get indexLabel() {
-    return this.getAttribute('index-label')
+  get indexLabel(): string {
+    return this.getAttribute('index-label') ?? 'Select a slide'
   }
 
   set indexLabel(value: string | null) {
@@ -171,13 +171,13 @@ export default class SliderControls
     this.#initializeControl(
       shadow.querySelector<HTMLSlotElement>('slot[name="prev-btn"]')!,
       () => this.#sliderElement?.slider?.prev(),
-      { 'aria-label': this.#prevBtnLabel() },
+      { 'aria-label': this.prevBtnLabel },
     )
 
     this.#initializeControl(
       shadow.querySelector<HTMLSlotElement>('slot[name="next-btn"]')!,
       () => this.#sliderElement?.slider?.next(),
-      { 'aria-label': this.#nextBtnLabel() },
+      { 'aria-label': this.nextBtnLabel },
     )
 
     this.#initPlayBtnSlot()
@@ -311,7 +311,7 @@ export default class SliderControls
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
 
     if (indexSlot) {
-      indexSlot.setAttribute('aria-label', this.#indexSlotLabel())
+      indexSlot.setAttribute('aria-label', this.indexLabel)
       indexSlot?.addEventListener('click', (ev) => {
         const container = indexSlot.assignedElements()[0] ?? indexSlot
 
@@ -458,7 +458,7 @@ export default class SliderControls
 
       button.setAttribute(
         'aria-label',
-        isPlaying ? this.#pauseButtonLabel() : this.#playButtonLabel(),
+        isPlaying ? this.pauseBtnLabel : this.playBtnLabel,
       )
       button?.setAttribute(
         'part',
@@ -480,34 +480,14 @@ export default class SliderControls
     const playButton = this.shadowRoot?.querySelector('#play-btn')
 
     if (nextButton) {
-      nextButton.setAttribute('aria-label', this.#nextBtnLabel())
+      nextButton.setAttribute('aria-label', this.nextBtnLabel)
     }
     if (prevButton) {
-      prevButton.setAttribute('aria-label', this.#prevBtnLabel())
+      prevButton.setAttribute('aria-label', this.prevBtnLabel)
     }
     if (playButton) {
       this.#setPlayBtnState()
     }
-  }
-
-  #indexSlotLabel() {
-    return this.indexLabel ?? 'Select a slide'
-  }
-
-  #nextBtnLabel() {
-    return this.nextBtnLabel ?? 'Next'
-  }
-
-  #prevBtnLabel() {
-    return this.prevBtnLabel ?? 'Previous'
-  }
-
-  #playButtonLabel() {
-    return this.playBtnLabel ?? 'Start slide auto scroll'
-  }
-
-  #pauseButtonLabel() {
-    return this.pauseBtnLabel ?? 'Stop slide auto scroll'
   }
 }
 
