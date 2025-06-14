@@ -9,13 +9,6 @@ import {
 } from '../packages/react/src/index'
 import { slideData, createSlide } from './shared'
 
-const CONTROLS_INIT_DELAY = 100
-const TRANSITION_DELAY = 200
-const CUBE_TRANSITION_DELAY = 300
-const TILE_TRANSITION_DELAY = 400
-const ATTRIBUTE_CHANGE_DELAY = 50
-const STATE_CHANGE_DELAY = 100
-
 const meta: Meta<typeof SliderControls> = {
   title: 'BoxSlider/SliderControls',
   component: SliderControls,
@@ -96,8 +89,6 @@ export const WithCarousel: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
-
     const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
     const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
     const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
@@ -116,7 +107,6 @@ export const WithCarousel: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-controls')
 
     await userEvent.click(nextButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
 
     const hasActiveButton = Array.from(indexButtons).some(
       (btn) => btn.getAttribute('aria-disabled') === 'true',
@@ -124,7 +114,6 @@ export const WithCarousel: Story = {
     expect(hasActiveButton).toBe(true)
 
     await userEvent.click(indexButtons[1] as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
 
     expect(indexButtons[1]).toHaveAttribute('aria-disabled')
 
@@ -132,15 +121,12 @@ export const WithCarousel: Story = {
 
     controls!.indexBtnLabel = 'Go to slide %d'
 
-    await new Promise((resolve) => setTimeout(resolve, ATTRIBUTE_CHANGE_DELAY))
-
     expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
     expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
 
     const indexSlot = controls!.shadowRoot!.querySelector('slot[name="index"]')!
     expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
     controls!.indexLabel = 'Choose a slide'
-    await new Promise((resolve) => setTimeout(resolve, ATTRIBUTE_CHANGE_DELAY))
     expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
   },
 }
@@ -191,8 +177,6 @@ export const WithFadeSlider: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
-
     const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
     const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
     const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
@@ -206,8 +190,6 @@ export const WithFadeSlider: Story = {
 
     const initialLabel = playButton.getAttribute('aria-label')
     await userEvent.click(playButton as HTMLElement)
-
-    await new Promise((resolve) => setTimeout(resolve, STATE_CHANGE_DELAY))
 
     const newLabel = playButton.getAttribute('aria-label')
     expect(newLabel).toBeTruthy()
@@ -223,7 +205,6 @@ export const WithFadeSlider: Story = {
     expect(indexButtons.length).toBeGreaterThan(0)
 
     await userEvent.click(indexButtons[2] as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
     expect(indexButtons[2]).toHaveAttribute('aria-disabled')
   },
 }
@@ -281,8 +262,6 @@ export const WithCubeSlider: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
-
     const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
     const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
     const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
@@ -302,12 +281,10 @@ export const WithCubeSlider: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(indexButtons[1] as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, CUBE_TRANSITION_DELAY))
     expect(indexButtons[1]).toHaveAttribute('aria-disabled')
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(nextButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, CUBE_TRANSITION_DELAY))
 
     expect(indexButtons[2]).toHaveAttribute('aria-disabled')
   },
@@ -365,8 +342,6 @@ export const WithTileSlider: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
-
     const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
     const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
     const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
@@ -386,12 +361,10 @@ export const WithTileSlider: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(indexButtons[2] as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TILE_TRANSITION_DELAY))
     expect(indexButtons[2]).toHaveAttribute('aria-disabled')
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(prevButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TILE_TRANSITION_DELAY))
     expect(indexButtons[1]).toHaveAttribute('aria-disabled')
     expect(indexButtons[2]).toHaveAttribute('aria-disabled')
   },
@@ -495,8 +468,6 @@ export const ProfessionalStyled: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
-
     const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
     const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
     const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
@@ -509,7 +480,6 @@ export const ProfessionalStyled: Story = {
     expect(playButton.getAttribute('aria-label')).toBeTruthy()
 
     await userEvent.click(playButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, STATE_CHANGE_DELAY))
 
     const newLabel = playButton.getAttribute('aria-label')
     expect(newLabel).toBeTruthy()
@@ -522,13 +492,11 @@ export const ProfessionalStyled: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(indexButtons[indexButtons.length - 1] as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
     expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
       'aria-disabled',
     )
 
     await userEvent.click(prevButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
     expect(indexButtons[indexButtons.length - 2]).toHaveAttribute(
       'aria-disabled',
     )
@@ -537,7 +505,6 @@ export const ProfessionalStyled: Story = {
     )
 
     await userEvent.click(nextButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
     expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
       'aria-disabled',
     )
