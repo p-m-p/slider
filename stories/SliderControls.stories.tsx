@@ -97,10 +97,17 @@ export const WithCarousel: Story = {
     expect(prevButton).toBeTruthy()
     expect(playButton).toBeTruthy()
 
+    // Wait for controls to be fully initialized
+    await waitFor(() => {
+      const indexContainer =
+        controls!.shadowRoot!.querySelector('#index-container')!
+      const indexButtons = indexContainer.querySelectorAll('button')
+      expect(indexButtons.length).toBe(slideData.length)
+    })
+
     const indexContainer =
       controls!.shadowRoot!.querySelector('#index-container')!
     const indexButtons = indexContainer.querySelectorAll('button')
-    expect(indexButtons.length).toBe(slideData.length)
 
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
     expect(indexButtons[0]).toHaveAttribute('aria-label')
