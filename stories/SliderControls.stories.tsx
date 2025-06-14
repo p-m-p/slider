@@ -9,6 +9,13 @@ import {
 } from '../packages/react/src/index'
 import { slideData, createSlide } from './shared'
 
+const CONTROLS_INIT_DELAY = 100
+const TRANSITION_DELAY = 200
+const CUBE_TRANSITION_DELAY = 300
+const TILE_TRANSITION_DELAY = 400
+const ATTRIBUTE_CHANGE_DELAY = 50
+const STATE_CHANGE_DELAY = 100
+
 const meta: Meta<typeof SliderControls> = {
   title: 'BoxSlider/SliderControls',
   component: SliderControls,
@@ -89,76 +96,52 @@ export const WithCarousel: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    // Wait for controls to initialize
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
 
-    // Test navigation controls are accessible via shadowRoot
-    const nextButton = controls?.shadowRoot?.querySelector('#next-btn')
-    const prevButton = controls?.shadowRoot?.querySelector('#prev-btn')
-    const playButton = controls?.shadowRoot?.querySelector('#play-btn')
+    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
+    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
+    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
 
     expect(nextButton).toBeTruthy()
     expect(prevButton).toBeTruthy()
     expect(playButton).toBeTruthy()
 
-    // Test that index buttons are present and accessible
     const indexContainer =
-      controls?.shadowRoot?.querySelector('#index-container')
-    const indexButtons = indexContainer?.querySelectorAll('button')
-    expect(indexButtons?.length).toBe(slideData.length)
+      controls!.shadowRoot!.querySelector('#index-container')!
+    const indexButtons = indexContainer.querySelectorAll('button')
+    expect(indexButtons.length).toBe(slideData.length)
 
-    // Test that index buttons have proper accessibility attributes
-    if (indexButtons && indexButtons.length > 0) {
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[0]).toHaveAttribute('aria-label')
-      expect(indexButtons[0]).toHaveAttribute('aria-controls')
-    }
+    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[0]).toHaveAttribute('aria-label')
+    expect(indexButtons[0]).toHaveAttribute('aria-controls')
 
-    // Test basic navigation functionality
-    if (nextButton && indexButtons && indexButtons.length > 1) {
-      await userEvent.click(nextButton as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 200))
+    await userEvent.click(nextButton as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
 
-      // Verify that navigation occurred (some button should be active)
-      const hasActiveButton = Array.from(indexButtons).some(
-        (btn) => btn.getAttribute('aria-disabled') === 'true',
-      )
-      expect(hasActiveButton).toBe(true)
-    }
+    const hasActiveButton = Array.from(indexButtons).some(
+      (btn) => btn.getAttribute('aria-disabled') === 'true',
+    )
+    expect(hasActiveButton).toBe(true)
 
-    // Test index button navigation
-    if (indexButtons && indexButtons.length > 1) {
-      await userEvent.click(indexButtons[1] as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 200))
+    await userEvent.click(indexButtons[1] as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
 
-      // Verify button was clicked and some state changed
-      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-    }
+    expect(indexButtons[1]).toHaveAttribute('aria-disabled')
 
-    // Test that index button labels update when properties change
-    if (controls && indexButtons && indexButtons.length > 0) {
-      // Check initial default labels
-      expect(indexButtons[0]).toHaveAttribute('aria-label', 'View slide 1')
+    expect(indexButtons[0]).toHaveAttribute('aria-label', 'View slide 1')
 
-      // Change the index button label property
-      controls.indexBtnLabel = 'Go to slide %d'
+    controls!.indexBtnLabel = 'Go to slide %d'
 
-      // Wait for attribute change callback to trigger
-      await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => setTimeout(resolve, ATTRIBUTE_CHANGE_DELAY))
 
-      // Verify the labels were updated
-      expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
-      if (indexButtons.length > 1) {
-        expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
-      }
+    expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
+    expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
 
-      // Test index slot label updates
-      const indexSlot = controls.shadowRoot?.querySelector('slot[name="index"]')
-      expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
-      controls.indexLabel = 'Choose a slide'
-      await new Promise((resolve) => setTimeout(resolve, 50))
-      expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
-    }
+    const indexSlot = controls!.shadowRoot!.querySelector('slot[name="index"]')!
+    expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
+    controls!.indexLabel = 'Choose a slide'
+    await new Promise((resolve) => setTimeout(resolve, ATTRIBUTE_CHANGE_DELAY))
+    expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
   },
 }
 
@@ -208,51 +191,40 @@ export const WithFadeSlider: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    // Wait for controls to initialize
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
 
-    // Test custom button labels are applied correctly via shadowRoot
-    const nextButton = controls?.shadowRoot?.querySelector('#next-btn')
-    const prevButton = controls?.shadowRoot?.querySelector('#prev-btn')
-    const playButton = controls?.shadowRoot?.querySelector('#play-btn')
+    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
+    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
+    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
 
-    // Test that buttons exist and have custom labels
     expect(nextButton).toBeTruthy()
     expect(prevButton).toBeTruthy()
     expect(playButton).toBeTruthy()
-    expect(nextButton?.getAttribute('aria-label')).toBe('Next image')
-    expect(prevButton?.getAttribute('aria-label')).toBe('Previous image')
-    expect(playButton?.getAttribute('aria-label')).toBeTruthy() // Will be 'Play slideshow' or 'Pause slideshow'
+    expect(nextButton.getAttribute('aria-label')).toBe('Next image')
+    expect(prevButton.getAttribute('aria-label')).toBe('Previous image')
+    expect(playButton.getAttribute('aria-label')).toBeTruthy()
 
-    // Test play/pause functionality
-    if (playButton) {
-      const initialLabel = playButton.getAttribute('aria-label')
-      await userEvent.click(playButton as HTMLElement)
+    const initialLabel = playButton.getAttribute('aria-label')
+    await userEvent.click(playButton as HTMLElement)
 
-      // Wait for state change
-      await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, STATE_CHANGE_DELAY))
 
-      // Button should toggle to a different label after clicking
-      const newLabel = playButton.getAttribute('aria-label')
-      expect(newLabel).toBeTruthy()
-      if (initialLabel === 'Start slideshow') {
-        expect(newLabel).toBe('Stop slideshow')
-      } else {
-        expect(newLabel).toBe('Start slideshow')
-      }
+    const newLabel = playButton.getAttribute('aria-label')
+    expect(newLabel).toBeTruthy()
+    if (initialLabel === 'Start slideshow') {
+      expect(newLabel).toBe('Stop slideshow')
+    } else {
+      expect(newLabel).toBe('Start slideshow')
     }
 
-    // Test that index navigation works
     const indexContainer =
-      controls?.shadowRoot?.querySelector('#index-container')
-    const indexButtons = indexContainer?.querySelectorAll('button')
-    expect(indexButtons?.length).toBeGreaterThan(0)
+      controls!.shadowRoot!.querySelector('#index-container')!
+    const indexButtons = indexContainer.querySelectorAll('button')
+    expect(indexButtons.length).toBeGreaterThan(0)
 
-    if (indexButtons && indexButtons.length > 2) {
-      await userEvent.click(indexButtons[2] as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-    }
+    await userEvent.click(indexButtons[2] as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
+    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
   },
 }
 
@@ -309,46 +281,35 @@ export const WithCubeSlider: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    // Wait for controls to initialize
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
 
-    // Test custom button labels are applied correctly via shadowRoot
-    const nextButton = controls?.shadowRoot?.querySelector('#next-btn')
-    const prevButton = controls?.shadowRoot?.querySelector('#prev-btn')
-    const playButton = controls?.shadowRoot?.querySelector('#play-btn')
+    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
+    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
+    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
 
-    // Test that buttons exist and have aria-labels
     expect(nextButton).toBeTruthy()
     expect(prevButton).toBeTruthy()
     expect(playButton).toBeTruthy()
-    expect(nextButton?.getAttribute('aria-label')).toBe('Rotate →')
-    expect(prevButton?.getAttribute('aria-label')).toBe('← Rotate')
-    expect(playButton?.getAttribute('aria-label')).toBeTruthy() // Will be 'Auto Rotate' or pause state
+    expect(nextButton.getAttribute('aria-label')).toBe('Rotate →')
+    expect(prevButton.getAttribute('aria-label')).toBe('← Rotate')
+    expect(playButton.getAttribute('aria-label')).toBeTruthy()
 
-    // Test that index navigation works with cube slider
     const indexContainer =
-      controls?.shadowRoot?.querySelector('#index-container')
-    const indexButtons = indexContainer?.querySelectorAll('button')
-    expect(indexButtons?.length).toBeGreaterThan(0)
+      controls!.shadowRoot!.querySelector('#index-container')!
+    const indexButtons = indexContainer.querySelectorAll('button')
+    expect(indexButtons.length).toBeGreaterThan(0)
 
-    if (indexButtons && indexButtons.length > 1) {
-      // Test initial state
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
-      // Test navigation via index button
-      await userEvent.click(indexButtons[1] as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 300)) // Cube transitions are slower
-      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    await userEvent.click(indexButtons[1] as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, CUBE_TRANSITION_DELAY))
+    expect(indexButtons[1]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
-      // Test navigation controls
-      if (nextButton) await userEvent.click(nextButton as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 300))
+    await userEvent.click(nextButton as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, CUBE_TRANSITION_DELAY))
 
-      if (indexButtons.length > 2) {
-        expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-      }
-    }
+    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
   },
 }
 
@@ -404,44 +365,35 @@ export const WithTileSlider: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    // Wait for controls to initialize
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
 
-    // Test custom button labels are applied correctly via shadowRoot
-    const nextButton = controls?.shadowRoot?.querySelector('#next-btn')
-    const prevButton = controls?.shadowRoot?.querySelector('#prev-btn')
-    const playButton = controls?.shadowRoot?.querySelector('#play-btn')
+    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
+    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
+    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
 
-    // Test that buttons exist and have aria-labels
     expect(nextButton).toBeTruthy()
     expect(prevButton).toBeTruthy()
     expect(playButton).toBeTruthy()
-    expect(nextButton?.getAttribute('aria-label')).toBe('Next Tiles')
-    expect(prevButton?.getAttribute('aria-label')).toBe('Previous Tiles')
-    expect(playButton?.getAttribute('aria-label')).toBeTruthy() // Will be 'Auto Tiles' or pause state
+    expect(nextButton.getAttribute('aria-label')).toBe('Next Tiles')
+    expect(prevButton.getAttribute('aria-label')).toBe('Previous Tiles')
+    expect(playButton.getAttribute('aria-label')).toBeTruthy()
 
-    // Test index navigation functionality
     const indexContainer =
-      controls?.shadowRoot?.querySelector('#index-container')
-    const indexButtons = indexContainer?.querySelectorAll('button')
-    expect(indexButtons?.length).toBeGreaterThan(0)
+      controls!.shadowRoot!.querySelector('#index-container')!
+    const indexButtons = indexContainer.querySelectorAll('button')
+    expect(indexButtons.length).toBeGreaterThan(0)
 
-    if (indexButtons && indexButtons.length > 2) {
-      // Test initial state - first slide should be active
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
-      // Test clicking on third slide
-      await userEvent.click(indexButtons[2] as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 400)) // Tile effects need more time
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    await userEvent.click(indexButtons[2] as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TILE_TRANSITION_DELAY))
+    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
-      // Test prev button navigation
-      if (prevButton) await userEvent.click(prevButton as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 400))
-      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-    }
+    await userEvent.click(prevButton as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TILE_TRANSITION_DELAY))
+    expect(indexButtons[1]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
   },
 }
 
@@ -543,65 +495,51 @@ export const ProfessionalStyled: Story = {
     const images = canvasElement.querySelectorAll('img')
     expect(images.length).toBeGreaterThan(0)
 
-    // Wait for controls to initialize
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, CONTROLS_INIT_DELAY))
 
-    // Test custom symbol button labels are applied correctly via shadowRoot
-    const nextButton = controls?.shadowRoot?.querySelector('#next-btn')
-    const prevButton = controls?.shadowRoot?.querySelector('#prev-btn')
-    const playButton = controls?.shadowRoot?.querySelector('#play-btn')
+    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
+    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
+    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
 
-    // Test that buttons exist and have aria-labels
     expect(nextButton).toBeTruthy()
     expect(prevButton).toBeTruthy()
     expect(playButton).toBeTruthy()
-    expect(nextButton?.getAttribute('aria-label')).toBe('→')
-    expect(prevButton?.getAttribute('aria-label')).toBe('←')
-    expect(playButton?.getAttribute('aria-label')).toBeTruthy() // Will be '▶' or '⏸'
+    expect(nextButton.getAttribute('aria-label')).toBe('→')
+    expect(prevButton.getAttribute('aria-label')).toBe('←')
+    expect(playButton.getAttribute('aria-label')).toBeTruthy()
 
-    // Test play/pause toggle with custom symbols
-    if (playButton) await userEvent.click(playButton as HTMLElement)
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await userEvent.click(playButton as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, STATE_CHANGE_DELAY))
 
-    // Button should have a label after clicking
-    const newLabel = playButton?.getAttribute('aria-label')
+    const newLabel = playButton.getAttribute('aria-label')
     expect(newLabel).toBeTruthy()
 
-    // Test comprehensive navigation with professional styling
     const indexContainer =
-      controls?.shadowRoot?.querySelector('#index-container')
-    const indexButtons = indexContainer?.querySelectorAll('button')
-    expect(indexButtons?.length).toBeGreaterThan(0)
+      controls!.shadowRoot!.querySelector('#index-container')!
+    const indexButtons = indexContainer.querySelectorAll('button')
+    expect(indexButtons.length).toBeGreaterThan(0)
 
-    if (indexButtons && indexButtons.length > 3) {
-      // Test initial state
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
-      // Test clicking last slide
-      await userEvent.click(
-        indexButtons[indexButtons.length - 1] as HTMLElement,
-      )
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-        'aria-disabled',
-      )
+    await userEvent.click(indexButtons[indexButtons.length - 1] as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
+    expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
+      'aria-disabled',
+    )
 
-      // Test prev button from last slide
-      if (prevButton) await userEvent.click(prevButton as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      expect(indexButtons[indexButtons.length - 2]).toHaveAttribute(
-        'aria-disabled',
-      )
-      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-        'aria-disabled',
-      )
+    await userEvent.click(prevButton as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
+    expect(indexButtons[indexButtons.length - 2]).toHaveAttribute(
+      'aria-disabled',
+    )
+    expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
+      'aria-disabled',
+    )
 
-      // Test next button navigation
-      if (nextButton) await userEvent.click(nextButton as HTMLElement)
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-        'aria-disabled',
-      )
-    }
+    await userEvent.click(nextButton as HTMLElement)
+    await new Promise((resolve) => setTimeout(resolve, TRANSITION_DELAY))
+    expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
+      'aria-disabled',
+    )
   },
 }
