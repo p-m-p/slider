@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from '@storybook/test'
+import { defaultOptions } from '../packages/slider/src/box-slider'
 import { TileSlider } from '../packages/react/src/index'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
+
+// Web component defaults for tile slider: rows=8, rowOffset=50, tileEffect='flip'
 
 const meta: Meta<typeof TileSlider> = {
   title: 'BoxSlider/TileSlider',
@@ -73,10 +76,20 @@ export const Default: Story = {
     const slider = canvasElement.querySelector('bs-tile')
     expect(slider).toBeTruthy()
 
-    // Test tile slider attributes
+    // Test all explicitly set properties
+    expect(slider?.speed).toBe(800)
+    expect(slider?.timeout).toBe(5000)
     expect(slider?.tileEffect).toBe('fade')
     expect(slider?.rows).toBe(4)
     expect(slider?.rowOffset).toBe(100)
+    expect(slider?.swipe).toBe(true)
+
+    // Test default values for unset properties
+    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
+    expect(slider?.loop).toBe(defaultOptions.loop)
+    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
+    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
+    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that content is rendered
     const images = canvasElement.querySelectorAll('img')
@@ -105,14 +118,20 @@ export const FlipEffect: Story = {
     const slider = canvasElement.querySelector('bs-tile')
     expect(slider).toBeTruthy()
 
-    // Test flip effect
+    // Test all explicitly set properties
+    expect(slider?.speed).toBe(1000)
+    expect(slider?.timeout).toBe(5000)
     expect(slider?.tileEffect).toBe('flip')
-
-    // Test 5 rows configuration
     expect(slider?.rows).toBe(5)
-
-    // Test row offset
     expect(slider?.rowOffset).toBe(120)
+    expect(slider?.swipe).toBe(true)
+
+    // Test default values for unset properties
+    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
+    expect(slider?.loop).toBe(defaultOptions.loop)
+    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
+    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
+    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
   },
 }
 
@@ -137,14 +156,20 @@ export const ManyRows: Story = {
     const slider = canvasElement.querySelector('bs-tile')
     expect(slider).toBeTruthy()
 
-    // Test many rows (8)
-    expect(slider?.rows).toBe(8)
-
-    // Test faster row offset
-    expect(slider?.rowOffset).toBe(60)
-
-    // Test speed setting
+    // Test all explicitly set properties
     expect(slider?.speed).toBe(1200)
+    expect(slider?.timeout).toBe(5000)
+    expect(slider?.tileEffect).toBe('fade')
+    expect(slider?.rows).toBe(8)
+    expect(slider?.rowOffset).toBe(60)
+    expect(slider?.swipe).toBe(true)
+
+    // Test default values for unset properties
+    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
+    expect(slider?.loop).toBe(defaultOptions.loop)
+    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
+    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
+    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
   },
 }
 
@@ -169,11 +194,20 @@ export const NoOffset: Story = {
     const slider = canvasElement.querySelector('bs-tile')
     expect(slider).toBeTruthy()
 
-    // Test no offset (simultaneous tiles)
-    expect(slider?.rowOffset).toBe(0)
-
-    // Test 6 rows
+    // Test all explicitly set properties
+    expect(slider?.speed).toBe(800)
+    expect(slider?.timeout).toBe(5000)
+    expect(slider?.tileEffect).toBe('flip')
     expect(slider?.rows).toBe(6)
+    expect(slider?.rowOffset).toBe(0)
+    expect(slider?.swipe).toBe(true)
+
+    // Test default values for unset properties
+    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
+    expect(slider?.loop).toBe(defaultOptions.loop)
+    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
+    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
+    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that content is rendered
     const images = canvasElement.querySelectorAll('img')
@@ -202,11 +236,65 @@ export const HighOffset: Story = {
     const slider = canvasElement.querySelector('bs-tile')
     expect(slider).toBeTruthy()
 
-    // Test high offset (delayed tiles)
-    expect(slider?.rowOffset).toBe(200)
-
-    // Test fade effect
+    // Test all explicitly set properties
+    expect(slider?.speed).toBe(1000)
+    expect(slider?.timeout).toBe(5000)
     expect(slider?.tileEffect).toBe('fade')
+    expect(slider?.rows).toBe(4)
+    expect(slider?.rowOffset).toBe(200)
+    expect(slider?.swipe).toBe(true)
+
+    // Test default values for unset properties
+    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
+    expect(slider?.loop).toBe(defaultOptions.loop)
+    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
+    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
+    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
+
+    // Test that content is rendered
+    const images = canvasElement.querySelectorAll('img')
+    expect(images.length).toBeGreaterThan(0)
+  },
+}
+
+export const CustomConfiguration: Story = {
+  args: {
+    speed: 1500,
+    timeout: 0, // Disable auto-scroll
+    autoScroll: false,
+    loop: false,
+    startIndex: 4,
+    swipe: false,
+    swipeTolerance: 100,
+    pauseOnHover: false,
+    tileEffect: 'flip',
+    rows: 6,
+    rowOffset: 150,
+    style: defaultSliderStyle,
+  },
+  render: function CustomConfigurationRender(args) {
+    return (
+      <TileSlider {...args}>
+        {slideData.map((slide, index) => createSlide(slide, index))}
+      </TileSlider>
+    )
+  },
+  play: async ({ canvasElement }) => {
+    const slider = canvasElement.querySelector('bs-tile')
+    expect(slider).toBeTruthy()
+
+    // Test all non-default properties
+    expect(slider?.speed).toBe(1500)
+    expect(slider?.timeout).toBe(0)
+    expect(slider?.autoScroll).toBe(false)
+    expect(slider?.loop).toBe(false)
+    expect(slider?.startIndex).toBe(4)
+    expect(slider?.swipe).toBe(false)
+    expect(slider?.swipeTolerance).toBe(100)
+    expect(slider?.pauseOnHover).toBe(false)
+    expect(slider?.tileEffect).toBe('flip')
+    expect(slider?.rows).toBe(6)
+    expect(slider?.rowOffset).toBe(150)
 
     // Test that content is rendered
     const images = canvasElement.querySelectorAll('img')
