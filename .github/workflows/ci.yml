@@ -26,7 +26,7 @@ jobs:
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install --with-deps chromium
       - name: Run Storybook tests
         run: |
           pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
