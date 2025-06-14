@@ -71,7 +71,6 @@ export default class SliderControls
     })
   }
 
-  // Property setters for React component compatibility
   get nextBtnLabel(): string {
     return this.getAttribute('next-btn-label') ?? 'Next'
   }
@@ -471,7 +470,6 @@ export default class SliderControls
   }
 
   #updateButtonLabels() {
-    // Update existing button labels when attributes change
     const nextButton = this.shadowRoot?.querySelector('#next-btn')
     const prevButton = this.shadowRoot?.querySelector('#prev-btn')
     const playButton = this.shadowRoot?.querySelector('#play-btn')
@@ -486,14 +484,12 @@ export default class SliderControls
       this.#setPlayBtnState()
     }
 
-    // Update index slot label
     const indexSlot =
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
     if (indexSlot) {
       indexSlot.setAttribute('aria-label', this.indexLabel)
     }
 
-    // Update index button labels
     this.#updateIndexButtonLabels()
   }
 
