@@ -19,7 +19,18 @@
       "Bash(git commit:*)",
       "Bash(rg:*)",
       "Bash(npx eslint:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh workflow:*)",
+      "Bash(gh run view:*)",
+      "Bash(pnpm install:*)",
+      "Bash(git push:*)",
+      "Bash(sed:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:testing-library.com)",
+      "WebFetch(domain:www.w3.org)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }

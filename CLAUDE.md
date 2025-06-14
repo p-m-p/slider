@@ -83,3 +83,4 @@ The library provides multiple slide transition effects (carousel, fade, cube, ti
 
 - Always use pnpm when running any node packages
 - Tests enhanced with comprehensive property coverage
+- Don't add comments in code
