@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent } from '@storybook/test'
+import { expect, userEvent, waitFor } from '@storybook/test'
 import {
   SliderControls,
   CarouselSlider,
@@ -121,16 +121,17 @@ export const WithCarousel: Story = {
 
     controls!.indexBtnLabel = 'Go to slide %d'
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
-
-    expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
-    expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
+    await waitFor(() => {
+      expect(indexButtons[0]).toHaveAttribute('aria-label', 'Go to slide 1')
+      expect(indexButtons[1]).toHaveAttribute('aria-label', 'Go to slide 2')
+    })
 
     const indexSlot = controls!.shadowRoot!.querySelector('slot[name="index"]')!
     expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
     controls!.indexLabel = 'Choose a slide'
-    await new Promise((resolve) => setTimeout(resolve, 50))
-    expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
+    await waitFor(() => {
+      expect(indexSlot).toHaveAttribute('aria-label', 'Choose a slide')
+    })
   },
 }
 
