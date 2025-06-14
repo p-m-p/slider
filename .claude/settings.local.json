@@ -15,7 +15,11 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm remove:*)",
       "Bash(pnpm run:*)",
-      "Bash(npx changeset:*)"
+      "Bash(npx changeset:*)",
+      "Bash(git commit:*)",
+      "Bash(rg:*)",
+      "Bash(npx eslint:*)",
+      "Bash(git reset:*)"
     ],
     "deny": []
   }

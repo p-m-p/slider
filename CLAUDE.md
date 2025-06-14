@@ -78,3 +78,7 @@ The library provides multiple slide transition effects (carousel, fade, cube, ti
   - `pnpm run build-storybook` - Build static files
   - `pnpm run test-storybook` - Run tests (requires running Storybook)
   - `pnpm run test-storybook:ci` - Run tests with static build
+
+## Memories
+
+- Always use pnpm when running any node packages
