@@ -361,15 +361,13 @@ export default class SliderControls
 
       if (slideCount > 1 && !this.hasAttribute('disable-index')) {
         const frag = document.createDocumentFragment()
-        const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
 
         for (let i = 0; i < slideCount; i++) {
           const btn = document.createElement('button')
           const isActive = i === this.#sliderElement!.slider!.activeIndex
-          const label = labelTemplate.replace(/%d/g, `${i + 1}`)
 
           btn.setAttribute('aria-disabled', isActive ? 'true' : 'false')
-          btn.setAttribute('aria-label', label)
+          btn.setAttribute('aria-label', this.#getIndexButtonLabel(i))
           btn.setAttribute('aria-controls', 'slider')
           btn.setAttribute('class', 'index-btn')
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
@@ -505,13 +503,16 @@ export default class SliderControls
     if (indexSlot) {
       const container = indexSlot.assignedElements()[0] ?? indexSlot
       const buttons = container?.querySelectorAll('button')
-      const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
 
       buttons?.forEach((btn, index) => {
-        const label = labelTemplate.replace(/%d/g, `${index + 1}`)
-        btn.setAttribute('aria-label', label)
+        btn.setAttribute('aria-label', this.#getIndexButtonLabel(index))
       })
     }
+  }
+
+  #getIndexButtonLabel(index: number): string {
+    const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
+    return labelTemplate.replace(/%d/g, `${index + 1}`)
   }
 }
 
