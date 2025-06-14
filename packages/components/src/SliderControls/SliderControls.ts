@@ -42,6 +42,16 @@ export default class SliderControls
   extends SafeBaseElement
   implements SliderControlsElement
 {
+  static get observedAttributes() {
+    return [
+      'next-btn-label',
+      'prev-btn-label',
+      'play-btn-label',
+      'pause-btn-label',
+      'index-btn-label',
+      'index-label',
+    ]
+  }
   #sliderElement!: SliderElement
   #mutationObserver: MutationObserver
   #hasBeenInteractedWith = false
@@ -59,6 +69,79 @@ export default class SliderControls
         this.#init()
       }
     })
+  }
+
+  // Property setters for React component compatibility
+  get nextBtnLabel() {
+    return this.getAttribute('next-btn-label')
+  }
+
+  set nextBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('next-btn-label')
+    } else {
+      this.setAttribute('next-btn-label', value)
+    }
+  }
+
+  get prevBtnLabel() {
+    return this.getAttribute('prev-btn-label')
+  }
+
+  set prevBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('prev-btn-label')
+    } else {
+      this.setAttribute('prev-btn-label', value)
+    }
+  }
+
+  get playBtnLabel() {
+    return this.getAttribute('play-btn-label')
+  }
+
+  set playBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('play-btn-label')
+    } else {
+      this.setAttribute('play-btn-label', value)
+    }
+  }
+
+  get pauseBtnLabel() {
+    return this.getAttribute('pause-btn-label')
+  }
+
+  set pauseBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('pause-btn-label')
+    } else {
+      this.setAttribute('pause-btn-label', value)
+    }
+  }
+
+  get indexBtnLabel() {
+    return this.getAttribute('index-btn-label')
+  }
+
+  set indexBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('index-btn-label')
+    } else {
+      this.setAttribute('index-btn-label', value)
+    }
+  }
+
+  get indexLabel() {
+    return this.getAttribute('index-label')
+  }
+
+  set indexLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('index-label')
+    } else {
+      this.setAttribute('index-label', value)
+    }
   }
 
   connectedCallback() {
@@ -384,24 +467,47 @@ export default class SliderControls
     }
   }
 
+  attributeChangedCallback(_name: string, oldValue: string, newValue: string) {
+    if (oldValue !== newValue) {
+      this.#updateButtonLabels()
+    }
+  }
+
+  #updateButtonLabels() {
+    // Update existing button labels when attributes change
+    const nextButton = this.shadowRoot?.querySelector('#next-btn')
+    const prevButton = this.shadowRoot?.querySelector('#prev-btn')
+    const playButton = this.shadowRoot?.querySelector('#play-btn')
+
+    if (nextButton) {
+      nextButton.setAttribute('aria-label', this.#nextBtnLabel())
+    }
+    if (prevButton) {
+      prevButton.setAttribute('aria-label', this.#prevBtnLabel())
+    }
+    if (playButton) {
+      this.#setPlayBtnState()
+    }
+  }
+
   #indexSlotLabel() {
-    return this.getAttribute('index-label') ?? 'Select a slide'
+    return this.indexLabel ?? 'Select a slide'
   }
 
   #nextBtnLabel() {
-    return this.getAttribute('next-btn-label') ?? 'Next'
+    return this.nextBtnLabel ?? 'Next'
   }
 
   #prevBtnLabel() {
-    return this.getAttribute('prev-btn-label') ?? 'Previous'
+    return this.prevBtnLabel ?? 'Previous'
   }
 
   #playButtonLabel() {
-    return this.getAttribute('play-btn-label') ?? 'Start slide auto scroll'
+    return this.playBtnLabel ?? 'Start slide auto scroll'
   }
 
   #pauseButtonLabel() {
-    return this.getAttribute('pause-btn-label') ?? 'Stop slide auto scroll'
+    return this.pauseBtnLabel ?? 'Stop slide auto scroll'
   }
 }
 
