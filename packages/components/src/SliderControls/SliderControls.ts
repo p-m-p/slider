@@ -42,6 +42,16 @@ export default class SliderControls
   extends SafeBaseElement
   implements SliderControlsElement
 {
+  static get observedAttributes() {
+    return [
+      'next-btn-label',
+      'prev-btn-label',
+      'play-btn-label',
+      'pause-btn-label',
+      'index-btn-label',
+      'index-label',
+    ]
+  }
   #sliderElement!: SliderElement
   #mutationObserver: MutationObserver
   #hasBeenInteractedWith = false
@@ -59,6 +69,78 @@ export default class SliderControls
         this.#init()
       }
     })
+  }
+
+  get nextBtnLabel(): string {
+    return this.getAttribute('next-btn-label') ?? 'Next'
+  }
+
+  set nextBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('next-btn-label')
+    } else {
+      this.setAttribute('next-btn-label', value)
+    }
+  }
+
+  get prevBtnLabel(): string {
+    return this.getAttribute('prev-btn-label') ?? 'Previous'
+  }
+
+  set prevBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('prev-btn-label')
+    } else {
+      this.setAttribute('prev-btn-label', value)
+    }
+  }
+
+  get playBtnLabel(): string {
+    return this.getAttribute('play-btn-label') ?? 'Start slide auto scroll'
+  }
+
+  set playBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('play-btn-label')
+    } else {
+      this.setAttribute('play-btn-label', value)
+    }
+  }
+
+  get pauseBtnLabel(): string {
+    return this.getAttribute('pause-btn-label') ?? 'Stop slide auto scroll'
+  }
+
+  set pauseBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('pause-btn-label')
+    } else {
+      this.setAttribute('pause-btn-label', value)
+    }
+  }
+
+  get indexBtnLabel(): string | null {
+    return this.getAttribute('index-btn-label')
+  }
+
+  set indexBtnLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('index-btn-label')
+    } else {
+      this.setAttribute('index-btn-label', value)
+    }
+  }
+
+  get indexLabel(): string {
+    return this.getAttribute('index-label') ?? 'Select a slide'
+  }
+
+  set indexLabel(value: string | null) {
+    if (value === null) {
+      this.removeAttribute('index-label')
+    } else {
+      this.setAttribute('index-label', value)
+    }
   }
 
   connectedCallback() {
@@ -88,13 +170,13 @@ export default class SliderControls
     this.#initializeControl(
       shadow.querySelector<HTMLSlotElement>('slot[name="prev-btn"]')!,
       () => this.#sliderElement?.slider?.prev(),
-      { 'aria-label': this.#prevBtnLabel() },
+      { 'aria-label': this.prevBtnLabel },
     )
 
     this.#initializeControl(
       shadow.querySelector<HTMLSlotElement>('slot[name="next-btn"]')!,
       () => this.#sliderElement?.slider?.next(),
-      { 'aria-label': this.#nextBtnLabel() },
+      { 'aria-label': this.nextBtnLabel },
     )
 
     this.#initPlayBtnSlot()
@@ -228,7 +310,7 @@ export default class SliderControls
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
 
     if (indexSlot) {
-      indexSlot.setAttribute('aria-label', this.#indexSlotLabel())
+      indexSlot.setAttribute('aria-label', this.indexLabel)
       indexSlot?.addEventListener('click', (ev) => {
         const container = indexSlot.assignedElements()[0] ?? indexSlot
 
@@ -278,16 +360,13 @@ export default class SliderControls
 
       if (slideCount > 1 && !this.hasAttribute('disable-index')) {
         const frag = document.createDocumentFragment()
-        const labelTemplate =
-          this.getAttribute('index-btn-label') ?? 'View slide %d'
 
         for (let i = 0; i < slideCount; i++) {
           const btn = document.createElement('button')
           const isActive = i === this.#sliderElement!.slider!.activeIndex
-          const label = labelTemplate.replace(/%d/g, `${i + 1}`)
 
           btn.setAttribute('aria-disabled', isActive ? 'true' : 'false')
-          btn.setAttribute('aria-label', label)
+          btn.setAttribute('aria-label', this.#getIndexButtonLabel(i))
           btn.setAttribute('aria-controls', 'slider')
           btn.setAttribute('class', 'index-btn')
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
@@ -375,7 +454,7 @@ export default class SliderControls
 
       button.setAttribute(
         'aria-label',
-        isPlaying ? this.#pauseButtonLabel() : this.#playButtonLabel(),
+        isPlaying ? this.pauseBtnLabel : this.playBtnLabel,
       )
       button?.setAttribute(
         'part',
@@ -384,24 +463,52 @@ export default class SliderControls
     }
   }
 
-  #indexSlotLabel() {
-    return this.getAttribute('index-label') ?? 'Select a slide'
+  attributeChangedCallback(_name: string, oldValue: string, newValue: string) {
+    if (oldValue !== newValue) {
+      this.#updateButtonLabels()
+    }
   }
 
-  #nextBtnLabel() {
-    return this.getAttribute('next-btn-label') ?? 'Next'
+  #updateButtonLabels() {
+    const nextButton = this.shadowRoot?.querySelector('#next-btn')
+    const prevButton = this.shadowRoot?.querySelector('#prev-btn')
+    const playButton = this.shadowRoot?.querySelector('#play-btn')
+
+    if (nextButton) {
+      nextButton.setAttribute('aria-label', this.nextBtnLabel)
+    }
+    if (prevButton) {
+      prevButton.setAttribute('aria-label', this.prevBtnLabel)
+    }
+    if (playButton) {
+      this.#setPlayBtnState()
+    }
+
+    const indexSlot =
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
+    if (indexSlot) {
+      indexSlot.setAttribute('aria-label', this.indexLabel)
+    }
+
+    this.#updateIndexButtonLabels()
   }
 
-  #prevBtnLabel() {
-    return this.getAttribute('prev-btn-label') ?? 'Previous'
+  #updateIndexButtonLabels() {
+    const indexSlot =
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
+    if (indexSlot) {
+      const container = indexSlot.assignedElements()[0] ?? indexSlot
+      const buttons = container?.querySelectorAll('button')
+
+      buttons?.forEach((btn, index) => {
+        btn.setAttribute('aria-label', this.#getIndexButtonLabel(index))
+      })
+    }
   }
 
-  #playButtonLabel() {
-    return this.getAttribute('play-btn-label') ?? 'Start slide auto scroll'
-  }
-
-  #pauseButtonLabel() {
-    return this.getAttribute('pause-btn-label') ?? 'Stop slide auto scroll'
+  #getIndexButtonLabel(index: number): string {
+    const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
+    return labelTemplate.replace(/%d/g, `${index + 1}`)
   }
 }
 

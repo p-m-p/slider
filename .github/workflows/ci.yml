@@ -23,6 +23,15 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run build
       - run: pnpm run test:coverage
+      - name: Build Storybook
+        run: pnpm run build-storybook --quiet
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run Storybook tests
+        run: |
+          pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm exec http-server storybook-static --port 6006 --silent" \
+            "pnpm exec wait-on http://127.0.0.1:6006 && pnpm run test-storybook --url http://127.0.0.1:6006"
       - uses: changesets/action@v1
         with:
           publish: pnpm run release

@@ -4,3 +4,6 @@ packages/**/LICENSE
 psd
 .nx
 /coverage
+
+*storybook.log
+storybook-static

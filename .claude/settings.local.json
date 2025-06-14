@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(pnpm build-storybook:*)",
+      "Bash(pnpm storybook:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(grep:*)",
+      "WebFetch(domain:philparsons.co.uk)",
+      "Bash(npx prettier:*)",
+      "Bash(npm run lint)",
+      "WebFetch(domain:storybook.js.org)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm run:*)",
+      "Bash(npx changeset:*)",
+      "Bash(git commit:*)",
+      "Bash(rg:*)",
+      "Bash(npx eslint:*)",
+      "Bash(git reset:*)"
+    ],
+    "deny": []
+  }
+}
