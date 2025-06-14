@@ -108,14 +108,18 @@ export const WithCarousel: Story = {
 
     await userEvent.click(nextButton as HTMLElement)
 
-    const hasActiveButton = Array.from(indexButtons).some(
-      (btn) => btn.getAttribute('aria-disabled') === 'true',
-    )
-    expect(hasActiveButton).toBe(true)
+    await waitFor(() => {
+      const hasActiveButton = Array.from(indexButtons).some(
+        (btn) => btn.getAttribute('aria-disabled') === 'true',
+      )
+      expect(hasActiveButton).toBe(true)
+    })
 
     await userEvent.click(indexButtons[1] as HTMLElement)
 
-    expect(indexButtons[1]).toHaveAttribute('aria-disabled')
+    await waitFor(() => {
+      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
+    })
 
     expect(indexButtons[0]).toHaveAttribute('aria-label', 'View slide 1')
 
@@ -195,13 +199,15 @@ export const WithFadeSlider: Story = {
     const initialLabel = playButton.getAttribute('aria-label')
     await userEvent.click(playButton as HTMLElement)
 
-    const newLabel = playButton.getAttribute('aria-label')
-    expect(newLabel).toBeTruthy()
-    if (initialLabel === 'Start slideshow') {
-      expect(newLabel).toBe('Stop slideshow')
-    } else {
-      expect(newLabel).toBe('Start slideshow')
-    }
+    await waitFor(() => {
+      const newLabel = playButton.getAttribute('aria-label')
+      expect(newLabel).toBeTruthy()
+      if (initialLabel === 'Start slideshow') {
+        expect(newLabel).toBe('Stop slideshow')
+      } else {
+        expect(newLabel).toBe('Start slideshow')
+      }
+    })
 
     const indexContainer =
       controls!.shadowRoot!.querySelector('#index-container')!
@@ -209,7 +215,9 @@ export const WithFadeSlider: Story = {
     expect(indexButtons.length).toBeGreaterThan(0)
 
     await userEvent.click(indexButtons[2] as HTMLElement)
-    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    await waitFor(() => {
+      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    })
   },
 }
 
@@ -285,12 +293,16 @@ export const WithCubeSlider: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(indexButtons[1] as HTMLElement)
-    expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    await waitFor(() => {
+      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
+      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    })
 
     await userEvent.click(nextButton as HTMLElement)
 
-    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    await waitFor(() => {
+      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    })
   },
 }
 
@@ -365,12 +377,16 @@ export const WithTileSlider: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(indexButtons[2] as HTMLElement)
-    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    await waitFor(() => {
+      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
+    })
 
     await userEvent.click(prevButton as HTMLElement)
-    expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-    expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    await waitFor(() => {
+      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
+      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
+    })
   },
 }
 
@@ -485,8 +501,10 @@ export const ProfessionalStyled: Story = {
 
     await userEvent.click(playButton as HTMLElement)
 
-    const newLabel = playButton.getAttribute('aria-label')
-    expect(newLabel).toBeTruthy()
+    await waitFor(() => {
+      const newLabel = playButton.getAttribute('aria-label')
+      expect(newLabel).toBeTruthy()
+    })
 
     const indexContainer =
       controls!.shadowRoot!.querySelector('#index-container')!
@@ -496,21 +514,27 @@ export const ProfessionalStyled: Story = {
     expect(indexButtons[0]).toHaveAttribute('aria-disabled')
 
     await userEvent.click(indexButtons[indexButtons.length - 1] as HTMLElement)
-    expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-      'aria-disabled',
-    )
+    await waitFor(() => {
+      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
+        'aria-disabled',
+      )
+    })
 
     await userEvent.click(prevButton as HTMLElement)
-    expect(indexButtons[indexButtons.length - 2]).toHaveAttribute(
-      'aria-disabled',
-    )
-    expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-      'aria-disabled',
-    )
+    await waitFor(() => {
+      expect(indexButtons[indexButtons.length - 2]).toHaveAttribute(
+        'aria-disabled',
+      )
+      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
+        'aria-disabled',
+      )
+    })
 
     await userEvent.click(nextButton as HTMLElement)
-    expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-      'aria-disabled',
-    )
+    await waitFor(() => {
+      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
+        'aria-disabled',
+      )
+    })
   },
 }
