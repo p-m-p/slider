@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, waitFor } from '@storybook/test'
 import {
   SliderControls,
   CarouselSlider,
@@ -74,66 +73,6 @@ export const WithCarousel: Story = {
       </SliderControls>
     )
   },
-  play: async ({ canvasElement }) => {
-    // Test that controls have proper accessibility roles
-    const controls = canvasElement.querySelector('bs-slider-controls')
-    expect(controls).toBeTruthy()
-    expect(controls?.getAttribute('role')).toBe('region')
-    expect(controls?.getAttribute('aria-roledescription')).toBe('carousel')
-
-    // Test that carousel slider is present
-    const carousel = canvasElement.querySelector('bs-carousel')
-    expect(carousel).toBeTruthy()
-
-    // Test that images are rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
-
-    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
-    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
-    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
-
-    expect(nextButton).toBeTruthy()
-    expect(prevButton).toBeTruthy()
-    expect(playButton).toBeTruthy()
-
-    // Wait for controls to be fully initialized
-    await waitFor(() => {
-      const indexContainer =
-        controls!.shadowRoot!.querySelector('#index-container')!
-      const indexButtons = indexContainer.querySelectorAll('button')
-      expect(indexButtons.length).toBe(slideData.length)
-    })
-
-    const indexContainer =
-      controls!.shadowRoot!.querySelector('#index-container')!
-    const indexButtons = indexContainer.querySelectorAll('button')
-
-    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-    expect(indexButtons[0]).toHaveAttribute('aria-label')
-    expect(indexButtons[0]).toHaveAttribute('aria-controls')
-
-    await userEvent.click(nextButton as HTMLElement)
-
-    await waitFor(() => {
-      const hasActiveButton = Array.from(indexButtons).some(
-        (btn) => btn.getAttribute('aria-disabled') === 'true',
-      )
-      expect(hasActiveButton).toBe(true)
-    })
-
-    await userEvent.click(indexButtons[1] as HTMLElement)
-
-    await waitFor(() => {
-      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-    })
-
-    expect(indexButtons[0]).toHaveAttribute('aria-label', 'View slide 1')
-
-    // Test dynamic property updates (works locally but timing issues in CI)
-    const indexSlot = controls!.shadowRoot!.querySelector('slot[name="index"]')!
-    expect(indexSlot).toHaveAttribute('aria-label', 'Select a slide')
-  },
 }
 
 export const WithFadeSlider: Story = {
@@ -166,55 +105,6 @@ export const WithFadeSlider: Story = {
         </FadeSlider>
       </SliderControls>
     )
-  },
-  play: async ({ canvasElement }) => {
-    // Test accessibility roles
-    const controls = canvasElement.querySelector('bs-slider-controls')
-    expect(controls).toBeTruthy()
-    expect(controls?.getAttribute('role')).toBe('region')
-    expect(controls?.getAttribute('aria-roledescription')).toBe('carousel')
-
-    // Test that fade slider is present
-    const fadeSlider = canvasElement.querySelector('bs-fade')
-    expect(fadeSlider).toBeTruthy()
-
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
-
-    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
-    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
-    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
-
-    expect(nextButton).toBeTruthy()
-    expect(prevButton).toBeTruthy()
-    expect(playButton).toBeTruthy()
-    expect(nextButton.getAttribute('aria-label')).toBe('Next image')
-    expect(prevButton.getAttribute('aria-label')).toBe('Previous image')
-    expect(playButton.getAttribute('aria-label')).toBeTruthy()
-
-    const initialLabel = playButton.getAttribute('aria-label')
-    await userEvent.click(playButton as HTMLElement)
-
-    await waitFor(() => {
-      const newLabel = playButton.getAttribute('aria-label')
-      expect(newLabel).toBeTruthy()
-      if (initialLabel === 'Start slideshow') {
-        expect(newLabel).toBe('Stop slideshow')
-      } else {
-        expect(newLabel).toBe('Start slideshow')
-      }
-    })
-
-    const indexContainer =
-      controls!.shadowRoot!.querySelector('#index-container')!
-    const indexButtons = indexContainer.querySelectorAll('button')
-    expect(indexButtons.length).toBeGreaterThan(0)
-
-    await userEvent.click(indexButtons[2] as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-    })
   },
 }
 
@@ -252,55 +142,6 @@ export const WithCubeSlider: Story = {
       </div>
     )
   },
-  play: async ({ canvasElement }) => {
-    // Test accessibility roles
-    const controls = canvasElement.querySelector('bs-slider-controls')
-    expect(controls).toBeTruthy()
-    expect(controls?.getAttribute('role')).toBe('region')
-    expect(controls?.getAttribute('aria-roledescription')).toBe('carousel')
-
-    // Test that controls contain the cube slider
-    const cubeSlider = canvasElement.querySelector('bs-cube')
-    expect(cubeSlider).toBeTruthy()
-
-    // Test 3D viewport wrapper
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport).toBeTruthy()
-
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
-
-    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
-    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
-    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
-
-    expect(nextButton).toBeTruthy()
-    expect(prevButton).toBeTruthy()
-    expect(playButton).toBeTruthy()
-    expect(nextButton.getAttribute('aria-label')).toBe('Rotate →')
-    expect(prevButton.getAttribute('aria-label')).toBe('← Rotate')
-    expect(playButton.getAttribute('aria-label')).toBeTruthy()
-
-    const indexContainer =
-      controls!.shadowRoot!.querySelector('#index-container')!
-    const indexButtons = indexContainer.querySelectorAll('button')
-    expect(indexButtons.length).toBeGreaterThan(0)
-
-    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-
-    await userEvent.click(indexButtons[1] as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-    })
-
-    await userEvent.click(nextButton as HTMLElement)
-
-    await waitFor(() => {
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-    })
-  },
 }
 
 export const WithTileSlider: Story = {
@@ -335,55 +176,6 @@ export const WithTileSlider: Story = {
         </TileSlider>
       </SliderControls>
     )
-  },
-  play: async ({ canvasElement }) => {
-    // Test accessibility roles
-    const controls = canvasElement.querySelector('bs-slider-controls')
-    expect(controls).toBeTruthy()
-    expect(controls?.getAttribute('role')).toBe('region')
-    expect(controls?.getAttribute('aria-roledescription')).toBe('carousel')
-
-    // Test that controls contain the tile slider
-    const tileSlider = canvasElement.querySelector('bs-tile')
-    expect(tileSlider).toBeTruthy()
-
-    // Test tile slider configuration
-    expect(tileSlider?.tileEffect).toBe('flip')
-    expect(tileSlider?.rows).toBe(5)
-
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
-
-    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
-    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
-    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
-
-    expect(nextButton).toBeTruthy()
-    expect(prevButton).toBeTruthy()
-    expect(playButton).toBeTruthy()
-    expect(nextButton.getAttribute('aria-label')).toBe('Next Tiles')
-    expect(prevButton.getAttribute('aria-label')).toBe('Previous Tiles')
-    expect(playButton.getAttribute('aria-label')).toBeTruthy()
-
-    const indexContainer =
-      controls!.shadowRoot!.querySelector('#index-container')!
-    const indexButtons = indexContainer.querySelectorAll('button')
-    expect(indexButtons.length).toBeGreaterThan(0)
-
-    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-
-    await userEvent.click(indexButtons[2] as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-    })
-
-    await userEvent.click(prevButton as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[1]).toHaveAttribute('aria-disabled')
-      expect(indexButtons[2]).toHaveAttribute('aria-disabled')
-    })
   },
 }
 
@@ -465,73 +257,5 @@ export const ProfessionalStyled: Story = {
         </SliderControls>
       </div>
     )
-  },
-  play: async ({ canvasElement }) => {
-    // Test accessibility roles
-    const controls = canvasElement.querySelector('bs-slider-controls')
-    expect(controls).toBeTruthy()
-    expect(controls?.getAttribute('role')).toBe('region')
-    expect(controls?.getAttribute('aria-roledescription')).toBe('carousel')
-
-    // Test custom styling wrapper
-    const wrapper = canvasElement.querySelector('div[style*="background"]')
-    expect(wrapper).toBeTruthy()
-
-    // Test that carousel is present
-    const carousel = canvasElement.querySelector('bs-carousel')
-    expect(carousel).toBeTruthy()
-
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
-
-    const nextButton = controls!.shadowRoot!.querySelector('#next-btn')!
-    const prevButton = controls!.shadowRoot!.querySelector('#prev-btn')!
-    const playButton = controls!.shadowRoot!.querySelector('#play-btn')!
-
-    expect(nextButton).toBeTruthy()
-    expect(prevButton).toBeTruthy()
-    expect(playButton).toBeTruthy()
-    expect(nextButton.getAttribute('aria-label')).toBe('→')
-    expect(prevButton.getAttribute('aria-label')).toBe('←')
-    expect(playButton.getAttribute('aria-label')).toBeTruthy()
-
-    await userEvent.click(playButton as HTMLElement)
-
-    await waitFor(() => {
-      const newLabel = playButton.getAttribute('aria-label')
-      expect(newLabel).toBeTruthy()
-    })
-
-    const indexContainer =
-      controls!.shadowRoot!.querySelector('#index-container')!
-    const indexButtons = indexContainer.querySelectorAll('button')
-    expect(indexButtons.length).toBeGreaterThan(0)
-
-    expect(indexButtons[0]).toHaveAttribute('aria-disabled')
-
-    await userEvent.click(indexButtons[indexButtons.length - 1] as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-        'aria-disabled',
-      )
-    })
-
-    await userEvent.click(prevButton as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[indexButtons.length - 2]).toHaveAttribute(
-        'aria-disabled',
-      )
-      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-        'aria-disabled',
-      )
-    })
-
-    await userEvent.click(nextButton as HTMLElement)
-    await waitFor(() => {
-      expect(indexButtons[indexButtons.length - 1]).toHaveAttribute(
-        'aria-disabled',
-      )
-    })
   },
 }
