@@ -30,7 +30,8 @@
       "Bash(cp:*)",
       "WebFetch(domain:testing-library.com)",
       "WebFetch(domain:www.w3.org)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }
