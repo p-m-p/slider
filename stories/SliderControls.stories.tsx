@@ -131,7 +131,6 @@ export const WithCubeSlider: Story = {
             width: '100%',
             height: '300px',
             perspective: '1000px',
-            overflow: 'hidden',
           }}>
           <CubeSlider
             speed={800}
