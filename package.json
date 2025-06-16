@@ -18,7 +18,8 @@
     "test:ui": "vitest --ui",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook"
+    "test-storybook": "test-storybook",
+    "chromatic": "npx chromatic --project-token=chpt_4757c406e5bec41"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.11",
