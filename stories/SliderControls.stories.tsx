@@ -126,7 +126,13 @@ export const WithCubeSlider: Story = {
   render: function WithCubeSliderRender(args) {
     return (
       <SliderControls {...args}>
-        <div style={{ perspective: '1000px', overflow: 'hidden' }}>
+        <div
+          style={{
+            width: '100%',
+            height: '300px',
+            perspective: '1000px',
+            overflow: 'hidden',
+          }}>
           <CubeSlider
             speed={800}
             timeout={5000}
