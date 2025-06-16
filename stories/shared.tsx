@@ -1,36 +1,33 @@
-export const slideImages = [
-  'https://picsum.photos/seed/slide1/600/300',
-  'https://picsum.photos/seed/slide2/600/300',
-  'https://picsum.photos/seed/slide3/600/300',
-  'https://picsum.photos/seed/slide4/600/300',
-  'https://picsum.photos/seed/slide5/600/300',
-]
-
 export const slideData = [
   {
     title: 'Beautiful Landscape',
     subtitle: "Explore nature's wonders",
-    image: slideImages[0],
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: '#ffffff',
   },
   {
     title: 'Urban Architecture',
     subtitle: 'Modern city designs',
-    image: slideImages[1],
+    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    color: '#ffffff',
   },
   {
     title: 'Peaceful Waters',
     subtitle: 'Find your tranquility',
-    image: slideImages[2],
+    background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    color: '#ffffff',
   },
   {
     title: 'Mountain Views',
     subtitle: 'Breathtaking heights',
-    image: slideImages[3],
+    background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    color: '#ffffff',
   },
   {
     title: 'Sunset Horizons',
     subtitle: 'End the day in beauty',
-    image: slideImages[4],
+    background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+    color: '#ffffff',
   },
 ]
 
@@ -41,45 +38,61 @@ export const createSlide = (slide: (typeof slideData)[0], index: number) => (
       position: 'relative',
       width: '100%',
       height: '300px',
-      overflow: 'hidden',
+      background: slide.background,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      padding: '40px 20px',
+      boxSizing: 'border-box',
     }}>
-    <img
-      src={slide.image}
-      alt={slide.title}
-      style={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-      }}
-    />
     <div
       style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
-        padding: '40px 20px 20px',
-        color: 'white',
+        background: 'rgba(0, 0, 0, 0.3)',
+        borderRadius: '12px',
+        padding: '24px 32px',
+        backdropFilter: 'blur(10px)',
       }}>
       <h3
         style={{
-          margin: '0 0 8px 0',
-          fontSize: '24px',
+          margin: '0 0 12px 0',
+          fontSize: '28px',
           fontWeight: 'bold',
-          textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+          color: slide.color,
+          textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
         }}>
         {slide.title}
       </h3>
       <p
         style={{
           margin: 0,
-          fontSize: '16px',
-          opacity: 0.9,
-          textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+          fontSize: '18px',
+          color: slide.color,
+          opacity: 0.95,
+          textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
         }}>
         {slide.subtitle}
       </p>
+    </div>
+    <div
+      style={{
+        position: 'absolute',
+        top: '20px',
+        right: '20px',
+        background: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: '50%',
+        width: '40px',
+        height: '40px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: slide.color,
+        fontSize: '18px',
+        fontWeight: 'bold',
+        backdropFilter: 'blur(10px)',
+      }}>
+      {index + 1}
     </div>
   </div>
 )
