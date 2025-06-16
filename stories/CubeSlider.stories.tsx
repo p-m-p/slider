@@ -99,9 +99,9 @@ export const Default: Story = {
     const viewport = canvasElement.querySelector('div[style*="perspective"]')
     expect(viewport).toBeTruthy()
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -304,8 +304,8 @@ export const CustomConfiguration: Story = {
     const viewport = canvasElement.querySelector('div[style*="perspective"]')
     expect(viewport).toBeTruthy()
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }

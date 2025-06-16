@@ -91,9 +91,9 @@ export const Default: Story = {
     expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -209,9 +209,9 @@ export const NoOffset: Story = {
     expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -251,9 +251,9 @@ export const HighOffset: Story = {
     expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -296,8 +296,8 @@ export const CustomConfiguration: Story = {
     expect(slider?.rows).toBe(6)
     expect(slider?.rowOffset).toBe(150)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }

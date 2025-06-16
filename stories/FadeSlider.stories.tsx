@@ -79,9 +79,9 @@ export const Default: Story = {
     expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -118,9 +118,9 @@ export const EaseInTiming: Story = {
     expect(slider?.startIndex).toBe(0) // Default value
     expect(slider?.swipeTolerance).toBe(30) // Default value
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -156,9 +156,9 @@ export const LinearFade: Story = {
     expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -194,9 +194,9 @@ export const FastFade: Story = {
     expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -235,8 +235,8 @@ export const CustomConfiguration: Story = {
     expect(slider?.pauseOnHover).toBe(false)
     expect(slider?.timingFunction).toBe('ease')
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }

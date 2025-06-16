@@ -119,9 +119,9 @@ export const CoverMode: Story = {
     expect(slider?.swipeTolerance).toBe(30) // Default value
     expect(slider?.timingFunction).toBe('ease-out') // Default value
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -158,9 +158,9 @@ export const CustomTiming: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
     expect(slider?.cover).toBe(carouselDefaults.cover)
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
 
@@ -236,8 +236,8 @@ export const CustomConfiguration: Story = {
     expect(slider?.cover).toBe(true)
     expect(slider?.timingFunction).toBe('linear')
 
-    // Test that content is rendered
-    const images = canvasElement.querySelectorAll('img')
-    expect(images.length).toBeGreaterThan(0)
+    // Test that slide content is rendered
+    const slides = canvasElement.querySelectorAll('[key]')
+    expect(slides.length).toBeGreaterThan(0)
   },
 }
