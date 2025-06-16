@@ -80,7 +80,7 @@ export const Default: Story = {
     expect(slider?.timingFunction).toBe(carouselDefaults.timingFunction)
 
     // Test that images are rendered
-    const images = canvasElement.querySelectorAll('img')
+    const images = canvasElement.querySelectorAll('.story-slide')
     expect(images.length).toBeGreaterThan(0)
   },
 }
