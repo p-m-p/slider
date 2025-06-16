@@ -1,0 +1,15 @@
+# Chromatic configuration
+buildScriptName: build-storybook
+projectToken: PROJECT_TOKEN_PLACEHOLDER
+
+# Test settings
+onlyChanged: true
+untraced: []
+externals: []
+
+# CI settings
+exitZeroOnChanges: true
+exitOnceUploaded: false
+
+# Performance settings
+skip: '**/node_modules/**'
