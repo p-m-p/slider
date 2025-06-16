@@ -125,8 +125,13 @@ export const WithCubeSlider: Story = {
   },
   render: function WithCubeSliderRender(args) {
     return (
-      <div style={{ perspective: '1000px', overflow: 'hidden' }}>
-        <SliderControls {...args}>
+      <SliderControls {...args}>
+        <div
+          style={{
+            width: '100%',
+            height: '300px',
+            perspective: '1000px',
+          }}>
           <CubeSlider
             speed={800}
             timeout={5000}
@@ -138,8 +143,8 @@ export const WithCubeSlider: Story = {
               .slice(0, 4)
               .map((slide, index) => createSlide(slide, index))}
           </CubeSlider>
-        </SliderControls>
-      </div>
+        </div>
+      </SliderControls>
     )
   },
 }

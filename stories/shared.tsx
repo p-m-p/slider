@@ -1,9 +1,9 @@
 export const slideImages = [
-  'https://picsum.photos/600/300?random=1',
-  'https://picsum.photos/600/300?random=2',
-  'https://picsum.photos/600/300?random=3',
-  'https://picsum.photos/600/300?random=4',
-  'https://picsum.photos/600/300?random=5',
+  'https://picsum.photos/seed/slide1/600/300',
+  'https://picsum.photos/seed/slide2/600/300',
+  'https://picsum.photos/seed/slide3/600/300',
+  'https://picsum.photos/seed/slide4/600/300',
+  'https://picsum.photos/seed/slide5/600/300',
 ]
 
 export const slideData = [
