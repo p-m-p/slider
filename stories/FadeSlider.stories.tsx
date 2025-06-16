@@ -80,7 +80,7 @@ export const Default: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -119,7 +119,7 @@ export const EaseInTiming: Story = {
     expect(slider?.swipeTolerance).toBe(30) // Default value
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -157,7 +157,7 @@ export const LinearFade: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -195,7 +195,7 @@ export const FastFade: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -236,7 +236,7 @@ export const CustomConfiguration: Story = {
     expect(slider?.timingFunction).toBe('ease')
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }

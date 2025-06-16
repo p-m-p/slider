@@ -34,6 +34,7 @@ export const slideData = [
 export const createSlide = (slide: (typeof slideData)[0], index: number) => (
   <div
     key={index}
+    className="story-slide"
     style={{
       position: 'relative',
       width: '100%',

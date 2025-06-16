@@ -100,7 +100,7 @@ export const Default: Story = {
     expect(viewport).toBeTruthy()
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -305,7 +305,7 @@ export const CustomConfiguration: Story = {
     expect(viewport).toBeTruthy()
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }

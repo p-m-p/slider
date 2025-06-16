@@ -92,7 +92,7 @@ export const Default: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -210,7 +210,7 @@ export const NoOffset: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -252,7 +252,7 @@ export const HighOffset: Story = {
     expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
@@ -297,7 +297,7 @@ export const CustomConfiguration: Story = {
     expect(slider?.rowOffset).toBe(150)
 
     // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('[key]')
+    const slides = canvasElement.querySelectorAll('.story-slide')
     expect(slides.length).toBeGreaterThan(0)
   },
 }
