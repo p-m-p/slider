@@ -10,8 +10,8 @@ declare global {
     after: CustomEvent<SliderEventData>
     before: CustomEvent<SliderEventData>
     destroy: CustomEvent<void>
-    pause: CustomEvent<SliderEventData>
-    play: CustomEvent<SliderEventData>
+    pause: Event | CustomEvent<SliderEventData>
+    play: Event | CustomEvent<SliderEventData>
   }
 
   interface HTMLElementTagNameMap {
