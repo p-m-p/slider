@@ -5,7 +5,7 @@ import {
   FadeSlider,
   CubeSlider,
   TileSlider,
-} from '../packages/react/src/index'
+} from '~/packages/react'
 import { slideData, createSlide } from './shared'
 
 const meta: Meta<typeof SliderControls> = {

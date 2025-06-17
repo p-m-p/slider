@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from '@storybook/test'
-import { defaultOptions } from '../packages/slider/src/box-slider'
-import { CarouselSlider } from '../packages/react/src/index'
+import { defaultOptions } from '~/packages/slider'
+import { CarouselSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 
 // Web component default for carousel timing function

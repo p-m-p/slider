@@ -18,6 +18,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "~/packages/react": ["./packages/react/src"],
+      "~/packages/components": ["./packages/components/src"],
+      "~/packages/slider": ["./packages/slider/src"]
+    }
   }
 }

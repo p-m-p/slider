@@ -32,7 +32,8 @@
       "WebFetch(domain:www.w3.org)",
       "WebFetch(domain:github.com)",
       "Bash(git pull:*)",
-      "Bash(pnpm exec test-storybook:*)"
+      "Bash(pnpm exec test-storybook:*)",
+      "Bash(pnpm list:*)"
     ],
     "deny": []
   }

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from '@storybook/test'
-import { defaultOptions } from '../packages/slider/src/box-slider'
-import { TileSlider } from '../packages/react/src/index'
+import { defaultOptions } from '~/packages/slider'
+import { TileSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 
 // Web component defaults for tile slider: rows=8, rowOffset=50, tileEffect='flip'
