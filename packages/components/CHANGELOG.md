@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.13.1
+
+### Patch Changes
+
+- cf55c13: Fix slider element types by extending core BoxSliderOptions interface
+
 ## 2.13.0
 
 ### Minor Changes

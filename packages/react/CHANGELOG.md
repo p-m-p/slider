@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.7.5
+
+### Patch Changes
+
+- Updated dependencies [cf55c13]
+  - @boxslider/components@2.13.1
+
 ## 2.7.4
 
 ### Patch Changes
