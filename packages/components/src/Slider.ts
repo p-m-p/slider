@@ -15,27 +15,17 @@ const NUMERIC_ATTRIBUTES = [
 ]
 export const SLIDER_ATTRIBUTES = [...BOOLEAN_ATTRIBUTES, ...NUMERIC_ATTRIBUTES]
 
-export interface SliderElementProps {
-  autoScroll: boolean
-  pauseOnHover: boolean
-  speed: number
-  swipe: boolean
-  swipeTolerance: number
-  startIndex: number
-  timeout: number
-}
-
 type NumericProp = 'speed' | 'startIndex' | 'swipeTolerance' | 'timeout'
 type BooleanProp = 'autoScroll' | 'loop' | 'pauseOnHover' | 'swipe'
 
-export interface SliderElement extends SliderElementProps, HTMLElement {
+export interface SliderElement extends BoxSliderOptions, HTMLElement {
   readonly slider?: BoxSlider
   readonly options: BoxSliderOptions
 }
 
 export default abstract class Slider
   extends SafeBaseElement
-  implements SliderElementProps
+  implements SliderElement
 {
   #slider?: BoxSlider
   #observer: MutationObserver

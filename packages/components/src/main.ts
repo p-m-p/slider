@@ -1,5 +1,4 @@
 import './style.css'
-import '.'
 import { Slider } from '.'
 import type { Effect } from '@boxslider/slider'
 
