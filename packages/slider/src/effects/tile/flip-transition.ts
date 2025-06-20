@@ -88,7 +88,7 @@ class FlipTransition implements TileTransition {
 
   setTileFace(slide: HTMLElement, tileFace: HTMLElement) {
     const clone = slide.cloneNode(true) as HTMLElement
-    clone.removeAttribute('style')
+    clone.style.removeProperty('visibility')
     tileFace.firstElementChild!.replaceChildren(clone)
   }
 }
