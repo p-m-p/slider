@@ -184,7 +184,7 @@ export const WithTileSlider: Story = {
   },
 }
 
-export const ProfessionalStyled: Story = {
+export const CustomStyles: Story = {
   args: {
     nextBtnLabel: '→',
     prevBtnLabel: '←',
@@ -194,22 +194,22 @@ export const ProfessionalStyled: Story = {
       display: 'block',
       width: '600px',
       border: 'none',
-      borderRadius: '16px',
+      borderRadius: '20px',
       overflow: 'hidden',
-      boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      boxShadow: '0 25px 50px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.1)',
+      background: 'linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)',
       position: 'relative',
 
-      // BoxSlider control styling with correct CSS custom properties
-      '--bs-button-bar-gap': '20px',
+      // BoxSlider control styling with supported CSS custom properties
+      '--bs-button-bar-gap': '16px',
 
-      // Control buttons styling with SVG icons
-      '--bs-btn-background-color': 'rgba(0, 0, 0, 0.7)',
-      '--bs-btn-hover-background-color': 'rgba(0, 0, 0, 0.9)',
+      // Control buttons styling
+      '--bs-btn-background-color': 'rgba(255, 255, 255, 0.2)',
+      '--bs-btn-hover-background-color': 'rgba(255, 255, 255, 0.3)',
       '--bs-btn-border-radius': '50%',
-      '--bs-btn-size': '52px',
+      '--bs-btn-size': '44px',
 
-      // Custom SVG icons for control buttons
+      // Custom SVG icons for control buttons with better styling
       '--bs-next-icon': `url("data:image/svg+xml,${encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -222,33 +222,37 @@ export const ProfessionalStyled: Story = {
         </svg>
       `)}")`,
 
-      '--play-icon': `url("data:image/svg+xml,${encodeURIComponent(`
+      '--bs-play-icon': `url("data:image/svg+xml,${encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M8 5V19L19 12L8 5Z" fill="white" stroke="white" stroke-width="1" stroke-linejoin="round"/>
         </svg>
       `)}")`,
 
-      '--pause-icon': `url("data:image/svg+xml,${encodeURIComponent(`
+      '--bs-pause-icon': `url("data:image/svg+xml,${encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
           <rect x="6" y="4" width="4" height="16" fill="white"/>
           <rect x="14" y="4" width="4" height="16" fill="white"/>
         </svg>
       `)}")`,
 
-      // Index button styling - elegant pill design
-      '--bs-index-btn-color': 'rgba(255, 255, 255, 0.4)',
-      '--bs-index-btn-hover-color': 'rgba(255, 255, 255, 0.7)',
+      // Index button styling
+      '--bs-index-btn-color': 'rgba(255, 255, 255, 0.3)',
+      '--bs-index-btn-hover-color': 'rgba(255, 255, 255, 0.6)',
       '--bs-index-btn-active-color': '#ffffff',
-      '--bs-index-btn-size': '12px',
+      '--bs-index-btn-size': '14px',
     },
   },
-  render: function ProfessionalStyledRender(args) {
+  render: function CustomStylesRender(args) {
     return (
       <div
         style={{
-          background: '#f8f9fa',
-          padding: '40px',
-          borderRadius: '12px',
+          background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+          padding: '60px',
+          borderRadius: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '500px',
         }}>
         <SliderControls {...args}>
           <CarouselSlider
@@ -256,7 +260,7 @@ export const ProfessionalStyled: Story = {
             timeout={4000}
             pauseOnHover
             swipe
-            style={{ display: 'block', width: '100%', height: '300px' }}>
+            style={{ display: 'block', width: '100%', height: '350px' }}>
             {slideData.map((slide, index) => createSlide(slide, index))}
           </CarouselSlider>
         </SliderControls>
