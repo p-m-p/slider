@@ -194,10 +194,7 @@ export const CustomStyles: Story = {
       display: 'block',
       width: '600px',
       border: 'none',
-      borderRadius: '20px',
       overflow: 'hidden',
-      boxShadow: '0 25px 50px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.1)',
-      background: 'linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)',
       position: 'relative',
 
       // BoxSlider control styling with supported CSS custom properties
@@ -246,13 +243,13 @@ export const CustomStyles: Story = {
     return (
       <div
         style={{
-          background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-          padding: '60px',
-          borderRadius: '20px',
+          background: 'linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)',
+          boxShadow:
+            '0 25px 50px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.1)',
+          padding: '0.5rem',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          minHeight: '500px',
         }}>
         <SliderControls {...args}>
           <CarouselSlider
@@ -260,7 +257,7 @@ export const CustomStyles: Story = {
             timeout={4000}
             pauseOnHover
             swipe
-            style={{ display: 'block', width: '100%', height: '350px' }}>
+            style={{ display: 'block', width: '100%', height: '300px' }}>
             {slideData.map((slide, index) => createSlide(slide, index))}
           </CarouselSlider>
         </SliderControls>
