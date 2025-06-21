@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.15.0
+
+### Minor Changes
+
+- 57432fc: Fix tile effect transitions preserving slide styles. Previously, tile effects were removing all styles from slide elements when cloning them for transitions. Now only the visibility property is removed, preserving any custom styling applied to slides.
+
 ## 2.14.2
 
 ### Patch Changes
