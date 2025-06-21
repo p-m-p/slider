@@ -34,7 +34,8 @@
       "Bash(git pull:*)",
       "Bash(pnpm exec test-storybook:*)",
       "Bash(pnpm list:*)",
-      "Bash(pnpm changeset:*)"
+      "Bash(pnpm changeset:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": []
   }
