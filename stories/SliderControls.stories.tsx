@@ -265,3 +265,115 @@ export const CustomStyles: Story = {
     )
   },
 }
+
+export const CustomButtons: Story = {
+  args: {
+    nextBtnLabel: 'Go forward',
+    prevBtnLabel: 'Go back',
+    playBtnLabel: 'Start slideshow',
+    pauseBtnLabel: 'Stop slideshow',
+  },
+  render: function CustomButtonsRender(args) {
+    return (
+      <div
+        style={{
+          background: '#f8f9fa',
+          padding: '2rem',
+          borderRadius: '8px',
+          width: '700px',
+        }}>
+        <SliderControls {...args}>
+          <CarouselSlider
+            speed={600}
+            timeout={3000}
+            pauseOnHover
+            swipe
+            style={{
+              display: 'block',
+              width: '100%',
+              height: '300px',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            }}>
+            {slideData.map((slide, index) => createSlide(slide, index))}
+          </CarouselSlider>
+
+          {/* Custom Previous Button */}
+          <button
+            slot="prev-btn"
+            style={{
+              padding: '8px 12px',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              background: 'white',
+              cursor: 'pointer',
+            }}>
+            ← Previous
+          </button>
+
+          {/* Custom Next Button */}
+          <button
+            slot="next-btn"
+            style={{
+              padding: '8px 12px',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              background: 'white',
+              cursor: 'pointer',
+            }}>
+            Next →
+          </button>
+
+          {/* Custom Play/Pause Button */}
+          <button
+            slot="play-btn"
+            style={{
+              padding: '10px',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              background: 'white',
+              cursor: 'pointer',
+              width: '40px',
+              height: '40px',
+            }}>
+            ⏯
+          </button>
+
+          {/* Custom Index Buttons */}
+          <div
+            slot="index"
+            style={{
+              display: 'flex',
+              gap: '4px',
+              justifyContent: 'flex-start',
+            }}>
+            {slideData.map((_, index) => (
+              <button
+                key={index}
+                data-slide-index={index}
+                style={{
+                  padding: '6px 10px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  background: 'white',
+                  cursor: 'pointer',
+                  minWidth: '32px',
+                }}>
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </SliderControls>
+      </div>
+    )
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'This story demonstrates how to use custom buttons by providing your own button elements in the available slots: `prev-btn`, `next-btn`, `play-btn`, and `index`. Each slot allows complete customization of the button appearance and behavior while maintaining accessibility and functionality.',
+      },
+    },
+  },
+}
