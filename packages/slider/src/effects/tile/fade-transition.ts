@@ -38,9 +38,9 @@ class FadeTransition implements TileTransition {
     applyCss(back, { opacity: '0' })
 
     front.classList.add(tileSettings.frontClass)
-    tile.appendChild(front)
+    tile.append(front)
     back.classList.add(tileSettings.backClass)
-    tile.appendChild(back)
+    tile.append(back)
 
     return tile
   }

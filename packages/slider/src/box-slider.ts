@@ -330,7 +330,7 @@ export default class BoxSlider {
   }
 
   private getSlides(): HTMLElement[] {
-    return Array.from(this.el.children).filter(
+    return [...this.el.children].filter(
       (child: Node) => child instanceof HTMLElement,
     ) as HTMLElement[]
   }
@@ -369,8 +369,7 @@ export default class BoxSlider {
 
     try {
       await (this.effect.transition(settings) ?? Promise.resolve())
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
+    } catch {
       // Transition may throw an error from aborted animation if slides are removed
       return
     }
@@ -391,7 +390,7 @@ export default class BoxSlider {
   }
 
   private stopAutoScroll() {
-    window.clearTimeout(this.autoScrollTimer)
+    globalThis.clearTimeout(this.autoScrollTimer)
   }
 
   private emit<T extends SliderEventType>(ev: T, payload?: SliderEventData) {
@@ -414,7 +413,7 @@ export default class BoxSlider {
   private setAutoScroll() {
     this.stopAutoScroll()
 
-    window.requestAnimationFrame(() => {
+    globalThis.requestAnimationFrame(() => {
       // Check if the element is still in the DOM, might have been removed
       // before animation frame callback is called
       if (!this._el) {
@@ -423,7 +422,7 @@ export default class BoxSlider {
 
       this.el.setAttribute('aria-live', 'off')
 
-      this.autoScrollTimer = window.setTimeout(
+      this.autoScrollTimer = globalThis.setTimeout(
         () => this.next(),
         this.options.timeout,
       )

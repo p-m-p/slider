@@ -54,9 +54,9 @@ export default class CubeSlider implements Effect {
     })
 
     if (
-      ['absolute', 'fixed', 'relative'].indexOf(
+      !['absolute', 'fixed', 'relative'].includes(
         getComputedStyle(viewport).position,
-      ) === -1
+      )
     ) {
       applyCss(viewport, { position: 'relative' })
     }

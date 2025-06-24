@@ -34,8 +34,8 @@ export function createSliderElement<T extends SliderElement>(
     <div>Slide four</div>
   `
 
-  viewport.appendChild(el)
-  document.body.appendChild(viewport)
+  viewport.append(el)
+  document.body.append(viewport)
 
   return el as T
 }

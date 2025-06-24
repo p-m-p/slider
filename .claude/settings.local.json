@@ -46,10 +46,12 @@
       "Bash(rg:*)",
 
       // Web fetching
+      "WebFetch(domain:eslint.org)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:philparsons.co.uk)",
       "WebFetch(domain:storybook.js.org)",
       "WebFetch(domain:testing-library.com)",
+      "WebFetch(domain:typescript-eslint.io)",
       "WebFetch(domain:www.w3.org)"
     ],
     "deny": []

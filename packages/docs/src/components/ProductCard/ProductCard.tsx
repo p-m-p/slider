@@ -10,7 +10,7 @@ export function ProductCard() {
 
   const handleActiveButton = (button: HTMLButtonElement) => {
     const buttons = buttonBar.current?.querySelectorAll('button')
-    const index = Array.from(buttons).indexOf(button)
+    const index = [...buttons].indexOf(button)
 
     buttons?.forEach((btn) => (btn.tabIndex = -1))
     button.tabIndex = 0
@@ -40,6 +40,8 @@ export function ProductCard() {
         <div
           ref={buttonBar}
           className={styles.thumbnails}
+          role="toolbar"
+          aria-label="Product image selection"
           onClick={(ev) => {
             if (ev.target instanceof HTMLButtonElement) {
               handleActiveButton(ev.target)

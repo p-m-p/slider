@@ -14,7 +14,7 @@ afterEach(() => {
   const controls = document.querySelector('bs-slider-controls')
 
   if (controls) {
-    document.body.removeChild(controls)
+    controls.remove()
   }
 })
 
@@ -88,7 +88,7 @@ test('default controls', async () => {
     </bs-carousel>
   `
 
-  document.body.appendChild(controls)
+  document.body.append(controls)
 
   const container =
     controls.shadowRoot!.querySelector<HTMLDivElement>('[part="container"]')!
@@ -96,11 +96,11 @@ test('default controls', async () => {
 
   await runAssertions({
     controls,
-    indexButtons: Array.from(
-      container
+    indexButtons: [
+      ...(container
         .querySelector<HTMLSlotElement>('slot[name="index"]')!
-        .assignedElements() as HTMLButtonElement[],
-    ),
+        .assignedElements() as HTMLButtonElement[]),
+    ],
     nextButton: getByRole(container, 'button', { name: 'Next' }),
     prevButton: getByRole(container, 'button', { name: 'Previous' }),
     playButton: await findByRole(container, 'button', {
@@ -136,7 +136,7 @@ test('custom controls', async () => {
     </div>
   `
 
-  document.body.appendChild(controls)
+  document.body.append(controls)
 
   await runAssertions({
     controls,
@@ -177,7 +177,7 @@ test('button label attributes', async () => {
       <div>Slide three</div>
     </bs-carousel>
   `
-  document.body.appendChild(controls)
+  document.body.append(controls)
 
   const container =
     controls.shadowRoot!.querySelector<HTMLDivElement>('[part="container"]')!

@@ -62,7 +62,7 @@ export default class SliderControls
 
     this.#mutationObserver = new MutationObserver((mutations) => {
       const hasNewSlider = mutations.some((mutation) => {
-        Array.from(mutation.addedNodes).some((node) => node instanceof Slider)
+        ;[...mutation.addedNodes].some((node) => node instanceof Slider)
       })
 
       if (hasNewSlider) {
@@ -151,11 +151,11 @@ export default class SliderControls
       this.getAttribute('unstyled') === 'false'
     ) {
       const style = document.createElement('style')
-      style.appendChild(document.createTextNode(styles))
-      shadow.appendChild(style)
+      style.append(document.createTextNode(styles))
+      shadow.append(style)
     }
 
-    shadow.appendChild(template.content.cloneNode(true))
+    shadow.append(template.content.cloneNode(true))
 
     const sliderSlot = shadow.querySelector<HTMLSlotElement>('#slider')
 
@@ -315,11 +315,11 @@ export default class SliderControls
         const container = indexSlot.assignedElements()[0] ?? indexSlot
 
         if (container) {
-          const index = Array.from(
-            container.querySelectorAll('button'),
-          ).indexOf(ev.target as HTMLButtonElement)
+          const index = [...container.querySelectorAll('button')].indexOf(
+            ev.target as HTMLButtonElement,
+          )
 
-          if (index > -1) {
+          if (index !== -1) {
             this.#hasBeenInteractedWith = true
 
             if (this.#sliderElement) {
@@ -372,10 +372,10 @@ export default class SliderControls
           btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
           btn.setAttribute('type', 'button')
 
-          frag.appendChild(btn)
+          frag.append(btn)
         }
 
-        indexSlot?.appendChild(frag)
+        indexSlot?.append(frag)
       }
     }
   }
@@ -418,7 +418,7 @@ export default class SliderControls
         ?.querySelectorAll<HTMLButtonElement>('button')
         .forEach((btn) => {
           if (!assignedElements.includes(btn)) {
-            indexSlot.removeChild(btn)
+            btn.remove()
           }
         })
     }
@@ -508,7 +508,7 @@ export default class SliderControls
 
   #getIndexButtonLabel(index: number): string {
     const labelTemplate = this.indexBtnLabel ?? 'View slide %d'
-    return labelTemplate.replace(/%d/g, `${index + 1}`)
+    return labelTemplate.replaceAll('%d', `${index + 1}`)
   }
 }
 
