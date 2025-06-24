@@ -37,7 +37,8 @@
       "WebFetch(domain:storybook.js.org)",
       "WebFetch(domain:testing-library.com)",
       "WebFetch(domain:typescript-eslint.io)",
-      "WebFetch(domain:www.w3.org)"
+      "WebFetch(domain:www.w3.org)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }
