@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.13.3
+
+### Patch Changes
+
+- 6aeb895: Improve code quality by adopting modern number checking methods
+  - Replace `parseInt` with `Number.parseInt` for more reliable parsing
+  - Replace negated conditions with positive logic for better readability
+  - No breaking changes to public APIs
+
+- Updated dependencies [6aeb895]
+  - @boxslider/slider@2.15.1
+
 ## 2.13.2
 
 ### Patch Changes
