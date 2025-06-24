@@ -22,7 +22,6 @@
   This update adds global TypeScript declarations that map web component tag names to their corresponding element types, enabling automatic type inference when using `querySelector` and similar DOM methods.
 
   **Added:**
-
   - Global `HTMLElementTagNameMap` interface with BoxSlider component mappings:
     - `'bs-carousel'` → `CarouselSliderElement`
     - `'bs-cube'` → `CubeSliderElement`
@@ -31,7 +30,6 @@
     - `'bs-slider-controls'` → `SliderControlsElement`
 
   **Benefits:**
-
   - Improved TypeScript developer experience
   - Automatic type inference for DOM queries
   - No need for explicit type casting when using `querySelector`
@@ -48,7 +46,6 @@
   ```
 
 - ce5ea6e: Enhance SliderControls with dynamic property updates and improved React compatibility
-
   - Add property getters/setters for all label attributes (nextBtnLabel, prevBtnLabel, playBtnLabel, pauseBtnLabel, indexBtnLabel, indexLabel)
   - Implement observedAttributes and attributeChangedCallback for dynamic updates
   - Fix index button labels not updating when properties change
@@ -358,7 +355,6 @@
 ### Minor Changes
 
 - 511f36c: SliderControls component fixes and improvements.
-
   - ARIA attributes added to navigation buttons
   - Fix custom index button event listeners
   - Don't apply static aria attributes to custom controls
