@@ -86,5 +86,6 @@ export function createTileSlider(
 }
 
 export { BoxSlider, defaultOptions } from './box-slider'
+export { default } from './box-slider'
 export * from './types'
 export * from './effects'

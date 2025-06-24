@@ -66,7 +66,7 @@ export default class TileSlider implements Effect {
     this.grid = this.calculateGrid(el)
 
     if (this._tileWrapper) {
-      this.destroy(el)
+      this.destroy()
     }
 
     const tileWrapper = document.createElement('div')

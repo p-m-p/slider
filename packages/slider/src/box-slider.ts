@@ -25,7 +25,7 @@ export const defaultOptions: BoxSliderOptions = Object.freeze({
   timeout: 5000,
 })
 
-export default class BoxSlider {
+export class BoxSlider {
   private _activeIndex: number
   private _el?: HTMLElement
   private _effect?: Effect
@@ -33,7 +33,7 @@ export default class BoxSlider {
 
   private options: BoxSliderOptions
   private slides: HTMLElement[]
-  private autoScrollTimer?: number
+  private autoScrollTimer?: ReturnType<typeof setTimeout>
   private eventListeners: EventListenerMap
   private elListeners: { [ev: string]: EventListener[] }
   private isDestroyed: boolean
@@ -472,3 +472,5 @@ export default class BoxSlider {
     })
   }
 }
+
+export default BoxSlider

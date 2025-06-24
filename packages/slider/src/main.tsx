@@ -1,6 +1,6 @@
 import { BoxSlider, CarouselSlider } from '.'
 
-const el = document.querySelector('#slider')
+const el = document.querySelector<HTMLElement>('#slider')
 
 if (el) {
   /*
