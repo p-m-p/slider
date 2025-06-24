@@ -63,7 +63,6 @@ export default tseslint.config(
       'import/namespace': 'off',
       'import/default': 'off',
       'import/named': 'off',
-      'import/no-duplicates': 'off',
       'import/no-named-as-default': 'off',
       'import/no-named-as-default-member': 'off',
     },
@@ -84,8 +83,6 @@ export default tseslint.config(
       'unicorn/prefer-module': 'off',
       'unicorn/prefer-top-level-await': 'off',
       'unicorn/no-array-for-each': 'off', // Allow forEach for readability
-      'unicorn/no-negated-condition': 'off',
-      'unicorn/prefer-number-properties': 'off',
       'unicorn/no-typeof-undefined': 'off',
       'unicorn/import-style': 'off',
       'unicorn/prefer-node-protocol': 'off',

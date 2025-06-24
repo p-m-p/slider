@@ -188,7 +188,7 @@ export default abstract class Slider
       const propName = name.replaceAll(/-./g, (m) => m[1].toUpperCase())
 
       if (NUMERIC_ATTRIBUTES.includes(name)) {
-        this[propName as NumericProp] = parseInt(value, 10)
+        this[propName as NumericProp] = Number.parseInt(value, 10)
       } else if (BOOLEAN_ATTRIBUTES.includes(name)) {
         this[propName as BooleanProp] = value !== 'false'
       }

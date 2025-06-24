@@ -71,11 +71,11 @@ export default class Tile extends Slider implements TileSliderElement {
   attributeChangedCallback(name: string, _: string, value: string) {
     switch (name) {
       case 'rows': {
-        this.rows = parseInt(value, 10)
+        this.rows = Number.parseInt(value, 10)
         break
       }
       case 'row-offset': {
-        this.rowOffset = parseInt(value, 10)
+        this.rowOffset = Number.parseInt(value, 10)
         break
       }
       case 'tile-effect': {

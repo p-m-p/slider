@@ -178,8 +178,8 @@ export default class TileSlider implements Effect {
 
   private calculateGrid(el: HTMLElement): TileGrid {
     const { width: elWidth, height: elHeight } = getComputedStyle(el)
-    const height = parseInt(elHeight, 10) ?? el.offsetHeight
-    const width = parseInt(elWidth, 10) ?? el.offsetWidth
+    const height = Number.parseInt(elHeight, 10) ?? el.offsetHeight
+    const width = Number.parseInt(elWidth, 10) ?? el.offsetWidth
     const rows = this.options.rows
     const tileHeight = Math.ceil(height / rows)
     const cols = Math.floor(el.offsetWidth / tileHeight)

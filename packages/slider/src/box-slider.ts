@@ -134,7 +134,10 @@ export class BoxSlider {
       ...options,
     }
 
-    if (options?.startIndex !== undefined && !isNaN(options.startIndex)) {
+    if (
+      options?.startIndex !== undefined &&
+      !Number.isNaN(options.startIndex)
+    ) {
       this._activeIndex = options.startIndex
     }
 

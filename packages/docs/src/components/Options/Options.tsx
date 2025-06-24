@@ -29,7 +29,9 @@ export function Options({ controls = [] }: OptionsProps) {
             size={4}
             type="number"
             value={options.speed}
-            onChange={(ev) => setOption('speed', parseInt(ev.target.value, 10))}
+            onChange={(ev) =>
+              setOption('speed', Number.parseInt(ev.target.value, 10))
+            }
           />
         </div>
         <div className={styles.field}>
@@ -40,7 +42,7 @@ export function Options({ controls = [] }: OptionsProps) {
             type="number"
             value={options.timeout}
             onChange={(ev) =>
-              setOption('timeout', parseInt(ev.target.value, 10))
+              setOption('timeout', Number.parseInt(ev.target.value, 10))
             }
           />
         </div>
@@ -79,7 +81,7 @@ export function Options({ controls = [] }: OptionsProps) {
             type="number"
             value={options.swipeTolerance}
             onChange={(ev) =>
-              setOption('swipeTolerance', parseInt(ev.target.value, 10))
+              setOption('swipeTolerance', Number.parseInt(ev.target.value, 10))
             }
           />
         </div>
@@ -114,7 +116,7 @@ export function Options({ controls = [] }: OptionsProps) {
                     let value: string | number | boolean = ev.target.value
 
                     if (type === 'number') {
-                      value = parseInt(value, 10)
+                      value = Number.parseInt(value, 10)
                     } else if (type === 'checkbox') {
                       value = ev.target.checked
                     }
