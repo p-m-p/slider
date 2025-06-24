@@ -59,7 +59,7 @@
     "react-dom": "^19.0.0",
     "storybook": "^9.0.9",
     "typescript": "^5.7.2",
-    "vite": "^6.0.6",
+    "vite": "^7.0.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.0"
   },
