@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      // Git commands
       "Bash(git add:*)",
       "Bash(git checkout:*)",
       "Bash(git commit:*)",
@@ -9,14 +8,10 @@
       "Bash(git pull:*)",
       "Bash(git push:*)",
       "Bash(git reset:*)",
-
-      // GitHub CLI commands
       "Bash(gh pr:*)",
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
       "Bash(gh workflow:*)",
-
-      // Package management
       "Bash(pnpm add:*)",
       "Bash(pnpm changeset:*)",
       "Bash(pnpm exec test-storybook:*)",
@@ -27,29 +22,21 @@
       "Bash(pnpm remove:*)",
       "Bash(pnpm run:*)",
       "Bash(pnpm test-storybook:*)",
-
-      // Storybook
       "Bash(pnpm build-storybook:*)",
       "Bash(pnpm storybook:*)",
-
-      // Changeset management
       "Bash(npx changeset:*)",
-
-      // File operations
       "Bash(cp:*)",
       "Bash(rm:*)",
       "Bash(sed:*)",
-
-      // Search commands
       "Bash(find:*)",
       "Bash(grep:*)",
       "Bash(rg:*)",
-
-      // Web fetching
+      "WebFetch(domain:eslint.org)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:philparsons.co.uk)",
       "WebFetch(domain:storybook.js.org)",
       "WebFetch(domain:testing-library.com)",
+      "WebFetch(domain:typescript-eslint.io)",
       "WebFetch(domain:www.w3.org)"
     ],
     "deny": []

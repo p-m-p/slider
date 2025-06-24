@@ -32,7 +32,7 @@ class FlipTransition implements TileTransition {
       'transform-style': 'preserve-3d',
       width: '100%',
     })
-    tileHolder.appendChild(tile)
+    tileHolder.append(tile)
 
     faces.forEach((face) =>
       applyCss(face, {
@@ -60,12 +60,12 @@ class FlipTransition implements TileTransition {
       'z-index': '2',
     })
 
-    front.appendChild(frontFace)
+    front.append(frontFace)
     front.classList.add(tileSettings.frontClass)
-    tile.appendChild(front)
-    back.appendChild(backFace)
+    tile.append(front)
+    back.append(backFace)
     back.classList.add(tileSettings.backClass)
-    tile.appendChild(back)
+    tile.append(back)
 
     return tileHolder
   }

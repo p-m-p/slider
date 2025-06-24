@@ -22,9 +22,8 @@ export function Example({
     swipeTolerance: 30,
     timeout: 5000,
     pauseOnHover: false,
-    ...effectControls.reduce(
-      (_c, c) => ({ ..._c, [c.optionKey]: c.defaultValue }),
-      {},
+    ...Object.fromEntries(
+      effectControls.map((c) => [c.optionKey, c.defaultValue]),
     ),
   })
 

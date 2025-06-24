@@ -25,7 +25,7 @@ export default class CarouselSlider implements Effect {
       overflow: 'hidden',
     })
 
-    if ('static inherit'.indexOf(getComputedStyle(el).position) !== -1) {
+    if ('static inherit'.includes(getComputedStyle(el).position)) {
       applyCss(el, { position: 'relative' })
     }
 

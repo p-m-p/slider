@@ -38,8 +38,7 @@ const config: Config = {
     () => ({
       name: 'postcss-plugins',
       configurePostCss: (options) => {
-        options.plugins.push('postcss-import')
-        options.plugins.push('postcss-nesting')
+        options.plugins.push('postcss-import', 'postcss-nesting')
 
         return options
       },

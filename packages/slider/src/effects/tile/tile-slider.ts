@@ -66,18 +66,16 @@ export default class TileSlider implements Effect {
     this.grid = this.calculateGrid(el)
 
     if (this._tileWrapper) {
-      this.destroy(el)
+      this.destroy()
     }
 
     const tileWrapper = document.createElement('div')
     tileWrapper.setAttribute('aria-hidden', 'true')
     tileWrapper.dataset.bsElement = 'true'
-    el.appendChild(tileWrapper)
+    el.append(tileWrapper)
     this._tileWrapper = tileWrapper
 
-    if (
-      'fixed absolute relative'.indexOf(getComputedStyle(el).position) === -1
-    ) {
+    if (!'fixed absolute relative'.includes(getComputedStyle(el).position)) {
       applyCss(el, { position: 'relative' })
     }
 
@@ -108,7 +106,7 @@ export default class TileSlider implements Effect {
           width: this.grid.tileWidth,
           zIndex: totalTiles - (i + j),
         })
-        fragment.appendChild(tile)
+        fragment.append(tile)
         this.tileTransition.setTileFace(
           slide,
           tile.querySelector(`.${FRONT_FACE_CLASS}`) as HTMLElement,
@@ -123,7 +121,7 @@ export default class TileSlider implements Effect {
       }),
     )
 
-    this.tileWrapper.appendChild(fragment)
+    this.tileWrapper.append(fragment)
   }
 
   async transition(settings: TransitionSettings): Promise<void> {
@@ -173,15 +171,15 @@ export default class TileSlider implements Effect {
     }
   }
 
-  destroy(el: HTMLElement) {
-    el.removeChild(this.tileWrapper)
+  destroy() {
+    this.tileWrapper.remove()
     delete this._tileWrapper
   }
 
   private calculateGrid(el: HTMLElement): TileGrid {
     const { width: elWidth, height: elHeight } = getComputedStyle(el)
-    const height = parseInt(elHeight, 10) ?? el.offsetHeight
-    const width = parseInt(elWidth, 10) ?? el.offsetWidth
+    const height = Number.parseInt(elHeight, 10) ?? el.offsetHeight
+    const width = Number.parseInt(elWidth, 10) ?? el.offsetWidth
     const rows = this.options.rows
     const tileHeight = Math.ceil(height / rows)
     const cols = Math.floor(el.offsetWidth / tileHeight)

@@ -19,7 +19,7 @@ export default function Home() {
                 carousel for modern web projects
               </h1>
 
-              <FadeSlider className={styles.subHeading} timeout={10000}>
+              <FadeSlider className={styles.subHeading} timeout={10_000}>
                 <p>
                   Zero third party dependencies and only 3kb download size for a
                   single effect

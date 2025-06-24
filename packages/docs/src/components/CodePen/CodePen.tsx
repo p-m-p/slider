@@ -11,7 +11,7 @@ export function CodePen({
   tab?: string
 }) {
   useEffect(() => {
-    window.__CPEmbed?.()
+    globalThis.__CPEmbed?.()
   })
 
   return (

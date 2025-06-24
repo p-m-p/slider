@@ -1,6 +1,6 @@
 import { BoxSlider, CarouselSlider } from '.'
 
-const el = document.getElementById('slider')
+const el = document.querySelector<HTMLElement>('#slider')
 
 if (el) {
   /*
@@ -45,12 +45,12 @@ if (el) {
   })
 
   document
-    .getElementById('next')
+    .querySelector('#next')
     ?.addEventListener('click', () => slider.next())
   document
-    .getElementById('prev')
+    .querySelector('#prev')
     ?.addEventListener('click', () => slider.prev())
   document
-    .getElementById('destroy')
+    .querySelector('#destroy')
     ?.addEventListener('click', () => slider.destroy())
 }

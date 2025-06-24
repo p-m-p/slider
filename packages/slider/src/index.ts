@@ -1,21 +1,11 @@
 import type { BoxSliderOptions } from './types'
-import {
-  default as FadeSlider,
-  type FadeSliderOptions,
-} from './effects/fade-slider'
-import {
-  default as CarouselSlider,
+import FadeSlider, { type FadeSliderOptions } from './effects/fade-slider'
+import CarouselSlider, {
   type CarouselSliderOptions,
 } from './effects/carousel-slider'
-import {
-  default as CubeSlider,
-  type CubeSliderOptions,
-} from './effects/cube-slider'
-import {
-  default as TileSlider,
-  type TileSliderOptions,
-} from './effects/tile/tile-slider'
-import { default as BoxSlider, defaultOptions } from './box-slider'
+import CubeSlider, { type CubeSliderOptions } from './effects/cube-slider'
+import TileSlider, { type TileSliderOptions } from './effects/tile/tile-slider'
+import BoxSlider from './box-slider'
 
 export function getSliderElement(el: string | HTMLElement): HTMLElement {
   if (typeof el === 'string') {
@@ -95,6 +85,7 @@ export function createTileSlider(
   )
 }
 
-export { BoxSlider, defaultOptions }
+export { BoxSlider, defaultOptions } from './box-slider'
+export { default } from './box-slider'
 export * from './types'
 export * from './effects'

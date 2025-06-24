@@ -12,10 +12,10 @@ export const createQueue = (): TransitionQueue => {
     const fn = next
 
     fn?.().then(() => {
-      if (fn !== next) {
-        run()
-      } else {
+      if (fn === next) {
         next = null
+      } else {
+        run()
       }
     })
   }
