@@ -2,7 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from '@storybook/test'
 import { defaultOptions } from '~/packages/slider'
 import { CubeSlider } from '~/packages/react'
-import { slideData, createSlide, defaultSliderStyle } from './shared'
+import {
+  slideData,
+  createSlide,
+  defaultSliderStyle,
+  cubeViewportStyle,
+  createCubeViewportStyle,
+} from './shared'
 
 // Web component defaults for cube slider: direction='horizontal', perspective=1000
 
@@ -62,13 +68,7 @@ export const Default: Story = {
   },
   render: function DefaultRender(args) {
     return (
-      <div
-        style={{
-          width: '600px',
-          height: '300px',
-          perspective: '1000px',
-          overflow: 'hidden',
-        }}>
+      <div style={cubeViewportStyle}>
         <CubeSlider {...args}>
           {slideData
             .slice(0, 4)
@@ -116,13 +116,7 @@ export const VerticalRotation: Story = {
   },
   render: function VerticalRotationRender(args) {
     return (
-      <div
-        style={{
-          width: '600px',
-          height: '300px',
-          perspective: '1200px',
-          overflow: 'hidden',
-        }}>
+      <div style={createCubeViewportStyle(1200)}>
         <CubeSlider {...args}>
           {slideData
             .slice(0, 4)
@@ -166,13 +160,7 @@ export const HighPerspective: Story = {
   },
   render: function HighPerspectiveRender(args) {
     return (
-      <div
-        style={{
-          width: '600px',
-          height: '300px',
-          perspective: '1800px',
-          overflow: 'hidden',
-        }}>
+      <div style={createCubeViewportStyle(1800)}>
         <CubeSlider {...args}>
           {slideData
             .slice(0, 4)
@@ -216,13 +204,7 @@ export const LowPerspective: Story = {
   },
   render: function LowPerspectiveRender(args) {
     return (
-      <div
-        style={{
-          width: '600px',
-          height: '300px',
-          perspective: '600px',
-          overflow: 'hidden',
-        }}>
+      <div style={createCubeViewportStyle(600)}>
         <CubeSlider {...args}>
           {slideData
             .slice(0, 4)
@@ -271,13 +253,7 @@ export const CustomConfiguration: Story = {
   },
   render: function CustomConfigurationRender(args) {
     return (
-      <div
-        style={{
-          width: '600px',
-          height: '300px',
-          perspective: '1500px',
-          overflow: 'hidden',
-        }}>
+      <div style={createCubeViewportStyle(1500)}>
         <CubeSlider {...args}>
           {slideData.map((slide, index) => createSlide(slide, index))}
         </CubeSlider>
