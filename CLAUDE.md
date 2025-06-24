@@ -85,3 +85,4 @@ The library provides multiple slide transition effects (carousel, fade, cube, ti
 - Tests enhanced with comprehensive property coverage
 - Don't add comments in code
 - Only set PRs to auto merge when explicitly told to do so
+- When adding commands to settings.local.json ensure they are added to the correct group
