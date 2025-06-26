@@ -1,4 +1,4 @@
-import { join } from 'path'
+import path from 'node:path'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -8,6 +8,6 @@ export default defineConfig({
     },
     environment: 'jsdom',
     globals: true,
-    setupFiles: [join(import.meta.dirname, 'testSetup.ts')],
+    setupFiles: [path.join(import.meta.dirname, 'testSetup.ts')],
   },
 })

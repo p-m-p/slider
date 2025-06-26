@@ -28,6 +28,7 @@ export default tseslint.config(
   react.configs.flat['jsx-runtime'],
   jsxA11y.flatConfigs.recommended,
   importPlugin.flatConfigs.recommended,
+  eslintPluginUnicorn.configs.recommended,
 
   // Main configuration for all files
   {
@@ -54,41 +55,11 @@ export default tseslint.config(
       },
     },
     rules: {
-      // Accessibility adjustments
-      'jsx-a11y/click-events-have-key-events': 'warn',
-      'jsx-a11y/no-static-element-interactions': 'warn',
-
-      // Import rules adjustments - disable problematic ones for now
       'import/no-unresolved': 'off',
-      'import/extensions': 'off',
-      'import/namespace': 'off',
-      'import/default': 'off',
-      'import/named': 'off',
-      'import/no-named-as-default': 'off',
-      'import/no-named-as-default-member': 'off',
-    },
-  },
-
-  // Unicorn recommended rules for TypeScript files
-  {
-    ...eslintPluginUnicorn.configs.recommended,
-    files: ['**/*.{ts,tsx}'],
-  },
-
-  // Unicorn rule overrides for TypeScript files
-  {
-    files: ['**/*.{ts,tsx}'],
-    rules: {
-      // Disable overly strict Unicorn rules
       'unicorn/filename-case': 'off',
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/no-null': 'off',
-      'unicorn/prefer-module': 'off',
-      'unicorn/prefer-top-level-await': 'off',
-      'unicorn/no-array-for-each': 'off', // Allow forEach for readability
-      'unicorn/no-typeof-undefined': 'off',
-      'unicorn/import-style': 'off',
-      'unicorn/prefer-node-protocol': 'off',
+      'unicorn/no-array-for-each': 'off',
     },
   },
 
@@ -100,20 +71,6 @@ export default tseslint.config(
     },
     rules: {
       ...storybook.configs['flat/recommended'][0].rules,
-      // Allow more flexible patterns in stories
-      'unicorn/consistent-function-scoping': 'off',
-      'unicorn/no-array-reduce': 'off',
-    },
-  },
-
-  // Test files configuration
-  {
-    files: ['**/*.{test,spec}.{ts,tsx}', '**/__tests__/**/*.{ts,tsx}'],
-    rules: {
-      // Allow more flexible patterns in tests
-      'unicorn/consistent-function-scoping': 'off',
-      'unicorn/no-array-reduce': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 
@@ -125,6 +82,7 @@ export default tseslint.config(
       'vitest.config.{js,ts}',
       'scripts/**/*.js',
       'packages/**/build.js',
+      'packages/docs/babel.config.js',
     ],
     rules: {
       'unicorn/prefer-module': 'off',
