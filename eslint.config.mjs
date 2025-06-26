@@ -5,6 +5,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y'
 import importPlugin from 'eslint-plugin-import'
 import unicorn from 'eslint-plugin-unicorn'
 import storybook from 'eslint-plugin-storybook'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import globals from 'globals'
 
 export default tseslint.config(
@@ -131,4 +132,7 @@ export default tseslint.config(
       'unicorn/prefer-node-protocol': 'off',
     },
   },
+
+  // Prettier integration - must be last to override conflicting rules
+  eslintPluginPrettierRecommended,
 )

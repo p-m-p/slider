@@ -38,7 +38,8 @@
       "WebFetch(domain:testing-library.com)",
       "WebFetch(domain:typescript-eslint.io)",
       "WebFetch(domain:www.w3.org)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(pnpm exec eslint:*)"
     ],
     "deny": []
   }
