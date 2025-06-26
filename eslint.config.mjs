@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint'
 import react from 'eslint-plugin-react'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import importPlugin from 'eslint-plugin-import'
-import unicorn from 'eslint-plugin-unicorn'
+import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import storybook from 'eslint-plugin-storybook'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import globals from 'globals'
@@ -69,14 +69,16 @@ export default tseslint.config(
     },
   },
 
-  // Unicorn rules for non-legacy files
+  // Unicorn recommended rules for TypeScript files
+  {
+    ...eslintPluginUnicorn.configs.recommended,
+    files: ['**/*.{ts,tsx}'],
+  },
+
+  // Unicorn rule overrides for TypeScript files
   {
     files: ['**/*.{ts,tsx}'],
-    plugins: {
-      unicorn,
-    },
     rules: {
-      ...unicorn.configs['flat/recommended'].rules,
       // Disable overly strict Unicorn rules
       'unicorn/filename-case': 'off',
       'unicorn/prevent-abbreviations': 'off',
