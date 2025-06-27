@@ -8,16 +8,19 @@ export function createPlayFn<T extends keyof JSX.IntrinsicElements>(
 ) {
   return async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const slider = canvasElement.querySelector<SliderElement>(selector)!
+    const slides = [...slider.children].filter((s) =>
+      s.classList.contains('story-slide'),
+    )
 
     for (const [prop, expectedValue] of Object.entries({
       ...defaultOptions,
       ...expectedProps,
     })) {
-      expect(slider[prop as keyof typeof slider]).toBe(expectedValue)
+      expect(slider[prop as keyof typeof slider], `slider.${prop}`).toBe(
+        expectedValue,
+      )
     }
-    const slides = [...slider.children].filter((s) =>
-      s.classList.contains('story-slide'),
-    )
+
     expect(slides).toHaveLength(slider.slider!.length)
   }
 }
