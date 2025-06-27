@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from '@storybook/test'
-import { defaultOptions } from '~/packages/slider'
 import { CubeSlider } from '~/packages/react'
 import {
   slideData,
@@ -9,8 +7,7 @@ import {
   cubeViewportStyle,
   createCubeViewportStyle,
 } from './shared'
-
-// Web component defaults for cube slider: direction='horizontal', perspective=1000
+import { createCubeTest } from './test-utils'
 
 const meta: Meta<typeof CubeSlider> = {
   title: 'BoxSlider/CubeSlider',
@@ -77,32 +74,13 @@ export const Default: Story = {
       </div>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(800)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.direction).toBe('horizontal')
-    expect(slider?.perspective).toBe(1000)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test viewport wrapper is present
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport).toBeTruthy()
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createCubeTest({
+    speed: 800,
+    timeout: 5000,
+    direction: 'horizontal',
+    perspective: 1000,
+    swipe: true,
+  }),
 }
 
 export const VerticalRotation: Story = {
@@ -125,28 +103,13 @@ export const VerticalRotation: Story = {
       </div>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(900)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.direction).toBe('vertical')
-    expect(slider?.perspective).toBe(1200)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test viewport wrapper is present
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport).toBeTruthy()
-  },
+  play: createCubeTest({
+    speed: 900,
+    timeout: 5000,
+    direction: 'vertical',
+    perspective: 1200,
+    swipe: true,
+  }),
 }
 
 export const HighPerspective: Story = {
@@ -169,28 +132,13 @@ export const HighPerspective: Story = {
       </div>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(800)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.direction).toBe('horizontal')
-    expect(slider?.perspective).toBe(1800)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test viewport wrapper is present
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport).toBeTruthy()
-  },
+  play: createCubeTest({
+    speed: 800,
+    timeout: 5000,
+    direction: 'horizontal',
+    perspective: 1800,
+    swipe: true,
+  }),
 }
 
 export const LowPerspective: Story = {
@@ -213,28 +161,13 @@ export const LowPerspective: Story = {
       </div>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(700)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.direction).toBe('horizontal')
-    expect(slider?.perspective).toBe(600)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test viewport wrapper is present
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport).toBeTruthy()
-  },
+  play: createCubeTest({
+    speed: 700,
+    timeout: 5000,
+    direction: 'horizontal',
+    perspective: 600,
+    swipe: true,
+  }),
 }
 
 export const CustomConfiguration: Story = {
@@ -260,28 +193,16 @@ export const CustomConfiguration: Story = {
       </div>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-cube')
-    expect(slider).toBeTruthy()
-
-    // Test all non-default properties
-    expect(slider?.speed).toBe(1200)
-    expect(slider?.timeout).toBe(0)
-    expect(slider?.autoScroll).toBe(false)
-    expect(slider?.loop).toBe(false)
-    expect(slider?.startIndex).toBe(1)
-    expect(slider?.swipe).toBe(false)
-    expect(slider?.swipeTolerance).toBe(60)
-    expect(slider?.pauseOnHover).toBe(false)
-    expect(slider?.direction).toBe('vertical')
-    expect(slider?.perspective).toBe(1500)
-
-    // Test viewport wrapper is present
-    const viewport = canvasElement.querySelector('div[style*="perspective"]')
-    expect(viewport).toBeTruthy()
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createCubeTest({
+    speed: 1200,
+    timeout: 0,
+    autoScroll: false,
+    loop: false,
+    startIndex: 1,
+    swipe: false,
+    swipeTolerance: 60,
+    pauseOnHover: false,
+    direction: 'vertical',
+    perspective: 1500,
+  }),
 }
