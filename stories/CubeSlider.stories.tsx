@@ -7,7 +7,7 @@ import {
   cubeViewportStyle,
   createCubeViewportStyle,
 } from './shared'
-import { createCubeTest } from './test-utils'
+import { createPlayFn } from './test-utils'
 
 const meta: Meta<typeof CubeSlider> = {
   title: 'BoxSlider/CubeSlider',
@@ -74,7 +74,7 @@ export const Default: Story = {
       </div>
     )
   },
-  play: createCubeTest({
+  play: createPlayFn('bs-cube', {
     speed: 800,
     timeout: 5000,
     direction: 'horizontal',
@@ -103,7 +103,7 @@ export const VerticalRotation: Story = {
       </div>
     )
   },
-  play: createCubeTest({
+  play: createPlayFn('bs-cube', {
     speed: 900,
     timeout: 5000,
     direction: 'vertical',
@@ -132,7 +132,7 @@ export const HighPerspective: Story = {
       </div>
     )
   },
-  play: createCubeTest({
+  play: createPlayFn('bs-cube', {
     speed: 800,
     timeout: 5000,
     direction: 'horizontal',
@@ -161,7 +161,7 @@ export const LowPerspective: Story = {
       </div>
     )
   },
-  play: createCubeTest({
+  play: createPlayFn('bs-cube', {
     speed: 700,
     timeout: 5000,
     direction: 'horizontal',
@@ -193,7 +193,7 @@ export const CustomConfiguration: Story = {
       </div>
     )
   },
-  play: createCubeTest({
+  play: createPlayFn('bs-cube', {
     speed: 1200,
     timeout: 0,
     autoScroll: false,

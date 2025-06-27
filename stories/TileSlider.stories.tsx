@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { TileSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
-import { createTileTest } from './test-utils'
+import { createPlayFn } from './test-utils'
 
 const meta: Meta<typeof TileSlider> = {
   title: 'BoxSlider/TileSlider',
@@ -69,7 +69,7 @@ export const Default: Story = {
       </TileSlider>
     )
   },
-  play: createTileTest({
+  play: createPlayFn('bs-tile', {
     speed: 800,
     timeout: 5000,
     tileEffect: 'fade',
@@ -96,7 +96,7 @@ export const FlipEffect: Story = {
       </TileSlider>
     )
   },
-  play: createTileTest({
+  play: createPlayFn('bs-tile', {
     speed: 1000,
     timeout: 5000,
     tileEffect: 'flip',
@@ -123,7 +123,7 @@ export const ManyRows: Story = {
       </TileSlider>
     )
   },
-  play: createTileTest({
+  play: createPlayFn('bs-tile', {
     speed: 1200,
     timeout: 5000,
     tileEffect: 'fade',
@@ -150,7 +150,7 @@ export const NoOffset: Story = {
       </TileSlider>
     )
   },
-  play: createTileTest({
+  play: createPlayFn('bs-tile', {
     speed: 800,
     timeout: 5000,
     tileEffect: 'flip',
@@ -177,7 +177,7 @@ export const HighOffset: Story = {
       </TileSlider>
     )
   },
-  play: createTileTest({
+  play: createPlayFn('bs-tile', {
     speed: 1000,
     timeout: 5000,
     tileEffect: 'fade',
@@ -209,7 +209,7 @@ export const CustomConfiguration: Story = {
       </TileSlider>
     )
   },
-  play: createTileTest({
+  play: createPlayFn('bs-tile', {
     speed: 1500,
     timeout: 0,
     autoScroll: false,

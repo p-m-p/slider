@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FadeSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
-import { createFadeTest } from './test-utils'
+import { createPlayFn } from './test-utils'
 
 const meta: Meta<typeof FadeSlider> = {
   title: 'BoxSlider/FadeSlider',
@@ -59,7 +59,7 @@ export const Default: Story = {
       </FadeSlider>
     )
   },
-  play: createFadeTest({
+  play: createPlayFn('bs-fade', {
     speed: 600,
     timeout: 5000,
     timingFunction: 'ease-in-out',
@@ -83,7 +83,7 @@ export const EaseInTiming: Story = {
       </FadeSlider>
     )
   },
-  play: createFadeTest({
+  play: createPlayFn('bs-fade', {
     speed: 800,
     timeout: 5000,
     timingFunction: 'ease-in',
@@ -107,7 +107,7 @@ export const LinearFade: Story = {
       </FadeSlider>
     )
   },
-  play: createFadeTest({
+  play: createPlayFn('bs-fade', {
     speed: 1000,
     timeout: 5000,
     timingFunction: 'linear',
@@ -130,7 +130,7 @@ export const FastFade: Story = {
       </FadeSlider>
     )
   },
-  play: createFadeTest({
+  play: createPlayFn('bs-fade', {
     speed: 400,
     timeout: 3000,
     timingFunction: 'ease-out',
@@ -158,7 +158,7 @@ export const CustomConfiguration: Story = {
       </FadeSlider>
     )
   },
-  play: createFadeTest({
+  play: createPlayFn('bs-fade', {
     speed: 1200,
     timeout: 0,
     autoScroll: false,
