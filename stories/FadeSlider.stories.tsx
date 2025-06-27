@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from '@storybook/test'
-import { defaultOptions } from '~/packages/slider'
 import { FadeSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
-
-// Web component default for fade timing function: 'ease-in-out'
+import { createFadeTest } from './test-utils'
 
 const meta: Meta<typeof FadeSlider> = {
   title: 'BoxSlider/FadeSlider',
@@ -62,27 +59,12 @@ export const Default: Story = {
       </FadeSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-fade')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(600)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.timingFunction).toBe('ease-in-out')
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createFadeTest({
+    speed: 600,
+    timeout: 5000,
+    timingFunction: 'ease-in-out',
+    swipe: true,
+  }),
 }
 
 export const EaseInTiming: Story = {
@@ -101,27 +83,13 @@ export const EaseInTiming: Story = {
       </FadeSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-fade')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(800)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.timingFunction).toBe('ease-in')
-    expect(slider?.swipe).toBe(true)
-    expect(slider?.pauseOnHover).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(true) // Default when timeout > 0
-    expect(slider?.loop).toBe(true) // Default value
-    expect(slider?.startIndex).toBe(0) // Default value
-    expect(slider?.swipeTolerance).toBe(30) // Default value
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createFadeTest({
+    speed: 800,
+    timeout: 5000,
+    timingFunction: 'ease-in',
+    swipe: true,
+    pauseOnHover: true,
+  }),
 }
 
 export const LinearFade: Story = {
@@ -139,27 +107,12 @@ export const LinearFade: Story = {
       </FadeSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-fade')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(1000)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.timingFunction).toBe('linear')
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createFadeTest({
+    speed: 1000,
+    timeout: 5000,
+    timingFunction: 'linear',
+    swipe: true,
+  }),
 }
 
 export const FastFade: Story = {
@@ -177,27 +130,12 @@ export const FastFade: Story = {
       </FadeSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-fade')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(400)
-    expect(slider?.timeout).toBe(3000)
-    expect(slider?.timingFunction).toBe('ease-out')
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createFadeTest({
+    speed: 400,
+    timeout: 3000,
+    timingFunction: 'ease-out',
+    swipe: true,
+  }),
 }
 
 export const CustomConfiguration: Story = {
@@ -220,23 +158,15 @@ export const CustomConfiguration: Story = {
       </FadeSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-fade')
-    expect(slider).toBeTruthy()
-
-    // Test all non-default properties
-    expect(slider?.speed).toBe(1200)
-    expect(slider?.timeout).toBe(0)
-    expect(slider?.autoScroll).toBe(false)
-    expect(slider?.loop).toBe(false)
-    expect(slider?.startIndex).toBe(3)
-    expect(slider?.swipe).toBe(false)
-    expect(slider?.swipeTolerance).toBe(75)
-    expect(slider?.pauseOnHover).toBe(false)
-    expect(slider?.timingFunction).toBe('ease')
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createFadeTest({
+    speed: 1200,
+    timeout: 0,
+    autoScroll: false,
+    loop: false,
+    startIndex: 3,
+    swipe: false,
+    swipeTolerance: 75,
+    pauseOnHover: false,
+    timingFunction: 'ease',
+  }),
 }

@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from '@storybook/test'
-import { defaultOptions } from '~/packages/slider'
 import { TileSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
-
-// Web component defaults for tile slider: rows=8, rowOffset=50, tileEffect='flip'
+import { createTileTest } from './test-utils'
 
 const meta: Meta<typeof TileSlider> = {
   title: 'BoxSlider/TileSlider',
@@ -72,29 +69,14 @@ export const Default: Story = {
       </TileSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-tile')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(800)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.tileEffect).toBe('fade')
-    expect(slider?.rows).toBe(4)
-    expect(slider?.rowOffset).toBe(100)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createTileTest({
+    speed: 800,
+    timeout: 5000,
+    tileEffect: 'fade',
+    rows: 4,
+    rowOffset: 100,
+    swipe: true,
+  }),
 }
 
 export const FlipEffect: Story = {
@@ -114,25 +96,14 @@ export const FlipEffect: Story = {
       </TileSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-tile')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(1000)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.tileEffect).toBe('flip')
-    expect(slider?.rows).toBe(5)
-    expect(slider?.rowOffset).toBe(120)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-  },
+  play: createTileTest({
+    speed: 1000,
+    timeout: 5000,
+    tileEffect: 'flip',
+    rows: 5,
+    rowOffset: 120,
+    swipe: true,
+  }),
 }
 
 export const ManyRows: Story = {
@@ -152,25 +123,14 @@ export const ManyRows: Story = {
       </TileSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-tile')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(1200)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.tileEffect).toBe('fade')
-    expect(slider?.rows).toBe(8)
-    expect(slider?.rowOffset).toBe(60)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-  },
+  play: createTileTest({
+    speed: 1200,
+    timeout: 5000,
+    tileEffect: 'fade',
+    rows: 8,
+    rowOffset: 60,
+    swipe: true,
+  }),
 }
 
 export const NoOffset: Story = {
@@ -190,29 +150,14 @@ export const NoOffset: Story = {
       </TileSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-tile')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(800)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.tileEffect).toBe('flip')
-    expect(slider?.rows).toBe(6)
-    expect(slider?.rowOffset).toBe(0)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createTileTest({
+    speed: 800,
+    timeout: 5000,
+    tileEffect: 'flip',
+    rows: 6,
+    rowOffset: 0,
+    swipe: true,
+  }),
 }
 
 export const HighOffset: Story = {
@@ -232,29 +177,14 @@ export const HighOffset: Story = {
       </TileSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-tile')
-    expect(slider).toBeTruthy()
-
-    // Test all explicitly set properties
-    expect(slider?.speed).toBe(1000)
-    expect(slider?.timeout).toBe(5000)
-    expect(slider?.tileEffect).toBe('fade')
-    expect(slider?.rows).toBe(4)
-    expect(slider?.rowOffset).toBe(200)
-    expect(slider?.swipe).toBe(true)
-
-    // Test default values for unset properties
-    expect(slider?.autoScroll).toBe(defaultOptions.autoScroll)
-    expect(slider?.loop).toBe(defaultOptions.loop)
-    expect(slider?.startIndex).toBe(defaultOptions.startIndex)
-    expect(slider?.swipeTolerance).toBe(defaultOptions.swipeTolerance)
-    expect(slider?.pauseOnHover).toBe(defaultOptions.pauseOnHover)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createTileTest({
+    speed: 1000,
+    timeout: 5000,
+    tileEffect: 'fade',
+    rows: 4,
+    rowOffset: 200,
+    swipe: true,
+  }),
 }
 
 export const CustomConfiguration: Story = {
@@ -279,25 +209,17 @@ export const CustomConfiguration: Story = {
       </TileSlider>
     )
   },
-  play: async ({ canvasElement }) => {
-    const slider = canvasElement.querySelector('bs-tile')
-    expect(slider).toBeTruthy()
-
-    // Test all non-default properties
-    expect(slider?.speed).toBe(1500)
-    expect(slider?.timeout).toBe(0)
-    expect(slider?.autoScroll).toBe(false)
-    expect(slider?.loop).toBe(false)
-    expect(slider?.startIndex).toBe(4)
-    expect(slider?.swipe).toBe(false)
-    expect(slider?.swipeTolerance).toBe(100)
-    expect(slider?.pauseOnHover).toBe(false)
-    expect(slider?.tileEffect).toBe('flip')
-    expect(slider?.rows).toBe(6)
-    expect(slider?.rowOffset).toBe(150)
-
-    // Test that slide content is rendered
-    const slides = canvasElement.querySelectorAll('.story-slide')
-    expect(slides.length).toBeGreaterThan(0)
-  },
+  play: createTileTest({
+    speed: 1500,
+    timeout: 0,
+    autoScroll: false,
+    loop: false,
+    startIndex: 4,
+    swipe: false,
+    swipeTolerance: 100,
+    pauseOnHover: false,
+    tileEffect: 'flip',
+    rows: 6,
+    rowOffset: 150,
+  }),
 }
