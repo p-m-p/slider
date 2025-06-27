@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Structure
+## Project structure
 
 BoxSlider is a monorepo containing a modern content slider library with multiple distribution formats:
 
@@ -43,6 +43,11 @@ The library provides multiple slide transition effects (carousel, fade, cube, ti
 - `pnpm run -r <script>` - Run script in all packages
 - `pnpm run --filter=<package> <script>` - Run script in specific package
 
+**Running Packages:**
+
+- Use `pnpm exec` to run packages installed in the workspace
+- Use `pnpx` to run packages not installed in the workspace
+
 ## Architecture
 
 **Core Library (`packages/slider/`):**
@@ -77,12 +82,17 @@ The library provides multiple slide transition effects (carousel, fade, cube, ti
   - `pnpm run storybook` - Start development server
   - `pnpm run build-storybook` - Build static files
   - `pnpm run test-storybook` - Run tests (requires running Storybook)
-  - `pnpm run test-storybook:ci` - Run tests with static build
 
-## Memories
+## Working with code
 
-- Always use pnpm when running any node packages
-- Tests enhanced with comprehensive property coverage
-- Don't add comments in code
-- Only set PRs to auto merge when explicitly told to do so
-- When adding commands to settings.local.json ensure they are added to the correct group
+**General Guidelines:**
+
+- Only add comments in code if they provide significant value
+
+**Git workflow:**
+
+- Never commit changes to the branch `main`
+- For each plan, create a new branch with an appropriate prefix (e.g. `feat/`, `fix/`, `chore/`)
+- Commit changes with conventional commit messages
+- Push changes to the remote branch and create a pull request if one does not already exist
+- Only set Github pull requests to auto merge when explicitly told to do so
