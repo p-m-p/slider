@@ -40,7 +40,8 @@
       "WebFetch(domain:www.w3.org)",
       "Bash(ls:*)",
       "Bash(pnpm exec eslint:*)",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(git stash:*)"
     ],
     "deny": []
   }

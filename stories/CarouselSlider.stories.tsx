@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CarouselSlider } from '~/packages/react'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
-import { createCarouselTest } from './test-utils'
+import { createPlayFn } from './test-utils'
 
 const meta: Meta<typeof CarouselSlider> = {
   title: 'BoxSlider/CarouselSlider',
@@ -53,7 +53,7 @@ export const Default: Story = {
       </CarouselSlider>
     )
   },
-  play: createCarouselTest({
+  play: createPlayFn('bs-carousel', {
     speed: 500,
     timeout: 5000,
     swipe: true,
@@ -76,7 +76,7 @@ export const CoverMode: Story = {
       </CarouselSlider>
     )
   },
-  play: createCarouselTest({
+  play: createPlayFn('bs-carousel', {
     speed: 600,
     timeout: 5000,
     cover: true,
@@ -100,7 +100,7 @@ export const CustomTiming: Story = {
       </CarouselSlider>
     )
   },
-  play: createCarouselTest({
+  play: createPlayFn('bs-carousel', {
     speed: 1200,
     timeout: 5000,
     timingFunction: 'ease-out',
@@ -123,7 +123,7 @@ export const FastTransitions: Story = {
       </CarouselSlider>
     )
   },
-  play: createCarouselTest({
+  play: createPlayFn('bs-carousel', {
     speed: 250,
     timeout: 2000,
     timingFunction: 'ease-in',
@@ -152,7 +152,7 @@ export const CustomConfiguration: Story = {
       </CarouselSlider>
     )
   },
-  play: createCarouselTest({
+  play: createPlayFn('bs-carousel', {
     speed: 1000,
     timeout: 0,
     autoScroll: false,
