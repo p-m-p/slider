@@ -55,14 +55,24 @@ export type BaseComponentProps<T> = BoxSliderProps &
   >
 
 export function extractEventHandlers<T extends BoxSliderProps>(props: T) {
-  const { onAfter, onBefore, onDestroy, onPause, onPlay, ...elementProps } =
-    props
+  const {
+    onAfter,
+    onBefore,
+    onDestroy,
+    onInit,
+    onPause,
+    onPlay,
+    onReset,
+    ...elementProps
+  } = props
   const eventHandlers = {
     onAfter,
     onBefore,
     onDestroy,
+    onInit,
     onPause,
     onPlay,
+    onReset,
   }
 
   return { elementProps, eventHandlers }
