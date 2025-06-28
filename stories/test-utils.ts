@@ -1,11 +1,12 @@
-import type { JSX } from 'react'
 import { expect } from '@storybook/test'
 import { defaultOptions } from '~/packages/slider'
 import type { SliderElement } from '~/packages/components'
 
-export function createPlayFn<T extends keyof JSX.IntrinsicElements>(
-  selector: T,
-  expectedProps: JSX.IntrinsicElements[T],
+type SliderSelector = 'bs-carousel' | 'bs-fade' | 'bs-cube' | 'bs-tile'
+
+export function createPlayFn(
+  selector: SliderSelector,
+  expectedProps: Record<string, string | number | boolean>,
 ) {
   return async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const slider = canvasElement.querySelector<SliderElement>(selector)!
