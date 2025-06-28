@@ -1,7 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CarouselSlider } from '~/packages/react'
+import { defaultOptions } from '~/packages/slider'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 import { createPlayFn } from './test-utils'
+import { sharedSliderArgTypes } from './shared-arg-types'
+
+const defaultStoryArgs = {
+  ...defaultOptions,
+  timingFunction: 'ease' as const,
+  cover: false,
+}
 
 const meta: Meta<typeof CarouselSlider> = {
   title: 'BoxSlider/CarouselSlider',
@@ -15,23 +23,23 @@ const meta: Meta<typeof CarouselSlider> = {
       },
     },
   },
+  args: {
+    ...defaultStoryArgs,
+    style: defaultSliderStyle,
+  },
   tags: ['autodocs'],
   argTypes: {
-    speed: {
-      control: { type: 'number', min: 100, max: 2000, step: 100 },
-      description: 'Transition speed in milliseconds',
+    ...sharedSliderArgTypes,
+    timingFunction: {
+      control: { type: 'select' },
+      options: ['ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear'],
+      description: 'CSS timing function for carousel transitions',
+      defaultValue: 'ease',
     },
-    timeout: {
-      control: { type: 'number', min: 0, max: 8000, step: 500 },
-      description: 'Auto-scroll timeout in milliseconds (0 to disable)',
-    },
-    swipe: {
-      control: 'boolean',
-      description: 'Enable touch/swipe navigation',
-    },
-    pauseOnHover: {
-      control: 'boolean',
-      description: 'Pause auto-scroll on hover',
+    cover: {
+      control: { type: 'boolean' },
+      description: 'Enable cover mode for carousel transitions',
+      defaultValue: false,
     },
   },
 }
@@ -42,9 +50,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     speed: 500,
-    timeout: 5000,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function DefaultRender(args) {
     return (
@@ -54,20 +59,15 @@ export const Default: Story = {
     )
   },
   play: createPlayFn('bs-carousel', {
+    ...defaultStoryArgs,
     speed: 500,
-    timeout: 5000,
-    swipe: true,
   }),
 }
 
 export const CoverMode: Story = {
   args: {
     speed: 600,
-    timeout: 5000,
     cover: true,
-    swipe: true,
-    pauseOnHover: true,
-    style: defaultSliderStyle,
   },
   render: function CoverModeRender(args) {
     return (
@@ -77,21 +77,16 @@ export const CoverMode: Story = {
     )
   },
   play: createPlayFn('bs-carousel', {
+    ...defaultStoryArgs,
     speed: 600,
-    timeout: 5000,
     cover: true,
-    swipe: true,
-    pauseOnHover: true,
   }),
 }
 
 export const CustomTiming: Story = {
   args: {
     speed: 1200,
-    timeout: 5000,
     timingFunction: 'ease-out',
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function CustomTimingRender(args) {
     return (
@@ -101,10 +96,9 @@ export const CustomTiming: Story = {
     )
   },
   play: createPlayFn('bs-carousel', {
+    ...defaultStoryArgs,
     speed: 1200,
-    timeout: 5000,
     timingFunction: 'ease-out',
-    swipe: true,
   }),
 }
 
@@ -113,8 +107,6 @@ export const FastTransitions: Story = {
     speed: 250,
     timeout: 2000,
     timingFunction: 'ease-in',
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function FastTransitionsRender(args) {
     return (
@@ -124,10 +116,10 @@ export const FastTransitions: Story = {
     )
   },
   play: createPlayFn('bs-carousel', {
+    ...defaultStoryArgs,
     speed: 250,
     timeout: 2000,
     timingFunction: 'ease-in',
-    swipe: true,
   }),
 }
 
@@ -143,7 +135,6 @@ export const CustomConfiguration: Story = {
     pauseOnHover: false,
     cover: true,
     timingFunction: 'linear',
-    style: defaultSliderStyle,
   },
   render: function CustomConfigurationRender(args) {
     return (
@@ -153,6 +144,7 @@ export const CustomConfiguration: Story = {
     )
   },
   play: createPlayFn('bs-carousel', {
+    ...defaultStoryArgs,
     speed: 1000,
     timeout: 0,
     autoScroll: false,

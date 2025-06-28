@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CubeSlider } from '~/packages/react'
+import { defaultOptions } from '~/packages/slider'
 import {
   slideData,
   createSlide,
@@ -8,6 +9,13 @@ import {
   createCubeViewportStyle,
 } from './shared'
 import { createPlayFn } from './test-utils'
+import { sharedSliderArgTypes } from './shared-arg-types'
+
+const defaultStoryArgs = {
+  ...defaultOptions,
+  direction: 'horizontal' as const,
+  perspective: 1000,
+}
 
 const meta: Meta<typeof CubeSlider> = {
   title: 'BoxSlider/CubeSlider',
@@ -21,32 +29,23 @@ const meta: Meta<typeof CubeSlider> = {
       },
     },
   },
+  args: {
+    ...defaultStoryArgs,
+    style: defaultSliderStyle,
+  },
   tags: ['autodocs'],
   argTypes: {
-    speed: {
-      control: { type: 'number', min: 100, max: 2000, step: 100 },
-      description: 'Transition speed in milliseconds',
-    },
-    timeout: {
-      control: { type: 'number', min: 0, max: 8000, step: 500 },
-      description: 'Auto-scroll timeout in milliseconds (0 to disable)',
-    },
+    ...sharedSliderArgTypes,
     direction: {
       control: { type: 'select' },
       options: ['horizontal', 'vertical'],
       description: 'Cube rotation direction',
+      defaultValue: 'horizontal',
     },
     perspective: {
       control: { type: 'number', min: 500, max: 2000, step: 100 },
       description: '3D perspective value in pixels',
-    },
-    swipe: {
-      control: 'boolean',
-      description: 'Enable touch/swipe navigation',
-    },
-    pauseOnHover: {
-      control: 'boolean',
-      description: 'Pause auto-scroll on hover',
+      defaultValue: 1000,
     },
   },
 }
@@ -55,14 +54,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    speed: 800,
-    timeout: 5000,
-    direction: 'horizontal',
-    perspective: 1000,
-    swipe: true,
-    style: defaultSliderStyle,
-  },
+  args: {},
+  // Uses all default values from meta
   render: function DefaultRender(args) {
     return (
       <div style={cubeViewportStyle}>
@@ -74,23 +67,14 @@ export const Default: Story = {
       </div>
     )
   },
-  play: createPlayFn('bs-cube', {
-    speed: 800,
-    timeout: 5000,
-    direction: 'horizontal',
-    perspective: 1000,
-    swipe: true,
-  }),
+  play: createPlayFn('bs-cube', defaultStoryArgs),
 }
 
 export const VerticalRotation: Story = {
   args: {
     speed: 900,
-    timeout: 5000,
     direction: 'vertical',
     perspective: 1200,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function VerticalRotationRender(args) {
     return (
@@ -104,22 +88,16 @@ export const VerticalRotation: Story = {
     )
   },
   play: createPlayFn('bs-cube', {
+    ...defaultStoryArgs,
     speed: 900,
-    timeout: 5000,
     direction: 'vertical',
     perspective: 1200,
-    swipe: true,
   }),
 }
 
 export const HighPerspective: Story = {
   args: {
-    speed: 800,
-    timeout: 5000,
-    direction: 'horizontal',
     perspective: 1800,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function HighPerspectiveRender(args) {
     return (
@@ -133,22 +111,15 @@ export const HighPerspective: Story = {
     )
   },
   play: createPlayFn('bs-cube', {
-    speed: 800,
-    timeout: 5000,
-    direction: 'horizontal',
+    ...defaultStoryArgs,
     perspective: 1800,
-    swipe: true,
   }),
 }
 
 export const LowPerspective: Story = {
   args: {
     speed: 700,
-    timeout: 5000,
-    direction: 'horizontal',
     perspective: 600,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function LowPerspectiveRender(args) {
     return (
@@ -162,11 +133,9 @@ export const LowPerspective: Story = {
     )
   },
   play: createPlayFn('bs-cube', {
+    ...defaultStoryArgs,
     speed: 700,
-    timeout: 5000,
-    direction: 'horizontal',
     perspective: 600,
-    swipe: true,
   }),
 }
 
@@ -182,7 +151,6 @@ export const CustomConfiguration: Story = {
     pauseOnHover: false,
     direction: 'vertical',
     perspective: 1500,
-    style: defaultSliderStyle,
   },
   render: function CustomConfigurationRender(args) {
     return (
@@ -194,6 +162,7 @@ export const CustomConfiguration: Story = {
     )
   },
   play: createPlayFn('bs-cube', {
+    ...defaultStoryArgs,
     speed: 1200,
     timeout: 0,
     autoScroll: false,

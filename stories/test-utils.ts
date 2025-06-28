@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { expect } from '@storybook/test'
 import { defaultOptions } from '~/packages/slider'
 import type { SliderElement } from '~/packages/components'

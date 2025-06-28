@@ -1,7 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FadeSlider } from '~/packages/react'
+import { defaultOptions } from '~/packages/slider'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 import { createPlayFn } from './test-utils'
+import { sharedSliderArgTypes } from './shared-arg-types'
+
+const defaultStoryArgs = {
+  ...defaultOptions,
+  timingFunction: 'ease-in-out' as const,
+}
 
 const meta: Meta<typeof FadeSlider> = {
   title: 'BoxSlider/FadeSlider',
@@ -15,28 +22,18 @@ const meta: Meta<typeof FadeSlider> = {
       },
     },
   },
+  args: {
+    ...defaultStoryArgs,
+    style: defaultSliderStyle,
+  },
   tags: ['autodocs'],
   argTypes: {
-    speed: {
-      control: { type: 'number', min: 100, max: 2000, step: 100 },
-      description: 'Transition speed in milliseconds',
-    },
-    timeout: {
-      control: { type: 'number', min: 0, max: 8000, step: 500 },
-      description: 'Auto-scroll timeout in milliseconds (0 to disable)',
-    },
+    ...sharedSliderArgTypes,
     timingFunction: {
       control: { type: 'select' },
       options: ['ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear'],
       description: 'CSS timing function for fade transitions',
-    },
-    swipe: {
-      control: 'boolean',
-      description: 'Enable touch/swipe navigation',
-    },
-    pauseOnHover: {
-      control: 'boolean',
-      description: 'Pause auto-scroll on hover',
+      defaultValue: 'ease-in-out',
     },
   },
 }
@@ -47,10 +44,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     speed: 600,
-    timeout: 5000,
-    timingFunction: 'ease-in-out',
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function DefaultRender(args) {
     return (
@@ -60,21 +53,15 @@ export const Default: Story = {
     )
   },
   play: createPlayFn('bs-fade', {
+    ...defaultStoryArgs,
     speed: 600,
-    timeout: 5000,
-    timingFunction: 'ease-in-out',
-    swipe: true,
   }),
 }
 
 export const EaseInTiming: Story = {
   args: {
     speed: 800,
-    timeout: 5000,
     timingFunction: 'ease-in',
-    swipe: true,
-    pauseOnHover: true,
-    style: defaultSliderStyle,
   },
   render: function EaseInTimingRender(args) {
     return (
@@ -84,21 +71,16 @@ export const EaseInTiming: Story = {
     )
   },
   play: createPlayFn('bs-fade', {
+    ...defaultStoryArgs,
     speed: 800,
-    timeout: 5000,
     timingFunction: 'ease-in',
-    swipe: true,
-    pauseOnHover: true,
   }),
 }
 
 export const LinearFade: Story = {
   args: {
     speed: 1000,
-    timeout: 5000,
     timingFunction: 'linear',
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function LinearFadeRender(args) {
     return (
@@ -108,10 +90,9 @@ export const LinearFade: Story = {
     )
   },
   play: createPlayFn('bs-fade', {
+    ...defaultStoryArgs,
     speed: 1000,
-    timeout: 5000,
     timingFunction: 'linear',
-    swipe: true,
   }),
 }
 
@@ -120,8 +101,6 @@ export const FastFade: Story = {
     speed: 400,
     timeout: 3000,
     timingFunction: 'ease-out',
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function FastFadeRender(args) {
     return (
@@ -131,10 +110,10 @@ export const FastFade: Story = {
     )
   },
   play: createPlayFn('bs-fade', {
+    ...defaultStoryArgs,
     speed: 400,
     timeout: 3000,
     timingFunction: 'ease-out',
-    swipe: true,
   }),
 }
 
@@ -149,7 +128,6 @@ export const CustomConfiguration: Story = {
     swipeTolerance: 75,
     pauseOnHover: false,
     timingFunction: 'ease',
-    style: defaultSliderStyle,
   },
   render: function CustomConfigurationRender(args) {
     return (
@@ -159,6 +137,7 @@ export const CustomConfiguration: Story = {
     )
   },
   play: createPlayFn('bs-fade', {
+    ...defaultStoryArgs,
     speed: 1200,
     timeout: 0,
     autoScroll: false,
