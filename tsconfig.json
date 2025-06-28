@@ -5,6 +5,7 @@
     "module": "ESNext",
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "erasableSyntaxOnly": true,
     "allowJs": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
