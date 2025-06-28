@@ -1,7 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { TileSlider } from '~/packages/react'
+import { defaultOptions } from '~/packages/slider'
 import { slideData, createSlide, defaultSliderStyle } from './shared'
 import { createPlayFn } from './test-utils'
+import { sharedSliderArgTypes } from './shared-arg-types'
+
+const defaultStoryArgs = {
+  ...defaultOptions,
+  tileEffect: 'fade' as const,
+  rows: 8,
+  rowOffset: 50,
+}
 
 const meta: Meta<typeof TileSlider> = {
   title: 'BoxSlider/TileSlider',
@@ -15,36 +24,28 @@ const meta: Meta<typeof TileSlider> = {
       },
     },
   },
+  args: {
+    ...defaultStoryArgs,
+    style: defaultSliderStyle,
+  },
   tags: ['autodocs'],
   argTypes: {
-    speed: {
-      control: { type: 'number', min: 100, max: 2000, step: 100 },
-      description: 'Transition speed in milliseconds',
-    },
-    timeout: {
-      control: { type: 'number', min: 0, max: 8000, step: 500 },
-      description: 'Auto-scroll timeout in milliseconds (0 to disable)',
-    },
+    ...sharedSliderArgTypes,
     tileEffect: {
       control: { type: 'select' },
       options: ['fade', 'flip'],
       description: 'Type of tile transition effect',
+      defaultValue: 'fade',
     },
     rows: {
-      control: { type: 'number', min: 2, max: 8 },
+      control: { type: 'number', min: 2, max: 8, step: 1 },
       description: 'Number of tile rows',
+      defaultValue: 8,
     },
     rowOffset: {
       control: { type: 'number', min: 0, max: 300, step: 25 },
       description: 'Delay offset between rows in milliseconds',
-    },
-    swipe: {
-      control: 'boolean',
-      description: 'Enable touch/swipe navigation',
-    },
-    pauseOnHover: {
-      control: 'boolean',
-      description: 'Pause auto-scroll on hover',
+      defaultValue: 50,
     },
   },
 }
@@ -53,15 +54,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    speed: 800,
-    timeout: 5000,
-    tileEffect: 'fade',
-    rows: 4,
-    rowOffset: 100,
-    swipe: true,
-    style: defaultSliderStyle,
-  },
+  args: {},
+  // Uses all default values from meta
   render: function DefaultRender(args) {
     return (
       <TileSlider {...args}>
@@ -69,25 +63,15 @@ export const Default: Story = {
       </TileSlider>
     )
   },
-  play: createPlayFn('bs-tile', {
-    speed: 800,
-    timeout: 5000,
-    tileEffect: 'fade',
-    rows: 4,
-    rowOffset: 100,
-    swipe: true,
-  }),
+  play: createPlayFn('bs-tile', defaultStoryArgs),
 }
 
 export const FlipEffect: Story = {
   args: {
     speed: 1000,
-    timeout: 5000,
     tileEffect: 'flip',
     rows: 5,
     rowOffset: 120,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function FlipEffectRender(args) {
     return (
@@ -97,24 +81,19 @@ export const FlipEffect: Story = {
     )
   },
   play: createPlayFn('bs-tile', {
+    ...defaultStoryArgs,
     speed: 1000,
-    timeout: 5000,
     tileEffect: 'flip',
     rows: 5,
     rowOffset: 120,
-    swipe: true,
   }),
 }
 
 export const ManyRows: Story = {
   args: {
     speed: 1200,
-    timeout: 5000,
-    tileEffect: 'fade',
     rows: 8,
     rowOffset: 60,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function ManyRowsRender(args) {
     return (
@@ -124,24 +103,17 @@ export const ManyRows: Story = {
     )
   },
   play: createPlayFn('bs-tile', {
+    ...defaultStoryArgs,
     speed: 1200,
-    timeout: 5000,
-    tileEffect: 'fade',
-    rows: 8,
     rowOffset: 60,
-    swipe: true,
   }),
 }
 
 export const NoOffset: Story = {
   args: {
-    speed: 800,
-    timeout: 5000,
     tileEffect: 'flip',
     rows: 6,
     rowOffset: 0,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function NoOffsetRender(args) {
     return (
@@ -151,24 +123,17 @@ export const NoOffset: Story = {
     )
   },
   play: createPlayFn('bs-tile', {
-    speed: 800,
-    timeout: 5000,
+    ...defaultStoryArgs,
     tileEffect: 'flip',
     rows: 6,
     rowOffset: 0,
-    swipe: true,
   }),
 }
 
 export const HighOffset: Story = {
   args: {
     speed: 1000,
-    timeout: 5000,
-    tileEffect: 'fade',
-    rows: 4,
     rowOffset: 200,
-    swipe: true,
-    style: defaultSliderStyle,
   },
   render: function HighOffsetRender(args) {
     return (
@@ -178,12 +143,9 @@ export const HighOffset: Story = {
     )
   },
   play: createPlayFn('bs-tile', {
+    ...defaultStoryArgs,
     speed: 1000,
-    timeout: 5000,
-    tileEffect: 'fade',
-    rows: 4,
     rowOffset: 200,
-    swipe: true,
   }),
 }
 
@@ -200,7 +162,6 @@ export const CustomConfiguration: Story = {
     tileEffect: 'flip',
     rows: 6,
     rowOffset: 150,
-    style: defaultSliderStyle,
   },
   render: function CustomConfigurationRender(args) {
     return (
@@ -210,6 +171,7 @@ export const CustomConfiguration: Story = {
     )
   },
   play: createPlayFn('bs-tile', {
+    ...defaultStoryArgs,
     speed: 1500,
     timeout: 0,
     autoScroll: false,

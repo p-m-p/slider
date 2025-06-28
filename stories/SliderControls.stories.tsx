@@ -38,18 +38,32 @@ const meta: Meta<typeof SliderControls> = {
     nextBtnLabel: {
       control: 'text',
       description: 'Accessible label for next button',
+      defaultValue: 'Next slide',
     },
     prevBtnLabel: {
       control: 'text',
       description: 'Accessible label for previous button',
+      defaultValue: 'Previous slide',
     },
     playBtnLabel: {
       control: 'text',
       description: 'Accessible label for play button',
+      defaultValue: 'Play slideshow',
     },
     pauseBtnLabel: {
       control: 'text',
       description: 'Accessible label for pause button',
+      defaultValue: 'Pause slideshow',
+    },
+    indexBtnLabel: {
+      control: 'text',
+      description: 'Accessible label template for index buttons',
+      defaultValue: 'Go to slide {index}',
+    },
+    indexLabel: {
+      control: 'text',
+      description: 'Accessible label for index container',
+      defaultValue: 'Slide navigation',
     },
   },
 }
