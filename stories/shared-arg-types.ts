@@ -66,11 +66,6 @@ export const sharedSliderArgTypes: ArgTypes = {
     action: 'destroy',
     description: 'Event triggered when slider is destroyed',
   },
-  onInit: {
-    table: { disable: true },
-    action: 'init',
-    description: 'Event triggered when slider is initialized',
-  },
   onPause: {
     table: { disable: true },
     action: 'pause',

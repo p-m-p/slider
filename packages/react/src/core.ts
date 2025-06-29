@@ -37,7 +37,6 @@ export interface BoxSliderProps extends Partial<BoxSliderOptions> {
   onAfter?: SliderEventListenerMap['after']
   onBefore?: SliderEventListenerMap['before']
   onDestroy?: SliderEventListenerMap['destroy']
-  onInit?: SliderEventListenerMap['init']
   onPause?: SliderEventListenerMap['pause']
   onPlay?: SliderEventListenerMap['play']
   onReset?: SliderEventListenerMap['reset']
@@ -59,7 +58,6 @@ export function extractEventHandlers<T extends BoxSliderProps>(props: T) {
     onAfter,
     onBefore,
     onDestroy,
-    onInit,
     onPause,
     onPlay,
     onReset,
@@ -69,7 +67,6 @@ export function extractEventHandlers<T extends BoxSliderProps>(props: T) {
     onAfter,
     onBefore,
     onDestroy,
-    onInit,
     onPause,
     onPlay,
     onReset,
@@ -79,7 +76,7 @@ export function extractEventHandlers<T extends BoxSliderProps>(props: T) {
 }
 
 export function sliderRefCallback<T extends BoxSliderProps>(
-  { onAfter, onBefore, onDestroy, onInit, onPause, onPlay, onReset }: T,
+  { onAfter, onBefore, onDestroy, onPause, onPlay, onReset }: T,
   sliderRef?: RefObject<BoxSlider | null>,
 ): RefCallback<SliderElement> {
   return (el: SliderElement) => {
@@ -96,10 +93,6 @@ export function sliderRefCallback<T extends BoxSliderProps>(
 
       if (onDestroy) {
         slider.addEventListener('destroy', onDestroy)
-      }
-
-      if (onInit) {
-        slider.addEventListener('init', onInit)
       }
 
       if (onPause) {

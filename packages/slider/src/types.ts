@@ -35,6 +35,8 @@ export interface SliderEventListenerMap {
 
   /**
    * Event triggered when slider is initialized
+   *
+   * @deprecated - This event will not fire. Listen for `reset` event instead.
    */
   init: () => void
 
