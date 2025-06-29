@@ -114,8 +114,6 @@ export class BoxSlider {
     this.applyEventListeners()
 
     responder.add(this)
-
-    this.emit('init')
   }
 
   /**

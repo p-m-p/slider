@@ -12,6 +12,7 @@ declare global {
     destroy: CustomEvent<void>
     pause: Event | CustomEvent<SliderEventData>
     play: Event | CustomEvent<SliderEventData>
+    reset: CustomEvent<void>
   }
 
   interface HTMLElementTagNameMap {

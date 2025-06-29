@@ -294,3 +294,22 @@ test('slide transition', async () => {
     )
   })
 })
+
+test('slider lifecycle events', async () => {
+  const el = createSliderElement('bs-carousel', {
+    'auto-scroll': 'false',
+  })
+
+  const resetHandler = vi.fn()
+  const destroyHandler = vi.fn()
+
+  el.addEventListener('destroy', destroyHandler)
+  el.addEventListener('reset', resetHandler)
+
+  expect(resetHandler).not.toHaveBeenCalled()
+  el.speed = 1000
+  expect(resetHandler).toHaveBeenCalledTimes(1)
+
+  el.remove()
+  expect(destroyHandler).toHaveBeenCalledWith(new CustomEvent('destroy'))
+})
