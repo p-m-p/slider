@@ -33,7 +33,7 @@
     "@docusaurus/types": "3.8.1",
     "postcss-import": "^16.1.0",
     "postcss-nesting": "^13.0.0",
-    "typescript": "~5.8.0"
+    "typescript": "~5.9.0"
   },
   "browserslist": {
     "production": [
