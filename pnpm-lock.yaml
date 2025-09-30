@@ -40,7 +40,7 @@ importers:
         version: 10.4.1
       '@testing-library/jest-dom':
         specifier: ^6.6.3
-        version: 6.8.0
+        version: 6.9.0
       '@testing-library/user-event':
         specifier: ^14.5.2
         version: 14.6.1(@testing-library/dom@10.4.1)
@@ -2476,8 +2476,8 @@ packages:
     resolution: {integrity: sha512-xGGHpBXYSHUUr6XsKBfs85TWlYKpTc37cSBBVrXcib2MkHLboWlkClhWF37JKlDb9KEq3dHs+f2xR7XJEWGBxA==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
 
-  '@testing-library/jest-dom@6.8.0':
-    resolution: {integrity: sha512-WgXcWzVM6idy5JaftTVC8Vs83NKRmGJz4Hqs4oyOuO2J4r/y79vvKZsb+CaGyCSEbUPI6OsewfPd0G1A0/TUZQ==}
+  '@testing-library/jest-dom@6.9.0':
+    resolution: {integrity: sha512-QHdxYMJ0YPGKYofMc6zYvo7LOViVhdc6nPg/OtM2cf9MQrwEcTxFCs7d/GJ5eSyPkHzOiBkc/KfLdFJBHzldtQ==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
 
   '@testing-library/user-event@14.5.2':
@@ -12048,7 +12048,7 @@ snapshots:
       lodash: 4.17.21
       redent: 3.0.0
 
-  '@testing-library/jest-dom@6.8.0':
+  '@testing-library/jest-dom@6.9.0':
     dependencies:
       '@adobe/css-tools': 4.4.4
       aria-query: 5.3.2
@@ -18619,7 +18619,7 @@ snapshots:
   storybook@9.1.9(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.7(@types/node@22.18.7)(jiti@2.6.0)(terser@5.31.3)(yaml@2.8.1)):
     dependencies:
       '@storybook/global': 5.0.0
-      '@testing-library/jest-dom': 6.8.0
+      '@testing-library/jest-dom': 6.9.0
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
       '@vitest/expect': 3.2.4
       '@vitest/mocker': 3.2.4(vite@7.1.7(@types/node@22.18.7)(jiti@2.6.0)(terser@5.31.3)(yaml@2.8.1))
