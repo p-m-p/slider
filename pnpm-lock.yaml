@@ -19,7 +19,7 @@ importers:
         version: 20.0.0
       '@eslint/js':
         specifier: ^9.17.0
-        version: 9.37.0
+        version: 9.38.0
       '@storybook/addon-docs':
         specifier: ^9.0.9
         version: 9.1.12(@types/react@19.2.2)(storybook@9.1.12(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.10(@types/node@22.18.11)(jiti@2.6.0)(terser@5.31.3)(yaml@2.8.1)))
@@ -1815,6 +1815,10 @@ packages:
 
   '@eslint/js@9.37.0':
     resolution: {integrity: sha512-jaS+NJ+hximswBG6pjNX0uEJZkrT0zwpVi3BA3vX22aFGjJjmgSTSmPpZCRKmoBL5VY/M6p0xsSJx7rk7sy5gg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@9.38.0':
+    resolution: {integrity: sha512-UZ1VpFvXf9J06YG9xQBdnzU+kthors6KjhMAl6f4gH4usHyh31rUf2DLGInT8RFYIReYXNSydgPY0V2LuWgl7A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.6':
@@ -11326,6 +11330,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@9.37.0': {}
+
+  '@eslint/js@9.38.0': {}
 
   '@eslint/object-schema@2.1.6': {}
 
