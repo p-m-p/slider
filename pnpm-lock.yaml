@@ -64,7 +64,7 @@ importers:
         version: 3.2.4(vitest@3.2.4)
       chromatic:
         specifier: ^13.0.0
-        version: 13.3.1
+        version: 13.3.2
       cz-conventional-changelog:
         specifier: ^3.3.0
         version: 3.3.0(@types/node@22.18.12)(typescript@5.9.3)
@@ -3535,8 +3535,8 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chromatic@13.3.1:
-    resolution: {integrity: sha512-qJ/el70Wo7jFgiXPpuukqxCEc7IKiH/e8MjTzIF9uKw+3XZ6GghOTTLC7lGfeZtosiQBMkRlYet77tC4KKHUng==}
+  chromatic@13.3.2:
+    resolution: {integrity: sha512-hBxbElFH8twWq7GHP52twqmduBkzB7EQZPIrzZA7iD9ZQ2P0Cbo1CDyeVsLz7FdywAKO86YvuXGxaOf7Z0n5eA==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -14034,7 +14034,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromatic@13.3.1: {}
+  chromatic@13.3.2: {}
 
   chrome-trace-event@1.0.4: {}
 
