@@ -9,5 +9,6 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: [path.join(import.meta.dirname, 'testSetup.ts')],
+    projects: ['packages/*'],
   },
 })
