@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.9.1
+
+### Patch Changes
+
+- Updated dependencies [fa15cf8]
+  - @boxslider/slider@2.16.1
+  - @boxslider/components@2.14.1
+
 ## 2.9.0
 
 ### Minor Changes
