@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.14.1
+
+### Patch Changes
+
+- fa15cf8: Update all CDN URLs in documentation from esm.sh to jsDelivr. All code examples and installation instructions now use `https://cdn.jsdelivr.net/npm/@boxslider/{package}/+esm` format for ES module imports.
+- Updated dependencies [fa15cf8]
+  - @boxslider/slider@2.16.1
+
 ## 2.14.0
 
 ### Minor Changes
