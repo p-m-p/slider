@@ -28,7 +28,9 @@ npm install --save @boxslider/components
 Use from CDN
 
 ```html
-<script type="module" src="https://esm.sh/@boxslider/components"></script>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
 
 <bs-slider-controls>
   <bs-carousel speed="300">
@@ -54,7 +56,7 @@ Use directly from a CDN
 
 ```html
 <script type="module">
-  import { createCarouselSlider } from 'https://esm.sh/@boxslider/slider'
+  import { createCarouselSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
 
   createCarouselSlider('#slider')
 </script>
