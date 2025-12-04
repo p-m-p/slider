@@ -11,8 +11,11 @@ const config: Config = {
   organizationName: 'p-m-p',
   projectName: 'slider',
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
 
   scripts: [
     {
