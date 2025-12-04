@@ -7,8 +7,7 @@ import {
 
 import '@boxslider/components/Carousel'
 
-export interface CarouselSliderProps
-  extends BaseComponentProps<CarouselSliderElement> {
+export interface CarouselSliderProps extends BaseComponentProps<CarouselSliderElement> {
   timingFunction?: string
   cover?: boolean
 }
