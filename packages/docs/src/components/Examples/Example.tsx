@@ -28,7 +28,7 @@ export function Example({
   })
 
   return (
-    <Context
+    <Context.Provider
       value={{
         options,
         setOption: (key: string, value: string | boolean) => {
@@ -46,6 +46,6 @@ export function Example({
           <Options controls={effectControls} />
         </div>
       )}
-    </Context>
+    </Context.Provider>
   )
 }
