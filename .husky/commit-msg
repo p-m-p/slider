@@ -1,1 +1,1 @@
-npx pnpm exec commitlint --edit
+pnpm exec commitlint --edit
