@@ -1,6 +1,6 @@
 import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
-import react from 'eslint-plugin-react'
+import eslintReact from '@eslint-react/eslint-plugin'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import importPlugin from 'eslint-plugin-import'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
@@ -24,8 +24,7 @@ export default tseslint.config(
   // Base configurations
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  react.configs.flat.recommended,
-  react.configs.flat['jsx-runtime'],
+  eslintReact.configs['recommended-typescript'],
   jsxA11y.flatConfigs.recommended,
   importPlugin.flatConfigs.recommended,
   eslintPluginUnicorn.configs.recommended,
