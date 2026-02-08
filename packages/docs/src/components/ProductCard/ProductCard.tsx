@@ -1,15 +1,15 @@
 import { FadeSlider } from '@boxslider/react'
-import { createRef } from 'react'
+import { useRef } from 'react'
 import type { BoxSlider } from '@boxslider/slider'
 
 import styles from './styles.module.css'
 
 export function ProductCard() {
-  const sliderRef = createRef<BoxSlider>()
-  const buttonBar = createRef<HTMLDivElement>()
+  const sliderRef = useRef<BoxSlider>(null)
+  const buttonBarRef = useRef<HTMLDivElement>(null)
 
   const handleActiveButton = (button: HTMLButtonElement) => {
-    const buttons = buttonBar.current?.querySelectorAll('button')
+    const buttons = buttonBarRef.current?.querySelectorAll('button')
     const index = [...buttons].indexOf(button)
 
     buttons?.forEach((btn) => (btn.tabIndex = -1))
@@ -38,7 +38,7 @@ export function ProductCard() {
           <div className={styles.slide}>Image five</div>
         </FadeSlider>
         <div
-          ref={buttonBar}
+          ref={buttonBarRef}
           className={styles.thumbnails}
           role="toolbar"
           aria-label="Product image selection"
