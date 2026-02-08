@@ -249,9 +249,9 @@ export const CustomButtons: Story = {
           </button>
 
           <div slot="index" style={customIndexContainerStyle}>
-            {slideData.map((_, index) => (
+            {slideData.map((slide, index) => (
               <button
-                key={index}
+                key={slide.title}
                 data-slide-index={index}
                 style={customIndexButtonStyle}>
                 {index + 1}

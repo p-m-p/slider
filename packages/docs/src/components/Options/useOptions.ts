@@ -1,6 +1,6 @@
-import { useContext } from 'react'
+import { use } from 'react'
 import { Context } from '../Examples/Context'
 
 export function useOptions() {
-  return useContext(Context)
+  return use(Context)
 }
