@@ -2,7 +2,7 @@
   "author": "Phil Parsons",
   "license": "MIT",
   "private": true,
-  "packageManager": "pnpm@10.29.2",
+  "packageManager": "pnpm@10.29.3",
   "type": "module",
   "scripts": {
     "build": "pnpm run -r build",
