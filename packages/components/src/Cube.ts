@@ -1,4 +1,5 @@
 import CubeSlider from '@boxslider/slider/effects/Cube'
+import type { TouchGesturePluginOptions } from '@boxslider/slider/plugins'
 import { register } from './core'
 import Slider, { SLIDER_ATTRIBUTES, type SliderElement } from './Slider'
 
@@ -43,6 +44,10 @@ export default class Cube extends Slider implements CubeSliderElement {
         perspective,
       }),
     )
+  }
+
+  protected override getTouchGestureOptions(): TouchGesturePluginOptions {
+    return { direction: this.#direction }
   }
 
   attributeChangedCallback(name: string, _: string, value: string) {
