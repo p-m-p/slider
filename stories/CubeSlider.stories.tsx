@@ -13,6 +13,8 @@ import { sharedSliderArgTypes } from './shared-arg-types'
 
 const defaultStoryArgs = {
   ...defaultOptions,
+  enableTouch: true,
+  pauseOnHover: true,
   direction: 'horizontal' as const,
   perspective: 1000,
 }
@@ -25,7 +27,7 @@ const meta: Meta<typeof CubeSlider> = {
     docs: {
       description: {
         component:
-          'A 3D cube slider component that provides cube rotation transitions between slides.',
+          'A 3D cube slider component that provides cube rotation transitions between slides. Supports progressive drag gestures for touch interaction.',
       },
     },
   },
@@ -55,7 +57,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-  // Uses all default values from meta
   render: function DefaultRender(args) {
     return (
       <div style={cubeViewportStyle}>
@@ -142,12 +143,11 @@ export const LowPerspective: Story = {
 export const CustomConfiguration: Story = {
   args: {
     speed: 1200,
-    timeout: 0, // Disable auto-scroll
+    timeout: 0,
     autoScroll: false,
     loop: false,
     startIndex: 1,
-    swipe: false,
-    swipeTolerance: 60,
+    enableTouch: false,
     pauseOnHover: false,
     direction: 'vertical',
     perspective: 1500,
@@ -168,8 +168,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 1,
-    swipe: false,
-    swipeTolerance: 60,
+    enableTouch: false,
     pauseOnHover: false,
     direction: 'vertical',
     perspective: 1500,

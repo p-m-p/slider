@@ -46,28 +46,25 @@ function testEffectProps<T extends SliderElement>(
 ) {
   const autoScroll = false
   const pauseOnHover = false
+  const enableTouch = false
   const speed = 500
   const startIndex = 1
-  const swipe = false
-  const swipeTolerance = 100
   const timeout = 5000
 
   const el = createSliderElement<T>(tag, {
     'auto-scroll': `${autoScroll}`,
     'pause-on-hover': `${pauseOnHover}`,
+    'enable-touch': `${enableTouch}`,
     'start-index': `${startIndex}`,
     speed: `${speed}`,
-    swipe: `${swipe}`,
-    'swipe-tolerance': `${swipeTolerance}`,
     timeout: `${timeout}`,
   })
 
   expect(el.autoScroll).toBeFalsy()
   expect(el.pauseOnHover).toBeFalsy()
+  expect(el.enableTouch).toBeFalsy()
   expect(el.speed).toBe(speed)
   expect(el.startIndex).toBe(startIndex)
-  expect(el.swipe).toBeFalsy()
-  expect(el.swipeTolerance).toBe(swipeTolerance)
   expect(el.timeout).toBe(timeout)
 
   const slider = el.slider!
@@ -84,13 +81,6 @@ function testEffectProps<T extends SliderElement>(
 
   const resetSpy = vi.spyOn(slider, 'reset')
 
-  el.setAttribute('pause-on-hover', 'true')
-  expect(resetSpy.mock.calls[0][0]).toEqual({ pauseOnHover: true })
-  el.pauseOnHover = false
-  expect(resetSpy.mock.calls[1][0]).toEqual({ pauseOnHover: false })
-
-  resetSpy.mockClear()
-
   el.setAttribute('speed', '2000')
   expect(resetSpy.mock.calls[0][0]).toEqual({ speed: 2000 })
   el.speed = 3000
@@ -102,20 +92,6 @@ function testEffectProps<T extends SliderElement>(
   expect(resetSpy.mock.calls[0][0]).toEqual({ startIndex: 2 })
   el.startIndex = 1
   expect(resetSpy.mock.calls[1][0]).toEqual({ startIndex: 1 })
-
-  resetSpy.mockClear()
-
-  el.setAttribute('swipe', '')
-  expect(resetSpy.mock.calls[0][0]).toEqual({ swipe: true })
-  el.swipe = false
-  expect(resetSpy.mock.calls[1][0]).toEqual({ swipe: false })
-
-  resetSpy.mockClear()
-
-  el.setAttribute('swipe-tolerance', '50')
-  expect(resetSpy.mock.calls[0][0]).toEqual({ swipeTolerance: 50 })
-  el.swipeTolerance = 100
-  expect(resetSpy.mock.calls[1][0]).toEqual({ swipeTolerance: 100 })
 
   resetSpy.mockClear()
 
@@ -312,4 +288,32 @@ test('slider lifecycle events', async () => {
 
   el.remove()
   expect(destroyHandler).toHaveBeenCalledWith(new CustomEvent('destroy'))
+})
+
+test('plugin management via enable-touch and pause-on-hover', () => {
+  const el = createSliderElement<CarouselSliderElement>('bs-carousel', {
+    'auto-scroll': 'false',
+    'enable-touch': 'true',
+    'pause-on-hover': 'true',
+  })
+
+  const slider = el.slider!
+
+  expect(el.enableTouch).toBe(true)
+  expect(el.pauseOnHover).toBe(true)
+
+  expect(slider.getPlugin('touch-gesture')).toBeDefined()
+  expect(slider.getPlugin('pause-on-hover')).toBeDefined()
+
+  el.enableTouch = false
+  expect(slider.getPlugin('touch-gesture')).toBeUndefined()
+
+  el.pauseOnHover = false
+  expect(slider.getPlugin('pause-on-hover')).toBeUndefined()
+
+  el.enableTouch = true
+  expect(slider.getPlugin('touch-gesture')).toBeDefined()
+
+  el.pauseOnHover = true
+  expect(slider.getPlugin('pause-on-hover')).toBeDefined()
 })
