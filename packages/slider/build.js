@@ -10,6 +10,7 @@ const entryPoints = [
   'effects/carousel-slider.ts',
   'effects/cube-slider.ts',
   'effects/fade-slider.ts',
+  'plugins/index.ts',
 ].map((entry) => join(srcDir, entry))
 
 await buildLib(entryPoints, outDir)

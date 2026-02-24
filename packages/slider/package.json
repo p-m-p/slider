@@ -48,6 +48,11 @@
       "import": "./dist/esm/effects/tile/tile-slider.js",
       "require": "./dist/cjs/effects/tile/tile-slider.cjs"
     },
+    "./plugins": {
+      "types": "./dist/types/plugins/index.d.ts",
+      "import": "./dist/esm/plugins/index.js",
+      "require": "./dist/cjs/plugins/index.cjs"
+    },
     "./browser.min.js": "./dist/min.js"
   },
   "main": "./dist/cjs/index.cjs",

@@ -1,4 +1,9 @@
-import type { BoxSliderOptions, Effect, TransitionSettings } from '../types'
+import type {
+  BoxSliderOptions,
+  Effect,
+  ProgressiveTransitionState,
+  TransitionSettings,
+} from '../types'
 import { applyCss } from '../utils'
 
 export interface CarouselSliderOptions {
@@ -8,6 +13,7 @@ export interface CarouselSliderOptions {
 
 export default class CarouselSlider implements Effect {
   readonly options: CarouselSliderOptions
+  readonly supportsProgressiveTransition = true
 
   constructor(options?: CarouselSliderOptions) {
     this.options = {
@@ -103,5 +109,137 @@ export default class CarouselSlider implements Effect {
     slides.forEach((slide) => {
       slide.getAnimations().forEach((animation) => animation.cancel())
     })
+  }
+
+  prepareTransition({
+    currentIndex,
+    isPrevious,
+    nextIndex,
+    slides,
+    speed,
+  }: TransitionSettings): ProgressiveTransitionState | null {
+    const currentSlide = slides[currentIndex]
+    const currentSlideWidth = currentSlide.offsetWidth
+    const nextSlide = slides[nextIndex]
+    const nextSlideWidth = nextSlide.offsetWidth
+    const isCover = this.options.cover
+
+    applyCss(nextSlide, { 'z-index': '3' })
+    applyCss(currentSlide, { 'z-index': '2' })
+
+    const nextStartX = isPrevious ? -nextSlideWidth : nextSlideWidth
+    const currentEndX = isPrevious ? currentSlideWidth : -currentSlideWidth
+
+    applyCss(nextSlide, {
+      transform: `translateX(${nextStartX}px)`,
+    })
+
+    return {
+      setProgress: (progress: number) => {
+        const nextX = nextStartX * (1 - progress)
+        applyCss(nextSlide, {
+          transform: `translateX(${nextX}px)`,
+        })
+
+        if (!isCover) {
+          const currentX = currentEndX * progress
+          applyCss(currentSlide, {
+            transform: `translateX(${currentX}px)`,
+          })
+        }
+      },
+
+      complete: async (fromProgress: number) => {
+        const remainingProgress = 1 - fromProgress
+        const remainingDuration = speed * remainingProgress
+
+        const nextX = nextStartX * (1 - fromProgress)
+
+        const animateIn = nextSlide.animate(
+          {
+            transform: [`translateX(${nextX}px)`, 'translateX(0px)'],
+          },
+          {
+            duration: remainingDuration,
+            easing: this.options.timingFunction,
+            fill: 'forwards',
+          },
+        )
+
+        if (!isCover) {
+          const currentX = currentEndX * fromProgress
+          await currentSlide.animate(
+            {
+              transform: [
+                `translateX(${currentX}px)`,
+                `translateX(${currentEndX}px)`,
+              ],
+            },
+            {
+              duration: remainingDuration,
+              easing: this.options.timingFunction,
+              fill: 'forwards',
+            },
+          ).finished
+        }
+
+        await animateIn.finished
+
+        applyCss(currentSlide, { 'z-index': '1' })
+      },
+
+      cancel: async (fromProgress: number) => {
+        const remainingDuration = speed * fromProgress
+
+        const nextX = nextStartX * (1 - fromProgress)
+
+        const animateOut = nextSlide.animate(
+          {
+            transform: [
+              `translateX(${nextX}px)`,
+              `translateX(${nextStartX}px)`,
+            ],
+          },
+          {
+            duration: remainingDuration,
+            easing: this.options.timingFunction,
+            fill: 'forwards',
+          },
+        )
+
+        if (!isCover) {
+          const currentX = currentEndX * fromProgress
+          await currentSlide.animate(
+            {
+              transform: [`translateX(${currentX}px)`, 'translateX(0px)'],
+            },
+            {
+              duration: remainingDuration,
+              easing: this.options.timingFunction,
+              fill: 'forwards',
+            },
+          ).finished
+        }
+
+        await animateOut.finished
+
+        applyCss(nextSlide, { 'z-index': '1' })
+        applyCss(currentSlide, { 'z-index': '3' })
+      },
+
+      abort: () => {
+        nextSlide.getAnimations().forEach((animation) => animation.cancel())
+        currentSlide.getAnimations().forEach((animation) => animation.cancel())
+
+        applyCss(nextSlide, {
+          transform: `translateX(${nextStartX}px)`,
+          'z-index': '1',
+        })
+        applyCss(currentSlide, {
+          transform: 'translateX(0px)',
+          'z-index': '3',
+        })
+      },
+    }
   }
 }

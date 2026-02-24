@@ -2,25 +2,32 @@ import BoxSlider, { defaultOptions } from '@boxslider/slider/BoxSlider'
 import type {
   BoxSliderOptions,
   Effect,
+  Plugin,
   SliderEventType,
 } from '@boxslider/slider'
+import {
+  PauseOnHoverPlugin,
+  TouchGesturePlugin,
+} from '@boxslider/slider/plugins'
 import { SafeBaseElement } from './core'
 
-const BOOLEAN_ATTRIBUTES = ['auto-scroll', 'loop', 'pause-on-hover', 'swipe']
-const NUMERIC_ATTRIBUTES = [
-  'speed',
-  'start-index',
-  'swipe-tolerance',
-  'timeout',
+const BOOLEAN_ATTRIBUTES = [
+  'auto-scroll',
+  'loop',
+  'enable-touch',
+  'pause-on-hover',
 ]
+const NUMERIC_ATTRIBUTES = ['speed', 'start-index', 'timeout']
 export const SLIDER_ATTRIBUTES = [...BOOLEAN_ATTRIBUTES, ...NUMERIC_ATTRIBUTES]
 
-type NumericProp = 'speed' | 'startIndex' | 'swipeTolerance' | 'timeout'
-type BooleanProp = 'autoScroll' | 'loop' | 'pauseOnHover' | 'swipe'
+type NumericProp = 'speed' | 'startIndex' | 'timeout'
+type BooleanProp = 'autoScroll' | 'loop' | 'enableTouch' | 'pauseOnHover'
 
 export interface SliderElement extends BoxSliderOptions, HTMLElement {
   readonly slider?: BoxSlider
   readonly options: BoxSliderOptions
+  enableTouch: boolean
+  pauseOnHover: boolean
 }
 
 export default abstract class Slider
@@ -30,6 +37,9 @@ export default abstract class Slider
   #slider?: BoxSlider
   #observer: MutationObserver
   #optionsCache: Partial<BoxSliderOptions> = {}
+  #enableTouch = true
+  #pauseOnHover = true
+  #pendingPlugins: Plugin[] = []
 
   static observedAttributes = SLIDER_ATTRIBUTES
 
@@ -71,12 +81,44 @@ export default abstract class Slider
     this.reset({ loop })
   }
 
+  get enableTouch() {
+    return this.#enableTouch
+  }
+
+  set enableTouch(enableTouch: boolean) {
+    if (this.#enableTouch === enableTouch) {
+      return
+    }
+
+    this.#enableTouch = enableTouch
+
+    if (this.slider) {
+      if (enableTouch) {
+        this.slider.use(new TouchGesturePlugin())
+      } else {
+        this.slider.unuse('touch-gesture')
+      }
+    }
+  }
+
   get pauseOnHover() {
-    return this.#getOrDefault('pauseOnHover')
+    return this.#pauseOnHover
   }
 
   set pauseOnHover(pauseOnHover: boolean) {
-    this.reset({ pauseOnHover })
+    if (this.#pauseOnHover === pauseOnHover) {
+      return
+    }
+
+    this.#pauseOnHover = pauseOnHover
+
+    if (this.slider) {
+      if (pauseOnHover) {
+        this.slider.use(new PauseOnHoverPlugin())
+      } else {
+        this.slider.unuse('pause-on-hover')
+      }
+    }
   }
 
   get speed() {
@@ -95,22 +137,6 @@ export default abstract class Slider
     this.reset({ startIndex })
   }
 
-  get swipe() {
-    return this.#getOrDefault('swipe')
-  }
-
-  set swipe(swipe: boolean) {
-    this.reset({ swipe })
-  }
-
-  get swipeTolerance() {
-    return this.#getOrDefault('swipeTolerance')
-  }
-
-  set swipeTolerance(swipeTolerance: number) {
-    this.reset({ swipeTolerance })
-  }
-
   get timeout() {
     return this.#getOrDefault('timeout')
   }
@@ -123,11 +149,8 @@ export default abstract class Slider
     return {
       autoScroll: this.autoScroll,
       loop: this.loop,
-      pauseOnHover: this.pauseOnHover,
       speed: this.speed,
       startIndex: this.startIndex,
-      swipe: this.swipe,
-      swipeTolerance: this.swipeTolerance,
       timeout: this.timeout,
     }
   }
@@ -150,8 +173,29 @@ export default abstract class Slider
     })
   }
 
+  use(plugin: Plugin): this {
+    if (this.slider) {
+      this.slider.use(plugin)
+    } else {
+      this.#pendingPlugins.push(plugin)
+    }
+
+    return this
+  }
+
   protected init(effect: Effect) {
-    const slider = new BoxSlider(this, effect, this.#optionsCache)
+    const plugins: Plugin[] = [...this.#pendingPlugins]
+    this.#pendingPlugins = []
+
+    if (this.#enableTouch) {
+      plugins.push(new TouchGesturePlugin())
+    }
+
+    if (this.#pauseOnHover) {
+      plugins.push(new PauseOnHoverPlugin())
+    }
+
+    const slider = new BoxSlider(this, effect, this.#optionsCache, plugins)
     const events: SliderEventType[] = [
       'after',
       'before',

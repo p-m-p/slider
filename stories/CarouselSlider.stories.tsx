@@ -7,6 +7,8 @@ import { sharedSliderArgTypes } from './shared-arg-types'
 
 const defaultStoryArgs = {
   ...defaultOptions,
+  enableTouch: true,
+  pauseOnHover: true,
   timingFunction: 'ease' as const,
   cover: false,
 }
@@ -19,7 +21,7 @@ const meta: Meta<typeof CarouselSlider> = {
     docs: {
       description: {
         component:
-          'A carousel slider component that provides horizontal slide transitions with smooth animations.',
+          'A carousel slider component that provides horizontal slide transitions with smooth animations. Supports progressive drag gestures for touch interaction.',
       },
     },
   },
@@ -126,12 +128,11 @@ export const FastTransitions: Story = {
 export const CustomConfiguration: Story = {
   args: {
     speed: 1000,
-    timeout: 0, // Disable auto-scroll
+    timeout: 0,
     autoScroll: false,
     loop: false,
     startIndex: 2,
-    swipe: false,
-    swipeTolerance: 50,
+    enableTouch: false,
     pauseOnHover: false,
     cover: true,
     timingFunction: 'linear',
@@ -150,8 +151,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 2,
-    swipe: false,
-    swipeTolerance: 50,
+    enableTouch: false,
     pauseOnHover: false,
     cover: true,
     timingFunction: 'linear',

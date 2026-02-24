@@ -7,6 +7,8 @@ import { sharedSliderArgTypes } from './shared-arg-types'
 
 const defaultStoryArgs = {
   ...defaultOptions,
+  enableTouch: true,
+  pauseOnHover: true,
   tileEffect: 'fade' as const,
   rows: 8,
   rowOffset: 50,
@@ -55,7 +57,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {},
-  // Uses all default values from meta
   render: function DefaultRender(args) {
     return (
       <TileSlider {...args}>
@@ -152,12 +153,11 @@ export const HighOffset: Story = {
 export const CustomConfiguration: Story = {
   args: {
     speed: 1500,
-    timeout: 0, // Disable auto-scroll
+    timeout: 0,
     autoScroll: false,
     loop: false,
     startIndex: 4,
-    swipe: false,
-    swipeTolerance: 100,
+    enableTouch: false,
     pauseOnHover: false,
     tileEffect: 'flip',
     rows: 6,
@@ -177,8 +177,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 4,
-    swipe: false,
-    swipeTolerance: 100,
+    enableTouch: false,
     pauseOnHover: false,
     tileEffect: 'flip',
     rows: 6,

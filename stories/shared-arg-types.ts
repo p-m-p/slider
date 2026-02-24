@@ -25,23 +25,19 @@ export const sharedSliderArgTypes: ArgTypes = {
   },
   pauseOnHover: {
     control: { type: 'boolean' },
-    description: 'Pause auto-scroll on mouse hover',
+    description: 'Pause auto-scroll on mouse hover (uses PauseOnHoverPlugin)',
+    defaultValue: true,
+  },
+  enableTouch: {
+    control: { type: 'boolean' },
+    description:
+      'Enable touch/swipe navigation with progressive drag support (uses TouchGesturePlugin)',
     defaultValue: true,
   },
   startIndex: {
     control: { type: 'number', min: 0, max: 10, step: 1 },
     description: 'Slide index to start from (0-based)',
     defaultValue: 0,
-  },
-  swipe: {
-    control: { type: 'boolean' },
-    description: 'Enable touch/swipe navigation',
-    defaultValue: true,
-  },
-  swipeTolerance: {
-    control: { type: 'number', min: 10, max: 100, step: 5 },
-    description: 'Minimum distance in pixels for a swipe transition',
-    defaultValue: 30,
   },
 
   // Style prop
