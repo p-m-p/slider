@@ -102,8 +102,15 @@ export class TouchGesturePlugin implements Plugin {
       }
 
       // For horizontal: right = prev, left = next
-      // For vertical: down = prev, up = next
-      this.direction = primaryDelta > 0 ? 'prev' : 'next'
+      // For vertical: up = prev, down = next (inverted to match visual rotation)
+      this.direction =
+        primaryDelta > 0
+          ? isHorizontal
+            ? 'prev'
+            : 'next'
+          : isHorizontal
+            ? 'next'
+            : 'prev'
       this.progressiveController = this.context.requestProgressiveTransition(
         this.direction,
       )
@@ -162,7 +169,9 @@ export class TouchGesturePlugin implements Plugin {
         this.progressiveController.cancel()
       }
     } else if (this.direction === null && Math.abs(delta) >= this.threshold) {
-      if (delta > 0) {
+      // Same direction logic as in handleTouchMove
+      const goPrev = isHorizontal ? delta > 0 : delta < 0
+      if (goPrev) {
         this.context.slider.prev()
       } else {
         this.context.slider.next()
