@@ -8,6 +8,7 @@ import type {
 import {
   PauseOnHoverPlugin,
   TouchGesturePlugin,
+  type TouchGesturePluginOptions,
 } from '@boxslider/slider/plugins'
 import { SafeBaseElement } from './core'
 
@@ -94,7 +95,7 @@ export default abstract class Slider
 
     if (this.slider) {
       if (enableTouch) {
-        this.slider.use(new TouchGesturePlugin())
+        this.slider.use(new TouchGesturePlugin(this.getTouchGestureOptions()))
       } else {
         this.slider.unuse('touch-gesture')
       }
@@ -183,12 +184,16 @@ export default abstract class Slider
     return this
   }
 
+  protected getTouchGestureOptions(): TouchGesturePluginOptions {
+    return {}
+  }
+
   protected init(effect: Effect) {
     const plugins: Plugin[] = [...this.#pendingPlugins]
     this.#pendingPlugins = []
 
     if (this.#enableTouch) {
-      plugins.push(new TouchGesturePlugin())
+      plugins.push(new TouchGesturePlugin(this.getTouchGestureOptions()))
     }
 
     if (this.#pauseOnHover) {

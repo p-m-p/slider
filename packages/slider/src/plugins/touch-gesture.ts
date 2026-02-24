@@ -8,6 +8,7 @@ export interface TouchGesturePluginOptions {
   threshold?: number
   commitThreshold?: number
   velocityThreshold?: number
+  direction?: 'horizontal' | 'vertical'
 }
 
 export class TouchGesturePlugin implements Plugin {
@@ -16,6 +17,7 @@ export class TouchGesturePlugin implements Plugin {
   private readonly threshold: number
   private readonly commitThreshold: number
   private readonly velocityThreshold: number
+  private readonly gestureDirection: 'horizontal' | 'vertical'
 
   private context?: PluginContext
   private startX = 0
@@ -24,12 +26,13 @@ export class TouchGesturePlugin implements Plugin {
   private isTracking = false
   private direction: 'next' | 'prev' | null = null
   private progressiveController: ProgressiveTransitionController | null = null
-  private isVerticalScroll = false
+  private isPerpendicularScroll = false
 
   constructor(options?: TouchGesturePluginOptions) {
     this.threshold = options?.threshold ?? 30
     this.commitThreshold = options?.commitThreshold ?? 0.5
     this.velocityThreshold = options?.velocityThreshold ?? 0.5
+    this.gestureDirection = options?.direction ?? 'horizontal'
   }
 
   initialize(context: PluginContext): void {
@@ -70,7 +73,7 @@ export class TouchGesturePlugin implements Plugin {
     this.startTime = Date.now()
     this.isTracking = true
     this.direction = null
-    this.isVerticalScroll = false
+    this.isPerpendicularScroll = false
   }
 
   private handleTouchMove = (ev: TouchEvent): void => {
@@ -82,27 +85,38 @@ export class TouchGesturePlugin implements Plugin {
     const deltaX = touch.clientX - this.startX
     const deltaY = touch.clientY - this.startY
 
+    const isHorizontal = this.gestureDirection === 'horizontal'
+    const primaryDelta = isHorizontal ? deltaX : deltaY
+    const perpendicularDelta = isHorizontal ? deltaY : deltaX
+
     if (this.direction === null) {
-      if (Math.abs(deltaY) > Math.abs(deltaX)) {
-        this.isVerticalScroll = true
+      // Check if user is scrolling perpendicular to gesture direction
+      if (Math.abs(perpendicularDelta) > Math.abs(primaryDelta)) {
+        this.isPerpendicularScroll = true
         this.isTracking = false
         return
       }
 
-      if (Math.abs(deltaX) < this.threshold) {
+      if (Math.abs(primaryDelta) < this.threshold) {
         return
       }
 
-      this.direction = deltaX > 0 ? 'prev' : 'next'
+      // For horizontal: right = prev, left = next
+      // For vertical: down = prev, up = next
+      this.direction = primaryDelta > 0 ? 'prev' : 'next'
       this.progressiveController = this.context.requestProgressiveTransition(
         this.direction,
       )
 
       // Update start position to account for threshold
-      this.startX = touch.clientX
+      if (isHorizontal) {
+        this.startX = touch.clientX
+      } else {
+        this.startY = touch.clientY
+      }
     }
 
-    if (this.isVerticalScroll) {
+    if (this.isPerpendicularScroll) {
       return
     }
 
@@ -112,8 +126,13 @@ export class TouchGesturePlugin implements Plugin {
     }
 
     if (this.progressiveController) {
-      const slideWidth = this.context.el.offsetWidth
-      const progress = Math.abs(touch.clientX - this.startX) / slideWidth
+      const slideSize = isHorizontal
+        ? this.context.el.offsetWidth
+        : this.context.el.offsetHeight
+      const currentDelta = isHorizontal
+        ? touch.clientX - this.startX
+        : touch.clientY - this.startY
+      const progress = Math.abs(currentDelta) / slideSize
       this.progressiveController.setProgress(Math.min(1, progress))
     }
   }
@@ -125,9 +144,12 @@ export class TouchGesturePlugin implements Plugin {
     }
 
     const touch = ev.changedTouches[0]
-    const deltaX = touch.clientX - this.startX
+    const isHorizontal = this.gestureDirection === 'horizontal'
+    const delta = isHorizontal
+      ? touch.clientX - this.startX
+      : touch.clientY - this.startY
     const elapsed = Date.now() - this.startTime
-    const velocity = Math.abs(deltaX) / elapsed
+    const velocity = Math.abs(delta) / elapsed
 
     if (this.progressiveController) {
       const progress = this.progressiveController.progress
@@ -139,8 +161,8 @@ export class TouchGesturePlugin implements Plugin {
       } else {
         this.progressiveController.cancel()
       }
-    } else if (this.direction === null && Math.abs(deltaX) >= this.threshold) {
-      if (deltaX > 0) {
+    } else if (this.direction === null && Math.abs(delta) >= this.threshold) {
+      if (delta > 0) {
         this.context.slider.prev()
       } else {
         this.context.slider.next()
@@ -161,7 +183,7 @@ export class TouchGesturePlugin implements Plugin {
     this.isTracking = false
     this.direction = null
     this.progressiveController = null
-    this.isVerticalScroll = false
+    this.isPerpendicularScroll = false
   }
 }
 
