@@ -124,8 +124,17 @@ export default class CarouselSlider implements Effect {
     const nextSlideWidth = nextSlide.offsetWidth
     const isCover = this.options.cover
 
+    // Cancel any existing animations to ensure clean state
+    nextSlide.getAnimations().forEach((a) => a.cancel())
+    currentSlide.getAnimations().forEach((a) => a.cancel())
+
+    // Ensure current slide is at origin position
+    applyCss(currentSlide, {
+      transform: 'translateX(0px)',
+      'z-index': '2',
+    })
+
     applyCss(nextSlide, { 'z-index': '3' })
-    applyCss(currentSlide, { 'z-index': '2' })
 
     const nextStartX = isPrevious ? -nextSlideWidth : nextSlideWidth
     const currentEndX = isPrevious ? currentSlideWidth : -currentSlideWidth
@@ -185,7 +194,18 @@ export default class CarouselSlider implements Effect {
 
         await animateIn.finished
 
-        applyCss(currentSlide, { 'z-index': '1' })
+        // Cancel animations and apply final styles
+        nextSlide.getAnimations().forEach((a) => a.cancel())
+        currentSlide.getAnimations().forEach((a) => a.cancel())
+
+        applyCss(nextSlide, {
+          transform: 'translateX(0px)',
+          'z-index': '3',
+        })
+        applyCss(currentSlide, {
+          transform: `translateX(${currentEndX}px)`,
+          'z-index': '1',
+        })
       },
 
       cancel: async (fromProgress: number) => {
@@ -223,8 +243,18 @@ export default class CarouselSlider implements Effect {
 
         await animateOut.finished
 
-        applyCss(nextSlide, { 'z-index': '1' })
-        applyCss(currentSlide, { 'z-index': '3' })
+        // Cancel animations and apply final styles
+        nextSlide.getAnimations().forEach((a) => a.cancel())
+        currentSlide.getAnimations().forEach((a) => a.cancel())
+
+        applyCss(nextSlide, {
+          transform: `translateX(${nextStartX}px)`,
+          'z-index': '1',
+        })
+        applyCss(currentSlide, {
+          transform: 'translateX(0px)',
+          'z-index': '3',
+        })
       },
 
       abort: () => {
