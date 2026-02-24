@@ -97,13 +97,19 @@ export class TouchGesturePlugin implements Plugin {
       this.progressiveController = this.context.requestProgressiveTransition(
         this.direction,
       )
+
+      // Update start position to account for threshold
+      this.startX = touch.clientX
     }
 
     if (this.isVerticalScroll) {
       return
     }
 
-    ev.preventDefault()
+    // Only prevent default if the event is cancelable
+    if (ev.cancelable) {
+      ev.preventDefault()
+    }
 
     if (this.progressiveController) {
       const slideWidth = this.context.el.offsetWidth

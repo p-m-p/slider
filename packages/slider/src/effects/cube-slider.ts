@@ -124,6 +124,19 @@ export default class CubeSlider implements Effect {
     const nextSlide = settings.slides[settings.nextIndex]
     const currentSlide = settings.slides[settings.currentIndex]
 
+    // Cancel any existing animations to ensure clean state
+    settings.el.getAnimations().forEach((a) => a.cancel())
+    nextSlide.getAnimations().forEach((a) => a.cancel())
+    currentSlide.getAnimations().forEach((a) => a.cancel())
+
+    // Ensure el and current slide are at their default positions
+    applyCss(settings.el, {
+      transform: `translate3d(0,0,-${this.translateZ}px)`,
+    })
+    applyCss(currentSlide, {
+      transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
+    })
+
     applyCss(nextSlide, {
       transform: `${this.rotation(-targetAngle)} translate3d(0,0,${this.translateZ}px)`,
     })
@@ -152,6 +165,9 @@ export default class CubeSlider implements Effect {
             duration: remainingDuration,
           },
         ).finished
+
+        // Cancel any running animations
+        settings.el.getAnimations().forEach((a) => a.cancel())
 
         settings.slides.forEach((s, index) => {
           if (index !== settings.nextIndex) {
@@ -183,6 +199,9 @@ export default class CubeSlider implements Effect {
             duration: remainingDuration,
           },
         ).finished
+
+        // Cancel any running animations
+        settings.el.getAnimations().forEach((a) => a.cancel())
 
         applyCss(nextSlide, { transform: 'initial' })
         applyCss(currentSlide, {
