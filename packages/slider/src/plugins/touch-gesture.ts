@@ -31,7 +31,7 @@ export class TouchGesturePlugin implements Plugin {
   constructor(options?: TouchGesturePluginOptions) {
     this.threshold = options?.threshold ?? 30
     this.commitThreshold = options?.commitThreshold ?? 0.5
-    this.velocityThreshold = options?.velocityThreshold ?? 0.5
+    this.velocityThreshold = options?.velocityThreshold ?? 0.3
     this.gestureDirection = options?.direction ?? 'horizontal'
   }
 
@@ -115,12 +115,14 @@ export class TouchGesturePlugin implements Plugin {
         this.direction,
       )
 
-      // Update start position to account for threshold
+      // Update start position and time to account for threshold
+      // This ensures velocity is calculated from the actual gesture start
       if (isHorizontal) {
         this.startX = touch.clientX
       } else {
         this.startY = touch.clientY
       }
+      this.startTime = Date.now()
     }
 
     if (this.isPerpendicularScroll) {
