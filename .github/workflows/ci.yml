@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - next
 permissions:
   contents: write
   packages: write
@@ -21,6 +22,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+          registry-url: 'https://registry.npmjs.org'
       - run: pnpm install
       - run: pnpm run lint
       - run: pnpm run build
@@ -29,14 +31,30 @@ jobs:
         run: pnpm run chromatic
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_TOKEN }}
-      - uses: changesets/action@v1
+
+      # Canary release for next branch
+      - name: Publish canary release
+        if: github.ref == 'refs/heads/next'
+        run: |
+          pnpm changeset version --snapshot next
+          pnpm changeset publish --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Regular release for main branch
+      - name: Create release PR or publish
+        if: github.ref == 'refs/heads/main'
+        uses: changesets/action@v1
         with:
           publish: pnpm run release
           commit: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Deploy GH Pages
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
