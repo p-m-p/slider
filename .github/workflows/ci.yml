@@ -26,9 +26,11 @@ jobs:
       - run: pnpm run build
       - run: pnpm run test:coverage
       - name: Run Chromatic tests
-        run: pnpm run chromatic
-        env:
-          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_TOKEN }}
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_TOKEN }}
+          turboSnap: true
+          autoAcceptChanges: true
       - uses: changesets/action@v1
         with:
           publish: pnpm run release
