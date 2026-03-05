@@ -4,6 +4,7 @@ projectToken: PROJECT_TOKEN_PLACEHOLDER
 
 # Test settings
 onlyChanged: true
+turboSnap: true
 untraced: []
 externals: []
 
