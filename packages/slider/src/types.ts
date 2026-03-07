@@ -74,7 +74,7 @@ export interface BoxSliderOptions {
   loop: boolean
 
   /**
-   * Pause auto scrolling on mouse over
+   * Pause auto scrolling when the mouse hovers over the slider
    */
   pauseOnHover: boolean
 
@@ -89,12 +89,17 @@ export interface BoxSliderOptions {
   startIndex: number
 
   /**
-   * Enable swiping to show next or previous slide
+   * Enable touch/swipe navigation
    */
   swipe: boolean
 
   /**
-   * Minimum distance in pixels for a swipe transition
+   * Direction for swipe gestures
+   */
+  swipeDirection: 'horizontal' | 'vertical'
+
+  /**
+   * Minimum distance in pixels required to trigger a swipe
    */
   swipeTolerance: number
 
@@ -137,6 +142,31 @@ export interface TransitionSettings {
   speed: number
 }
 
+/**
+ * State controller for progressive (drag-based) transitions
+ */
+export interface ProgressiveTransitionState {
+  /**
+   * Set the progress of the transition (0-1)
+   */
+  setProgress(progress: number): void
+
+  /**
+   * Complete the transition from the current progress
+   */
+  complete(fromProgress: number): Promise<void>
+
+  /**
+   * Cancel the transition and return to the start position
+   */
+  cancel(fromProgress: number): Promise<void>
+
+  /**
+   * Immediately abort and reset to initial state
+   */
+  abort(): void
+}
+
 export interface Effect {
   /**
    * Destroy the effect to remove any timers, event listeners, etc.
@@ -173,4 +203,17 @@ export interface Effect {
    * Transition to the next slide
    */
   transition(settings: TransitionSettings): void | Promise<void>
+
+  /**
+   * Whether this effect supports progressive (drag-based) transitions
+   */
+  readonly supportsProgressiveTransition?: boolean
+
+  /**
+   * Prepare a progressive transition and return a state controller.
+   * Returns null if progressive transition is not supported or not possible.
+   */
+  prepareTransition?(
+    settings: TransitionSettings,
+  ): ProgressiveTransitionState | null
 }

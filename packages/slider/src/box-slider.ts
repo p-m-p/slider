@@ -21,9 +21,19 @@ export const defaultOptions: BoxSliderOptions = Object.freeze({
   speed: 800,
   startIndex: 0,
   swipe: true,
+  swipeDirection: 'horizontal',
   swipeTolerance: 30,
   timeout: 5000,
 })
+
+interface ProgressiveTransitionController {
+  nextIndex: number
+  progress: number
+  setProgress(progress: number): void
+  complete(): Promise<void>
+  cancel(): Promise<void>
+  abort(): void
+}
 
 export class BoxSlider {
   private _activeIndex: number
@@ -35,9 +45,25 @@ export class BoxSlider {
   private slides: HTMLElement[]
   private autoScrollTimer?: ReturnType<typeof setTimeout>
   private eventListeners: EventListenerMap
-  private elListeners: { [ev: string]: EventListener[] }
   private isDestroyed: boolean
   private transitionQueue: TransitionQueue
+  private progressiveTransitionInProgress: boolean
+
+  private elListeners: Array<{
+    type: string
+    listener: EventListener
+    options?: AddEventListenerOptions
+  }> = []
+
+  private touchStartX = 0
+  private touchStartY = 0
+  private touchStartTime = 0
+  private isTouchTracking = false
+  private touchDirection: 'next' | 'prev' | null = null
+  private touchProgressiveController: ProgressiveTransitionController | null =
+    null
+  private isPerpendicularScroll = false
+  private pauseOnHoverWasPlaying = false
 
   /**
    * The currently active slide index
@@ -102,8 +128,8 @@ export class BoxSlider {
     this.transitionQueue = createQueue()
     this.slides = []
     this.eventListeners = {}
-    this.elListeners = {}
     this.isDestroyed = false
+    this.progressiveTransitionInProgress = false
 
     this.options = {
       ...defaultOptions,
@@ -121,6 +147,7 @@ export class BoxSlider {
    */
   reset(options?: Partial<BoxSliderOptions>, effect?: Effect) {
     this.stopAutoScroll()
+    this.removeEventListeners()
 
     if (typeof this.effect.destroy === 'function') {
       this.effect.destroy(this.el, this.slides)
@@ -140,6 +167,7 @@ export class BoxSlider {
     }
 
     this.init(effect || this.effect)
+    this.applyEventListeners()
     this.emit('reset')
   }
 
@@ -253,6 +281,7 @@ export class BoxSlider {
   destroy(): void {
     this.isDestroyed = true
     this.stopAutoScroll()
+    this.removeEventListeners()
 
     if (this.effect.destroy) {
       this.effect.destroy(this.el, this.slides)
@@ -263,12 +292,6 @@ export class BoxSlider {
     responder.remove(this)
     this.emit('destroy')
     this.eventListeners = {}
-    Object.entries(this.elListeners).forEach(([ev, listeners]) =>
-      listeners.forEach((listener) =>
-        this.el.removeEventListener(ev, listener),
-      ),
-    )
-    this.elListeners = {}
 
     delete this._el
     delete this._stateStore
@@ -334,6 +357,310 @@ export class BoxSlider {
     return [...this.el.children].filter(
       (child: Node) => child instanceof HTMLElement,
     ) as HTMLElement[]
+  }
+
+  private addElListener<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (ev: HTMLElementEventMap[K]) => void,
+    options?: AddEventListenerOptions,
+  ) {
+    this.el.addEventListener(type, listener as EventListener, options)
+    this.elListeners.push({
+      type,
+      listener: listener as EventListener,
+      options,
+    })
+  }
+
+  private removeEventListeners() {
+    this.elListeners.forEach(({ type, listener, options }) => {
+      this.el.removeEventListener(type, listener, options)
+    })
+    this.elListeners = []
+  }
+
+  private applyEventListeners() {
+    if (this.options.pauseOnHover) {
+      this.addElListener('pointerenter', this.handlePointerEnter)
+      this.addElListener('pointerleave', this.handlePointerLeave)
+    }
+
+    if (this.options.swipe) {
+      this.addElListener('touchstart', this.handleTouchStart, { passive: true })
+      this.addElListener('touchmove', this.handleTouchMove, { passive: false })
+      this.addElListener('touchend', this.handleTouchEnd, { passive: true })
+      this.addElListener('touchcancel', this.handleTouchCancel, {
+        passive: true,
+      })
+    }
+  }
+
+  private handlePointerEnter = () => {
+    if (this.options.autoScroll) {
+      this.pauseOnHoverWasPlaying = true
+      this.pause()
+    }
+  }
+
+  private handlePointerLeave = () => {
+    if (this.pauseOnHoverWasPlaying) {
+      this.pauseOnHoverWasPlaying = false
+      this.play()
+    }
+  }
+
+  private handleTouchStart = (ev: TouchEvent) => {
+    if (ev.touches.length !== 1) {
+      return
+    }
+
+    const touch = ev.touches[0]
+    this.touchStartX = touch.clientX
+    this.touchStartY = touch.clientY
+    this.touchStartTime = Date.now()
+    this.isTouchTracking = true
+    this.touchDirection = null
+    this.isPerpendicularScroll = false
+  }
+
+  private handleTouchMove = (ev: TouchEvent) => {
+    if (!this.isTouchTracking || ev.touches.length !== 1) {
+      return
+    }
+
+    const touch = ev.touches[0]
+    const deltaX = touch.clientX - this.touchStartX
+    const deltaY = touch.clientY - this.touchStartY
+
+    const isHorizontal = this.options.swipeDirection === 'horizontal'
+    const primaryDelta = isHorizontal ? deltaX : deltaY
+    const perpendicularDelta = isHorizontal ? deltaY : deltaX
+
+    if (this.touchDirection === null) {
+      if (Math.abs(perpendicularDelta) > Math.abs(primaryDelta)) {
+        this.isPerpendicularScroll = true
+        this.isTouchTracking = false
+        return
+      }
+
+      if (Math.abs(primaryDelta) < this.options.swipeTolerance) {
+        return
+      }
+
+      // For horizontal: right = prev, left = next
+      // For vertical: up = prev, down = next (inverted to match visual rotation)
+      this.touchDirection =
+        primaryDelta > 0
+          ? isHorizontal
+            ? 'prev'
+            : 'next'
+          : isHorizontal
+            ? 'next'
+            : 'prev'
+
+      this.touchProgressiveController = this.prepareProgressiveTransition(
+        this.touchDirection,
+      )
+
+      // Update start position and time to account for threshold
+      if (isHorizontal) {
+        this.touchStartX = touch.clientX
+      } else {
+        this.touchStartY = touch.clientY
+      }
+      this.touchStartTime = Date.now()
+    }
+
+    if (this.isPerpendicularScroll) {
+      return
+    }
+
+    if (ev.cancelable) {
+      ev.preventDefault()
+    }
+
+    if (this.touchProgressiveController) {
+      const slideSize = isHorizontal
+        ? this.el.offsetWidth
+        : this.el.offsetHeight
+      const currentDelta = isHorizontal
+        ? touch.clientX - this.touchStartX
+        : touch.clientY - this.touchStartY
+      const progress = Math.abs(currentDelta) / slideSize
+      this.touchProgressiveController.setProgress(Math.min(1, progress))
+    }
+  }
+
+  private handleTouchEnd = (ev: TouchEvent) => {
+    if (!this.isTouchTracking) {
+      this.cleanupTouch()
+      return
+    }
+
+    const touch = ev.changedTouches[0]
+    const isHorizontal = this.options.swipeDirection === 'horizontal'
+    const delta = isHorizontal
+      ? touch.clientX - this.touchStartX
+      : touch.clientY - this.touchStartY
+    const elapsed = Date.now() - this.touchStartTime
+    const velocity = Math.abs(delta) / elapsed
+
+    const commitThreshold = 0.5
+    const velocityThreshold = 0.3
+
+    if (this.touchProgressiveController) {
+      const progress = this.touchProgressiveController.progress
+      const shouldComplete =
+        progress >= commitThreshold || velocity > velocityThreshold
+
+      if (shouldComplete) {
+        this.touchProgressiveController.complete()
+      } else {
+        this.touchProgressiveController.cancel()
+      }
+    } else if (
+      this.touchDirection === null &&
+      Math.abs(delta) >= this.options.swipeTolerance
+    ) {
+      const goPrev = isHorizontal ? delta > 0 : delta < 0
+      if (goPrev) {
+        this.prev()
+      } else {
+        this.next()
+      }
+    }
+
+    this.cleanupTouch()
+  }
+
+  private handleTouchCancel = () => {
+    if (this.touchProgressiveController) {
+      this.touchProgressiveController.abort()
+    }
+    this.cleanupTouch()
+  }
+
+  private cleanupTouch() {
+    this.isTouchTracking = false
+    this.touchDirection = null
+    this.touchProgressiveController = null
+    this.isPerpendicularScroll = false
+  }
+
+  private prepareProgressiveTransition(
+    direction: 'next' | 'prev',
+  ): ProgressiveTransitionController | null {
+    if (
+      this.progressiveTransitionInProgress ||
+      !this.effect.supportsProgressiveTransition ||
+      !this.effect.prepareTransition
+    ) {
+      return null
+    }
+
+    const isNext = direction === 'next'
+    const isLastSlide = this.activeIndex === this.slides.length - 1
+    const isFirstSlide = this.activeIndex === 0
+
+    if (isNext && isLastSlide && !this.options.loop) {
+      return null
+    }
+
+    if (!isNext && isFirstSlide && !this.options.loop) {
+      return null
+    }
+
+    const nextIndex = isNext
+      ? isLastSlide
+        ? 0
+        : this.activeIndex + 1
+      : isFirstSlide
+        ? this.slides.length - 1
+        : this.activeIndex - 1
+
+    const settings = {
+      el: this.el,
+      slides: this.slides,
+      speed: this.options.speed,
+      currentIndex: this.activeIndex,
+      isPrevious: !isNext,
+      nextIndex,
+    }
+
+    const state = this.effect.prepareTransition(settings)
+
+    if (!state) {
+      return null
+    }
+
+    this.progressiveTransitionInProgress = true
+    this.stopAutoScroll()
+
+    this.emit('before', {
+      currentIndex: settings.currentIndex,
+      nextIndex: settings.nextIndex,
+      speed: settings.speed,
+    })
+
+    let currentProgress = 0
+
+    const controller: ProgressiveTransitionController = {
+      nextIndex,
+
+      get progress() {
+        return currentProgress
+      },
+
+      setProgress: (progress: number) => {
+        currentProgress = Math.max(0, Math.min(1, progress))
+        state.setProgress(currentProgress)
+      },
+
+      complete: async () => {
+        try {
+          await state.complete(currentProgress)
+        } finally {
+          this.progressiveTransitionInProgress = false
+        }
+
+        if (this.isDestroyed) {
+          return
+        }
+
+        this._activeIndex = nextIndex
+        this.slides[settings.currentIndex].setAttribute('aria-hidden', 'true')
+        this.slides[nextIndex].setAttribute('aria-hidden', 'false')
+
+        if (this.options.autoScroll) {
+          this.setAutoScroll()
+        }
+
+        this.emit('after')
+      },
+
+      cancel: async () => {
+        try {
+          await state.cancel(currentProgress)
+        } finally {
+          this.progressiveTransitionInProgress = false
+        }
+
+        if (this.options.autoScroll && !this.isDestroyed) {
+          this.setAutoScroll()
+        }
+      },
+
+      abort: () => {
+        state.abort()
+        this.progressiveTransitionInProgress = false
+
+        if (this.options.autoScroll && !this.isDestroyed) {
+          this.setAutoScroll()
+        }
+      },
+    }
+
+    return controller
   }
 
   private async transitionTo(
@@ -427,49 +754,6 @@ export class BoxSlider {
         () => this.next(),
         this.options.timeout,
       )
-    })
-  }
-
-  private addElListener(ev: keyof HTMLElementEventMap, handler: EventListener) {
-    this.el.addEventListener(ev, handler, { passive: true })
-    this.elListeners[ev] = this.elListeners[ev] || []
-    this.elListeners[ev].push(handler)
-  }
-
-  private applyEventListeners() {
-    this.addElListener('pointerenter', () => {
-      if (this.options.autoScroll && this.options.pauseOnHover) {
-        this.pause()
-      }
-    })
-    this.addElListener('pointerleave', () => {
-      if (this.options.autoScroll && this.options.pauseOnHover) {
-        this.play()
-      }
-    })
-
-    if (this.options.swipe) {
-      this.addSwipeNavigation()
-    }
-  }
-
-  private addSwipeNavigation() {
-    let startX = 0
-
-    this.addElListener('touchstart', (ev) => {
-      startX = (ev as TouchEvent).changedTouches[0].screenX
-    })
-
-    this.addElListener('touchend', (ev) => {
-      const distanceX = (ev as TouchEvent).changedTouches[0].screenX - startX
-
-      if (Math.abs(distanceX) >= this.options.swipeTolerance) {
-        if (distanceX > 0) {
-          this.prev()
-        } else {
-          this.next()
-        }
-      }
     })
   }
 }

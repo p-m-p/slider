@@ -45,6 +45,10 @@ export default class Cube extends Slider implements CubeSliderElement {
     )
   }
 
+  protected override getSwipeDirection(): 'horizontal' | 'vertical' {
+    return this.#direction
+  }
+
   attributeChangedCallback(name: string, _: string, value: string) {
     if (name === 'perspective') {
       this.perspective = Number.parseInt(value, 10)
