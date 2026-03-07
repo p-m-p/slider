@@ -2,14 +2,8 @@ import BoxSlider, { defaultOptions } from '@boxslider/slider/BoxSlider'
 import type {
   BoxSliderOptions,
   Effect,
-  Plugin,
   SliderEventType,
 } from '@boxslider/slider'
-import {
-  PauseOnHoverPlugin,
-  TouchGesturePlugin,
-  type TouchGesturePluginOptions,
-} from '@boxslider/slider/plugins'
 import { SafeBaseElement } from './core'
 
 const BOOLEAN_ATTRIBUTES = [
@@ -40,7 +34,6 @@ export default abstract class Slider
   #optionsCache: Partial<BoxSliderOptions> = {}
   #enableTouch = true
   #pauseOnHover = true
-  #pendingPlugins: Plugin[] = []
 
   static observedAttributes = SLIDER_ATTRIBUTES
 
@@ -92,14 +85,7 @@ export default abstract class Slider
     }
 
     this.#enableTouch = enableTouch
-
-    if (this.slider) {
-      if (enableTouch) {
-        this.slider.use(new TouchGesturePlugin(this.getTouchGestureOptions()))
-      } else {
-        this.slider.unuse('touch-gesture')
-      }
-    }
+    this.slider?.reset({ swipe: enableTouch })
   }
 
   get pauseOnHover() {
@@ -112,14 +98,7 @@ export default abstract class Slider
     }
 
     this.#pauseOnHover = pauseOnHover
-
-    if (this.slider) {
-      if (pauseOnHover) {
-        this.slider.use(new PauseOnHoverPlugin())
-      } else {
-        this.slider.unuse('pause-on-hover')
-      }
-    }
+    this.slider?.reset({ pauseOnHover })
   }
 
   get speed() {
@@ -146,12 +125,41 @@ export default abstract class Slider
     this.reset({ timeout })
   }
 
+  get swipe() {
+    return this.#enableTouch
+  }
+
+  set swipe(swipe: boolean) {
+    this.enableTouch = swipe
+  }
+
+  get swipeDirection(): 'horizontal' | 'vertical' {
+    return this.getSwipeDirection()
+  }
+
+  set swipeDirection(_: 'horizontal' | 'vertical') {
+    // swipeDirection is determined by the component type (e.g., Cube with vertical direction)
+    // Setting via this property is not supported - use the component's direction attribute instead
+  }
+
+  get swipeTolerance() {
+    return this.#getOrDefault('swipeTolerance')
+  }
+
+  set swipeTolerance(swipeTolerance: number) {
+    this.reset({ swipeTolerance })
+  }
+
   get options(): BoxSliderOptions {
     return {
       autoScroll: this.autoScroll,
       loop: this.loop,
+      pauseOnHover: this.pauseOnHover,
       speed: this.speed,
       startIndex: this.startIndex,
+      swipe: this.enableTouch,
+      swipeDirection: this.getSwipeDirection(),
+      swipeTolerance: this.#getOrDefault('swipeTolerance'),
       timeout: this.timeout,
     }
   }
@@ -174,33 +182,17 @@ export default abstract class Slider
     })
   }
 
-  use(plugin: Plugin): this {
-    if (this.slider) {
-      this.slider.use(plugin)
-    } else {
-      this.#pendingPlugins.push(plugin)
-    }
-
-    return this
-  }
-
-  protected getTouchGestureOptions(): TouchGesturePluginOptions {
-    return {}
+  protected getSwipeDirection(): 'horizontal' | 'vertical' {
+    return 'horizontal'
   }
 
   protected init(effect: Effect) {
-    const plugins: Plugin[] = [...this.#pendingPlugins]
-    this.#pendingPlugins = []
-
-    if (this.#enableTouch) {
-      plugins.push(new TouchGesturePlugin(this.getTouchGestureOptions()))
-    }
-
-    if (this.#pauseOnHover) {
-      plugins.push(new PauseOnHoverPlugin())
-    }
-
-    const slider = new BoxSlider(this, effect, this.#optionsCache, plugins)
+    const slider = new BoxSlider(this, effect, {
+      ...this.#optionsCache,
+      swipe: this.#enableTouch,
+      swipeDirection: this.getSwipeDirection(),
+      pauseOnHover: this.#pauseOnHover,
+    })
     const events: SliderEventType[] = [
       'after',
       'before',
