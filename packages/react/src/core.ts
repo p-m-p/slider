@@ -34,8 +34,6 @@ declare module 'react/jsx-runtime' {
 }
 
 export interface BoxSliderProps extends Partial<BoxSliderOptions> {
-  enableTouch?: boolean
-  pauseOnHover?: boolean
   onAfter?: SliderEventListenerMap['after']
   onBefore?: SliderEventListenerMap['before']
   onDestroy?: SliderEventListenerMap['destroy']
@@ -49,9 +47,10 @@ export type BaseComponentProps<T> = BoxSliderProps &
   Omit<
     JSXSliderElement<T>,
     | 'auto-scroll'
-    | 'enable-touch'
     | 'pause-on-hover'
     | 'start-index'
+    | 'swipe-direction'
+    | 'swipe-tolerance'
     | 'timing-function'
   >
 

@@ -11,6 +11,7 @@ title: Configuration
 | `pauseOnHover`   | boolean | true when a using a fine pointing device  | Pause an auto-scrolling slider when the users mouse hovers over it. For use with autoScroll or a slider in play mode         |
 | `speed`          | number  | 800                                       | The time interval in milliseconds within which the slide animation will complete                                             |
 | `swipe`          | boolean | true                                      | Enable swiping the box to navigate to the next or previous slide                                                             |
+| `swipeDirection` | string  | `horizontal`                              | Direction for swipe gestures (`horizontal` or `vertical`). Use `vertical` with vertical cube sliders                         |
 | `swipeTolerance` | number  | 30                                        | The number of pixels between the pointer down and pointer up events during the swipe action that will trigger the transition |
 | `timeout`        | number  | 5000                                      | The time interval between slide transitions. For use with autoScroll                                                         |
 

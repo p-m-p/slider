@@ -46,7 +46,7 @@ function testEffectProps<T extends SliderElement>(
 ) {
   const autoScroll = false
   const pauseOnHover = false
-  const enableTouch = false
+  const swipe = false
   const speed = 500
   const startIndex = 1
   const timeout = 5000
@@ -54,7 +54,7 @@ function testEffectProps<T extends SliderElement>(
   const el = createSliderElement<T>(tag, {
     'auto-scroll': `${autoScroll}`,
     'pause-on-hover': `${pauseOnHover}`,
-    'enable-touch': `${enableTouch}`,
+    swipe: `${swipe}`,
     'start-index': `${startIndex}`,
     speed: `${speed}`,
     timeout: `${timeout}`,
@@ -62,7 +62,7 @@ function testEffectProps<T extends SliderElement>(
 
   expect(el.autoScroll).toBeFalsy()
   expect(el.pauseOnHover).toBeFalsy()
-  expect(el.enableTouch).toBeFalsy()
+  expect(el.swipe).toBeFalsy()
   expect(el.speed).toBe(speed)
   expect(el.startIndex).toBe(startIndex)
   expect(el.timeout).toBe(timeout)
@@ -290,27 +290,27 @@ test('slider lifecycle events', async () => {
   expect(destroyHandler).toHaveBeenCalledWith(new CustomEvent('destroy'))
 })
 
-test('enable-touch and pause-on-hover options', () => {
+test('swipe and pause-on-hover options', () => {
   const el = createSliderElement<CarouselSliderElement>('bs-carousel', {
     'auto-scroll': 'false',
-    'enable-touch': 'true',
+    swipe: 'true',
     'pause-on-hover': 'true',
   })
 
   const slider = el.slider!
 
-  expect(el.enableTouch).toBe(true)
+  expect(el.swipe).toBe(true)
   expect(el.pauseOnHover).toBe(true)
   expect(slider.getOption('swipe')).toBe(true)
   expect(slider.getOption('pauseOnHover')).toBe(true)
 
-  el.enableTouch = false
+  el.swipe = false
   expect(slider.getOption('swipe')).toBe(false)
 
   el.pauseOnHover = false
   expect(slider.getOption('pauseOnHover')).toBe(false)
 
-  el.enableTouch = true
+  el.swipe = true
   expect(slider.getOption('swipe')).toBe(true)
 
   el.pauseOnHover = true
