@@ -5,9 +5,6 @@ import type {
   BoxSliderOptions,
   Effect,
   EventListenerMap,
-  Plugin,
-  PluginContext,
-  ProgressiveTransitionController,
   SliderEventData,
   SliderEventListenerMap,
   SliderEventType,
@@ -20,23 +17,22 @@ function safeMatchMedia(query: string): boolean {
 export const defaultOptions: BoxSliderOptions = Object.freeze({
   autoScroll: !safeMatchMedia('(prefers-reduced-motion: reduce)'),
   loop: true,
+  pauseOnHover: safeMatchMedia('(pointer: fine)'),
   speed: 800,
   startIndex: 0,
+  swipe: true,
+  swipeDirection: 'horizontal',
+  swipeTolerance: 30,
   timeout: 5000,
 })
 
-interface PluginEntry {
-  plugin: Plugin
-  listeners: Array<{
-    target: EventTarget
-    type: string
-    listener: EventListener
-    options?: AddEventListenerOptions
-  }>
-  sliderListeners: Array<{
-    event: SliderEventType
-    handler: SliderEventListenerMap[SliderEventType]
-  }>
+interface ProgressiveTransitionController {
+  nextIndex: number
+  progress: number
+  setProgress(progress: number): void
+  complete(): Promise<void>
+  cancel(): Promise<void>
+  abort(): void
 }
 
 export class BoxSlider {
@@ -51,8 +47,23 @@ export class BoxSlider {
   private eventListeners: EventListenerMap
   private isDestroyed: boolean
   private transitionQueue: TransitionQueue
-  private plugins: PluginEntry[]
   private progressiveTransitionInProgress: boolean
+
+  private elListeners: Array<{
+    type: string
+    listener: EventListener
+    options?: AddEventListenerOptions
+  }> = []
+
+  private touchStartX = 0
+  private touchStartY = 0
+  private touchStartTime = 0
+  private isTouchTracking = false
+  private touchDirection: 'next' | 'prev' | null = null
+  private touchProgressiveController: ProgressiveTransitionController | null =
+    null
+  private isPerpendicularScroll = false
+  private pauseOnHoverWasPlaying = false
 
   /**
    * The currently active slide index
@@ -110,7 +121,6 @@ export class BoxSlider {
     el: HTMLElement,
     effect: Effect,
     options?: Partial<BoxSliderOptions>,
-    plugins?: Plugin[],
   ) {
     this._el = el
     this._stateStore = new StateStore()
@@ -119,7 +129,6 @@ export class BoxSlider {
     this.slides = []
     this.eventListeners = {}
     this.isDestroyed = false
-    this.plugins = []
     this.progressiveTransitionInProgress = false
 
     this.options = {
@@ -128,7 +137,7 @@ export class BoxSlider {
     }
     this._activeIndex = this.options.startIndex
     this.init(effect)
-    this.initializePlugins(plugins || [])
+    this.applyEventListeners()
 
     responder.add(this)
   }
@@ -138,6 +147,7 @@ export class BoxSlider {
    */
   reset(options?: Partial<BoxSliderOptions>, effect?: Effect) {
     this.stopAutoScroll()
+    this.removeEventListeners()
 
     if (typeof this.effect.destroy === 'function') {
       this.effect.destroy(this.el, this.slides)
@@ -157,7 +167,7 @@ export class BoxSlider {
     }
 
     this.init(effect || this.effect)
-    this.resetPlugins()
+    this.applyEventListeners()
     this.emit('reset')
   }
 
@@ -271,9 +281,7 @@ export class BoxSlider {
   destroy(): void {
     this.isDestroyed = true
     this.stopAutoScroll()
-
-    this.plugins.forEach((entry) => this.destroyPluginEntry(entry))
-    this.plugins = []
+    this.removeEventListeners()
 
     if (this.effect.destroy) {
       this.effect.destroy(this.el, this.slides)
@@ -289,51 +297,6 @@ export class BoxSlider {
     delete this._stateStore
     delete this._effect
     this.slides.length = 0
-  }
-
-  /**
-   * Register a plugin with the slider
-   */
-  use(plugin: Plugin): BoxSlider {
-    if (this.plugins.some((entry) => entry.plugin.name === plugin.name)) {
-      return this
-    }
-
-    const entry: PluginEntry = {
-      plugin,
-      listeners: [],
-      sliderListeners: [],
-    }
-
-    this.plugins.push(entry)
-    plugin.initialize(this.createPluginContext(entry))
-
-    return this
-  }
-
-  /**
-   * Remove a plugin by name
-   */
-  unuse(pluginName: string): BoxSlider {
-    const index = this.plugins.findIndex(
-      (entry) => entry.plugin.name === pluginName,
-    )
-
-    if (index !== -1) {
-      const entry = this.plugins[index]
-      this.destroyPluginEntry(entry)
-      this.plugins.splice(index, 1)
-    }
-
-    return this
-  }
-
-  /**
-   * Get a plugin by name
-   */
-  getPlugin<T extends Plugin>(name: string): T | undefined {
-    const entry = this.plugins.find((e) => e.plugin.name === name)
-    return entry?.plugin as T | undefined
   }
 
   private init(effect: Effect) {
@@ -396,79 +359,195 @@ export class BoxSlider {
     ) as HTMLElement[]
   }
 
-  private initializePlugins(plugins: Plugin[]) {
-    plugins.forEach((plugin) => this.use(plugin))
+  private addElListener<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (ev: HTMLElementEventMap[K]) => void,
+    options?: AddEventListenerOptions,
+  ) {
+    this.el.addEventListener(type, listener as EventListener, options)
+    this.elListeners.push({
+      type,
+      listener: listener as EventListener,
+      options,
+    })
   }
 
-  private createPluginContext(entry: PluginEntry): PluginContext {
-    return {
-      slider: this,
-      el: this.el,
-      slides: this.slides,
-      options: this.options,
+  private removeEventListeners() {
+    this.elListeners.forEach(({ type, listener, options }) => {
+      this.el.removeEventListener(type, listener, options)
+    })
+    this.elListeners = []
+  }
 
-      addListener: <K extends keyof HTMLElementEventMap>(
-        target: EventTarget,
-        type: K,
-        listener: (ev: HTMLElementEventMap[K]) => void,
-        options?: AddEventListenerOptions,
-      ) => {
-        target.addEventListener(type, listener as EventListener, options)
-        entry.listeners.push({
-          target,
-          type,
-          listener: listener as EventListener,
-          options,
-        })
-      },
+  private applyEventListeners() {
+    if (this.options.pauseOnHover) {
+      this.addElListener('pointerenter', this.handlePointerEnter)
+      this.addElListener('pointerleave', this.handlePointerLeave)
+    }
 
-      on: <T extends SliderEventType>(
-        event: T,
-        handler: SliderEventListenerMap[T],
-      ) => {
-        this.addEventListener(event, handler)
-        entry.sliderListeners.push({ event, handler })
-      },
-
-      requestProgressiveTransition: (direction: 'next' | 'prev') => {
-        return this.requestProgressiveTransition(direction)
-      },
+    if (this.options.swipe) {
+      this.addElListener('touchstart', this.handleTouchStart, { passive: true })
+      this.addElListener('touchmove', this.handleTouchMove, { passive: false })
+      this.addElListener('touchend', this.handleTouchEnd, { passive: true })
+      this.addElListener('touchcancel', this.handleTouchCancel, {
+        passive: true,
+      })
     }
   }
 
-  private destroyPluginEntry(entry: PluginEntry) {
-    entry.plugin.destroy()
-
-    entry.listeners.forEach(({ target, type, listener, options }) => {
-      target.removeEventListener(type, listener, options)
-    })
-    entry.listeners = []
-
-    entry.sliderListeners.forEach(({ event, handler }) => {
-      this.removeEventListener(event, handler)
-    })
-    entry.sliderListeners = []
+  private handlePointerEnter = () => {
+    if (this.options.autoScroll) {
+      this.pauseOnHoverWasPlaying = true
+      this.pause()
+    }
   }
 
-  private resetPlugins() {
-    this.plugins.forEach((entry) => {
-      if (entry.plugin.reset) {
-        entry.listeners.forEach(({ target, type, listener, options }) => {
-          target.removeEventListener(type, listener, options)
-        })
-        entry.listeners = []
+  private handlePointerLeave = () => {
+    if (this.pauseOnHoverWasPlaying) {
+      this.pauseOnHoverWasPlaying = false
+      this.play()
+    }
+  }
 
-        entry.sliderListeners.forEach(({ event, handler }) => {
-          this.removeEventListener(event, handler)
-        })
-        entry.sliderListeners = []
+  private handleTouchStart = (ev: TouchEvent) => {
+    if (ev.touches.length !== 1) {
+      return
+    }
 
-        entry.plugin.reset(this.createPluginContext(entry))
+    const touch = ev.touches[0]
+    this.touchStartX = touch.clientX
+    this.touchStartY = touch.clientY
+    this.touchStartTime = Date.now()
+    this.isTouchTracking = true
+    this.touchDirection = null
+    this.isPerpendicularScroll = false
+  }
+
+  private handleTouchMove = (ev: TouchEvent) => {
+    if (!this.isTouchTracking || ev.touches.length !== 1) {
+      return
+    }
+
+    const touch = ev.touches[0]
+    const deltaX = touch.clientX - this.touchStartX
+    const deltaY = touch.clientY - this.touchStartY
+
+    const isHorizontal = this.options.swipeDirection === 'horizontal'
+    const primaryDelta = isHorizontal ? deltaX : deltaY
+    const perpendicularDelta = isHorizontal ? deltaY : deltaX
+
+    if (this.touchDirection === null) {
+      if (Math.abs(perpendicularDelta) > Math.abs(primaryDelta)) {
+        this.isPerpendicularScroll = true
+        this.isTouchTracking = false
+        return
       }
-    })
+
+      if (Math.abs(primaryDelta) < this.options.swipeTolerance) {
+        return
+      }
+
+      // For horizontal: right = prev, left = next
+      // For vertical: up = prev, down = next (inverted to match visual rotation)
+      this.touchDirection =
+        primaryDelta > 0
+          ? isHorizontal
+            ? 'prev'
+            : 'next'
+          : isHorizontal
+            ? 'next'
+            : 'prev'
+
+      this.touchProgressiveController = this.prepareProgressiveTransition(
+        this.touchDirection,
+      )
+
+      // Update start position and time to account for threshold
+      if (isHorizontal) {
+        this.touchStartX = touch.clientX
+      } else {
+        this.touchStartY = touch.clientY
+      }
+      this.touchStartTime = Date.now()
+    }
+
+    if (this.isPerpendicularScroll) {
+      return
+    }
+
+    if (ev.cancelable) {
+      ev.preventDefault()
+    }
+
+    if (this.touchProgressiveController) {
+      const slideSize = isHorizontal
+        ? this.el.offsetWidth
+        : this.el.offsetHeight
+      const currentDelta = isHorizontal
+        ? touch.clientX - this.touchStartX
+        : touch.clientY - this.touchStartY
+      const progress = Math.abs(currentDelta) / slideSize
+      this.touchProgressiveController.setProgress(Math.min(1, progress))
+    }
   }
 
-  private requestProgressiveTransition(
+  private handleTouchEnd = (ev: TouchEvent) => {
+    if (!this.isTouchTracking) {
+      this.cleanupTouch()
+      return
+    }
+
+    const touch = ev.changedTouches[0]
+    const isHorizontal = this.options.swipeDirection === 'horizontal'
+    const delta = isHorizontal
+      ? touch.clientX - this.touchStartX
+      : touch.clientY - this.touchStartY
+    const elapsed = Date.now() - this.touchStartTime
+    const velocity = Math.abs(delta) / elapsed
+
+    const commitThreshold = 0.5
+    const velocityThreshold = 0.3
+
+    if (this.touchProgressiveController) {
+      const progress = this.touchProgressiveController.progress
+      const shouldComplete =
+        progress >= commitThreshold || velocity > velocityThreshold
+
+      if (shouldComplete) {
+        this.touchProgressiveController.complete()
+      } else {
+        this.touchProgressiveController.cancel()
+      }
+    } else if (
+      this.touchDirection === null &&
+      Math.abs(delta) >= this.options.swipeTolerance
+    ) {
+      const goPrev = isHorizontal ? delta > 0 : delta < 0
+      if (goPrev) {
+        this.prev()
+      } else {
+        this.next()
+      }
+    }
+
+    this.cleanupTouch()
+  }
+
+  private handleTouchCancel = () => {
+    if (this.touchProgressiveController) {
+      this.touchProgressiveController.abort()
+    }
+    this.cleanupTouch()
+  }
+
+  private cleanupTouch() {
+    this.isTouchTracking = false
+    this.touchDirection = null
+    this.touchProgressiveController = null
+    this.isPerpendicularScroll = false
+  }
+
+  private prepareProgressiveTransition(
     direction: 'next' | 'prev',
   ): ProgressiveTransitionController | null {
     if (
