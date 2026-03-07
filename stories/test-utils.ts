@@ -4,11 +4,6 @@ import type { SliderElement } from '~/packages/components'
 
 type SliderSelector = 'bs-carousel' | 'bs-fade' | 'bs-cube' | 'bs-tile'
 
-const componentDefaults = {
-  enableTouch: true,
-  pauseOnHover: true,
-}
-
 export function createPlayFn(
   selector: SliderSelector,
   expectedProps: Record<string, string | number | boolean>,
@@ -21,7 +16,6 @@ export function createPlayFn(
 
     for (const [prop, expectedValue] of Object.entries({
       ...defaultOptions,
-      ...componentDefaults,
       ...expectedProps,
     })) {
       expect(slider[prop as keyof typeof slider], `slider.${prop}`).toBe(

@@ -7,8 +7,6 @@ import { sharedSliderArgTypes } from './shared-arg-types'
 
 const defaultStoryArgs = {
   ...defaultOptions,
-  enableTouch: true,
-  pauseOnHover: true,
   tileEffect: 'fade' as const,
   rows: 8,
   rowOffset: 50,
@@ -157,7 +155,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 4,
-    enableTouch: false,
+    swipe: false,
     pauseOnHover: false,
     tileEffect: 'flip',
     rows: 6,
@@ -177,7 +175,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 4,
-    enableTouch: false,
+    swipe: false,
     pauseOnHover: false,
     tileEffect: 'flip',
     rows: 6,

@@ -6,23 +6,21 @@ import type {
 } from '@boxslider/slider'
 import { SafeBaseElement } from './core'
 
-const BOOLEAN_ATTRIBUTES = [
-  'auto-scroll',
-  'loop',
-  'enable-touch',
-  'pause-on-hover',
+const BOOLEAN_ATTRIBUTES = ['auto-scroll', 'loop', 'pause-on-hover', 'swipe']
+const NUMERIC_ATTRIBUTES = [
+  'speed',
+  'start-index',
+  'swipe-tolerance',
+  'timeout',
 ]
-const NUMERIC_ATTRIBUTES = ['speed', 'start-index', 'timeout']
 export const SLIDER_ATTRIBUTES = [...BOOLEAN_ATTRIBUTES, ...NUMERIC_ATTRIBUTES]
 
-type NumericProp = 'speed' | 'startIndex' | 'timeout'
-type BooleanProp = 'autoScroll' | 'loop' | 'enableTouch' | 'pauseOnHover'
+type NumericProp = 'speed' | 'startIndex' | 'swipeTolerance' | 'timeout'
+type BooleanProp = 'autoScroll' | 'loop' | 'pauseOnHover' | 'swipe'
 
 export interface SliderElement extends BoxSliderOptions, HTMLElement {
   readonly slider?: BoxSlider
   readonly options: BoxSliderOptions
-  enableTouch: boolean
-  pauseOnHover: boolean
 }
 
 export default abstract class Slider
@@ -32,8 +30,6 @@ export default abstract class Slider
   #slider?: BoxSlider
   #observer: MutationObserver
   #optionsCache: Partial<BoxSliderOptions> = {}
-  #enableTouch = true
-  #pauseOnHover = true
 
   static observedAttributes = SLIDER_ATTRIBUTES
 
@@ -75,30 +71,12 @@ export default abstract class Slider
     this.reset({ loop })
   }
 
-  get enableTouch() {
-    return this.#enableTouch
-  }
-
-  set enableTouch(enableTouch: boolean) {
-    if (this.#enableTouch === enableTouch) {
-      return
-    }
-
-    this.#enableTouch = enableTouch
-    this.slider?.reset({ swipe: enableTouch })
-  }
-
   get pauseOnHover() {
-    return this.#pauseOnHover
+    return this.#getOrDefault('pauseOnHover')
   }
 
   set pauseOnHover(pauseOnHover: boolean) {
-    if (this.#pauseOnHover === pauseOnHover) {
-      return
-    }
-
-    this.#pauseOnHover = pauseOnHover
-    this.slider?.reset({ pauseOnHover })
+    this.reset({ pauseOnHover })
   }
 
   get speed() {
@@ -117,20 +95,12 @@ export default abstract class Slider
     this.reset({ startIndex })
   }
 
-  get timeout() {
-    return this.#getOrDefault('timeout')
-  }
-
-  set timeout(timeout: number) {
-    this.reset({ timeout })
-  }
-
   get swipe() {
-    return this.#enableTouch
+    return this.#getOrDefault('swipe')
   }
 
   set swipe(swipe: boolean) {
-    this.enableTouch = swipe
+    this.reset({ swipe })
   }
 
   get swipeDirection(): 'horizontal' | 'vertical' {
@@ -139,7 +109,6 @@ export default abstract class Slider
 
   set swipeDirection(_: 'horizontal' | 'vertical') {
     // swipeDirection is determined by the component type (e.g., Cube with vertical direction)
-    // Setting via this property is not supported - use the component's direction attribute instead
   }
 
   get swipeTolerance() {
@@ -150,6 +119,14 @@ export default abstract class Slider
     this.reset({ swipeTolerance })
   }
 
+  get timeout() {
+    return this.#getOrDefault('timeout')
+  }
+
+  set timeout(timeout: number) {
+    this.reset({ timeout })
+  }
+
   get options(): BoxSliderOptions {
     return {
       autoScroll: this.autoScroll,
@@ -157,9 +134,9 @@ export default abstract class Slider
       pauseOnHover: this.pauseOnHover,
       speed: this.speed,
       startIndex: this.startIndex,
-      swipe: this.enableTouch,
-      swipeDirection: this.getSwipeDirection(),
-      swipeTolerance: this.#getOrDefault('swipeTolerance'),
+      swipe: this.swipe,
+      swipeDirection: this.swipeDirection,
+      swipeTolerance: this.swipeTolerance,
       timeout: this.timeout,
     }
   }
@@ -189,9 +166,7 @@ export default abstract class Slider
   protected init(effect: Effect) {
     const slider = new BoxSlider(this, effect, {
       ...this.#optionsCache,
-      swipe: this.#enableTouch,
       swipeDirection: this.getSwipeDirection(),
-      pauseOnHover: this.#pauseOnHover,
     })
     const events: SliderEventType[] = [
       'after',

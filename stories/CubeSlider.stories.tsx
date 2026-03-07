@@ -13,8 +13,6 @@ import { sharedSliderArgTypes } from './shared-arg-types'
 
 const defaultStoryArgs = {
   ...defaultOptions,
-  enableTouch: true,
-  pauseOnHover: true,
   direction: 'horizontal' as const,
   perspective: 1000,
 }
@@ -147,7 +145,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 1,
-    enableTouch: false,
+    swipe: false,
     pauseOnHover: false,
     direction: 'vertical',
     perspective: 1500,
@@ -168,7 +166,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 1,
-    enableTouch: false,
+    swipe: false,
     pauseOnHover: false,
     direction: 'vertical',
     perspective: 1500,
