@@ -7,3 +7,5 @@ psd
 
 *storybook.log
 storybook-static
+
+.claude/settings.local.json
