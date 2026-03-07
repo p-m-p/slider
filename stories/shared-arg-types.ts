@@ -25,13 +25,12 @@ export const sharedSliderArgTypes: ArgTypes = {
   },
   pauseOnHover: {
     control: { type: 'boolean' },
-    description: 'Pause auto-scroll on mouse hover (uses PauseOnHoverPlugin)',
+    description: 'Pause auto-scroll on mouse hover',
     defaultValue: true,
   },
-  enableTouch: {
+  swipe: {
     control: { type: 'boolean' },
-    description:
-      'Enable touch/swipe navigation with progressive drag support (uses TouchGesturePlugin)',
+    description: 'Enable touch/swipe navigation with progressive drag support',
     defaultValue: true,
   },
   startIndex: {
