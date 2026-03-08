@@ -4,11 +4,7 @@ import type {
   ProgressiveTransitionState,
   TransitionSettings,
 } from '../../types'
-import {
-  applyCss,
-  cancelAnimations,
-  createProgressiveTransition,
-} from '../../utils'
+import { applyCss, createProgressiveTransition } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
 import {
@@ -190,7 +186,6 @@ export default class TileSlider implements Effect {
       },
 
       onReset: () => {
-        cancelAnimations(...tiles)
         this.tileWrapper.style.setProperty('display', 'none')
         currentSlide.style.setProperty('visibility', 'visible')
       },
