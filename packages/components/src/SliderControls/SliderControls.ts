@@ -293,6 +293,13 @@ export default class SliderControls
         )
       }
 
+      if (this.#sliderEventListeners.cancel) {
+        this.#sliderElement.removeEventListener(
+          'cancel',
+          this.#sliderEventListeners.cancel,
+        )
+      }
+
       this.#sliderEventListeners.before = (ev: Event) => {
         const { currentIndex, nextIndex } = (ev as CustomEvent).detail
         // Set initial state when transition starts (for non-progressive transitions)
@@ -325,6 +332,16 @@ export default class SliderControls
       this.#sliderElement.addEventListener(
         'progress',
         this.#sliderEventListeners.progress,
+      )
+
+      this.#sliderEventListeners.cancel = (ev: Event) => {
+        const { currentIndex } = (ev as CustomEvent).detail
+        // Reset pip state to the current active index when a transition is cancelled
+        this.#setIndexPipState(currentIndex)
+      }
+      this.#sliderElement.addEventListener(
+        'cancel',
+        this.#sliderEventListeners.cancel,
       )
     }
   }
