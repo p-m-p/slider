@@ -103,14 +103,6 @@ export default abstract class Slider
     this.reset({ swipe })
   }
 
-  get swipeDirection(): 'horizontal' | 'vertical' {
-    return this.getSwipeDirection()
-  }
-
-  set swipeDirection(_: 'horizontal' | 'vertical') {
-    // swipeDirection is determined by the component type (e.g., Cube with vertical direction)
-  }
-
   get swipeTolerance() {
     return this.#getOrDefault('swipeTolerance')
   }
@@ -135,7 +127,6 @@ export default abstract class Slider
       speed: this.speed,
       startIndex: this.startIndex,
       swipe: this.swipe,
-      swipeDirection: this.swipeDirection,
       swipeTolerance: this.swipeTolerance,
       timeout: this.timeout,
     }
@@ -159,15 +150,8 @@ export default abstract class Slider
     })
   }
 
-  protected getSwipeDirection(): 'horizontal' | 'vertical' {
-    return 'horizontal'
-  }
-
   protected init(effect: Effect) {
-    const slider = new BoxSlider(this, effect, {
-      ...this.#optionsCache,
-      swipeDirection: this.getSwipeDirection(),
-    })
+    const slider = new BoxSlider(this, effect, this.#optionsCache)
     const events: SliderEventType[] = [
       'after',
       'before',

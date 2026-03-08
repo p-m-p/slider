@@ -94,11 +94,6 @@ export interface BoxSliderOptions {
   swipe: boolean
 
   /**
-   * Direction for swipe gestures
-   */
-  swipeDirection: 'horizontal' | 'vertical'
-
-  /**
    * Minimum distance in pixels required to trigger a swipe
    */
   swipeTolerance: number
@@ -168,6 +163,11 @@ export interface ProgressiveTransitionState {
 }
 
 export interface Effect {
+  /**
+   * The swipe direction for touch gestures. Defaults to 'horizontal' if not specified.
+   */
+  readonly swipeDirection?: 'horizontal' | 'vertical'
+
   /**
    * Destroy the effect to remove any timers, event listeners, etc.
    */
