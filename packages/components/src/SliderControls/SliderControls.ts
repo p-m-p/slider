@@ -272,13 +272,6 @@ export default class SliderControls
 
       this.#addIndexPips()
 
-      if (this.#sliderEventListeners.before) {
-        this.#sliderElement.removeEventListener(
-          'before',
-          this.#sliderEventListeners.before,
-        )
-      }
-
       if (this.#sliderEventListeners.after) {
         this.#sliderElement.removeEventListener(
           'after',
@@ -293,15 +286,12 @@ export default class SliderControls
         )
       }
 
-      this.#sliderEventListeners.before = (ev: Event) => {
-        const { currentIndex, nextIndex } = (ev as CustomEvent).detail
-        // Set initial state when transition starts (for non-progressive transitions)
-        this.#setIndexPipState(currentIndex, nextIndex)
+      if (this.#sliderEventListeners.cancel) {
+        this.#sliderElement.removeEventListener(
+          'cancel',
+          this.#sliderEventListeners.cancel,
+        )
       }
-      this.#sliderElement.addEventListener(
-        'before',
-        this.#sliderEventListeners.before,
-      )
 
       this.#sliderEventListeners.after = (ev: Event) => {
         const { currentIndex } = (ev as CustomEvent).detail
@@ -313,13 +303,23 @@ export default class SliderControls
         this.#sliderEventListeners.after,
       )
 
+      this.#sliderEventListeners.cancel = (ev: Event) => {
+        const { currentIndex } = (ev as CustomEvent).detail
+        // Ensure pip state reflects final active index after transition completes
+        this.#setIndexPipState(currentIndex)
+      }
+      this.#sliderElement.addEventListener(
+        'cancel',
+        this.#sliderEventListeners.cancel,
+      )
+
       this.#sliderEventListeners.progress = (ev: Event) => {
         const { currentIndex, nextIndex, progress } = (ev as CustomEvent).detail
         // Update pip state based on progress: <=50% shows current, >50% shows next
         if (progress <= 50) {
-          this.#setIndexPipState(nextIndex, currentIndex)
+          this.#setIndexPipState(currentIndex)
         } else {
-          this.#setIndexPipState(currentIndex, nextIndex)
+          this.#setIndexPipState(nextIndex)
         }
       }
       this.#sliderElement.addEventListener(
@@ -429,14 +429,13 @@ export default class SliderControls
     }
   }
 
-  #setIndexPipState(_currentIndex: number, nextIndex?: number) {
+  #setIndexPipState(activeIndex: number) {
     const indexSlot =
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
 
     if (indexSlot) {
       const container = indexSlot?.assignedElements()[0] ?? indexSlot
       const buttons = container?.querySelectorAll('button')
-      const activeIndex = nextIndex ?? _currentIndex
 
       buttons?.forEach((btn, index) => {
         const isActive = index === activeIndex
