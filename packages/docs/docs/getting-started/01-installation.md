@@ -56,8 +56,8 @@ Use directly from a CDN
 
 ```html
 <script type="module">
-  import { createCarouselSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+  import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
 
-  createCarouselSlider('#slider')
+  const slider = createFadeSlider('#slider')
 </script>
 ```
