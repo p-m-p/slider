@@ -200,16 +200,10 @@ export interface Effect {
   ): void
 
   /**
-   * Transition to the next slide. Only required if prepareTransition is not implemented.
-   */
-  transition?(settings: TransitionSettings): void | Promise<void>
-
-  /**
    * Prepare a transition and return a state controller. Used for both
    * regular transitions (via complete(0)) and progressive drag transitions.
-   * If implemented, the transition() method is not required.
    */
-  prepareTransition?(
+  prepareTransition(
     settings: TransitionSettings,
   ): ProgressiveTransitionState | null
 }
