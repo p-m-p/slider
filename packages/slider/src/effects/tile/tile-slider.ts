@@ -159,6 +159,7 @@ export default class TileSlider implements Effect {
 
     return createProgressiveTransition({
       elements: tiles,
+      speed: settings.speed,
 
       // TileSlider doesn't support progressive drag - no-op
       onProgress: () => {},
