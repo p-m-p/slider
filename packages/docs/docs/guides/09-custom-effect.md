@@ -9,13 +9,43 @@ accessibility and performance when creating custom effects.
 :::
 
 It's possible to create your own custom effects for BoxSlider with an object that
-implements the slide [Effect interface](https://github.com/p-m-p/slider/blob/main/packages/slider/src/types.ts#L128).
+implements the slide [Effect interface](https://github.com/p-m-p/slider/blob/main/packages/slider/src/types.ts).
 
-Considering an example where the slide visibility is controlled by the CSS `display` property,
-the `initialize` method sets the initial display value of all slides and the `transition` method
-updates the display setting of the current and next slide so that the next slide is made visible.
+## Effect Interface
+
+An effect must implement the following interface:
+
+```typescript
+interface Effect {
+  // Optional: specify 'vertical' for vertical swipe gestures
+  readonly swipeDirection?: 'horizontal' | 'vertical'
+
+  // Set the initial state of slides
+  initialize(
+    el: HTMLElement,
+    slides: HTMLElement[],
+    options: BoxSliderOptions,
+    stateStore: StateStore,
+  ): void
+
+  // Prepare and return a transition controller
+  prepareTransition(
+    settings: TransitionSettings,
+  ): ProgressiveTransitionState | null
+
+  // Optional: clean up when slider is destroyed
+  destroy?(el: HTMLElement, slides: HTMLElement[]): void
+}
+```
+
+## Simple Example
+
+For a basic effect where slide visibility is controlled by CSS `display`, use the
+`createProgressiveTransition` helper to create the required state controller:
 
 ```js
+import { createProgressiveTransition } from '@boxslider/slider'
+
 const effect = {
   initialize(el, slides, options) {
     slides.forEach((slide, index) =>
@@ -26,9 +56,28 @@ const effect = {
     )
   },
 
-  transition({ currentIndex, nextIndex }) {
-    this.slides[currentIndex].style.setProperty('display', 'none')
-    this.slides[nextIndex].style.setProperty('display', 'block')
+  prepareTransition({ slides, currentIndex, nextIndex, speed }) {
+    const currentSlide = slides[currentIndex]
+    const nextSlide = slides[nextIndex]
+
+    return createProgressiveTransition({
+      elements: [currentSlide, nextSlide],
+      speed,
+      onProgress: () => {},
+      onComplete: async () => {
+        currentSlide.style.setProperty('display', 'none')
+        nextSlide.style.setProperty('display', 'block')
+      },
+      onCancel: async () => {},
+      onFinish: () => {
+        currentSlide.style.setProperty('display', 'none')
+        nextSlide.style.setProperty('display', 'block')
+      },
+      onReset: () => {
+        currentSlide.style.setProperty('display', 'block')
+        nextSlide.style.setProperty('display', 'none')
+      },
+    })
   },
 }
 ```
@@ -41,19 +90,33 @@ import { BoxSlider } from '@boxslider/slider'
 const slider = new BoxSlider(document.getElementById('slider'), effect)
 ```
 
-## Animation
+## Progressive Transition Callbacks
 
-An effect that animates the slide transition should return a promise that resolves when the animation
-is finished. The animation speed is determined from the `speed` option set in the slider options that
-is provided in the transition settings passed to the `transition` method.
+The `createProgressiveTransition` helper accepts the following callbacks:
+
+| Callback                                      | Description                                                             |
+| --------------------------------------------- | ----------------------------------------------------------------------- |
+| `onProgress(progress)`                        | Called during drag with progress value (0-1). Update visual state here. |
+| `onComplete(fromProgress, remainingDuration)` | Animate to completion from current progress.                            |
+| `onCancel(fromProgress, remainingDuration)`   | Animate back to start position.                                         |
+| `onFinish()`                                  | Set final state after transition completes.                             |
+| `onReset()`                                   | Reset to initial state after cancel/abort.                              |
+
+## Animated Effect with Progressive Drag
+
+For effects that animate and support progressive drag transitions, implement
+`onProgress` to update the visual state as the user drags:
 
 ```js
+import { createProgressiveTransition } from '@boxslider/slider'
+
 const effect = {
   initialize(el, slides, options) {
     el.style.setProperty('position', 'relative')
 
     slides.forEach((slide, index) => {
       slide.style.setProperty('position', 'absolute')
+      slide.style.setProperty('inset', '0')
       slide.style.setProperty(
         'opacity',
         index === options.startIndex ? '1' : '0',
@@ -61,39 +124,124 @@ const effect = {
     })
   },
 
-  async transition({ slides, speed, currentIndex, nextIndex }) {
-    const animateOut = slides[currentIndex].animate(
-      { opacity: [1, 0], transform: ['scale(1)', 'scale(0.9)'] },
-      { duration: speed, fill: 'forwards' },
-    )
-    const animateIn = slides[nextIndex].animate(
-      { opacity: [0, 1], transform: ['scale(0.9)', 'scale(1)'] },
-      { duration: speed, fill: 'forwards' },
-    )
+  prepareTransition({ slides, currentIndex, nextIndex, speed }) {
+    const currentSlide = slides[currentIndex]
+    const nextSlide = slides[nextIndex]
 
-    await Promise.all([animateIn.finished, animateOut.finished])
+    // Set initial state for transition
+    currentSlide.style.setProperty('opacity', '1')
+    nextSlide.style.setProperty('opacity', '0')
+
+    return createProgressiveTransition({
+      elements: [currentSlide, nextSlide],
+      speed,
+
+      // Update visuals as user drags (progress: 0-1)
+      onProgress: (progress) => {
+        currentSlide.style.setProperty('opacity', String(1 - progress))
+        currentSlide.style.setProperty(
+          'transform',
+          `scale(${1 - progress * 0.1})`,
+        )
+        nextSlide.style.setProperty('opacity', String(progress))
+        nextSlide.style.setProperty(
+          'transform',
+          `scale(${0.9 + progress * 0.1})`,
+        )
+      },
+
+      // Animate to completion when drag ends past threshold
+      onComplete: async (fromProgress, remainingDuration) => {
+        await Promise.all([
+          currentSlide.animate(
+            {
+              opacity: [String(1 - fromProgress), '0'],
+              transform: [`scale(${1 - fromProgress * 0.1})`, 'scale(0.9)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+          nextSlide.animate(
+            {
+              opacity: [String(fromProgress), '1'],
+              transform: [`scale(${0.9 + fromProgress * 0.1})`, 'scale(1)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+        ])
+      },
+
+      // Animate back to start when drag is cancelled
+      onCancel: async (fromProgress, remainingDuration) => {
+        await Promise.all([
+          currentSlide.animate(
+            {
+              opacity: [String(1 - fromProgress), '1'],
+              transform: [`scale(${1 - fromProgress * 0.1})`, 'scale(1)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+          nextSlide.animate(
+            {
+              opacity: [String(fromProgress), '0'],
+              transform: [`scale(${0.9 + fromProgress * 0.1})`, 'scale(0.9)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+        ])
+      },
+
+      // Set final state
+      onFinish: () => {
+        currentSlide.getAnimations().forEach((a) => a.cancel())
+        nextSlide.getAnimations().forEach((a) => a.cancel())
+        currentSlide.style.setProperty('opacity', '0')
+        currentSlide.style.setProperty('transform', 'scale(0.9)')
+        nextSlide.style.setProperty('opacity', '1')
+        nextSlide.style.setProperty('transform', 'scale(1)')
+      },
+
+      // Reset to initial state
+      onReset: () => {
+        currentSlide.getAnimations().forEach((a) => a.cancel())
+        nextSlide.getAnimations().forEach((a) => a.cancel())
+        currentSlide.style.setProperty('opacity', '1')
+        currentSlide.style.setProperty('transform', 'scale(1)')
+        nextSlide.style.setProperty('opacity', '0')
+        nextSlide.style.setProperty('transform', 'scale(0.9)')
+      },
+    })
+  },
+
+  destroy(el, slides) {
+    slides.forEach((slide) => {
+      slide.getAnimations().forEach((animation) => animation.cancel())
+    })
   },
 }
 ```
 
-## Destroying the effect
+## Vertical Swipe Direction
 
-When a slider is destroyed via the `destroy` method any style properties applied by the effect to the slider
-and slide elements will be either reset to their original values or removed by the `BoxSlider` object.
-If the effect has any clean up to perform then a `destroy` method can be added to the effect object.
-
-In the animation example the animations will persist on the slide elements after the slider is destroyed due
-to the `fill` setting of 'forwards'. These animations can be cancelled in the `destroy` method.
+For effects that should respond to vertical swipe gestures instead of horizontal,
+add the `swipeDirection` property:
 
 ```js
-destroy(el, slides) {
-  slides.forEach((slide) => {
-    slide.getAnimations().forEach((animation) => animation.cancel())
-  })
+const verticalEffect = {
+  get swipeDirection() {
+    return 'vertical'
+  },
+
+  initialize(el, slides, options) {
+    // ...
+  },
+
+  prepareTransition(settings) {
+    // ...
+  },
 }
 ```
 
-## Custom web component
+## Custom Web Component
 
 To use a custom effect as a web component, define an element that extends the `Slider` class and call the `init`
 method with the effect object from the `connectedCallback` method.

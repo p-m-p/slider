@@ -133,6 +133,34 @@ slider.addEventListener('after', (data) => {
 })
 ```
 
+### `progress`
+
+Fires during progressive drag transitions with the current progress percentage.
+
+```javascript
+slider.addEventListener('progress', (data) => {
+  // data: {
+  //   currentIndex: number
+  //   nextIndex: number
+  //   progress: number (0-100)
+  // }
+})
+```
+
+### `cancel`
+
+Fires when a progressive drag transition is cancelled (user releases before completing).
+
+```javascript
+slider.addEventListener('cancel', (data) => {
+  // data: {
+  //   currentIndex: number
+  //   nextIndex: number
+  //   speed: number
+  // }
+})
+```
+
 ### `play`
 
 Fires when the slider is put into play mode.
