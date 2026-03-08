@@ -5,7 +5,11 @@ import type {
   ProgressiveTransitionState,
   TransitionSettings,
 } from '../types'
-import { applyCss } from '../utils'
+import {
+  applyCss,
+  cancelAnimations,
+  createProgressiveTransition,
+} from '../utils'
 
 export interface CubeSliderOptions {
   direction?: 'horizontal' | 'vertical'
@@ -123,106 +127,78 @@ export default class CubeSlider implements Effect {
     const targetAngle = settings.isPrevious ? 90 : -90
     const nextSlide = settings.slides[settings.nextIndex]
     const currentSlide = settings.slides[settings.currentIndex]
+    const el = settings.el
+    const speed = settings.speed
 
-    // Cancel any existing animations to ensure clean state
-    settings.el.getAnimations().forEach((a) => a.cancel())
-    nextSlide.getAnimations().forEach((a) => a.cancel())
-    currentSlide.getAnimations().forEach((a) => a.cancel())
+    cancelAnimations(el, nextSlide, currentSlide)
 
-    // Ensure el and current slide are at their default positions
-    applyCss(settings.el, {
-      transform: `translate3d(0,0,-${this.translateZ}px)`,
-    })
+    applyCss(el, { transform: `translate3d(0,0,-${this.translateZ}px)` })
     applyCss(currentSlide, {
       transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
     })
-
     applyCss(nextSlide, {
       transform: `${this.rotation(-targetAngle)} translate3d(0,0,${this.translateZ}px)`,
     })
 
-    return {
-      setProgress: (progress: number) => {
+    return createProgressiveTransition({
+      elements: [el, nextSlide, currentSlide],
+
+      onProgress: (progress: number) => {
         const angle = targetAngle * progress
-        applyCss(settings.el, {
+        applyCss(el, {
           transform: `translate3d(0,0,-${this.translateZ}px) ${this.rotation(angle)}`,
         })
       },
 
-      complete: async (fromProgress: number) => {
+      onComplete: async (fromProgress: number) => {
         const currentAngle = targetAngle * fromProgress
-        const remainingProgress = 1 - fromProgress
-        const remainingDuration = settings.speed * remainingProgress
+        const remainingDuration = speed * (1 - fromProgress)
 
-        await settings.el.animate(
+        await el.animate(
           {
             transform: [
               `translate3d(0,0,-${this.translateZ}px) ${this.rotation(currentAngle)}`,
               `translate3d(0,0,-${this.translateZ}px) ${this.rotation(targetAngle)}`,
             ],
           },
-          {
-            duration: remainingDuration,
-          },
+          { duration: remainingDuration },
         ).finished
-
-        // Cancel any running animations
-        settings.el.getAnimations().forEach((a) => a.cancel())
-
-        settings.slides.forEach((s, index) => {
-          if (index !== settings.nextIndex) {
-            applyCss(s, { transform: 'initial' })
-          }
-        })
-
-        applyCss(nextSlide, {
-          transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
-        })
-
-        applyCss(settings.el, {
-          transform: `translate3d(0,0,-${this.translateZ}px)`,
-        })
       },
 
-      cancel: async (fromProgress: number) => {
+      onCancel: async (fromProgress: number) => {
         const currentAngle = targetAngle * fromProgress
-        const remainingDuration = settings.speed * fromProgress
+        const remainingDuration = speed * fromProgress
 
-        await settings.el.animate(
+        await el.animate(
           {
             transform: [
               `translate3d(0,0,-${this.translateZ}px) ${this.rotation(currentAngle)}`,
               `translate3d(0,0,-${this.translateZ}px) ${this.rotation(0)}`,
             ],
           },
-          {
-            duration: remainingDuration,
-          },
+          { duration: remainingDuration },
         ).finished
+      },
 
-        // Cancel any running animations
-        settings.el.getAnimations().forEach((a) => a.cancel())
+      onFinish: () => {
+        settings.slides.forEach((s, index) => {
+          if (index !== settings.nextIndex) {
+            applyCss(s, { transform: 'initial' })
+          }
+        })
+        applyCss(nextSlide, {
+          transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
+        })
+        applyCss(el, { transform: `translate3d(0,0,-${this.translateZ}px)` })
+      },
 
+      onReset: () => {
         applyCss(nextSlide, { transform: 'initial' })
         applyCss(currentSlide, {
           transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
         })
-        applyCss(settings.el, {
-          transform: `translate3d(0,0,-${this.translateZ}px)`,
-        })
+        applyCss(el, { transform: `translate3d(0,0,-${this.translateZ}px)` })
       },
-
-      abort: () => {
-        settings.el.getAnimations().forEach((animation) => animation.cancel())
-
-        applyCss(nextSlide, { transform: 'initial' })
-        applyCss(currentSlide, {
-          transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
-        })
-        applyCss(settings.el, {
-          transform: `translate3d(0,0,-${this.translateZ}px)`,
-        })
-      },
-    }
+    })
   }
 }
