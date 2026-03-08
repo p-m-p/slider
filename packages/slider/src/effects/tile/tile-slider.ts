@@ -1,5 +1,14 @@
-import type { BoxSliderOptions, Effect, TransitionSettings } from '../../types'
-import { applyCss } from '../../utils'
+import type {
+  BoxSliderOptions,
+  Effect,
+  ProgressiveTransitionState,
+  TransitionSettings,
+} from '../../types'
+import {
+  applyCss,
+  cancelAnimations,
+  createProgressiveTransition,
+} from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
 import {
@@ -124,51 +133,73 @@ export default class TileSlider implements Effect {
     this.tileWrapper.append(fragment)
   }
 
-  async transition(settings: TransitionSettings): Promise<void> {
-    const tiles = this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`)
+  prepareTransition(settings: TransitionSettings): ProgressiveTransitionState {
+    const tiles = [
+      ...this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`),
+    ] as HTMLElement[]
     const tileDuration =
       (settings.speed - this.options.rowOffset * (this.grid.rows - 1)) /
       this.grid.cols
     const nextFace = this.activeFace === 'front' ? 'back' : 'front'
+    const currentSlide = settings.slides[settings.currentIndex]
+    const nextSlide = settings.slides[settings.nextIndex]
 
+    // Set up initial state
     this.tileWrapper.style.setProperty('display', 'block')
-    settings.slides[settings.currentIndex].style.setProperty(
-      'visibility',
-      'hidden',
-    )
+    currentSlide.style.setProperty('visibility', 'hidden')
+
+    // Set up tile faces for the next slide
     this.tileWrapper
       .querySelectorAll(
         `.${nextFace === 'front' ? FRONT_FACE_CLASS : BACK_FACE_CLASS}`,
       )
       .forEach((tile) =>
-        this.tileTransition.setTileFace(
-          settings.slides[settings.nextIndex],
-          tile as HTMLElement,
-        ),
+        this.tileTransition.setTileFace(nextSlide, tile as HTMLElement),
       )
 
-    for (let i = 0; i < this.grid.rows; i++) {
-      for (let j = 0; j < this.grid.cols; j++) {
-        const index = i * this.grid.cols + j
-        const tile = tiles[index] as HTMLElement
-        const transition = this.tileTransition.transition({
-          delay: i * this.options.rowOffset + j * tileDuration,
-          duration: tileDuration,
-          nextFace,
-          tile,
-        })
+    return createProgressiveTransition({
+      elements: tiles,
 
-        if (index === tiles.length - 1) {
-          await transition
-          this.activeFace = nextFace
-          this.tileWrapper.style.setProperty('display', 'none')
-          settings.slides[settings.nextIndex].style.setProperty(
-            'visibility',
-            'visible',
-          )
+      // TileSlider doesn't support progressive drag - no-op
+      onProgress: () => {},
+
+      onComplete: async () => {
+        const animations: Promise<void>[] = []
+
+        for (let i = 0; i < this.grid.rows; i++) {
+          for (let j = 0; j < this.grid.cols; j++) {
+            const index = i * this.grid.cols + j
+            const tile = tiles[index]
+
+            animations.push(
+              this.tileTransition.transition({
+                delay: i * this.options.rowOffset + j * tileDuration,
+                duration: tileDuration,
+                nextFace,
+                tile,
+              }),
+            )
+          }
         }
-      }
-    }
+
+        await Promise.all(animations)
+        this.activeFace = nextFace
+      },
+
+      // TileSlider doesn't support cancel - just reset
+      onCancel: async () => {},
+
+      onFinish: () => {
+        this.tileWrapper.style.setProperty('display', 'none')
+        nextSlide.style.setProperty('visibility', 'visible')
+      },
+
+      onReset: () => {
+        cancelAnimations(...tiles)
+        this.tileWrapper.style.setProperty('display', 'none')
+        currentSlide.style.setProperty('visibility', 'visible')
+      },
+    })
   }
 
   destroy() {
