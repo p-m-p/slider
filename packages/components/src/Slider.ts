@@ -152,9 +152,10 @@ export default abstract class Slider
 
   protected init(effect: Effect) {
     const slider = new BoxSlider(this, effect, this.#optionsCache)
-    const events: SliderEventType[] = [
+    const events: Exclude<SliderEventType, 'progress'>[] = [
       'after',
       'before',
+      'cancel',
       'destroy',
       'pause',
       'play',
@@ -165,6 +166,10 @@ export default abstract class Slider
       slider.addEventListener(ev, (detail) =>
         this.dispatchEvent(new CustomEvent(ev, { detail })),
       ),
+    )
+
+    slider.addEventListener('progress', (detail) =>
+      this.dispatchEvent(new CustomEvent('progress', { detail })),
     )
 
     this.#slider = slider

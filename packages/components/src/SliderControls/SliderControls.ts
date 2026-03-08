@@ -271,11 +271,43 @@ export default class SliderControls
       )
 
       this.#addIndexPips()
+
+      if (this.#sliderEventListeners.before) {
+        this.#sliderElement.removeEventListener(
+          'before',
+          this.#sliderEventListeners.before,
+        )
+      }
+
+      if (this.#sliderEventListeners.progress) {
+        this.#sliderElement.removeEventListener(
+          'progress',
+          this.#sliderEventListeners.progress,
+        )
+      }
+
+      this.#sliderEventListeners.before = (ev: Event) => {
+        const { currentIndex, nextIndex } = (ev as CustomEvent).detail
+        // Set initial state when transition starts (for non-progressive transitions)
+        this.#setIndexPipState(currentIndex, nextIndex)
+      }
       this.#sliderElement.addEventListener(
         'before',
-        ({ detail: { currentIndex, nextIndex } }) => {
+        this.#sliderEventListeners.before,
+      )
+
+      this.#sliderEventListeners.progress = (ev: Event) => {
+        const { currentIndex, nextIndex, progress } = (ev as CustomEvent).detail
+        // Update pip state based on progress: <=50% shows current, >50% shows next
+        if (progress <= 50) {
+          this.#setIndexPipState(nextIndex, currentIndex)
+        } else {
           this.#setIndexPipState(currentIndex, nextIndex)
-        },
+        }
+      }
+      this.#sliderElement.addEventListener(
+        'progress',
+        this.#sliderEventListeners.progress,
       )
     }
   }
