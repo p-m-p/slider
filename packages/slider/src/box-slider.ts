@@ -487,6 +487,12 @@ export class BoxSlider {
       const slideSize = isHorizontal
         ? this.el.offsetWidth
         : this.el.offsetHeight
+
+      // Guard against zero-sized layouts (hidden/collapsed sliders)
+      if (slideSize <= 0) {
+        return
+      }
+
       const currentDelta = isHorizontal
         ? touch.clientX - this.touchStartX
         : touch.clientY - this.touchStartY
@@ -710,8 +716,6 @@ export class BoxSlider {
       nextIndex,
     }
 
-    this._activeIndex = nextIndex
-
     this.emit('before', {
       currentIndex: settings.currentIndex,
       nextIndex: settings.nextIndex,
@@ -722,6 +726,7 @@ export class BoxSlider {
       const state = this.effect.prepareTransition(settings)
 
       if (state) {
+        this._activeIndex = nextIndex
         await state.complete(0)
       }
     } catch {
