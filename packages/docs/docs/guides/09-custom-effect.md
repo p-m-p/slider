@@ -102,13 +102,21 @@ The `createProgressiveTransition` helper accepts the following optional callback
 
 All callbacks are optional - only implement those needed for your effect.
 
+:::tip
+Animations on the `elements` passed to `createProgressiveTransition` are automatically cancelled
+after `onFinish`/`onReset` complete. You don't need to cancel them manually in these callbacks.
+:::
+
 ## Animated Effect with Progressive Drag
 
 For effects that animate and support progressive drag transitions, implement
 `onProgress` to update the visual state as the user drags:
 
 ```js
-import { createProgressiveTransition } from '@boxslider/slider'
+import {
+  cancelAnimations,
+  createProgressiveTransition,
+} from '@boxslider/slider'
 
 const effect = {
   initialize(el, slides, options) {
@@ -127,6 +135,9 @@ const effect = {
   prepareTransition({ slides, currentIndex, nextIndex, speed }) {
     const currentSlide = slides[currentIndex]
     const nextSlide = slides[nextIndex]
+
+    // Cancel any running animations before setting up new state
+    cancelAnimations(currentSlide, nextSlide)
 
     // Set initial state for transition
     currentSlide.style.setProperty('opacity', '1')
@@ -190,20 +201,16 @@ const effect = {
         ])
       },
 
-      // Set final state
+      // Set final state (animations are cancelled automatically after this)
       onFinish: () => {
-        currentSlide.getAnimations().forEach((a) => a.cancel())
-        nextSlide.getAnimations().forEach((a) => a.cancel())
         currentSlide.style.setProperty('opacity', '0')
         currentSlide.style.setProperty('transform', 'scale(0.9)')
         nextSlide.style.setProperty('opacity', '1')
         nextSlide.style.setProperty('transform', 'scale(1)')
       },
 
-      // Reset to initial state
+      // Reset to initial state (animations are cancelled automatically after this)
       onReset: () => {
-        currentSlide.getAnimations().forEach((a) => a.cancel())
-        nextSlide.getAnimations().forEach((a) => a.cancel())
         currentSlide.style.setProperty('opacity', '1')
         currentSlide.style.setProperty('transform', 'scale(1)')
         nextSlide.style.setProperty('opacity', '0')
@@ -213,9 +220,7 @@ const effect = {
   },
 
   destroy(el, slides) {
-    slides.forEach((slide) => {
-      slide.getAnimations().forEach((animation) => animation.cancel())
-    })
+    cancelAnimations(...slides)
   },
 }
 ```
