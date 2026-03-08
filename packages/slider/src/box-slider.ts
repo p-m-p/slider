@@ -21,7 +21,6 @@ export const defaultOptions: BoxSliderOptions = Object.freeze({
   speed: 800,
   startIndex: 0,
   swipe: true,
-  swipeDirection: 'horizontal',
   swipeTolerance: 30,
   timeout: 5000,
 })
@@ -432,7 +431,8 @@ export class BoxSlider {
     const deltaX = touch.clientX - this.touchStartX
     const deltaY = touch.clientY - this.touchStartY
 
-    const isHorizontal = this.options.swipeDirection === 'horizontal'
+    const isHorizontal =
+      (this.effect.swipeDirection ?? 'horizontal') === 'horizontal'
     const primaryDelta = isHorizontal ? deltaX : deltaY
     const perpendicularDelta = isHorizontal ? deltaY : deltaX
 
@@ -498,7 +498,8 @@ export class BoxSlider {
     }
 
     const touch = ev.changedTouches[0]
-    const isHorizontal = this.options.swipeDirection === 'horizontal'
+    const isHorizontal =
+      (this.effect.swipeDirection ?? 'horizontal') === 'horizontal'
     const delta = isHorizontal
       ? touch.clientX - this.touchStartX
       : touch.clientY - this.touchStartY

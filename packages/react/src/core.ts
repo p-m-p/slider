@@ -49,7 +49,6 @@ export type BaseComponentProps<T> = BoxSliderProps &
     | 'auto-scroll'
     | 'pause-on-hover'
     | 'start-index'
-    | 'swipe-direction'
     | 'swipe-tolerance'
     | 'timing-function'
   >

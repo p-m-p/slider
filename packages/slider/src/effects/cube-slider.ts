@@ -21,6 +21,10 @@ export default class CubeSlider implements Effect {
   readonly supportsProgressiveTransition = true
   private translateZ!: number
 
+  get swipeDirection(): 'horizontal' | 'vertical' {
+    return this.options.direction ?? 'horizontal'
+  }
+
   constructor(options?: Partial<CubeSliderOptions>) {
     this.options = {
       direction: options?.direction || 'horizontal',
