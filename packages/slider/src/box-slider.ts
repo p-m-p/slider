@@ -414,6 +414,8 @@ export class BoxSlider {
       return
     }
 
+    ev.stopPropagation()
+
     const touch = ev.touches[0]
     this.touchStartX = touch.clientX
     this.touchStartY = touch.clientY
@@ -479,6 +481,7 @@ export class BoxSlider {
     if (ev.cancelable) {
       ev.preventDefault()
     }
+    ev.stopPropagation()
 
     if (this.touchProgressiveController) {
       const slideSize = isHorizontal
@@ -511,6 +514,7 @@ export class BoxSlider {
     const velocityThreshold = 0.3
 
     if (this.touchProgressiveController) {
+      ev.stopPropagation()
       const progress = this.touchProgressiveController.progress
       const shouldComplete =
         progress >= commitThreshold || velocity > velocityThreshold
