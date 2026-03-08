@@ -47,6 +47,7 @@ function testEffectProps<T extends SliderElement>(
   const autoScroll = false
   const pauseOnHover = false
   const swipe = false
+  const swipeTolerance = 50
   const speed = 500
   const startIndex = 1
   const timeout = 5000
@@ -55,6 +56,7 @@ function testEffectProps<T extends SliderElement>(
     'auto-scroll': `${autoScroll}`,
     'pause-on-hover': `${pauseOnHover}`,
     swipe: `${swipe}`,
+    'swipe-tolerance': `${swipeTolerance}`,
     'start-index': `${startIndex}`,
     speed: `${speed}`,
     timeout: `${timeout}`,
@@ -63,6 +65,7 @@ function testEffectProps<T extends SliderElement>(
   expect(el.autoScroll).toBeFalsy()
   expect(el.pauseOnHover).toBeFalsy()
   expect(el.swipe).toBeFalsy()
+  expect(el.swipeTolerance).toBe(swipeTolerance)
   expect(el.speed).toBe(speed)
   expect(el.startIndex).toBe(startIndex)
   expect(el.timeout).toBe(timeout)
@@ -99,6 +102,13 @@ function testEffectProps<T extends SliderElement>(
   expect(resetSpy.mock.calls[0][0]).toEqual({ timeout: 850 })
   el.timeout = 300
   expect(resetSpy.mock.calls[1][0]).toEqual({ timeout: 300 })
+
+  resetSpy.mockClear()
+
+  el.setAttribute('swipe-tolerance', '100')
+  expect(resetSpy.mock.calls[0][0]).toEqual({ swipeTolerance: 100 })
+  el.swipeTolerance = 25
+  expect(resetSpy.mock.calls[1][0]).toEqual({ swipeTolerance: 25 })
 
   resetSpy.mockClear()
 
