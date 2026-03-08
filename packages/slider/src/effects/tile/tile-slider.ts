@@ -4,11 +4,7 @@ import type {
   ProgressiveTransitionState,
   TransitionSettings,
 } from '../../types'
-import {
-  applyCss,
-  cancelAnimations,
-  createProgressiveTransition,
-} from '../../utils'
+import { applyCss, createProgressiveTransition } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
 import {
@@ -138,19 +134,12 @@ export default class TileSlider implements Effect {
       ...this.tileWrapper.querySelectorAll(`.${TILE_CLASS}`),
     ] as HTMLElement[]
 
-    // Cancel any running animations from previous transitions
-    cancelAnimations(...tiles)
-
     const tileDuration =
       (settings.speed - this.options.rowOffset * (this.grid.rows - 1)) /
       this.grid.cols
     const nextFace = this.activeFace === 'front' ? 'back' : 'front'
     const currentSlide = settings.slides[settings.currentIndex]
     const nextSlide = settings.slides[settings.nextIndex]
-
-    // Set up initial state
-    this.tileWrapper.style.setProperty('display', 'block')
-    currentSlide.style.setProperty('visibility', 'hidden')
 
     // Set up tile faces for the next slide
     this.tileWrapper
@@ -161,8 +150,14 @@ export default class TileSlider implements Effect {
         this.tileTransition.setTileFace(nextSlide, tile as HTMLElement),
       )
 
+    // Set up initial state
+    this.tileWrapper.style.setProperty('display', 'block')
+    currentSlide.style.setProperty('visibility', 'hidden')
+
+    // Pass empty elements array - tile animations use fill: 'forwards' to
+    // maintain state between transitions and should not be cancelled
     return createProgressiveTransition({
-      elements: tiles,
+      elements: [],
       speed: settings.speed,
 
       onComplete: async () => {
@@ -185,12 +180,12 @@ export default class TileSlider implements Effect {
         }
 
         await Promise.all(animations)
-        this.activeFace = nextFace
       },
 
       onFinish: () => {
         this.tileWrapper.style.setProperty('display', 'none')
         nextSlide.style.setProperty('visibility', 'visible')
+        this.activeFace = nextFace
       },
 
       onReset: () => {
