@@ -73,13 +73,13 @@ a new `BoxSlider` instance with the desired effect and options. See the [JavaScr
 for more information.
 
 ```javascript
-import { createCarouselSlider } from '@boxslider/slider'
+import { createFadeSlider } from '@boxslider/slider'
 
-const slider = createCarouselSlider('#slider', {
+// Creates a slider with fading slide transition that moves
+// to the next slide every 5 seconds (5000ms)
+const slider = createFadeSlider('#slider', {
   autoScroll: true,
   timeout: 5000,
   timingFunction: 'ease-in-out',
-})
-
-slider.next()
+}
 ```

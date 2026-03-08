@@ -1,5 +1,5 @@
 import { Slider } from '@boxslider/components'
-import type { Effect } from '@boxslider/slider'
+import { createProgressiveTransition, type Effect } from '@boxslider/slider'
 import { Slides } from './Slides'
 import styles from './styles.module.css'
 import { SliderControls } from '@boxslider/react'
@@ -10,24 +10,98 @@ const effect: Effect = {
     slides.forEach((slide, index) => {
       const isActive = index === options.startIndex
       slide.style.setProperty('position', 'absolute')
+      slide.style.setProperty('inset', '0')
       slide.style.setProperty('visibility', isActive ? 'visible' : 'hidden')
       slide.style.setProperty('opacity', isActive ? '1' : '0')
     })
   },
 
-  async transition({ slides, speed, currentIndex, nextIndex }) {
-    slides[nextIndex].style.setProperty('visibility', 'visible')
-    const animateOut = slides[currentIndex].animate(
-      { opacity: [1, 0], transform: ['scale(1)', 'scale(0.9)'] },
-      { duration: speed, fill: 'forwards' },
-    )
-    const animateIn = slides[nextIndex].animate(
-      { opacity: [0, 1], transform: ['scale(0.9)', 'scale(1)'] },
-      { duration: speed, fill: 'forwards' },
-    )
+  prepareTransition({ slides, speed, currentIndex, nextIndex }) {
+    const currentSlide = slides[currentIndex]
+    const nextSlide = slides[nextIndex]
 
-    await Promise.all([animateIn.finished, animateOut.finished])
-    slides[currentIndex].style.setProperty('visibility', 'hidden')
+    nextSlide.style.setProperty('visibility', 'visible')
+    currentSlide.style.setProperty('opacity', '1')
+    currentSlide.style.setProperty('transform', 'scale(1)')
+    nextSlide.style.setProperty('opacity', '0')
+    nextSlide.style.setProperty('transform', 'scale(0.9)')
+
+    return createProgressiveTransition({
+      elements: [currentSlide, nextSlide],
+      speed,
+
+      onProgress: (progress) => {
+        currentSlide.style.setProperty('opacity', String(1 - progress))
+        currentSlide.style.setProperty(
+          'transform',
+          `scale(${1 - progress * 0.1})`,
+        )
+        nextSlide.style.setProperty('opacity', String(progress))
+        nextSlide.style.setProperty(
+          'transform',
+          `scale(${0.9 + progress * 0.1})`,
+        )
+      },
+
+      onComplete: async (fromProgress, remainingDuration) => {
+        await Promise.all([
+          currentSlide.animate(
+            {
+              opacity: [String(1 - fromProgress), '0'],
+              transform: [`scale(${1 - fromProgress * 0.1})`, 'scale(0.9)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+          nextSlide.animate(
+            {
+              opacity: [String(fromProgress), '1'],
+              transform: [`scale(${0.9 + fromProgress * 0.1})`, 'scale(1)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+        ])
+      },
+
+      onCancel: async (fromProgress, remainingDuration) => {
+        await Promise.all([
+          currentSlide.animate(
+            {
+              opacity: [String(1 - fromProgress), '1'],
+              transform: [`scale(${1 - fromProgress * 0.1})`, 'scale(1)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+          nextSlide.animate(
+            {
+              opacity: [String(fromProgress), '0'],
+              transform: [`scale(${0.9 + fromProgress * 0.1})`, 'scale(0.9)'],
+            },
+            { duration: remainingDuration, fill: 'forwards' },
+          ).finished,
+        ])
+      },
+
+      onFinish: () => {
+        currentSlide.getAnimations().forEach((a) => a.cancel())
+        nextSlide.getAnimations().forEach((a) => a.cancel())
+        currentSlide.style.setProperty('visibility', 'hidden')
+        currentSlide.style.setProperty('opacity', '0')
+        currentSlide.style.setProperty('transform', 'scale(0.9)')
+        nextSlide.style.setProperty('visibility', 'visible')
+        nextSlide.style.setProperty('opacity', '1')
+        nextSlide.style.setProperty('transform', 'scale(1)')
+      },
+
+      onReset: () => {
+        currentSlide.getAnimations().forEach((a) => a.cancel())
+        nextSlide.getAnimations().forEach((a) => a.cancel())
+        nextSlide.style.setProperty('visibility', 'hidden')
+        currentSlide.style.setProperty('opacity', '1')
+        currentSlide.style.setProperty('transform', 'scale(1)')
+        nextSlide.style.setProperty('opacity', '0')
+        nextSlide.style.setProperty('transform', 'scale(0.9)')
+      },
+    })
   },
 
   destroy(_, slides) {
