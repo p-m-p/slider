@@ -57,6 +57,17 @@ export default class SliderControls
   #hasBeenInteractedWith = false
   #sliderEventListeners: Record<string, EventListener> = {}
 
+  #setSliderListener(event: string, handler: EventListener) {
+    if (this.#sliderEventListeners[event]) {
+      this.#sliderElement.removeEventListener(
+        event,
+        this.#sliderEventListeners[event],
+      )
+    }
+    this.#sliderEventListeners[event] = handler
+    this.#sliderElement.addEventListener(event, handler)
+  }
+
   constructor() {
     super()
 
@@ -231,101 +242,27 @@ export default class SliderControls
 
       this.#setPlayBtnState()
 
-      if (this.#sliderEventListeners.play) {
-        this.#sliderElement.removeEventListener(
-          'play',
-          this.#sliderEventListeners.play,
-        )
-      }
-
-      if (this.#sliderEventListeners.reset) {
-        this.#sliderElement.removeEventListener(
-          'reset',
-          this.#sliderEventListeners.reset,
-        )
-      }
-
-      if (this.#sliderEventListeners.pause) {
-        this.#sliderElement.removeEventListener(
-          'pause',
-          this.#sliderEventListeners.pause,
-        )
-      }
-
-      this.#sliderEventListeners.play = () => this.#setPlayBtnState()
-      this.#sliderElement.addEventListener(
-        'play',
-        this.#sliderEventListeners.play,
-      )
-
-      this.#sliderEventListeners.pause = () => this.#setPlayBtnState()
-      this.#sliderElement.addEventListener(
-        'pause',
-        this.#sliderEventListeners.pause,
-      )
-
-      this.#sliderEventListeners.reset = () => this.#init()
-      this.#sliderElement.addEventListener(
-        'reset',
-        this.#sliderEventListeners.reset,
-      )
+      this.#setSliderListener('play', () => this.#setPlayBtnState())
+      this.#setSliderListener('pause', () => this.#setPlayBtnState())
+      this.#setSliderListener('reset', () => this.#init())
 
       this.#addIndexPips()
 
-      if (this.#sliderEventListeners.after) {
-        this.#sliderElement.removeEventListener(
-          'after',
-          this.#sliderEventListeners.after,
-        )
-      }
-
-      if (this.#sliderEventListeners.progress) {
-        this.#sliderElement.removeEventListener(
-          'progress',
-          this.#sliderEventListeners.progress,
-        )
-      }
-
-      if (this.#sliderEventListeners.cancel) {
-        this.#sliderElement.removeEventListener(
-          'cancel',
-          this.#sliderEventListeners.cancel,
-        )
-      }
-
-      this.#sliderEventListeners.after = (ev: Event) => {
+      this.#setSliderListener('after', (ev: Event) => {
         const { currentIndex } = (ev as CustomEvent).detail
-        // Ensure pip state reflects final active index after transition completes
         this.#setIndexPipState(currentIndex)
-      }
-      this.#sliderElement.addEventListener(
-        'after',
-        this.#sliderEventListeners.after,
-      )
+      })
 
-      this.#sliderEventListeners.cancel = (ev: Event) => {
+      this.#setSliderListener('cancel', (ev: Event) => {
         const { currentIndex } = (ev as CustomEvent).detail
-        // Ensure pip state reflects final active index after transition completes
         this.#setIndexPipState(currentIndex)
-      }
-      this.#sliderElement.addEventListener(
-        'cancel',
-        this.#sliderEventListeners.cancel,
-      )
+      })
 
-      this.#sliderEventListeners.progress = (ev: Event) => {
+      this.#setSliderListener('progress', (ev: Event) => {
         const { currentIndex, nextIndex, progress } = (ev as CustomEvent).detail
         // Update pip state based on progress: <=50% shows current, >50% shows next
-        if (progress <= 50) {
-          this.#setIndexPipState(currentIndex)
-        } else {
-          this.#setIndexPipState(nextIndex)
-        }
-      }
-      this.#sliderElement.addEventListener(
-        'progress',
-        this.#sliderEventListeners.progress,
-      )
+        this.#setIndexPipState(progress <= 50 ? currentIndex : nextIndex)
+      })
     }
   }
 
