@@ -56,13 +56,6 @@ export interface SliderEventListenerMap {
   destroy: () => void
 
   /**
-   * Event triggered when slider is initialized
-   *
-   * @deprecated - This event will not fire. Listen for `reset` event instead.
-   */
-  init: () => void
-
-  /**
    * Event triggered when slider auto scrolling is stopped
    */
   pause: (data: SliderEventData) => void

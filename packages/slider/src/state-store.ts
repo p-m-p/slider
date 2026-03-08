@@ -26,7 +26,7 @@ export class StateStore {
 
         if (cachedValue === null || cachedValue === '') {
           el.removeAttribute(attribute)
-        } else if (cachedValue !== null) {
+        } else {
           el.setAttribute(attribute, cachedValue)
         }
       })
