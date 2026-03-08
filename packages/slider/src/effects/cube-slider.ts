@@ -114,6 +114,7 @@ export default class CubeSlider implements Effect {
 
     return createProgressiveTransition({
       elements: [el, nextSlide, currentSlide],
+      speed,
 
       onProgress: (progress: number) => {
         const angle = targetAngle * progress
@@ -122,9 +123,8 @@ export default class CubeSlider implements Effect {
         })
       },
 
-      onComplete: async (fromProgress: number) => {
+      onComplete: async (fromProgress: number, remainingDuration: number) => {
         const currentAngle = targetAngle * fromProgress
-        const remainingDuration = speed * (1 - fromProgress)
 
         await el.animate(
           {
@@ -137,9 +137,8 @@ export default class CubeSlider implements Effect {
         ).finished
       },
 
-      onCancel: async (fromProgress: number) => {
+      onCancel: async (fromProgress: number, remainingDuration: number) => {
         const currentAngle = targetAngle * fromProgress
-        const remainingDuration = speed * fromProgress
 
         await el.animate(
           {

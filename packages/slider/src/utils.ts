@@ -13,9 +13,10 @@ export function cancelAnimations(...elements: HTMLElement[]): void {
 
 export interface ProgressiveTransitionConfig {
   elements: HTMLElement[]
+  speed: number
   onProgress: (progress: number) => void
-  onComplete: (fromProgress: number) => Promise<void>
-  onCancel: (fromProgress: number) => Promise<void>
+  onComplete: (fromProgress: number, remainingDuration: number) => Promise<void>
+  onCancel: (fromProgress: number, remainingDuration: number) => Promise<void>
   onFinish: () => void
   onReset: () => void
 }
@@ -23,20 +24,29 @@ export interface ProgressiveTransitionConfig {
 export function createProgressiveTransition(
   config: ProgressiveTransitionConfig,
 ): ProgressiveTransitionState {
-  const { elements, onProgress, onComplete, onCancel, onFinish, onReset } =
-    config
+  const {
+    elements,
+    speed,
+    onProgress,
+    onComplete,
+    onCancel,
+    onFinish,
+    onReset,
+  } = config
 
   return {
     setProgress: onProgress,
 
     complete: async (fromProgress: number) => {
-      await onComplete(fromProgress)
+      const remainingDuration = speed * (1 - fromProgress)
+      await onComplete(fromProgress, remainingDuration)
       cancelAnimations(...elements)
       onFinish()
     },
 
     cancel: async (fromProgress: number) => {
-      await onCancel(fromProgress)
+      const remainingDuration = speed * fromProgress
+      await onCancel(fromProgress, remainingDuration)
       cancelAnimations(...elements)
       onReset()
     },
