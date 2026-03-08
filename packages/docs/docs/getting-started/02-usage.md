@@ -81,5 +81,5 @@ const slider = createFadeSlider('#slider', {
   autoScroll: true,
   timeout: 5000,
   timingFunction: 'ease-in-out',
-}
+})
 ```
