@@ -17,6 +17,23 @@ export type SliderEventData = {
   speed: number
 }
 
+export type ProgressEventData = {
+  /**
+   * The currently active slide index
+   */
+  currentIndex: number
+
+  /**
+   * The index of the slide being transitioned to
+   */
+  nextIndex: number
+
+  /**
+   * The progress of the transition as a percentage (0-100)
+   */
+  progress: number
+}
+
 export interface SliderEventListenerMap {
   /**
    * Event triggered after slide transition completes
@@ -27,6 +44,11 @@ export interface SliderEventListenerMap {
    * Event triggered before slide transition begins
    */
   before: (data: SliderEventData) => void
+
+  /**
+   * Event triggered when a progressive transition is cancelled
+   */
+  cancel: (data: SliderEventData) => void
 
   /**
    * Event triggered when slider is destroyed
@@ -49,6 +71,11 @@ export interface SliderEventListenerMap {
    * Event triggered when slider auto scrolling is started
    */
   play: (data: SliderEventData) => void
+
+  /**
+   * Event triggered during a progressive transition with progress percentage
+   */
+  progress: (data: ProgressEventData) => void
 
   /**
    * Event triggered when slider is reset
