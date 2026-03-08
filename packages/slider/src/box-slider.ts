@@ -5,6 +5,7 @@ import type {
   BoxSliderOptions,
   Effect,
   EventListenerMap,
+  ProgressEventData,
   SliderEventData,
   SliderEventListenerMap,
   SliderEventType,
@@ -611,6 +612,11 @@ export class BoxSlider {
       setProgress: (progress: number) => {
         currentProgress = Math.max(0, Math.min(1, progress))
         state.setProgress(currentProgress)
+        this.emitProgress({
+          currentIndex: settings.currentIndex,
+          nextIndex: settings.nextIndex,
+          progress: Math.round(currentProgress * 100),
+        })
       },
 
       complete: async () => {
@@ -642,7 +648,17 @@ export class BoxSlider {
           this.progressiveTransitionInProgress = false
         }
 
-        if (this.options.autoScroll && !this.isDestroyed) {
+        if (this.isDestroyed) {
+          return
+        }
+
+        this.emit('cancel', {
+          currentIndex: settings.currentIndex,
+          nextIndex: settings.nextIndex,
+          speed: settings.speed,
+        })
+
+        if (this.options.autoScroll) {
           this.setAutoScroll()
         }
       },
@@ -722,7 +738,10 @@ export class BoxSlider {
     globalThis.clearTimeout(this.autoScrollTimer)
   }
 
-  private emit<T extends SliderEventType>(ev: T, payload?: SliderEventData) {
+  private emit<T extends Exclude<SliderEventType, 'progress'>>(
+    ev: T,
+    payload?: SliderEventData,
+  ) {
     const handlers: EventListenerMap[T] = this.eventListeners[ev]
 
     if (ev === 'destroy') {
@@ -737,6 +756,11 @@ export class BoxSlider {
         }),
       )
     }
+  }
+
+  private emitProgress(data: ProgressEventData) {
+    const handlers = this.eventListeners.progress
+    handlers?.forEach((cb) => cb(data))
   }
 
   private setAutoScroll() {
