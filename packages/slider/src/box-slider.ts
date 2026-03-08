@@ -551,10 +551,7 @@ export class BoxSlider {
   private prepareProgressiveTransition(
     direction: 'next' | 'prev',
   ): ProgressiveTransitionController | null {
-    if (
-      this.progressiveTransitionInProgress ||
-      !this.effect.prepareTransition
-    ) {
+    if (this.progressiveTransitionInProgress) {
       return null
     }
 
@@ -696,14 +693,10 @@ export class BoxSlider {
     })
 
     try {
-      if (this.effect.prepareTransition) {
-        const state = this.effect.prepareTransition(settings)
+      const state = this.effect.prepareTransition(settings)
 
-        if (state) {
-          await state.complete(0)
-        }
-      } else if (this.effect.transition) {
-        await (this.effect.transition(settings) ?? Promise.resolve())
+      if (state) {
+        await state.complete(0)
       }
     } catch {
       // Transition may throw an error from aborted animation if slides are removed
