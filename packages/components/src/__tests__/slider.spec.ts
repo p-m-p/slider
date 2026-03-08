@@ -290,27 +290,27 @@ test('slider lifecycle events', async () => {
   expect(destroyHandler).toHaveBeenCalledWith(new CustomEvent('destroy'))
 })
 
-test('enable-touch and pause-on-hover options', () => {
+test('swipe and pause-on-hover options', () => {
   const el = createSliderElement<CarouselSliderElement>('bs-carousel', {
     'auto-scroll': 'false',
-    'enable-touch': 'true',
+    swipe: 'true',
     'pause-on-hover': 'true',
   })
 
   const slider = el.slider!
 
-  expect(el.enableTouch).toBe(true)
+  expect(el.swipe).toBe(true)
   expect(el.pauseOnHover).toBe(true)
   expect(slider.getOption('swipe')).toBe(true)
   expect(slider.getOption('pauseOnHover')).toBe(true)
 
-  el.enableTouch = false
+  el.swipe = false
   expect(slider.getOption('swipe')).toBe(false)
 
   el.pauseOnHover = false
   expect(slider.getOption('pauseOnHover')).toBe(false)
 
-  el.enableTouch = true
+  el.swipe = true
   expect(slider.getOption('swipe')).toBe(true)
 
   el.pauseOnHover = true

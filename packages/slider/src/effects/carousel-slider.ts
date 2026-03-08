@@ -4,7 +4,11 @@ import type {
   ProgressiveTransitionState,
   TransitionSettings,
 } from '../types'
-import { applyCss } from '../utils'
+import {
+  applyCss,
+  cancelAnimations,
+  createProgressiveTransition,
+} from '../utils'
 
 export interface CarouselSliderOptions {
   cover?: boolean
@@ -13,7 +17,6 @@ export interface CarouselSliderOptions {
 
 export default class CarouselSlider implements Effect {
   readonly options: CarouselSliderOptions
-  readonly supportsProgressiveTransition = true
 
   constructor(options?: CarouselSliderOptions) {
     this.options = {
@@ -48,67 +51,8 @@ export default class CarouselSlider implements Effect {
     })
   }
 
-  async transition({
-    currentIndex,
-    isPrevious,
-    nextIndex,
-    slides,
-    speed,
-  }: TransitionSettings) {
-    const currentSlide = slides[currentIndex]
-    const currentSlideWidth = currentSlide.offsetWidth
-    const nextSlide = slides[nextIndex]
-    const nextSlideWidth = nextSlide.offsetWidth
-
-    applyCss(nextSlide, {
-      'z-index': '3',
-    })
-
-    applyCss(currentSlide, {
-      'z-index': '2',
-    })
-
-    const animateIn = nextSlide.animate(
-      {
-        transform: [
-          `translateX(${isPrevious ? '-' + nextSlideWidth : nextSlideWidth}px)`,
-          'translateX(0px)',
-        ],
-      },
-      {
-        duration: speed,
-        easing: this.options.timingFunction,
-        fill: 'forwards',
-      },
-    )
-
-    if (!this.options.cover) {
-      await currentSlide.animate(
-        {
-          transform: [
-            'translateX(0px)',
-            `translateX(${isPrevious ? currentSlideWidth : '-' + currentSlideWidth}px)`,
-          ],
-        },
-        {
-          duration: speed,
-          easing: this.options.timingFunction,
-          fill: 'forwards',
-        },
-      ).finished
-    }
-
-    await animateIn.finished
-
-    applyCss(currentSlide, {
-      'z-index': '1',
-    })
-  }
-
   destroy(_: HTMLElement, slides: HTMLElement[]) {
-    slides.forEach((slide) => {
-      slide.getAnimations().forEach((animation) => animation.cancel())
-    })
+    cancelAnimations(...slides)
   }
 
   prepareTransition({
@@ -117,60 +61,47 @@ export default class CarouselSlider implements Effect {
     nextIndex,
     slides,
     speed,
-  }: TransitionSettings): ProgressiveTransitionState | null {
+  }: TransitionSettings): ProgressiveTransitionState {
     const currentSlide = slides[currentIndex]
     const currentSlideWidth = currentSlide.offsetWidth
     const nextSlide = slides[nextIndex]
     const nextSlideWidth = nextSlide.offsetWidth
     const isCover = this.options.cover
+    const timingFunction = this.options.timingFunction
 
-    // Cancel any existing animations to ensure clean state
-    nextSlide.getAnimations().forEach((a) => a.cancel())
-    currentSlide.getAnimations().forEach((a) => a.cancel())
-
-    // Ensure current slide is at origin position
-    applyCss(currentSlide, {
-      transform: 'translateX(0px)',
-      'z-index': '2',
-    })
-
-    applyCss(nextSlide, { 'z-index': '3' })
+    cancelAnimations(currentSlide, nextSlide)
 
     const nextStartX = isPrevious ? -nextSlideWidth : nextSlideWidth
     const currentEndX = isPrevious ? currentSlideWidth : -currentSlideWidth
 
+    applyCss(currentSlide, { transform: 'translateX(0px)', 'z-index': '2' })
     applyCss(nextSlide, {
       transform: `translateX(${nextStartX}px)`,
+      'z-index': '3',
     })
 
-    return {
-      setProgress: (progress: number) => {
+    return createProgressiveTransition({
+      elements: [currentSlide, nextSlide],
+
+      onProgress: (progress: number) => {
         const nextX = nextStartX * (1 - progress)
-        applyCss(nextSlide, {
-          transform: `translateX(${nextX}px)`,
-        })
+        applyCss(nextSlide, { transform: `translateX(${nextX}px)` })
 
         if (!isCover) {
           const currentX = currentEndX * progress
-          applyCss(currentSlide, {
-            transform: `translateX(${currentX}px)`,
-          })
+          applyCss(currentSlide, { transform: `translateX(${currentX}px)` })
         }
       },
 
-      complete: async (fromProgress: number) => {
-        const remainingProgress = 1 - fromProgress
-        const remainingDuration = speed * remainingProgress
-
+      onComplete: async (fromProgress: number) => {
+        const remainingDuration = speed * (1 - fromProgress)
         const nextX = nextStartX * (1 - fromProgress)
 
         const animateIn = nextSlide.animate(
-          {
-            transform: [`translateX(${nextX}px)`, 'translateX(0px)'],
-          },
+          { transform: [`translateX(${nextX}px)`, 'translateX(0px)'] },
           {
             duration: remainingDuration,
-            easing: this.options.timingFunction,
+            easing: timingFunction,
             fill: 'forwards',
           },
         )
@@ -186,31 +117,17 @@ export default class CarouselSlider implements Effect {
             },
             {
               duration: remainingDuration,
-              easing: this.options.timingFunction,
+              easing: timingFunction,
               fill: 'forwards',
             },
           ).finished
         }
 
         await animateIn.finished
-
-        // Cancel animations and apply final styles
-        nextSlide.getAnimations().forEach((a) => a.cancel())
-        currentSlide.getAnimations().forEach((a) => a.cancel())
-
-        applyCss(nextSlide, {
-          transform: 'translateX(0px)',
-          'z-index': '3',
-        })
-        applyCss(currentSlide, {
-          transform: `translateX(${currentEndX}px)`,
-          'z-index': '1',
-        })
       },
 
-      cancel: async (fromProgress: number) => {
+      onCancel: async (fromProgress: number) => {
         const remainingDuration = speed * fromProgress
-
         const nextX = nextStartX * (1 - fromProgress)
 
         const animateOut = nextSlide.animate(
@@ -222,7 +139,7 @@ export default class CarouselSlider implements Effect {
           },
           {
             duration: remainingDuration,
-            easing: this.options.timingFunction,
+            easing: timingFunction,
             fill: 'forwards',
           },
         )
@@ -230,46 +147,33 @@ export default class CarouselSlider implements Effect {
         if (!isCover) {
           const currentX = currentEndX * fromProgress
           await currentSlide.animate(
-            {
-              transform: [`translateX(${currentX}px)`, 'translateX(0px)'],
-            },
+            { transform: [`translateX(${currentX}px)`, 'translateX(0px)'] },
             {
               duration: remainingDuration,
-              easing: this.options.timingFunction,
+              easing: timingFunction,
               fill: 'forwards',
             },
           ).finished
         }
 
         await animateOut.finished
+      },
 
-        // Cancel animations and apply final styles
-        nextSlide.getAnimations().forEach((a) => a.cancel())
-        currentSlide.getAnimations().forEach((a) => a.cancel())
+      onFinish: () => {
+        applyCss(nextSlide, { transform: 'translateX(0px)', 'z-index': '3' })
+        applyCss(currentSlide, {
+          transform: `translateX(${currentEndX}px)`,
+          'z-index': '1',
+        })
+      },
 
+      onReset: () => {
         applyCss(nextSlide, {
           transform: `translateX(${nextStartX}px)`,
           'z-index': '1',
         })
-        applyCss(currentSlide, {
-          transform: 'translateX(0px)',
-          'z-index': '3',
-        })
+        applyCss(currentSlide, { transform: 'translateX(0px)', 'z-index': '3' })
       },
-
-      abort: () => {
-        nextSlide.getAnimations().forEach((animation) => animation.cancel())
-        currentSlide.getAnimations().forEach((animation) => animation.cancel())
-
-        applyCss(nextSlide, {
-          transform: `translateX(${nextStartX}px)`,
-          'z-index': '1',
-        })
-        applyCss(currentSlide, {
-          transform: 'translateX(0px)',
-          'z-index': '3',
-        })
-      },
-    }
+    })
   }
 }

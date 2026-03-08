@@ -94,11 +94,6 @@ export interface BoxSliderOptions {
   swipe: boolean
 
   /**
-   * Direction for swipe gestures
-   */
-  swipeDirection: 'horizontal' | 'vertical'
-
-  /**
    * Minimum distance in pixels required to trigger a swipe
    */
   swipeTolerance: number
@@ -169,6 +164,11 @@ export interface ProgressiveTransitionState {
 
 export interface Effect {
   /**
+   * The swipe direction for touch gestures. Defaults to 'horizontal' if not specified.
+   */
+  readonly swipeDirection?: 'horizontal' | 'vertical'
+
+  /**
    * Destroy the effect to remove any timers, event listeners, etc.
    */
   destroy?: (el: HTMLElement, slides: HTMLElement[]) => void
@@ -200,20 +200,10 @@ export interface Effect {
   ): void
 
   /**
-   * Transition to the next slide
+   * Prepare a transition and return a state controller. Used for both
+   * regular transitions (via complete(0)) and progressive drag transitions.
    */
-  transition(settings: TransitionSettings): void | Promise<void>
-
-  /**
-   * Whether this effect supports progressive (drag-based) transitions
-   */
-  readonly supportsProgressiveTransition?: boolean
-
-  /**
-   * Prepare a progressive transition and return a state controller.
-   * Returns null if progressive transition is not supported or not possible.
-   */
-  prepareTransition?(
+  prepareTransition(
     settings: TransitionSettings,
   ): ProgressiveTransitionState | null
 }

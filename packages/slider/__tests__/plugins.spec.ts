@@ -1,4 +1,4 @@
-import { BoxSlider, CarouselSlider, FadeSlider } from '../src'
+import { BoxSlider, CarouselSlider, CubeSlider, FadeSlider } from '../src'
 
 function createSliderElement(): HTMLElement {
   const el = document.createElement('div')
@@ -190,13 +190,16 @@ describe('Swipe navigation', () => {
 
   test('vertical swipe direction triggers correct navigation', () => {
     const el = createSliderElement()
-    const slider = new BoxSlider(el, new FadeSlider(), {
-      autoScroll: false,
-      startIndex: 1,
-      swipe: true,
-      swipeDirection: 'vertical',
-      swipeTolerance: 10,
-    })
+    const slider = new BoxSlider(
+      el,
+      new CubeSlider({ direction: 'vertical' }),
+      {
+        autoScroll: false,
+        startIndex: 1,
+        swipe: true,
+        swipeTolerance: 10,
+      },
+    )
 
     const prevSpy = vi.spyOn(slider, 'prev')
 
@@ -226,12 +229,12 @@ describe('Progressive Transitions', () => {
 
   test('CarouselSlider supports progressive transitions', () => {
     const effect = new CarouselSlider()
-    expect(effect.supportsProgressiveTransition).toBe(true)
+    expect(effect.prepareTransition).toBeDefined()
   })
 
   test('FadeSlider supports progressive transitions', () => {
     const effect = new FadeSlider()
-    expect(effect.supportsProgressiveTransition).toBe(true)
+    expect(effect.prepareTransition).toBeDefined()
   })
 
   test('progressive drag transition works with carousel', async () => {

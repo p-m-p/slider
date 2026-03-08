@@ -7,8 +7,6 @@ import { sharedSliderArgTypes } from './shared-arg-types'
 
 const defaultStoryArgs = {
   ...defaultOptions,
-  enableTouch: true,
-  pauseOnHover: true,
   timingFunction: 'ease-in-out' as const,
 }
 
@@ -126,7 +124,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 3,
-    enableTouch: false,
+    swipe: false,
     pauseOnHover: false,
     timingFunction: 'ease',
   },
@@ -144,7 +142,7 @@ export const CustomConfiguration: Story = {
     autoScroll: false,
     loop: false,
     startIndex: 3,
-    enableTouch: false,
+    swipe: false,
     pauseOnHover: false,
     timingFunction: 'ease',
   }),
