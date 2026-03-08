@@ -114,7 +114,9 @@ export interface BoxSliderOptions {
   swipe: boolean
 
   /**
-   * Minimum distance in pixels required to trigger a swipe
+   * Minimum distance in pixels required to start a drag gesture.
+   * Once dragging starts, the transition commits based on drag progress
+   * (>50%) or velocity, not this threshold.
    */
   swipeTolerance: number
 

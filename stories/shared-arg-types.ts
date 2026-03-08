@@ -33,6 +33,11 @@ export const sharedSliderArgTypes: ArgTypes = {
     description: 'Enable touch/swipe navigation with progressive drag support',
     defaultValue: true,
   },
+  swipeTolerance: {
+    control: { type: 'number', min: 0, max: 100, step: 5 },
+    description: 'Minimum distance in pixels to start a drag gesture',
+    defaultValue: 30,
+  },
   startIndex: {
     control: { type: 'number', min: 0, max: 10, step: 1 },
     description: 'Slide index to start from (0-based)',
