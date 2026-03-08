@@ -12,7 +12,6 @@ to update your code.
 
 - **Progressive drag transitions** - Users see slides move as they drag, not just after releasing
 - **New events** - `progress` and `cancel` events for tracking drag state
-- **Simplified architecture** - Touch handling and pause-on-hover built into core
 
 ## Breaking Changes
 
@@ -53,12 +52,10 @@ const effect = {
     return createProgressiveTransition({
       elements: [currentSlide, nextSlide],
       speed,
-      onProgress: () => {},
       onComplete: async () => {
         currentSlide.style.opacity = '0'
         nextSlide.style.opacity = '1'
       },
-      onCancel: async () => {},
       onFinish: () => {
         currentSlide.style.opacity = '0'
         nextSlide.style.opacity = '1'
@@ -74,7 +71,7 @@ const effect = {
 
 ### Progressive Transition Callbacks
 
-The `createProgressiveTransition` helper requires these callbacks:
+The `createProgressiveTransition` helper accepts these optional callbacks:
 
 | Callback                                      | Purpose                                    |
 | --------------------------------------------- | ------------------------------------------ |
@@ -83,6 +80,8 @@ The `createProgressiveTransition` helper requires these callbacks:
 | `onCancel(fromProgress, remainingDuration)`   | Animate back to start                      |
 | `onFinish()`                                  | Set final CSS state                        |
 | `onReset()`                                   | Reset to initial CSS state                 |
+
+Only implement the callbacks your effect needs.
 
 ### Adding Progressive Drag Support
 

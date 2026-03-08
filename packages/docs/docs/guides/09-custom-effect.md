@@ -63,12 +63,10 @@ const effect = {
     return createProgressiveTransition({
       elements: [currentSlide, nextSlide],
       speed,
-      onProgress: () => {},
       onComplete: async () => {
         currentSlide.style.setProperty('display', 'none')
         nextSlide.style.setProperty('display', 'block')
       },
-      onCancel: async () => {},
       onFinish: () => {
         currentSlide.style.setProperty('display', 'none')
         nextSlide.style.setProperty('display', 'block')
@@ -92,7 +90,7 @@ const slider = new BoxSlider(document.getElementById('slider'), effect)
 
 ## Progressive Transition Callbacks
 
-The `createProgressiveTransition` helper accepts the following callbacks:
+The `createProgressiveTransition` helper accepts the following optional callbacks:
 
 | Callback                                      | Description                                                             |
 | --------------------------------------------- | ----------------------------------------------------------------------- |
@@ -101,6 +99,8 @@ The `createProgressiveTransition` helper accepts the following callbacks:
 | `onCancel(fromProgress, remainingDuration)`   | Animate back to start position.                                         |
 | `onFinish()`                                  | Set final state after transition completes.                             |
 | `onReset()`                                   | Reset to initial state after cancel/abort.                              |
+
+All callbacks are optional - only implement those needed for your effect.
 
 ## Animated Effect with Progressive Drag
 
