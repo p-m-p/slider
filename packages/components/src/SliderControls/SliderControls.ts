@@ -294,9 +294,9 @@ export default class SliderControls
       }
 
       this.#sliderEventListeners.before = (ev: Event) => {
-        const { currentIndex, nextIndex } = (ev as CustomEvent).detail
-        // Set initial state when transition starts (for non-progressive transitions)
-        this.#setIndexPipState(currentIndex, nextIndex)
+        const { currentIndex } = (ev as CustomEvent).detail
+        // Keep pip at currentIndex when transition starts; progress/after will update it
+        this.#setIndexPipState(currentIndex)
       }
       this.#sliderElement.addEventListener(
         'before',
