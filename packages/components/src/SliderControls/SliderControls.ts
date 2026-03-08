@@ -412,31 +412,23 @@ export default class SliderControls
     }
   }
 
-  #setIndexPipState(currentIndex: number, nextIndex?: number) {
+  #setIndexPipState(_currentIndex: number, nextIndex?: number) {
     const indexSlot =
       this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="index"]')
 
     if (indexSlot) {
       const container = indexSlot?.assignedElements()[0] ?? indexSlot
       const buttons = container?.querySelectorAll('button')
-      const currentBtn = buttons?.item(currentIndex)
-      const nextBtn = buttons?.item(nextIndex ?? -1)
+      const activeIndex = nextIndex ?? _currentIndex
 
-      if (currentBtn) {
-        currentBtn.setAttribute('aria-disabled', 'false')
+      buttons?.forEach((btn, index) => {
+        const isActive = index === activeIndex
+        btn.setAttribute('aria-disabled', isActive ? 'true' : 'false')
 
-        if (currentBtn.hasAttribute('part')) {
-          currentBtn.setAttribute('part', 'index-btn')
+        if (btn.hasAttribute('part')) {
+          btn.setAttribute('part', isActive ? 'index-btn active' : 'index-btn')
         }
-      }
-
-      if (nextBtn) {
-        nextBtn.setAttribute('aria-disabled', 'true')
-
-        if (nextBtn.hasAttribute('part')) {
-          nextBtn.setAttribute('part', 'index-btn active')
-        }
-      }
+      })
     }
   }
 
