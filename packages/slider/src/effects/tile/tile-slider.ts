@@ -41,7 +41,6 @@ interface TileGrid {
 
 export default class TileSlider implements Effect {
   readonly options: TileSliderOptions
-  readonly supportsProgressiveTransition = false
 
   private _tileWrapper: HTMLElement | undefined
   private tileTransition: FadeTransition | FlipTransition
@@ -162,9 +161,6 @@ export default class TileSlider implements Effect {
       elements: tiles,
       speed: settings.speed,
 
-      // TileSlider doesn't support progressive drag - no-op
-      onProgress: () => {},
-
       onComplete: async () => {
         const animations: Promise<void>[] = []
 
@@ -187,9 +183,6 @@ export default class TileSlider implements Effect {
         await Promise.all(animations)
         this.activeFace = nextFace
       },
-
-      // TileSlider doesn't support cancel - just reset
-      onCancel: async () => {},
 
       onFinish: () => {
         this.tileWrapper.style.setProperty('display', 'none')

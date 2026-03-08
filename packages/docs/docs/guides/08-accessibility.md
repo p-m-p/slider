@@ -63,6 +63,8 @@ on page load to prevent the slider from automatically scrolling. The default con
 `prefers-reduced-motion` media query. You may also want to set the `speed` option to `0` to prevent slide transitions from animating.
 
 ```js
+import { createFadeSlider } from '@boxslider/slider'
+
 const hasReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)',
 ).matches

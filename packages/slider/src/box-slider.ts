@@ -508,7 +508,7 @@ export class BoxSlider {
       ? touch.clientX - this.touchStartX
       : touch.clientY - this.touchStartY
     const elapsed = Date.now() - this.touchStartTime
-    const velocity = Math.abs(delta) / elapsed
+    const velocity = elapsed > 0 ? Math.abs(delta) / elapsed : 0
 
     const commitThreshold = 0.5
     const velocityThreshold = 0.3
@@ -520,9 +520,9 @@ export class BoxSlider {
         progress >= commitThreshold || velocity > velocityThreshold
 
       if (shouldComplete) {
-        this.touchProgressiveController.complete()
+        this.touchProgressiveController.complete().catch(() => {})
       } else {
-        this.touchProgressiveController.cancel()
+        this.touchProgressiveController.cancel().catch(() => {})
       }
     } else if (
       this.touchDirection === null &&
@@ -685,6 +685,12 @@ export class BoxSlider {
     backwards: boolean,
   ): Promise<void> {
     this.stopAutoScroll()
+
+    // Abort any in-progress progressive transition before starting a new one
+    if (this.touchProgressiveController) {
+      this.touchProgressiveController.abort()
+      this.cleanupTouch()
+    }
 
     if (
       this.isDestroyed ||

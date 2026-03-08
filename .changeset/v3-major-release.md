@@ -75,14 +75,10 @@ const effect = {
     return createProgressiveTransition({
       elements: [slides[currentIndex], slides[nextIndex]],
       speed,
-      onProgress: () => {}, // No progressive support
       onComplete: async () => {
         slides[currentIndex].style.display = 'none'
         slides[nextIndex].style.display = 'block'
       },
-      onCancel: async () => {},
-      onFinish: () => {},
-      onReset: () => {},
     })
   },
 }
@@ -182,7 +178,7 @@ slider.addEventListener('cancel', (data) => {
 
 ### Progressive Drag Transitions
 
-All built-in effects (Carousel, Cube, Fade, Tile) now support progressive drag transitions. When users swipe/drag on touch devices, they see real-time visual feedback of the transition progress rather than a simple swipe trigger.
+Carousel, Cube, and Fade effects now support progressive drag transitions. When users swipe/drag on touch devices, they see real-time visual feedback of the transition progress. Tile effect uses standard swipe triggers due to the complexity of its tile-based animation.
 
 ### Utility Function
 
@@ -191,10 +187,3 @@ The `createProgressiveTransition` helper is exported for creating compliant `Pro
 ```typescript
 import { createProgressiveTransition } from '@boxslider/slider'
 ```
-
-## Internal Changes (Non-Breaking)
-
-- Touch/swipe handling moved from plugin to core
-- Pause-on-hover moved from plugin to core
-- Plugin system removed (was internal, not public API)
-- Bundle size optimization
