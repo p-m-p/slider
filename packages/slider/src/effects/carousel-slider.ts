@@ -17,7 +17,6 @@ export interface CarouselSliderOptions {
 
 export default class CarouselSlider implements Effect {
   readonly options: CarouselSliderOptions
-  readonly supportsProgressiveTransition = true
 
   constructor(options?: CarouselSliderOptions) {
     this.options = {
@@ -49,63 +48,6 @@ export default class CarouselSlider implements Effect {
         transform: `translateX(${active ? 0 : slide.offsetWidth}px)`,
         'z-index': active ? '3' : '1',
       })
-    })
-  }
-
-  async transition({
-    currentIndex,
-    isPrevious,
-    nextIndex,
-    slides,
-    speed,
-  }: TransitionSettings) {
-    const currentSlide = slides[currentIndex]
-    const currentSlideWidth = currentSlide.offsetWidth
-    const nextSlide = slides[nextIndex]
-    const nextSlideWidth = nextSlide.offsetWidth
-
-    applyCss(nextSlide, {
-      'z-index': '3',
-    })
-
-    applyCss(currentSlide, {
-      'z-index': '2',
-    })
-
-    const animateIn = nextSlide.animate(
-      {
-        transform: [
-          `translateX(${isPrevious ? '-' + nextSlideWidth : nextSlideWidth}px)`,
-          'translateX(0px)',
-        ],
-      },
-      {
-        duration: speed,
-        easing: this.options.timingFunction,
-        fill: 'forwards',
-      },
-    )
-
-    if (!this.options.cover) {
-      await currentSlide.animate(
-        {
-          transform: [
-            'translateX(0px)',
-            `translateX(${isPrevious ? currentSlideWidth : '-' + currentSlideWidth}px)`,
-          ],
-        },
-        {
-          duration: speed,
-          easing: this.options.timingFunction,
-          fill: 'forwards',
-        },
-      ).finished
-    }
-
-    await animateIn.finished
-
-    applyCss(currentSlide, {
-      'z-index': '1',
     })
   }
 

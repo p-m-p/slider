@@ -32,7 +32,6 @@ interface TileGrid {
 
 export default class TileSlider implements Effect {
   readonly options: TileSliderOptions
-  readonly supportsProgressiveTransition = false
 
   private _tileWrapper: HTMLElement | undefined
   private tileTransition: FadeTransition | FlipTransition
