@@ -229,12 +229,12 @@ describe('Progressive Transitions', () => {
 
   test('CarouselSlider supports progressive transitions', () => {
     const effect = new CarouselSlider()
-    expect(effect.supportsProgressiveTransition).toBe(true)
+    expect(effect.prepareTransition).toBeDefined()
   })
 
   test('FadeSlider supports progressive transitions', () => {
     const effect = new FadeSlider()
-    expect(effect.supportsProgressiveTransition).toBe(true)
+    expect(effect.prepareTransition).toBeDefined()
   })
 
   test('progressive drag transition works with carousel', async () => {

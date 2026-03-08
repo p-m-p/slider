@@ -18,7 +18,6 @@ export interface CubeSliderOptions {
 
 export default class CubeSlider implements Effect {
   readonly options: CubeSliderOptions
-  readonly supportsProgressiveTransition = true
   private translateZ!: number
 
   get swipeDirection(): 'horizontal' | 'vertical' {
@@ -86,37 +85,6 @@ export default class CubeSlider implements Effect {
 
     applyCss(el, {
       'transform-style': 'preserve-3d',
-      transform: `translate3d(0,0,-${this.translateZ}px)`,
-    })
-  }
-
-  async transition(settings: TransitionSettings) {
-    const angle = settings.isPrevious ? 90 : -90
-
-    applyCss(settings.slides[settings.nextIndex], {
-      transform: `${this.rotation(-angle)} translate3d(0,0,${this.translateZ}px)`,
-    })
-
-    await settings.el.animate(
-      {
-        transform: `translate3d(0,0,-${this.translateZ}px) ${this.rotation(angle)}`,
-      },
-      {
-        duration: settings.speed,
-      },
-    ).finished
-
-    settings.slides.forEach((s, index) => {
-      if (index !== settings.nextIndex) {
-        applyCss(s, { transform: 'initial' })
-      }
-    })
-
-    applyCss(settings.slides[settings.nextIndex], {
-      transform: `${this.rotation(0)} translate3d(0,0,${this.translateZ}px)`,
-    })
-
-    applyCss(settings.el, {
       transform: `translate3d(0,0,-${this.translateZ}px)`,
     })
   }
