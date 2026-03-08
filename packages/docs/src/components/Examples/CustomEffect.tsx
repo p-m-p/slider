@@ -1,5 +1,9 @@
 import { Slider } from '@boxslider/components'
-import { createProgressiveTransition, type Effect } from '@boxslider/slider'
+import {
+  cancelAnimations,
+  createProgressiveTransition,
+  type Effect,
+} from '@boxslider/slider'
 import { Slides } from './Slides'
 import styles from './styles.module.css'
 import { SliderControls } from '@boxslider/react'
@@ -19,6 +23,8 @@ const effect: Effect = {
   prepareTransition({ slides, speed, currentIndex, nextIndex }) {
     const currentSlide = slides[currentIndex]
     const nextSlide = slides[nextIndex]
+
+    cancelAnimations(currentSlide, nextSlide)
 
     nextSlide.style.setProperty('visibility', 'visible')
     currentSlide.style.setProperty('opacity', '1')
@@ -82,8 +88,6 @@ const effect: Effect = {
       },
 
       onFinish: () => {
-        currentSlide.getAnimations().forEach((a) => a.cancel())
-        nextSlide.getAnimations().forEach((a) => a.cancel())
         currentSlide.style.setProperty('visibility', 'hidden')
         currentSlide.style.setProperty('opacity', '0')
         currentSlide.style.setProperty('transform', 'scale(0.9)')
@@ -93,8 +97,6 @@ const effect: Effect = {
       },
 
       onReset: () => {
-        currentSlide.getAnimations().forEach((a) => a.cancel())
-        nextSlide.getAnimations().forEach((a) => a.cancel())
         nextSlide.style.setProperty('visibility', 'hidden')
         currentSlide.style.setProperty('opacity', '1')
         currentSlide.style.setProperty('transform', 'scale(1)')
@@ -105,9 +107,7 @@ const effect: Effect = {
   },
 
   destroy(_, slides) {
-    slides.forEach((slide) => {
-      slide.getAnimations().forEach((animation) => animation.cancel())
-    })
+    cancelAnimations(...slides)
   },
 }
 
