@@ -82,6 +82,7 @@ export default class CarouselSlider implements Effect {
 
     return createProgressiveTransition({
       elements: [currentSlide, nextSlide],
+      speed,
 
       onProgress: (progress: number) => {
         const nextX = nextStartX * (1 - progress)
@@ -93,8 +94,7 @@ export default class CarouselSlider implements Effect {
         }
       },
 
-      onComplete: async (fromProgress: number) => {
-        const remainingDuration = speed * (1 - fromProgress)
+      onComplete: async (fromProgress: number, remainingDuration: number) => {
         const nextX = nextStartX * (1 - fromProgress)
 
         const animateIn = nextSlide.animate(
@@ -126,8 +126,7 @@ export default class CarouselSlider implements Effect {
         await animateIn.finished
       },
 
-      onCancel: async (fromProgress: number) => {
-        const remainingDuration = speed * fromProgress
+      onCancel: async (fromProgress: number, remainingDuration: number) => {
         const nextX = nextStartX * (1 - fromProgress)
 
         const animateOut = nextSlide.animate(

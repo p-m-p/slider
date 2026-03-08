@@ -68,15 +68,14 @@ export default class FadeSlider implements Effect {
 
     return createProgressiveTransition({
       elements: [currentSlide, nextSlide],
+      speed,
 
       onProgress: (progress: number) => {
         applyCss(currentSlide, { opacity: String(1 - progress) })
         applyCss(nextSlide, { opacity: String(progress) })
       },
 
-      onComplete: async (fromProgress: number) => {
-        const remainingDuration = speed * (1 - fromProgress)
-
+      onComplete: async (fromProgress: number, remainingDuration: number) => {
         await Promise.all([
           currentSlide.animate(
             { opacity: [String(1 - fromProgress), '0'] },
@@ -97,9 +96,7 @@ export default class FadeSlider implements Effect {
         ])
       },
 
-      onCancel: async (fromProgress: number) => {
-        const remainingDuration = speed * fromProgress
-
+      onCancel: async (fromProgress: number, remainingDuration: number) => {
         await Promise.all([
           currentSlide.animate(
             { opacity: [String(1 - fromProgress), '1'] },
