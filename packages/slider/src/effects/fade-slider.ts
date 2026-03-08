@@ -16,7 +16,6 @@ export interface FadeSliderOptions {
 
 export default class FadeSlider implements Effect {
   readonly options: FadeSliderOptions
-  readonly supportsProgressiveTransition = true
 
   constructor(options?: FadeSliderOptions) {
     this.options = {
@@ -46,38 +45,6 @@ export default class FadeSlider implements Effect {
         'z-index': active ? '2' : '1',
       })
     })
-  }
-
-  async transition({
-    currentIndex,
-    nextIndex,
-    slides,
-    speed,
-  }: TransitionSettings) {
-    const currentSlide = slides[currentIndex]
-    const nextSlide = slides[nextIndex]
-
-    applyCss(currentSlide, { 'z-index': '1' })
-    applyCss(nextSlide, { 'z-index': '2' })
-
-    await Promise.all([
-      currentSlide.animate(
-        { opacity: [1, 0] },
-        {
-          duration: speed,
-          easing: this.options.timingFunction,
-          fill: 'forwards',
-        },
-      ).finished,
-      nextSlide.animate(
-        { opacity: [0, 1] },
-        {
-          duration: speed,
-          easing: this.options.timingFunction,
-          fill: 'forwards',
-        },
-      ).finished,
-    ])
   }
 
   destroy(_: HTMLElement, slides: HTMLElement[]) {
