@@ -279,6 +279,13 @@ export default class SliderControls
         )
       }
 
+      if (this.#sliderEventListeners.after) {
+        this.#sliderElement.removeEventListener(
+          'after',
+          this.#sliderEventListeners.after,
+        )
+      }
+
       if (this.#sliderEventListeners.progress) {
         this.#sliderElement.removeEventListener(
           'progress',
@@ -294,6 +301,16 @@ export default class SliderControls
       this.#sliderElement.addEventListener(
         'before',
         this.#sliderEventListeners.before,
+      )
+
+      this.#sliderEventListeners.after = (ev: Event) => {
+        const { currentIndex } = (ev as CustomEvent).detail
+        // Ensure pip state reflects final active index after transition completes
+        this.#setIndexPipState(currentIndex)
+      }
+      this.#sliderElement.addEventListener(
+        'after',
+        this.#sliderEventListeners.after,
       )
 
       this.#sliderEventListeners.progress = (ev: Event) => {
