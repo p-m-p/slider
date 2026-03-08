@@ -716,8 +716,6 @@ export class BoxSlider {
       nextIndex,
     }
 
-    this._activeIndex = nextIndex
-
     this.emit('before', {
       currentIndex: settings.currentIndex,
       nextIndex: settings.nextIndex,
@@ -728,6 +726,7 @@ export class BoxSlider {
       const state = this.effect.prepareTransition(settings)
 
       if (state) {
+        this._activeIndex = nextIndex
         await state.complete(0)
       }
     } catch {
