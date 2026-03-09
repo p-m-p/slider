@@ -3,7 +3,7 @@ import {
   type TileSettings,
   type TileTransition,
 } from './tile-transition'
-import { applyCss } from '../../utils'
+import { animOpts, applyCss, cloneSlideToFace } from '../../utils'
 
 class FlipTransition implements TileTransition {
   createTile(tileSettings: TileSettings): HTMLElement {
@@ -78,18 +78,12 @@ class FlipTransition implements TileTransition {
           `rotateY(${nextFace === 'back' ? 180 : 0}deg)`,
         ],
       },
-      {
-        delay,
-        duration,
-        fill: 'forwards',
-      },
+      animOpts(duration, undefined, delay),
     ).finished
   }
 
   setTileFace(slide: HTMLElement, tileFace: HTMLElement) {
-    const clone = slide.cloneNode(true) as HTMLElement
-    clone.style.removeProperty('visibility')
-    tileFace.firstElementChild!.replaceChildren(clone)
+    cloneSlideToFace(slide, tileFace, true)
   }
 }
 

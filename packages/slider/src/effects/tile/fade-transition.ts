@@ -5,7 +5,7 @@ import {
   BACK_FACE_CLASS,
   TransitionSettings,
 } from './tile-transition'
-import { applyCss } from '../../utils'
+import { animOpts, applyCss, cloneSlideToFace } from '../../utils'
 
 class FadeTransition implements TileTransition {
   createTile(tileSettings: TileSettings): HTMLElement {
@@ -48,23 +48,16 @@ class FadeTransition implements TileTransition {
   async transition({ tile, nextFace, delay, duration }: TransitionSettings) {
     const front = tile.querySelector(`.${FRONT_FACE_CLASS}`) as HTMLElement
     const back = tile.querySelector(`.${BACK_FACE_CLASS}`) as HTMLElement
+    const opts = animOpts(duration, undefined, delay)
 
-    const frontAnimation = front.animate(
-      { opacity: nextFace === 'front' ? 1 : 0 },
-      { duration, fill: 'forwards', delay },
-    )
-    const backAnimation = back.animate(
-      { opacity: nextFace === 'front' ? 0 : 1 },
-      { duration, fill: 'forwards', delay },
-    )
-
-    await Promise.all([frontAnimation.finished, backAnimation.finished])
+    await Promise.all([
+      front.animate({ opacity: nextFace === 'front' ? 1 : 0 }, opts).finished,
+      back.animate({ opacity: nextFace === 'front' ? 0 : 1 }, opts).finished,
+    ])
   }
 
   setTileFace(slide: HTMLElement, tileFace: HTMLElement) {
-    const clone = slide.cloneNode(true) as HTMLElement
-    clone.style.removeProperty('visibility')
-    tileFace.replaceChildren(clone)
+    cloneSlideToFace(slide, tileFace)
   }
 }
 

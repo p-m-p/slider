@@ -9,6 +9,7 @@ import {
   applyCss,
   cancelAnimations,
   createProgressiveTransition,
+  needsPositioning,
 } from '../utils'
 
 export interface CubeSliderOptions {
@@ -66,11 +67,7 @@ export default class CubeSlider implements Effect {
       top: '0',
     })
 
-    if (
-      !['absolute', 'fixed', 'relative'].includes(
-        getComputedStyle(viewport).position,
-      )
-    ) {
+    if (needsPositioning(viewport)) {
       applyCss(viewport, { position: 'relative' })
     }
 

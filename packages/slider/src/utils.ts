@@ -11,6 +11,30 @@ export function cancelAnimations(...elements: HTMLElement[]): void {
   elements.forEach((el) => el.getAnimations().forEach((a) => a.cancel()))
 }
 
+export function needsPositioning(el: HTMLElement): boolean {
+  const pos = getComputedStyle(el).position
+  return pos === 'static' || pos === 'inherit'
+}
+
+export function cloneSlideToFace(
+  slide: HTMLElement,
+  face: HTMLElement,
+  nested = false,
+): void {
+  const clone = slide.cloneNode(true) as HTMLElement
+  clone.style.removeProperty('visibility')
+  const target = nested ? face.firstElementChild! : face
+  target.replaceChildren(clone)
+}
+
+export function animOpts(
+  duration: number,
+  easing?: string,
+  delay?: number,
+): KeyframeAnimationOptions {
+  return { delay, duration, easing, fill: 'forwards' }
+}
+
 const noop = () => {}
 const asyncNoop = async () => {}
 
