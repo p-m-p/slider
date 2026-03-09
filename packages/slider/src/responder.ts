@@ -21,5 +21,3 @@ export const responder = {
     boxSliders = boxSliders.filter((b) => b !== boxSlider)
   },
 }
-
-export default responder

@@ -28,7 +28,9 @@ export default class FadeSlider implements Effect {
     slides: HTMLElement[],
     options: BoxSliderOptions,
   ): void {
-    if ('static inherit'.includes(getComputedStyle(el).position)) {
+    if (
+      !['absolute', 'fixed', 'relative'].includes(getComputedStyle(el).position)
+    ) {
       applyCss(el, { position: 'relative' })
     }
 
