@@ -27,6 +27,7 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run build
       - run: pnpm run test:coverage
+      - run: pnpm run size:check
       - name: Run Chromatic tests
         uses: chromaui/action@latest
         with:
