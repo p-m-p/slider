@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Full bundle (minified)",
+    "path": "packages/slider/dist/min.js",
+    "limit": "6.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "Core + Carousel",
+    "path": "packages/slider/dist/esm/index.js",
+    "import": "{ BoxSlider, CarouselSlider }",
+    "limit": "4 kB",
+    "gzip": true
+  },
+  {
+    "name": "Core + Cube",
+    "path": "packages/slider/dist/esm/index.js",
+    "import": "{ BoxSlider, CubeSlider }",
+    "limit": "4.2 kB",
+    "gzip": true
+  },
+  {
+    "name": "Core + Fade",
+    "path": "packages/slider/dist/esm/index.js",
+    "import": "{ BoxSlider, FadeSlider }",
+    "limit": "3.9 kB",
+    "gzip": true
+  },
+  {
+    "name": "Core + Tile",
+    "path": "packages/slider/dist/esm/index.js",
+    "import": "{ BoxSlider, TileSlider }",
+    "limit": "5.1 kB",
+    "gzip": true
+  }
+]
