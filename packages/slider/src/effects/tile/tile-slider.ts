@@ -4,11 +4,7 @@ import type {
   ProgressiveTransitionState,
   TransitionSettings,
 } from '../../types'
-import {
-  applyCss,
-  createProgressiveTransition,
-  needsPositioning,
-} from '../../utils'
+import { applyCss, createProgressiveTransition } from '../../utils'
 import FadeTransition from './fade-transition'
 import FlipTransition from './flip-transition'
 import {
@@ -84,7 +80,7 @@ export default class TileSlider implements Effect {
     el.append(tileWrapper)
     this._tileWrapper = tileWrapper
 
-    if (needsPositioning(el)) {
+    if (!'fixed absolute relative'.includes(getComputedStyle(el).position)) {
       applyCss(el, { position: 'relative' })
     }
 

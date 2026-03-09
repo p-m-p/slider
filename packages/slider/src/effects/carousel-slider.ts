@@ -5,11 +5,9 @@ import type {
   TransitionSettings,
 } from '../types'
 import {
-  animOpts,
   applyCss,
   cancelAnimations,
   createProgressiveTransition,
-  needsPositioning,
 } from '../utils'
 
 export interface CarouselSliderOptions {
@@ -32,9 +30,11 @@ export default class CarouselSlider implements Effect {
     slides: HTMLElement[],
     options: BoxSliderOptions,
   ) {
-    applyCss(el, { overflow: 'hidden' })
+    applyCss(el, {
+      overflow: 'hidden',
+    })
 
-    if (needsPositioning(el)) {
+    if ('static inherit'.includes(getComputedStyle(el).position)) {
       applyCss(el, { position: 'relative' })
     }
 
@@ -95,12 +95,15 @@ export default class CarouselSlider implements Effect {
       },
 
       onComplete: async (fromProgress: number, remainingDuration: number) => {
-        const opts = animOpts(remainingDuration, timingFunction)
         const nextX = nextStartX * (1 - fromProgress)
 
         const animateIn = nextSlide.animate(
           { transform: [`translateX(${nextX}px)`, 'translateX(0px)'] },
-          opts,
+          {
+            duration: remainingDuration,
+            easing: timingFunction,
+            fill: 'forwards',
+          },
         )
 
         if (!isCover) {
@@ -112,7 +115,11 @@ export default class CarouselSlider implements Effect {
                 `translateX(${currentEndX}px)`,
               ],
             },
-            opts,
+            {
+              duration: remainingDuration,
+              easing: timingFunction,
+              fill: 'forwards',
+            },
           ).finished
         }
 
@@ -120,7 +127,6 @@ export default class CarouselSlider implements Effect {
       },
 
       onCancel: async (fromProgress: number, remainingDuration: number) => {
-        const opts = animOpts(remainingDuration, timingFunction)
         const nextX = nextStartX * (1 - fromProgress)
 
         const animateOut = nextSlide.animate(
@@ -130,14 +136,22 @@ export default class CarouselSlider implements Effect {
               `translateX(${nextStartX}px)`,
             ],
           },
-          opts,
+          {
+            duration: remainingDuration,
+            easing: timingFunction,
+            fill: 'forwards',
+          },
         )
 
         if (!isCover) {
           const currentX = currentEndX * fromProgress
           await currentSlide.animate(
             { transform: [`translateX(${currentX}px)`, 'translateX(0px)'] },
-            opts,
+            {
+              duration: remainingDuration,
+              easing: timingFunction,
+              fill: 'forwards',
+            },
           ).finished
         }
 

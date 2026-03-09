@@ -5,11 +5,9 @@ import type {
   TransitionSettings,
 } from '../types'
 import {
-  animOpts,
   applyCss,
   cancelAnimations,
   createProgressiveTransition,
-  needsPositioning,
 } from '../utils'
 
 export interface FadeSliderOptions {
@@ -30,7 +28,7 @@ export default class FadeSlider implements Effect {
     slides: HTMLElement[],
     options: BoxSliderOptions,
   ): void {
-    if (needsPositioning(el)) {
+    if ('static inherit'.includes(getComputedStyle(el).position)) {
       applyCss(el, { position: 'relative' })
     }
 
@@ -78,26 +76,44 @@ export default class FadeSlider implements Effect {
       },
 
       onComplete: async (fromProgress: number, remainingDuration: number) => {
-        const opts = animOpts(remainingDuration, timingFunction)
         await Promise.all([
           currentSlide.animate(
             { opacity: [String(1 - fromProgress), '0'] },
-            opts,
+            {
+              duration: remainingDuration,
+              easing: timingFunction,
+              fill: 'forwards',
+            },
           ).finished,
-          nextSlide.animate({ opacity: [String(fromProgress), '1'] }, opts)
-            .finished,
+          nextSlide.animate(
+            { opacity: [String(fromProgress), '1'] },
+            {
+              duration: remainingDuration,
+              easing: timingFunction,
+              fill: 'forwards',
+            },
+          ).finished,
         ])
       },
 
       onCancel: async (fromProgress: number, remainingDuration: number) => {
-        const opts = animOpts(remainingDuration, timingFunction)
         await Promise.all([
           currentSlide.animate(
             { opacity: [String(1 - fromProgress), '1'] },
-            opts,
+            {
+              duration: remainingDuration,
+              easing: timingFunction,
+              fill: 'forwards',
+            },
           ).finished,
-          nextSlide.animate({ opacity: [String(fromProgress), '0'] }, opts)
-            .finished,
+          nextSlide.animate(
+            { opacity: [String(fromProgress), '0'] },
+            {
+              duration: remainingDuration,
+              easing: timingFunction,
+              fill: 'forwards',
+            },
+          ).finished,
         ])
       },
 
