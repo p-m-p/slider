@@ -21,14 +21,12 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run build
       - run: pnpm run test:coverage
-      - name: Check bundle size
-        uses: andresz1/size-limit-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          package_manager: pnpm
-          skip_step: build
       - name: Run Chromatic tests
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
-          turboSnap: true
+      - name: Check bundle size
+        uses: andresz1/size-limit-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          skip_step: build
