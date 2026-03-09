@@ -11,9 +11,6 @@ export function cancelAnimations(...elements: HTMLElement[]): void {
   elements.forEach((el) => el.getAnimations().forEach((a) => a.cancel()))
 }
 
-const noop = () => {}
-const asyncNoop = async () => {}
-
 export interface ProgressiveTransitionConfig {
   elements: HTMLElement[]
   speed: number
@@ -33,32 +30,32 @@ export function createProgressiveTransition(
   const {
     elements,
     speed,
-    onProgress = noop,
-    onComplete = asyncNoop,
-    onCancel = asyncNoop,
-    onFinish = noop,
-    onReset = noop,
+    onProgress,
+    onComplete,
+    onCancel,
+    onFinish,
+    onReset,
   } = config
 
   return {
-    setProgress: onProgress,
+    setProgress: (progress) => onProgress?.(progress),
 
     complete: async (fromProgress: number) => {
       const remainingDuration = speed * (1 - fromProgress)
-      await onComplete(fromProgress, remainingDuration)
-      onFinish()
+      await onComplete?.(fromProgress, remainingDuration)
+      onFinish?.()
       cancelAnimations(...elements)
     },
 
     cancel: async (fromProgress: number) => {
       const remainingDuration = speed * fromProgress
-      await onCancel(fromProgress, remainingDuration)
-      onReset()
+      await onCancel?.(fromProgress, remainingDuration)
+      onReset?.()
       cancelAnimations(...elements)
     },
 
     abort: () => {
-      onReset()
+      onReset?.()
       cancelAnimations(...elements)
     },
   }

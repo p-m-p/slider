@@ -319,9 +319,7 @@ export class BoxSlider {
     )
     this.addAriaAttributes()
 
-    if (this.options.autoScroll) {
-      this.setAutoScroll()
-    }
+    this.setAutoScroll()
   }
 
   private addAriaAttributes() {
@@ -644,10 +642,7 @@ export class BoxSlider {
         this.slides[settings.currentIndex].setAttribute('aria-hidden', 'true')
         this.slides[nextIndex].setAttribute('aria-hidden', 'false')
 
-        if (this.options.autoScroll) {
-          this.setAutoScroll()
-        }
-
+        this.setAutoScroll()
         this.emit('after')
       },
 
@@ -668,18 +663,13 @@ export class BoxSlider {
           speed: settings.speed,
         })
 
-        if (this.options.autoScroll) {
-          this.setAutoScroll()
-        }
+        this.setAutoScroll()
       },
 
       abort: () => {
         state.abort()
         this.progressiveTransitionInProgress = false
-
-        if (this.options.autoScroll && !this.isDestroyed) {
-          this.setAutoScroll()
-        }
+        this.setAutoScroll()
       },
     }
 
@@ -739,9 +729,7 @@ export class BoxSlider {
       return
     }
 
-    if (this.options.autoScroll) {
-      this.setAutoScroll()
-    }
+    this.setAutoScroll()
 
     this.slides[settings.currentIndex].setAttribute('aria-hidden', 'true')
     this.slides[settings.nextIndex].setAttribute('aria-hidden', 'false')
@@ -779,6 +767,10 @@ export class BoxSlider {
   }
 
   private setAutoScroll() {
+    if (!this.options.autoScroll) {
+      return
+    }
+
     this.stopAutoScroll()
 
     globalThis.requestAnimationFrame(() => {
