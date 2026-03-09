@@ -7,7 +7,7 @@
   "scripts": {
     "build": "pnpm run -r build",
     "size": "size-limit",
-    "size:check": "size-limit --ci",
+    "size:check": "size-limit",
     "clean": "pnpm run -r clean",
     "dev": "pnpm run --filter=examples dev",
     "format": "prettier --write .",
