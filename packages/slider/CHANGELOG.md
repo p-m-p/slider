@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.0.1
+
+### Patch Changes
+
+- e6c2c85: Standardize code patterns and remove redundant code for improved maintainability
+
 ## 3.0.0
 
 ### Major Changes

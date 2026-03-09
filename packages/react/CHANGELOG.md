@@ -1,5 +1,14 @@
 # Change Log
 
+## 3.0.1
+
+### Patch Changes
+
+- 710bc7a: Optimize for React 19 with ref cleanup and simplified event handling
+- Updated dependencies [e6c2c85]
+  - @boxslider/slider@3.0.1
+  - @boxslider/components@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
