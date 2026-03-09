@@ -32,5 +32,35 @@
     "import": "{ BoxSlider, TileSlider }",
     "limit": "5.1 kB",
     "gzip": true
+  },
+  {
+    "name": "Components (full)",
+    "path": "packages/components/dist/min.js",
+    "limit": "10 kB",
+    "gzip": true
+  },
+  {
+    "name": "Components: Carousel",
+    "path": "packages/components/dist/esm/Carousel.js",
+    "limit": "4.6 kB",
+    "gzip": true
+  },
+  {
+    "name": "Components: Cube",
+    "path": "packages/components/dist/esm/Cube.js",
+    "limit": "4.7 kB",
+    "gzip": true
+  },
+  {
+    "name": "Components: Fade",
+    "path": "packages/components/dist/esm/Fade.js",
+    "limit": "4.4 kB",
+    "gzip": true
+  },
+  {
+    "name": "Components: Tile",
+    "path": "packages/components/dist/esm/Tile.js",
+    "limit": "5.6 kB",
+    "gzip": true
   }
 ]

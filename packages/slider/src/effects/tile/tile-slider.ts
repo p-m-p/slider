@@ -80,7 +80,9 @@ export default class TileSlider implements Effect {
     el.append(tileWrapper)
     this._tileWrapper = tileWrapper
 
-    if (!'fixed absolute relative'.includes(getComputedStyle(el).position)) {
+    if (
+      !['absolute', 'fixed', 'relative'].includes(getComputedStyle(el).position)
+    ) {
       applyCss(el, { position: 'relative' })
     }
 
