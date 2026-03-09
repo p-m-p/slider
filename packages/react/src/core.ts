@@ -76,39 +76,43 @@ export function extractEventHandlers<T extends BoxSliderProps>(props: T) {
 }
 
 export function sliderRefCallback<T extends BoxSliderProps>(
-  { onAfter, onBefore, onDestroy, onPause, onPlay, onReset }: T,
+  eventHandlers: T,
   sliderRef?: RefObject<BoxSlider | null>,
 ): RefCallback<SliderElement> {
   return (el: SliderElement) => {
     const slider = el?.slider
 
     if (slider) {
-      if (onAfter) {
-        slider.addEventListener('after', onAfter)
-      }
+      const events = [
+        ['after', eventHandlers.onAfter],
+        ['before', eventHandlers.onBefore],
+        ['destroy', eventHandlers.onDestroy],
+        ['pause', eventHandlers.onPause],
+        ['play', eventHandlers.onPlay],
+        ['reset', eventHandlers.onReset],
+      ] as const
 
-      if (onBefore) {
-        slider.addEventListener('before', onBefore)
-      }
-
-      if (onDestroy) {
-        slider.addEventListener('destroy', onDestroy)
-      }
-
-      if (onPause) {
-        slider.addEventListener('pause', onPause)
-      }
-
-      if (onPlay) {
-        slider.addEventListener('play', onPlay)
-      }
-
-      if (onReset) {
-        slider.addEventListener('reset', onReset)
+      for (const [event, handler] of events) {
+        if (handler) {
+          slider.addEventListener(event, handler)
+        }
       }
 
       if (sliderRef) {
         sliderRef.current = slider
+      }
+
+      // React 19 ref cleanup - remove event listeners on unmount
+      return () => {
+        for (const [event, handler] of events) {
+          if (handler) {
+            slider.removeEventListener(event, handler)
+          }
+        }
+
+        if (sliderRef) {
+          sliderRef.current = null
+        }
       }
     }
   }
