@@ -1,0 +1,17 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**"]
+    },
+    "//#lint": {},
+    "//#test": {},
+    "//#test:coverage": {
+      "outputs": ["coverage/**"]
+    },
+    "//#build-storybook": {
+      "outputs": ["storybook-static/**"]
+    }
+  }
+}

@@ -17,10 +17,17 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: 'pnpm'
+      - uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
       - run: pnpm install
-      - run: pnpm run lint
-      - run: pnpm run build
-      - run: pnpm run test:coverage
+      - run: turbo lint
+      - run: turbo build
+      - run: turbo test:coverage
       - name: Run Chromatic tests
         uses: chromaui/action@latest
         with:
