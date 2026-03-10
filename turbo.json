@@ -5,9 +5,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "build/**"]
     },
-    "//#lint": {},
-    "//#test": {},
-    "//#test:coverage": {
+    "//#lint:run": {},
+    "//#test:run": {},
+    "//#test:coverage:run": {
       "outputs": ["coverage/**"]
     },
     "//#build-storybook": {
