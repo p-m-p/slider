@@ -19,15 +19,20 @@ multiple slide transition effects for modern browsers.
 The library can be used standalone or via React and web components. View the [website](https://philparsons.co.uk/slider/)
 for full details.
 
-## Installation
+## Packages
 
-Install from NPM
+### [@boxslider/slider](./packages/slider)
+
+The core JavaScript library. Zero runtime dependencies. Provides factory functions and a `BoxSlider`
+class for attaching transition effects to any container element.
+
+Install from NPM:
 
 ```sh
 npm install --save @boxslider/slider
 ```
 
-Use from CDN
+Use from CDN:
 
 ```html
 <script type="module">
@@ -37,9 +42,14 @@ Use from CDN
 </script>
 ```
 
-### React
+**Available effects:** `createCarouselSlider` · `createCubeSlider` · `createFadeSlider` · `createTileSlider`
 
-Install via NPM
+### [@boxslider/react](./packages/react)
+
+React 19 component wrappers. Provides typed props and event handlers for all slider effects plus a
+`SliderControls` component that adds navigation controls automatically.
+
+Install via NPM:
 
 ```sh
 npm install --save @boxslider/react
@@ -61,28 +71,35 @@ function MySlider() {
 }
 ```
 
-View the [React guide](https://philparsons.co.uk/slider/docs/guides/react) for full details
+View the [React guide](https://philparsons.co.uk/slider/docs/guides/react) for full details.
 
-### Web Components
+**Available components:** `CarouselSlider` · `CubeSlider` · `FadeSlider` · `TileSlider` · `SliderControls`
 
-Install via NPM
+### [@boxslider/components](./packages/components)
+
+Framework-agnostic web components. Works in any modern browser or JavaScript framework without
+additional configuration.
+
+Install via NPM:
 
 ```sh
 npm install --save @boxslider/components
 ```
 
-Use from CDN
+Use from CDN:
 
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
 
-<bx-slider-controls>
+<bs-slider-controls>
   <bs-carousel>
     <div>Slide 1</div>
     <div>Slide 2</div>
     <div>Slide 3</div>
   </bs-carousel>
-</bx-slider-controls
+</bs-slider-controls>
 ```
 
 View the [web components guide](https://philparsons.co.uk/slider/docs/guides/web-components) for full details.
+
+**Available elements:** `<bs-carousel>` · `<bs-cube>` · `<bs-fade>` · `<bs-tile>` · `<bs-slider-controls>`
