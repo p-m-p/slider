@@ -25,9 +25,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
       - run: pnpm install
-      - run: pnpm run lint
-      - run: pnpm run build
-      - run: pnpm run test:coverage
+      - run: pnpm exec turbo lint
+      - run: pnpm exec turbo build
+      - run: pnpm exec turbo test:coverage
       - name: Run Chromatic tests
         uses: chromaui/action@latest
         with:
