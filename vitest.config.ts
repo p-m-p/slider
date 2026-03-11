@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     coverage: {
       provider: 'v8',
+      exclude: ['**/dist/**', '**/src/types.ts', '**/src/effects/index.ts'],
     },
     environment: 'jsdom',
     globals: true,
