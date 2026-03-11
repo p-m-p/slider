@@ -634,7 +634,7 @@ describe('BoxSlider API', () => {
     slider.destroy()
   })
 
-  test('progress events are emitted during progressive transitions', async () => {
+  test('progress events are emitted during progressive transitions', () => {
     const el = createSliderElement()
     Object.defineProperty(el, 'offsetWidth', { value: 100, configurable: true })
 
@@ -668,20 +668,15 @@ describe('BoxSlider API', () => {
       }),
     )
 
-    el.dispatchEvent(
-      new TouchEvent('touchend', {
-        changedTouches: [{ clientX: 70, clientY: 100 } as Touch],
-      }),
-    )
-
-    await new Promise((resolve) => setTimeout(resolve, 50))
-
+    // progress is emitted synchronously inside setProgress() during touchmove
     expect(progressSpy).toHaveBeenCalled()
 
     slider.destroy()
   })
 
   test('cancel event is emitted when progressive transition is cancelled', async () => {
+    vi.useFakeTimers()
+
     const el = createSliderElement()
     Object.defineProperty(el, 'offsetWidth', { value: 200, configurable: true })
 
@@ -709,18 +704,20 @@ describe('BoxSlider API', () => {
       }),
     )
 
-    // End with insufficient progress to complete (less than 50% of 200px = 100px)
+    // End with insufficient progress to complete (less than 50% of 200px = 100px).
+    // Date.now() is frozen by fake timers so elapsed=0, velocity=0, ensuring cancel branch.
     el.dispatchEvent(
       new TouchEvent('touchend', {
         changedTouches: [{ clientX: 80, clientY: 100 } as Touch],
       }),
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await vi.runAllTimersAsync()
 
     expect(cancelSpy).toHaveBeenCalled()
 
     slider.destroy()
+    vi.useRealTimers()
   })
 
   test('touchcancel aborts progressive transition', async () => {
