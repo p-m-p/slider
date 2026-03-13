@@ -29,6 +29,7 @@ jobs:
       - run: pnpm run build
       - run: pnpm run test:coverage
       - name: Run Chromatic tests
+        if: github.actor != 'renovate[bot]'
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
