@@ -45,7 +45,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^5.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
     "@vitest/coverage-v8": "^4.0.3",
     "@vitest/ui": "^4.0.3",
     "chromatic": "^15.0.0",
