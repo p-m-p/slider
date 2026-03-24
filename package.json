@@ -48,7 +48,7 @@
     "@vitejs/plugin-react": "^6.0.0",
     "@vitest/coverage-v8": "^4.0.3",
     "@vitest/ui": "^4.0.3",
-    "chromatic": "^15.0.0",
+    "chromatic": "^16.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.27.0",
     "eslint": "^10.0.0",
