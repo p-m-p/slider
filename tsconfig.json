@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "erasableSyntaxOnly": true,
     "allowJs": false,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,7 +20,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vitest/globals"],
-    "baseUrl": ".",
     "paths": {
       "~/packages/react": ["./packages/react/src"],
       "~/packages/components": ["./packages/components/src"],
