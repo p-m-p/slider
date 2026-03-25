@@ -2,7 +2,8 @@ import type { ReactNode } from 'react'
 import Footer from '@theme-original/DocItem/Footer'
 import type FooterType from '@theme/DocItem/Footer'
 import type { WrapperProps } from '@docusaurus/types'
-import { Github, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
+import GithubIcon from '@site/src/components/GithubIcon'
 
 import styles from './styles.module.css'
 import CallToAction from '@site/src/components/CallToAction'
@@ -24,7 +25,7 @@ export default function FooterWrapper(props: Props): ReactNode {
         <CallToAction
           variant="secondary"
           href="https://github.com/p-m-p/slider">
-          <Github /> Star BoxSlider
+          <GithubIcon /> Star BoxSlider
         </CallToAction>
       </div>
       <Footer {...props} />
