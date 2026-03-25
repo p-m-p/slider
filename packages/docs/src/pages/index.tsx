@@ -1,7 +1,8 @@
 import { FadeSlider } from '@boxslider/react'
 import Layout from '@theme/Layout'
 import CallToAction from '../components/CallToAction'
-import { Code, Github, Play, SearchCheck, Sparkles } from 'lucide-react'
+import { Code, Play, SearchCheck, Sparkles } from 'lucide-react'
+import GithubIcon from '../components/GithubIcon'
 import FeatureTile from '../components/FeatureTile'
 import { Carousel } from '../components/Examples'
 
@@ -38,7 +39,7 @@ export default function Home() {
               <CallToAction
                 variant="secondary"
                 href="https://github.com/p-m-p/slider">
-                <Github /> Github
+                <GithubIcon /> GitHub
               </CallToAction>
             </p>
 
