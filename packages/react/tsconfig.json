@@ -9,6 +9,5 @@
     "rootDir": "./src"
   },
   "include": ["src"],
-  "exclude": ["**/__tests__/**"],
-  "references": [{ "path": "../slider" }]
+  "references": [{ "path": "../slider" }, { "path": "../components" }]
 }
