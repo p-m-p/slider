@@ -50,7 +50,7 @@
     "@vitest/ui": "^4.0.3",
     "chromatic": "^16.0.0",
     "cz-conventional-changelog": "^3.3.0",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-import-resolver-typescript": "^4.4.3",
