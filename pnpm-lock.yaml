@@ -25,7 +25,7 @@ importers:
         version: 10.0.1(eslint@10.2.0(jiti@2.6.1))
       '@size-limit/esbuild':
         specifier: ^12.0.1
-        version: 12.0.1(size-limit@12.0.1(jiti@2.6.1))
+        version: 12.1.0(size-limit@12.0.1(jiti@2.6.1))
       '@size-limit/file':
         specifier: ^12.0.1
         version: 12.0.1(size-limit@12.0.1(jiti@2.6.1))
@@ -2645,11 +2645,11 @@ packages:
   '@sinonjs/fake-timers@15.1.1':
     resolution: {integrity: sha512-cO5W33JgAPbOh07tvZjUOJ7oWhtaqGHiZw+11DPbyqh2kHTBc3eF/CjJDeQ4205RLQsX6rxCuYOroFQwl7JDRw==}
 
-  '@size-limit/esbuild@12.0.1':
-    resolution: {integrity: sha512-Z6km06//90REJ30+WmMWvngG9dZnY52z3bhGxkoOwyXaAwPuQgx6ZdD1edNDABXIZMatbeMejigBPNEl4OaFsQ==}
+  '@size-limit/esbuild@12.1.0':
+    resolution: {integrity: sha512-Um6MVrX+05kIxI4+zk0ZByG9dA/Th1f+sfGc571D95BnCPc90/pl2+2OdsQuOyoWEbeAMqfcTKo0v07i+E65Vw==}
     engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
     peerDependencies:
-      size-limit: 12.0.1
+      size-limit: 12.1.0
 
   '@size-limit/file@12.0.1':
     resolution: {integrity: sha512-Kvbnz46iV7WeHaANf1HmWjXBVMU2KkCU+0xJ78FzIjZwlVKKEqy+QCZprdBMfIWrzrvYeqP4cfuzKG8z6xVivg==}
@@ -7121,8 +7121,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@5.1.6:
-    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
+  nanoid@5.1.7:
+    resolution: {integrity: sha512-ua3NDgISf6jdwezAheMOk4mbE1LXjm1DfMUDMuJf4AqxLFK3ccGpgWizwa5YV7Yz9EpXwEaWoRXSb/BnV0t5dQ==}
     engines: {node: ^18 || >=20}
     hasBin: true
 
@@ -12770,10 +12770,10 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@size-limit/esbuild@12.0.1(size-limit@12.0.1(jiti@2.6.1))':
+  '@size-limit/esbuild@12.1.0(size-limit@12.0.1(jiti@2.6.1))':
     dependencies:
-      esbuild: 0.27.7
-      nanoid: 5.1.6
+      esbuild: 0.28.0
+      nanoid: 5.1.7
       size-limit: 12.0.1(jiti@2.6.1)
 
   '@size-limit/file@12.0.1(size-limit@12.0.1(jiti@2.6.1))':
@@ -18284,7 +18284,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  nanoid@5.1.6: {}
+  nanoid@5.1.7: {}
 
   nanospinner@1.2.2:
     dependencies:
