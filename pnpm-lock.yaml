@@ -73,7 +73,7 @@ importers:
         version: 4.1.5(vitest@4.1.5)
       chromatic:
         specifier: ^16.0.0
-        version: 16.6.1
+        version: 16.6.3
       cz-conventional-changelog:
         specifier: ^3.3.0
         version: 3.3.0(@types/node@24.12.2)(typescript@6.0.3)
@@ -4103,8 +4103,8 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chromatic@16.6.1:
-    resolution: {integrity: sha512-QlrPBFFrMtR9LlP1FcnIsmIiMSQ055K94i/cDNHd8opo405AHO2oMEPPSfi1cKC2GyB3bEpXPZ+MW5bCHMcrLA==}
+  chromatic@16.6.3:
+    resolution: {integrity: sha512-N9WCRuezqrxujRvgnAlE9XKxXcF6q2kowKH2Ba82FYkRc4xlY9g8r+ESEph9jLv500s43/9oDmB/kZ9r24BcgQ==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -9090,6 +9090,7 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-to-istanbul@9.3.0:
@@ -14380,7 +14381,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromatic@16.6.1:
+  chromatic@16.6.3:
     dependencies:
       semver: 7.7.4
 
