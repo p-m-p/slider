@@ -73,7 +73,7 @@ importers:
         version: 4.1.5(vitest@4.1.5)
       chromatic:
         specifier: ^16.0.0
-        version: 16.7.0
+        version: 16.8.0
       cz-conventional-changelog:
         specifier: ^3.3.0
         version: 3.3.0(@types/node@24.12.2)(typescript@6.0.3)
@@ -4138,8 +4138,8 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chromatic@16.7.0:
-    resolution: {integrity: sha512-t6d3zFajnRYqK+pJg4v2qezDJ5EJxAsPypuV88xJ+u0z6Bec7MCV9j+nMKZXTua8e0wBt6FsjJ9Yqx+fyUngSA==}
+  chromatic@16.8.0:
+    resolution: {integrity: sha512-61Ma2LBOB8x2uyVnVn0RkPxtPNlg6crXmOn9X3gEcKuRDbJQUfNSKTjRCX18YSOW0lxGrzmkQO5Qj+P0l4GEkQ==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -14437,7 +14437,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromatic@16.7.0:
+  chromatic@16.8.0:
     dependencies:
       semver: 7.7.4
 
