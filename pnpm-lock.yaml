@@ -203,7 +203,7 @@ importers:
         version: 3.10.1(@swc/core@1.15.18)(esbuild@0.28.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       baseline-browser-mapping:
         specifier: ^2.9.19
-        version: 2.10.27
+        version: 2.10.28
       postcss-import:
         specifier: ^16.1.0
         version: 16.1.1(postcss@8.5.14)
@@ -3789,6 +3789,11 @@ packages:
 
   baseline-browser-mapping@2.10.27:
     resolution: {integrity: sha512-zEs/ufmZoUd7WftKpKyXaT6RFxpQ5Qm9xytKRHvJfxFV9DFJkZph9RvJ1LcOUi0Z1ZVijMte65JbILeV+8QQEA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  baseline-browser-mapping@2.10.28:
+    resolution: {integrity: sha512-Ic44hnOtFIgravCunj1ifSoQPSUrkNiJuH9Mf6jr2jjoA74icqV8wU0KuadXeOR8zuIJMOoTv0GuQjZ9ZYNMeA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -13960,6 +13965,8 @@ snapshots:
   base64-js@1.5.1: {}
 
   baseline-browser-mapping@2.10.27: {}
+
+  baseline-browser-mapping@2.10.28: {}
 
   batch@0.6.1: {}
 
