@@ -15,6 +15,21 @@ Install via NPM.
 npm i --save @boxslider/components
 ```
 
+<details>
+  <summary>Copy AI coding agent prompt: Web Components install + setup</summary>
+
+```text
+Set up BoxSlider Web Components in this repository.
+Requirements:
+- Install @boxslider/components with npm.
+- Import @boxslider/components from the appropriate app entry file.
+- Add a bs-slider-controls wrapper containing a bs-carousel with three slides.
+- Add minimal CSS for slider width/height.
+- Keep edits small and report changed files plus run/verify commands.
+```
+
+</details>
+
 Include the package into the root of your project.
 
 ```ts

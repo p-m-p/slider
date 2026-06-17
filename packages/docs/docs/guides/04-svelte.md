@@ -10,6 +10,21 @@ Svelte applications can easily integrate the BoxSlider [Web Components](/docs/gu
 npm i --save @boxslider/components
 ```
 
+<details>
+  <summary>Copy AI coding agent prompt: Svelte install + setup</summary>
+
+```text
+Set up BoxSlider in a Svelte project in this repository.
+Requirements:
+- Install @boxslider/components with npm.
+- Import @boxslider/components in a Svelte component.
+- Render a bs-carousel (or bs-slider-controls + bs-carousel) with three slides.
+- Add minimal CSS for visible width/height.
+- Keep edits minimal and provide changed files plus verification steps.
+```
+
+</details>
+
 ## Components
 
 Svelte has first class support for web components and the best way to use BoxSlider is to use the web components directly

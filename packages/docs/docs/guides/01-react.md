@@ -11,6 +11,21 @@ slide effect and the slider controls.
 npm i --save @boxslider/react@latest
 ```
 
+<details>
+  <summary>Copy AI coding agent prompt: React install + setup</summary>
+
+```text
+Set up BoxSlider React in this repository.
+Requirements:
+- Install @boxslider/react@latest with npm.
+- Build one simple example using SliderControls + CarouselSlider with three slides.
+- Add the minimum styles required for width/height so it renders correctly.
+- Keep changes minimal and aligned with existing project conventions.
+- Return changed files and verification steps.
+```
+
+</details>
+
 ## Components
 
 Each slide effect has a matching React component. The options for the slider and the effect are passed as props.

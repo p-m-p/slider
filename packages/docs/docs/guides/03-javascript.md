@@ -16,6 +16,21 @@ Install via NPM.
 npm install --save @boxslider/slider
 ```
 
+<details>
+  <summary>Copy AI coding agent prompt: JavaScript install + setup</summary>
+
+```text
+Set up BoxSlider JavaScript usage in this repository.
+Requirements:
+- Install @boxslider/slider with npm.
+- Create slider HTML with three slides and initialize createCarouselSlider or createFadeSlider.
+- Include one or two basic options (for example speed or autoScroll).
+- Add minimal CSS for slider and slide sizing.
+- Keep changes focused and return changed files with verification steps.
+```
+
+</details>
+
 Alternatively use from CDN.
 
 ```html

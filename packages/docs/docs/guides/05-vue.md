@@ -10,6 +10,21 @@ Vue applications can easily integrate the BoxSlider [Web Components](/docs/guide
 npm i --save @boxslider/components
 ```
 
+<details>
+  <summary>Copy AI coding agent prompt: Vue install + setup</summary>
+
+```text
+Set up BoxSlider in a Vue project in this repository.
+Requirements:
+- Install @boxslider/components with npm.
+- Import @boxslider/components in a Vue component.
+- Render a bs-carousel (or bs-slider-controls + bs-carousel) with three slides.
+- Add minimal CSS for visible width/height.
+- Keep edits minimal and provide changed files plus verification steps.
+```
+
+</details>
+
 ## Components
 
 Vue has first class support for web components and the best way to use BoxSlider is to use the web components directly
