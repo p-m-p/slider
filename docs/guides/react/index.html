@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.10.1">
 <title data-rh="true">React | BoxSlider</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://philparsons.co.uk/slider/img/social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://philparsons.co.uk/slider/img/social-card.jpg"><meta data-rh="true" property="og:url" content="https://philparsons.co.uk/slider/docs/guides/react"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="React | BoxSlider"><meta data-rh="true" name="description" content="BoxSlider React components are a thin wrapper around the Web Components for each"><meta data-rh="true" property="og:description" content="BoxSlider React components are a thin wrapper around the Web Components for each"><link data-rh="true" rel="icon" href="/slider/img/icon.png"><link data-rh="true" rel="canonical" href="https://philparsons.co.uk/slider/docs/guides/react"><link data-rh="true" rel="alternate" href="https://philparsons.co.uk/slider/docs/guides/react" hreflang="en"><link data-rh="true" rel="alternate" href="https://philparsons.co.uk/slider/docs/guides/react" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"React","item":"https://philparsons.co.uk/slider/docs/guides/react"}]}</script><script src="https://static.cloudflareinsights.com/beacon.min.js" defer="defer" data-cf-beacon="{&quot;token&quot;: &quot;86e36e0634bb461e84a1b6a61f287b46&quot;}"></script>
-<script src="https://public.codepenassets.com/embed/index.js" async></script><link rel="stylesheet" href="/slider/assets/css/styles.8727ae5d.css">
-<script src="/slider/assets/js/runtime~main.d632470e.js" defer="defer"></script>
-<script src="/slider/assets/js/main.36604eaf.js" defer="defer"></script>
+<script src="https://public.codepenassets.com/embed/index.js" async></script><link rel="stylesheet" href="/slider/assets/css/styles.d1e06427.css">
+<script src="/slider/assets/js/runtime~main.f36accd7.js" defer="defer"></script>
+<script src="/slider/assets/js/main.a4f795c9.js" defer="defer"></script>
 </head>
 <body>
 <svg style="display: none;"><defs>
@@ -16,6 +16,21 @@
 slide effect and the slider controls.</p>
 <h2 class="anchor anchorTargetStickyNavbar_GcX5" id="installation">Installation<a href="#installation" class="hash-link" aria-label="Direct link to Installation" title="Direct link to Installation" translate="no">​</a></h2>
 <div class="language-sh codeBlockContainer_UoWQ theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_FtmW"><pre tabindex="0" class="prism-code language-sh codeBlock_cqWl thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_v0PV"><div class="token-line" style="color:#F8F8F2"><span class="token plain">npm i --save @boxslider/react@latest</span><br></div></code></pre></div></div>
+<div class="container_nd26"><button aria-label="Copy AI prompt to clipboard" class="root_uWlu primary_rzED"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy AI prompt</button><details class="details_Asw3"><summary class="summary_ZM7w"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down chevron_f3XW" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>View prompt</summary><pre class="promptText_rkcO">I&#x27;m setting up BoxSlider React components in my project.
+
+Install: npm i --save @boxslider/react@latest
+
+The package provides these components:
+
+- CarouselSlider, FadeSlider, CubeSlider, TileSlider — slide effects, options passed as props
+- SliderControls — navigation buttons, wraps the slider component
+
+Key requirements:
+
+- Sliders need explicit display, height, and width CSS to function
+- Slider options (speed, timeout, autoScroll, pauseOnHover, loop, swipe) are passed as props
+
+Please provide a complete React component example with a carousel slider wrapped in SliderControls and the required styles.</pre></details></div>
 <h2 class="anchor anchorTargetStickyNavbar_GcX5" id="components">Components<a href="#components" class="hash-link" aria-label="Direct link to Components" title="Direct link to Components" translate="no">​</a></h2>
 <p>Each slide effect has a matching React component. The options for the slider and the effect are passed as props.
 View the <a class="" href="/slider/docs/getting-started/configuration">configuration options</a> for the available options.</p>
