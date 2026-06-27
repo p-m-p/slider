@@ -2,6 +2,8 @@
 title: Web Components
 ---
 
+import { CopyPrompt } from '@site/src/components/CopyPrompt'
+
 BoxSlider Web Components provide ready to us slider elements for each slide
 effect and the slider controls.
 
@@ -36,6 +38,24 @@ Alternatively use from CDN.
   </bs-carousel>
 </bs-slider-controls>
 ```
+
+<CopyPrompt
+prompt={`I'm setting up BoxSlider Web Components in my project.
+
+Install: npm i --save @boxslider/components
+Then import in your entry file: import '@boxslider/components'
+
+Or use from CDN: <script type="module" src="https://cdn.jsdelivr.net/npm/@boxslider/components/+esm"></script>
+
+Available web components:
+
+- bs-carousel, bs-cube, bs-fade, bs-tile — slide effects (camelCase options become kebab-case attributes, e.g. autoScroll → auto-scroll)
+- bs-slider-controls — navigation buttons, wraps the slider element
+
+Key requirements: The slider element needs display, height, and width set via CSS.
+
+Please provide a complete HTML example with a carousel slider wrapped in bs-slider-controls and the required styles.`}
+/>
 
 To import a single component use the individual exports.
 

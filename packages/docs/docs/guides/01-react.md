@@ -2,6 +2,8 @@
 title: React
 ---
 
+import { CopyPrompt } from '@site/src/components/CopyPrompt'
+
 BoxSlider React components are a thin wrapper around the [Web Components](/docs/guides/web-components) for each
 slide effect and the slider controls.
 
@@ -10,6 +12,24 @@ slide effect and the slider controls.
 ```sh
 npm i --save @boxslider/react@latest
 ```
+
+<CopyPrompt
+prompt={`I'm setting up BoxSlider React components in my project.
+
+Install: npm i --save @boxslider/react@latest
+
+The package provides these components:
+
+- CarouselSlider, FadeSlider, CubeSlider, TileSlider — slide effects, options passed as props
+- SliderControls — navigation buttons, wraps the slider component
+
+Key requirements:
+
+- Sliders need explicit display, height, and width CSS to function
+- Slider options (speed, timeout, autoScroll, pauseOnHover, loop, swipe) are passed as props
+
+Please provide a complete React component example with a carousel slider wrapped in SliderControls and the required styles.`}
+/>
 
 ## Components
 

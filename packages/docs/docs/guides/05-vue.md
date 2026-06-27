@@ -2,6 +2,8 @@
 title: Vue
 ---
 
+import { CopyPrompt } from '@site/src/components/CopyPrompt'
+
 Vue applications can easily integrate the BoxSlider [Web Components](/docs/guides/web-components).
 
 ## Installation
@@ -9,6 +11,22 @@ Vue applications can easily integrate the BoxSlider [Web Components](/docs/guide
 ```sh
 npm i --save @boxslider/components
 ```
+
+<CopyPrompt
+prompt={`I'm integrating BoxSlider into my Vue application using Web Components.
+
+Install: npm i --save @boxslider/components
+
+In Vue, import the package in your component setup then use the web components directly in templates:
+
+- bs-carousel, bs-cube, bs-fade, bs-tile — slide effects (bind numeric/boolean options with :prop="value", strings without binding)
+- bs-slider-controls — navigation buttons, wraps the slider element
+- Use a template ref to access the BoxSlider instance via the element's .slider property
+
+Key requirements: Set display, height, and width on the slider element via CSS.
+
+Please provide a complete Vue component example with a carousel slider wrapped in bs-slider-controls and the required styles.`}
+/>
 
 ## Components
 
