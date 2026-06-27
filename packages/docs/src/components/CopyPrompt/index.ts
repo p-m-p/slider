@@ -1,0 +1,1 @@
+export { CopyPrompt } from './CopyPrompt'

@@ -2,6 +2,8 @@
 title: Svelte
 ---
 
+import { CopyPrompt } from '@site/src/components/CopyPrompt'
+
 Svelte applications can easily integrate the BoxSlider [Web Components](/docs/guides/web-components).
 
 ## Installation
@@ -9,6 +11,22 @@ Svelte applications can easily integrate the BoxSlider [Web Components](/docs/gu
 ```sh
 npm i --save @boxslider/components
 ```
+
+<CopyPrompt
+prompt={`I'm integrating BoxSlider into my Svelte application using Web Components.
+
+Install: npm i --save @boxslider/components
+
+In Svelte, import the package in your component script then use the web components directly in templates:
+
+- bs-carousel, bs-cube, bs-fade, bs-tile — slide effects (pass options as props, e.g. speed={500})
+- bs-slider-controls — navigation buttons, wraps the slider element
+- Use bind:this to access the BoxSlider instance via the element's .slider property
+
+Key requirements: Set display, height, and width on the slider element via CSS.
+
+Please provide a complete Svelte component example with a carousel slider wrapped in bs-slider-controls and the required styles.`}
+/>
 
 ## Components
 

@@ -2,6 +2,8 @@
 title: JavaScript
 ---
 
+import { CopyPrompt } from '@site/src/components/CopyPrompt'
+
 More advanced users may want to use the core JavaScript library directly. The core library provides
 a simple API for creating a slider and manipulating it programmatically. For ready to use components
 view the [React](/docs/guides/react) and [Web Components](/docs/guides/web-components) guides.
@@ -25,6 +27,26 @@ Alternatively use from CDN.
   createFadeSlider('#slider', { speed: 300 })
 </script>
 ```
+
+<CopyPrompt
+prompt={`I'm setting up the BoxSlider JavaScript library in my project.
+
+Install: npm install --save @boxslider/slider
+Or import from CDN: import { createFadeSlider } from 'https://cdn.jsdelivr.net/npm/@boxslider/slider/+esm'
+
+Available helper functions (each takes a CSS selector or element + optional options):
+
+- createCarouselSlider, createFadeSlider, createCubeSlider, createTileSlider
+
+Options include: speed, timeout, autoScroll, pauseOnHover, loop, swipe, swipeTolerance
+
+Key requirements:
+
+- Create the HTML structure with a container and slide elements
+- Set display, height, and width CSS on the slider container
+
+Please provide a complete example with HTML, CSS, and JavaScript that creates a working carousel slider.`}
+/>
 
 ## Usage
 
