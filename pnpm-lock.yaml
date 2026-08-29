@@ -73,7 +73,7 @@ importers:
         version: 4.1.11(vitest@4.1.11)
       chromatic:
         specifier: ^18.0.0
-        version: 18.6.1
+        version: 18.6.2
       cz-conventional-changelog:
         specifier: ^3.3.0
         version: 3.3.0(@types/node@24.13.3)(typescript@6.0.3)
@@ -4117,8 +4117,8 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chromatic@18.6.1:
-    resolution: {integrity: sha512-N8gvZgtsWla8qi8EXxEmTgHI9vtcAG5ul+4USB2/hKwr/i64rFTrs1pvvDCF2Pg55JB3yyJEaTuMuQc06LpNtg==}
+  chromatic@18.6.2:
+    resolution: {integrity: sha512-qAz/baLQV1iHjWkYyAN/Z8wSmlsSCkrvJihiisnRS/kVVVkD6Gn15wBk+O1HzDk0YEYcyvP0ohMN6J1guDK1IA==}
     engines: {node: '>=22.0.0'}
     hasBin: true
     peerDependencies:
@@ -14405,7 +14405,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromatic@18.6.1:
+  chromatic@18.6.2:
     dependencies:
       semver: 7.8.5
 
