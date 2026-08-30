@@ -27,7 +27,7 @@
     "chromatic": "chromatic --exit-zero-on-changes"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.11",
+    "@changesets/cli": "^3.0.0",
     "@commitlint/cli": "^21.0.0",
     "@commitlint/config-conventional": "^21.0.0",
     "@eslint-react/eslint-plugin": "^5.0.0",
