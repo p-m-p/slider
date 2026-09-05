@@ -55,7 +55,7 @@ jobs:
       # Regular release for main branch
       - name: Create release PR or publish
         if: github.ref == 'refs/heads/main'
-        uses: changesets/action@v1
+        uses: changesets/action@v2.1.1
         with:
           publish: pnpm run release
           commit: 'chore: version packages'
