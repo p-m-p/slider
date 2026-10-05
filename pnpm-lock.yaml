@@ -200,8 +200,8 @@ importers:
         specifier: ^8.6.14
         version: 8.6.15(storybook@10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0))
       '@storybook/test-runner':
-        specifier: ^0.24.0
-        version: 0.24.5(@types/node@24.13.5)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0))(supports-color@8.1.1)
+        specifier: ^0.26.0
+        version: 0.26.0(@types/node@24.13.5)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0))(supports-color@8.1.1)
       '@testing-library/dom':
         specifier: ^10.4.0
         version: 10.4.2
@@ -2910,12 +2910,12 @@ packages:
       typescript:
         optional: true
 
-  '@storybook/test-runner@0.24.5':
-    resolution: {integrity: sha512-U8ib6parBD+wA4z5ZW/JnsR3KkEXoP+sHP8WJdDZeh0GwfTlcWjhbeR6Ij/gxNFEA1bdpBa/P8qYTOs+LKIN1g==}
+  '@storybook/test-runner@0.26.0':
+    resolution: {integrity: sha512-q/B3Mf5QQuYAQ99AKcxTnNzPBso2OctLy13mEA23kYM8vW+Sz3WysdZIiQvNQ0bQFI9MDRkcLQVGIBcnnkaZXA==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
-      storybook: ^0.0.0-0 || ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0
+      storybook: ^0.0.0-0 || ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0 || >=11
 
   '@storybook/test@8.6.15':
     resolution: {integrity: sha512-EwquDRUDVvWcZds3T2abmB5wSN/Vattal4YtZ6fpBlIUqONV4o/cOBX39cFfQSUCBrIXIjQ6RmapQCHK/PvBYw==}
@@ -12816,7 +12816,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/test-runner@0.24.5(@types/node@24.13.5)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0))(supports-color@8.1.1)':
+  '@storybook/test-runner@0.26.0(@types/node@24.13.5)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0))(supports-color@8.1.1)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@babel/generator': 7.29.8
