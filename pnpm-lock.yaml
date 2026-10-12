@@ -183,10 +183,10 @@ importers:
         version: 10.0.1(eslint@10.12.0(jiti@2.6.1)(supports-color@8.1.1))
       '@size-limit/esbuild':
         specifier: ^14.0.0
-        version: 14.0.0(size-limit@14.0.0)
+        version: 14.1.0(size-limit@14.1.0)
       '@size-limit/file':
         specifier: ^14.0.0
-        version: 14.0.0(size-limit@14.0.0)
+        version: 14.1.0(size-limit@14.1.0)
       '@storybook/addon-docs':
         specifier: ^10.0.0
         version: 10.6.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(storybook@10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0))
@@ -285,7 +285,7 @@ importers:
         version: 19.3.0(react@19.3.0)
       size-limit:
         specifier: ^14.0.0
-        version: 14.0.0
+        version: 14.1.0
       storybook:
         specifier: ^10.0.0
         version: 10.6.1(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.0)
@@ -2840,17 +2840,17 @@ packages:
   '@sinonjs/fake-timers@15.4.0':
     resolution: {integrity: sha512-DsG+8/LscQIQg68J6Ef3dv10u6nVyetYn923s3/sus5eaGfTo1of5WMZSLf0UJc9KDuKPilPH0UDJCjvNbDNCA==}
 
-  '@size-limit/esbuild@14.0.0':
-    resolution: {integrity: sha512-UYf3AfIG8bLme8dLvnB+ZwDETW9Jd/jljzUyt/7Oqvew4jms5w35aA1JMiBlIojnlIrMuwPzK8h0eA/FKQUFmA==}
+  '@size-limit/esbuild@14.1.0':
+    resolution: {integrity: sha512-VRkw9yssPhJ8aRO9RIN9rxbaNSFyUOz4IZiW5YnRfwN3+GkS2WhXCj/wTPA0afjbHlMZFnI5TEwmAz6Yg9PFhQ==}
     engines: {node: ^22.19.0 || ^24.5.0 || >=26.0.0}
     peerDependencies:
-      size-limit: 14.0.0
+      size-limit: 14.1.0
 
-  '@size-limit/file@14.0.0':
-    resolution: {integrity: sha512-CzlXGYuzt+vZM70NxPwi5uFyYHhORrdpDCJtcH+G57oeUPrgnqdUhDoP4jRxa6i2HNBM5Htatw5X5TcDZ8uBWQ==}
+  '@size-limit/file@14.1.0':
+    resolution: {integrity: sha512-mR0uVxzdzV31pk8Iz795dDXxhHsrv9RSsyjeCVboUr1Q2+2KL/GpjeMZ44ydFqI2JfXZ22dOsbY28yPeOse1Nw==}
     engines: {node: ^22.19.0 || ^24.5.0 || >=26.0.0}
     peerDependencies:
-      size-limit: 14.0.0
+      size-limit: 14.1.0
 
   '@slorber/react-helmet-async@1.3.0':
     resolution: {integrity: sha512-e9/OK8VhwUSc67diWI8Rb3I0YgI9/SBQtnhe9aEuK6MhZm7ntZZimXgwXnd8W96YTmSOb9M4d8LwhRZyhWr/1A==}
@@ -8516,8 +8516,8 @@ packages:
     engines: {node: '>=12.0.0', npm: '>=5.6.0'}
     hasBin: true
 
-  size-limit@14.0.0:
-    resolution: {integrity: sha512-VqcTCDkYEi+yH6s03bDRWHdC70ipyhI7d8geYiso/rMtUJ5H3uo7bZFYOlUmdrH3N+DCZstBntBJWZBpHp1waQ==}
+  size-limit@14.1.0:
+    resolution: {integrity: sha512-ANW8IDwAK3P84y+bElmWqq8ymV/mNS8Jan+otR5XItVVS4AEyAx7MpT+1BsMULbgDaJ1cle3qN/hkOYQS0vF7g==}
     engines: {node: ^22.19.0 || ^24.5.0 || >=26.0.0}
     hasBin: true
 
@@ -12785,14 +12785,14 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@size-limit/esbuild@14.0.0(size-limit@14.0.0)':
+  '@size-limit/esbuild@14.1.0(size-limit@14.1.0)':
     dependencies:
       esbuild: 0.28.2
-      size-limit: 14.0.0
+      size-limit: 14.1.0
 
-  '@size-limit/file@14.0.0(size-limit@14.0.0)':
+  '@size-limit/file@14.1.0(size-limit@14.1.0)':
     dependencies:
-      size-limit: 14.0.0
+      size-limit: 14.1.0
 
   '@slorber/react-helmet-async@1.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
@@ -13453,8 +13453,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.70.0(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.70.0(typescript@6.0.3)
-      '@typescript-eslint/types': 8.70.0
+      '@typescript-eslint/tsconfig-utils': 8.71.0(typescript@6.0.3)
+      '@typescript-eslint/types': 8.71.0
       debug: 4.4.3(supports-color@8.1.1)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -19706,7 +19706,7 @@ snapshots:
       arg: 5.0.2
       sax: 1.4.1
 
-  size-limit@14.0.0:
+  size-limit@14.1.0:
     dependencies:
       lilconfig: 3.1.3
       nanospinner: 1.2.2
